@@ -16,9 +16,9 @@ public class SWItems {
 
     public static void itemsRegistration() {
         dogTag = new ItemDogTag();
-        GameRegistry.registerItem(dogTag, "Dog Tag");
+        GameRegistry.registerItem(dogTag, "SWDogTag");
 
         dogTreat = new ItemDogTreat();
-        GameRegistry.registerItem(dogTreat, "Dog Treat");
+        GameRegistry.registerItem(dogTreat, "SWDogTreat");
     }
 }
