@@ -35,7 +35,7 @@ public class SophisticatedWolvesMod {
 
         Recipes.recipesRegistration();
 
-        EntityRegistry.registerGlobalEntityID(SophisticatedWolf.class, "SWWolf", EntityRegistry.findGlobalUniqueEntityId(), 14144467, 7969893);
+        EntityRegistry.registerGlobalEntityID(SophisticatedWolf.class, "SWWolf", EntityRegistry.findGlobalUniqueEntityId(), 14144467, 13545366);
         if (SWConfiguration.respawningWolves) {
             EntityRegistry.addSpawn(SophisticatedWolf.class, 1, 4, 4, EnumCreatureType.monster, BiomeDictionary.getBiomesForType(BiomeDictionary.Type.FOREST));
         }
