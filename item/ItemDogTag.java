@@ -27,12 +27,14 @@ public class ItemDogTag extends Item {
      */
     @Override
     public boolean itemInteractionForEntity(ItemStack stack, EntityPlayer player, EntityLivingBase entity) {
-        if (SWConfiguration.nameTagForAnyPets) {
-            if (entity instanceof EntityTameable) {
+        if (!entity.worldObj.isRemote) {
+            if (SWConfiguration.nameTagForAnyPets) {
+                if (entity instanceof EntityTameable) {
+                    return setName((EntityTameable) entity, stack);
+                }
+            } else if (entity instanceof SophisticatedWolf) {
                 return setName((EntityTameable) entity, stack);
             }
-        } else if (entity instanceof SophisticatedWolf) {
-            return setName((EntityTameable) entity, stack);
         }
         return super.itemInteractionForEntity(stack, player, entity);
     }
