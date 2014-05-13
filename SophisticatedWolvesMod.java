@@ -26,6 +26,7 @@ public class SophisticatedWolvesMod {
     @Mod.EventHandler
     public void preInit(FMLPreInitializationEvent event) {
         SWConfiguration.getInstance(event.getSuggestedConfigurationFile());
+        SWLocalization.init();
     }
 
     @Mod.EventHandler

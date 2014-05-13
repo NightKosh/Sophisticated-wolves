@@ -6,14 +6,15 @@ import net.minecraft.client.gui.GuiTextField;
 import net.minecraft.entity.passive.EntityTameable;
 import net.minecraft.util.ChatAllowedCharacters;
 import org.lwjgl.input.Keyboard;
+import sophisticated_wolves.SophisticatedWolvesMod;
 
 public class GuiEditName extends GuiScreen {
+
+    private final String screenTitle = SophisticatedWolvesMod.proxy.getLocalizedString("gui.edit_dog_name");
     private GuiTextField nameField;
     private EntityTameable pet;
-    protected String screenTitle;
 
     public GuiEditName(EntityTameable pet) {
-        this.screenTitle = "Give your pet a name:"; //Text that appears at the top of the screen
         this.pet = pet;
     }
 

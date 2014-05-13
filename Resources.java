@@ -9,6 +9,8 @@ public class Resources {
 
     private static final String MOD_NAME = ModInfo.ID.toLowerCase();
     private static final String ENTITY_LOCATION = MOD_NAME + ":textures/entity/";
+    // localization path
+    public static final String LOCALIZATION_LOCATION = "/assets/" + MOD_NAME + "/lang/";
 
     //items
     public static final String DOG_TAG = MOD_NAME + ":dogtag";
