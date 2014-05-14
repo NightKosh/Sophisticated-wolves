@@ -1,6 +1,8 @@
 package sophisticated_wolves.entity;
 
 
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.entity.EntityAgeable;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.ai.*;
@@ -121,7 +123,7 @@ public class SophisticatedWolf extends EntityWolf implements ISophisticatedWolf 
         }
 
         if (this.rand.nextInt(3) == 0 && !this.CreeperAlert()) {
-            if (this.isTamed() && this.dataWatcher.getWatchableObjectFloat(18) < 10.0F) {
+            if (this.isTamed() && this.getHealth() < 10.0F) {
                 return "mob.wolf.whine";
             } else {
                 return "mob.wolf.panting";
@@ -137,6 +139,18 @@ public class SophisticatedWolf extends EntityWolf implements ISophisticatedWolf 
                     return null;
                 }
             }
+        }
+    }
+
+    @Override
+    @SideOnly(Side.CLIENT)
+    public float getTailRotation() {
+        if (this.isAngry()) {
+            return 1.5393804F;
+        } else if (this.isTamed()) {
+            return (0.55F - (20 - this.getHealth()) * 0.02F) * (float) Math.PI;
+        } else {
+            return  (float) Math.PI / 5F;
         }
     }
 
@@ -236,7 +250,7 @@ public class SophisticatedWolf extends EntityWolf implements ISophisticatedWolf 
                         }
                     }
 
-                    if ((stack.getItem().equals(Items.cooked_fished) || stack.getItem().equals(Items.fish)) && this.dataWatcher.getWatchableObjectFloat(18) < 20.0F) {
+                    if ((stack.getItem().equals(Items.cooked_fished) || stack.getItem().equals(Items.fish)) && this.getHealth() < 20.0F) {
                         if (!player.capabilities.isCreativeMode) {
                             --stack.stackSize;
                         }
@@ -327,7 +341,7 @@ public class SophisticatedWolf extends EntityWolf implements ISophisticatedWolf 
             return false;
         }
         if (itemstack.getItem() instanceof ItemFood) {
-            return this.dataWatcher.getWatchableObjectFloat(18) < 20.0F && (((ItemFood) itemstack.getItem()).isWolfsFavoriteMeat() || itemstack.getItem().equals(Items.fish) || itemstack.getItem().equals(Items.cooked_fished));
+            return this.getHealth() < 20.0F && (((ItemFood) itemstack.getItem()).isWolfsFavoriteMeat() || itemstack.getItem().equals(Items.fish) || itemstack.getItem().equals(Items.cooked_fished));
         } else {
             return itemstack.getItem().equals(SWItems.dogTreat) && getGrowingAge() == 0;
         }
