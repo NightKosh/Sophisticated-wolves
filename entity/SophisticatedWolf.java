@@ -34,7 +34,6 @@ public class SophisticatedWolf extends EntityWolf implements ISophisticatedWolf 
 
     private static boolean isDebugMode = false;
     //New Sophisticated Wolves variables
-    public boolean smoking;
     public boolean puking;
 
     public SophisticatedWolf(World world) {
@@ -172,14 +171,12 @@ public class SophisticatedWolf extends EntityWolf implements ISophisticatedWolf 
             this.setPrevTimeWolfIsShaking(0);
         }
 
-
         float timeWolfIsShaking = this.timeWolfIsShaking();
-        if (!this.isWet() && this.isShaking() && this.getField_70928_h()) {
+        if (!this.isWet() && this.getField_70928_h()) {
             if (timeWolfIsShaking == 0) {
                 //checks if burning/poisoned/wet and sets variables
                 if (this.isBurning()) {
                     this.playSound("mob.wolf.shake", this.getSoundVolume(), (this.rand.nextFloat() - this.rand.nextFloat()) * 0.2F + 1.0F);
-                    this.smoking = true;
                 } else if (this.isPotionActive(Potion.poison) || this.isPotionActive(Potion.wither)) {
                     this.puking = true;
                 } else {
@@ -189,10 +186,9 @@ public class SophisticatedWolf extends EntityWolf implements ISophisticatedWolf 
 
             if (this.prevTimeWolfIsShaking() >= 1.95F) {
                 //extinguishing added
-                if (this.smoking) {
+                if (this.isBurning()) {
                     this.extinguish();
                     this.playSound("random.fizz", 0.7F, 1.6F + (rand.nextFloat() - rand.nextFloat()) * 0.4F);
-                    this.smoking = false;
                 }
                 if (this.puking) {
                     this.clearActivePotions();
@@ -200,7 +196,7 @@ public class SophisticatedWolf extends EntityWolf implements ISophisticatedWolf 
                 }
             }
             if (timeWolfIsShaking > 0.35F) {
-                if (this.smoking) {
+                if (this.isBurning()) {
                     this.playTameEffect(false); //generates smoke particles while shaking
                 }
                 if (!this.puking) {
