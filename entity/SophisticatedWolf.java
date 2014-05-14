@@ -19,8 +19,10 @@ import net.minecraft.world.World;
 import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraft.world.biome.BiomeGenForest;
 import net.minecraft.world.biome.WorldChunkManager;
+import org.apache.logging.log4j.Level;
 import sophisticated_wolves.SWConfiguration;
 import sophisticated_wolves.SWItems;
+import sophisticated_wolves.SophisticatedWolvesMod;
 import sophisticated_wolves.api.ISophisticatedWolf;
 import sophisticated_wolves.entity.ai.*;
 import sophisticated_wolves.item.ItemDogTag;
@@ -30,6 +32,7 @@ import java.util.List;
 
 public class SophisticatedWolf extends EntityWolf implements ISophisticatedWolf {
 
+    private static boolean isDebugMode = false;
     //New Sophisticated Wolves variables
     public boolean smoking;
     public boolean puking;
@@ -38,19 +41,19 @@ public class SophisticatedWolf extends EntityWolf implements ISophisticatedWolf 
         super(world);
 
         this.tasks.addTask(1, new EntityAISwimming(this));
-        this.tasks.addTask(3, new EntityAIAvoidCreeper(this, 8.0F, 6.0F, 1.0D, 1.4D)); //new behavior
+        this.tasks.addTask(3, new EntityAIAvoidCreeper(this, 8, 6, 1, 1.4)); //new behavior
         this.tasks.addTask(5, this.aiSit);
         this.tasks.addTask(7, new EntityAIShake(this)); //behavior for shaking
         this.tasks.addTask(10, new EntityAIAttackCancel(this)); //new behavior
         this.tasks.addTask(15, new EntityAILeapAtTarget(this, 0.4F));
-        this.tasks.addTask(20, new EntityAIAttackOnCollide(this, 1.0D, true));
-        this.tasks.addTask(22, new EntityAIMoveCancel(this, 6.0F));
-        this.tasks.addTask(25, new EntityAINewFollowOwner(this, 1.0D, 6.0F, 2.0F)); //changed 10.0F to 6.0F, mod class
-        this.tasks.addTask(27, new EntityAIAvoidFire(this, 1.0D, 1.4D)); //new behavior
-        this.tasks.addTask(30, new EntityAIMate(this, 1.0D));
-        this.tasks.addTask(35, new EntityAINewBeg(this, 8.0F)); //changed order with Wander, mod class
-        this.tasks.addTask(40, new EntityAIWander(this, 1.0D)); //changed order with Beg
-        this.tasks.addTask(45, new EntityAIWatchClosest(this, EntityPlayer.class, 8.0F));
+        this.tasks.addTask(20, new EntityAIAttackOnCollide(this, 1, true));
+        this.tasks.addTask(22, new EntityAIMoveCancel(this, 6));
+        this.tasks.addTask(25, new EntityAINewFollowOwner(this, 1, 6, 2)); //changed 10.0F to 6.0F, mod class
+        this.tasks.addTask(27, new EntityAIAvoidFire(this, 1, 1.4D)); //new behavior
+        this.tasks.addTask(30, new EntityAIMate(this, 1));
+        this.tasks.addTask(35, new EntityAINewBeg(this, 8)); //changed order with Wander, mod class
+        this.tasks.addTask(40, new EntityAIWander(this, 1)); //changed order with Beg
+        this.tasks.addTask(45, new EntityAIWatchClosest(this, EntityPlayer.class, 8));
         this.tasks.addTask(50, new EntityAILookIdle(this));
         this.targetTasks.addTask(1, new EntityAINewOwnerHurtByTarget(this)); //mod class
         this.targetTasks.addTask(2, new EntityAINewOwnerHurtTarget(this)); //mod class
@@ -160,11 +163,10 @@ public class SophisticatedWolf extends EntityWolf implements ISophisticatedWolf 
      * Called to update the entity's position/logic.
      */
     @Override
-    public void onUpdate() {
-        //Checks if wolf is burning and not currently standing in fire or if wolf is poison
+    public void onUpdate() {        //Checks if wolf is burning and not currently standing in fire or if wolf is poison
         if (!this.getField_70928_h() &&
                 ((this.isBurning() && !this.worldObj.func_147470_e(this.boundingBox.contract(0.001D, 0.001D, 0.001D))) ||
-                ((this.isPotionActive(Potion.poison) || this.isPotionActive(Potion.wither))))) {
+                        ((this.isPotionActive(Potion.poison) || this.isPotionActive(Potion.wither))))) {
             this.setShaking(true);
             this.setTimeWolfIsShaking(0);
             this.setPrevTimeWolfIsShaking(0);
@@ -214,93 +216,6 @@ public class SophisticatedWolf extends EntityWolf implements ISophisticatedWolf 
             }
         }
         super.onUpdate();
-    }
-
-    public boolean isShaking() {
-        Object value = getPrivateFieldValue("isShaking");
-        if (value == null) {
-            return false;
-        } else {
-            return (Boolean) value;
-        }
-    }
-
-    public void setShaking(boolean isShaking) {
-        setPrivateFieldValue("isShaking", isShaking);
-    }
-
-    public boolean getField_70928_h() {
-        Object value = getPrivateFieldValue("field_70928_h");
-        if (value == null) {
-            return false;
-        } else {
-            return (Boolean) value;
-        }
-    }
-
-    public float timeWolfIsShaking() {
-        Object value = getPrivateFieldValue("timeWolfIsShaking");
-        if (value == null) {
-            return 0;
-        } else {
-            return (Float) value;
-        }
-    }
-
-    public void setTimeWolfIsShaking(float time) {
-        setPrivateFieldValue("timeWolfIsShaking", time);
-    }
-
-    public float prevTimeWolfIsShaking() {
-        Object value = getPrivateFieldValue("prevTimeWolfIsShaking");
-        if (value == null) {
-            return 0;
-        } else {
-            return (Float) value;
-        }
-    }
-
-    public void setPrevTimeWolfIsShaking(float time) {
-        setPrivateFieldValue("prevTimeWolfIsShaking", time);
-    }
-
-    private Object getPrivateFieldValue(String fieldName) {
-        Field field = getField(this.getClass().getSuperclass(), fieldName);
-        if (field == null) {
-            return null;
-        }
-        try {
-            field.setAccessible(true);
-            return field.get(this);
-        } catch (IllegalAccessException e){
-            return null;
-        }
-    }
-
-    private void setPrivateFieldValue(String fieldName, Object value) {
-        Field field = getField(this.getClass().getSuperclass(), fieldName);
-        if (field == null) {
-            return;
-        }
-        try {
-            field.setAccessible(true);
-            field.set(this, value);
-        } catch (IllegalAccessException e){
-        }
-    }
-
-
-    private static Field getField(Class clazz, String fieldName) {
-        try {
-            return clazz.getDeclaredField(fieldName);
-        } catch (NoSuchFieldException e) {
-            Class superClass = clazz.getSuperclass();
-            if (superClass == null) {
-                return null;
-            } else {
-                return getField(superClass, fieldName);
-            }
-        }
     }
 
     /**
@@ -481,4 +396,121 @@ public class SophisticatedWolf extends EntityWolf implements ISophisticatedWolf 
     public void updateSpecies(int species) {
         this.dataWatcher.updateObject(22, Byte.valueOf((byte) species));
     }
+
+
+    // Reflection
+    public boolean isShaking() {
+        Object value = getPrivateFieldValue(isDebugMode ? "isShaking" : "field_70925_g");
+        if (value == null) {
+            if (SWConfiguration.logWolfErrors) {
+                SophisticatedWolvesMod.logger.log(Level.ERROR, "isShaking is null!!!");
+            }
+            return false;
+        } else {
+            return (Boolean) value;
+        }
+    }
+
+    public void setShaking(boolean isShaking) {
+        setPrivateFieldValue(isDebugMode ? "isShaking" : "field_70925_g", isShaking);
+    }
+
+    public boolean getField_70928_h() {
+        Object value = getPrivateFieldValue("field_70928_h");
+        if (value == null) {
+            if (SWConfiguration.logWolfErrors) {
+                SophisticatedWolvesMod.logger.log(Level.ERROR, "field_70928_h is null!!!");
+            }
+            return false;
+        } else {
+            return (Boolean) value;
+        }
+    }
+
+    public float timeWolfIsShaking() {
+        Object value = getPrivateFieldValue(isDebugMode ? "timeWolfIsShaking" : "field_70929_i");
+        if (value == null) {
+            if (SWConfiguration.logWolfErrors) {
+                SophisticatedWolvesMod.logger.log(Level.ERROR, "timeWolfIsShaking is null!!!");
+            }
+            return 0;
+        } else {
+            return (Float) value;
+        }
+    }
+
+    public void setTimeWolfIsShaking(float time) {
+        setPrivateFieldValue(isDebugMode ? "timeWolfIsShaking" : "field_70929_i", time);
+    }
+
+    public float prevTimeWolfIsShaking() {
+        Object value = getPrivateFieldValue(isDebugMode ? "prevTimeWolfIsShaking" : "field_70927_j");
+        if (value == null) {
+            if (SWConfiguration.logWolfErrors) {
+                SophisticatedWolvesMod.logger.log(Level.ERROR, "prevTimeWolfIsShaking is null!!!");
+            }
+            return 0;
+        } else {
+            return (Float) value;
+        }
+    }
+
+    public void setPrevTimeWolfIsShaking(float time) {
+        setPrivateFieldValue(isDebugMode ? "prevTimeWolfIsShaking" : "field_70927_j", time);
+    }
+
+    private Object getPrivateFieldValue(String fieldName) {
+        Field field = getField(this.getClass().getSuperclass(), fieldName);
+        if (field == null) {
+            if (SWConfiguration.logWolfErrors) {
+                SophisticatedWolvesMod.logger.log(Level.ERROR, "Can't get private field " + fieldName);
+            }
+            return null;
+        }
+        try {
+            field.setAccessible(true);
+            return field.get(this);
+        } catch (IllegalAccessException e) {
+            if (SWConfiguration.logWolfErrors) {
+                SophisticatedWolvesMod.logger.log(Level.ERROR, "IllegalAccessException " + fieldName);
+            }
+            return null;
+        }
+    }
+
+    private void setPrivateFieldValue(String fieldName, Object value) {
+        Field field = getField(this.getClass().getSuperclass(), fieldName);
+        if (field == null) {
+            if (SWConfiguration.logWolfErrors) {
+                SophisticatedWolvesMod.logger.log(Level.ERROR, "Can't set private field " + fieldName);
+            }
+            return;
+        }
+        try {
+            field.setAccessible(true);
+            field.set(this, value);
+        } catch (IllegalAccessException e) {
+            if (SWConfiguration.logWolfErrors) {
+                SophisticatedWolvesMod.logger.log(Level.ERROR, "IllegalAccessException " + fieldName);
+            }
+        }
+    }
+
+    private static Field getField(Class clazz, String fieldName) {
+        try {
+            return clazz.getDeclaredField(fieldName);
+        } catch (NoSuchFieldException e) {
+            Class superClass = clazz.getSuperclass();
+            if (superClass == null) {
+                if (SWConfiguration.logWolfErrors) {
+                    SophisticatedWolvesMod.logger.log(Level.ERROR, "Can't get field " + fieldName);
+                }
+                return null;
+            } else {
+                return getField(superClass, fieldName);
+            }
+        }
+    }
+
+
 }

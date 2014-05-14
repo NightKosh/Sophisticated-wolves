@@ -7,6 +7,8 @@ import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.registry.EntityRegistry;
 import net.minecraft.entity.EnumCreatureType;
 import net.minecraftforge.common.BiomeDictionary;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import sophisticated_wolves.entity.SophisticatedWolf;
 import sophisticated_wolves.proxy.CommonProxy;
 
@@ -18,6 +20,8 @@ public class SophisticatedWolvesMod {
     public static SophisticatedWolvesMod instance;
     @SidedProxy(clientSide = "sophisticated_wolves.proxy.ClientProxy", serverSide = "sophisticated_wolves.proxy.CommonProxy")
     public static CommonProxy proxy;
+
+    public static Logger logger = LogManager.getLogger(ModInfo.ID);
 
     public SophisticatedWolvesMod() {
         instance = this;
