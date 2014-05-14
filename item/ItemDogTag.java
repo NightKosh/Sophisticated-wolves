@@ -30,18 +30,21 @@ public class ItemDogTag extends Item {
         if (!entity.worldObj.isRemote) {
             if (SWConfiguration.nameTagForAnyPets) {
                 if (entity instanceof EntityTameable) {
-                    return setName((EntityTameable) entity, stack);
+                    return setName((EntityTameable) entity, stack, player);
                 }
             } else if (entity instanceof SophisticatedWolf) {
-                return setName((EntityTameable) entity, stack);
+                return setName((EntityTameable) entity, stack, player);
             }
         }
         return super.itemInteractionForEntity(stack, player, entity);
     }
 
-    private static boolean setName(EntityTameable pet, ItemStack stack) {
-        FMLClientHandler.instance().getClient().displayGuiScreen(new GuiEditName(pet));
-        --stack.stackSize;
-        return true;
+    private static boolean setName(EntityTameable pet, ItemStack stack, EntityPlayer player) {
+        if (pet.isTamed() && pet.getOwnerName().equals(player.getCommandSenderName())) {
+            FMLClientHandler.instance().getClient().displayGuiScreen(new GuiEditName(pet));
+            --stack.stackSize;
+            return true;
+        }
+        return false;
     }
 }
