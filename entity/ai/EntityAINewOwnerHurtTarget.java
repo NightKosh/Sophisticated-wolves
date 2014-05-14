@@ -25,7 +25,7 @@ public class EntityAINewOwnerHurtTarget extends EntityAIOwnerHurtTarget {
             EntityLivingBase owner = this.theEntityTameable.getOwner();
             if (owner != null) {
                 this.theTarget = owner.getLastAttacker();
-                if (theTarget.func_142015_aE() <= 40 || !this.theTarget.getAITarget().equals(owner)) {
+                if (theTarget != null && (theTarget.func_142015_aE() <= 40 || !this.theTarget.getAITarget().equals(owner))) {
                     return false;
                 }
                 return true;
