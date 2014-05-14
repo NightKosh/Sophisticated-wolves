@@ -47,12 +47,7 @@ public class RenderSophisticatedWolf extends RenderWolf {
                 else
                     return Resources.forestWolf;
             } else {
-                if (wolf.isTamed())
-                    return Resources.defaultWolfTame;
-                if (wolf.isAngry())
-                    return Resources.defaultWolfAngry;
-                else
-                    return Resources.defaultWolf;
+                return super.getEntityTexture(wolf);
             }
         } else {
             return super.getEntityTexture(wolf);

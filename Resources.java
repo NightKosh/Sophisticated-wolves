@@ -30,9 +30,4 @@ public class Resources {
     public static final ResourceLocation forestWolf = new ResourceLocation(ENTITY_LOCATION + "forest/wolf.png");
     public static final ResourceLocation forestWolfTame = new ResourceLocation(ENTITY_LOCATION + "forest/wolf_tame.png");
     public static final ResourceLocation forestWolfAngry = new ResourceLocation(ENTITY_LOCATION + "forest/wolf_angry.png");
-
-    //Forced Default Wolf
-    public static final ResourceLocation defaultWolf = new ResourceLocation(ENTITY_LOCATION + "default/wolf.png");
-    public static final ResourceLocation defaultWolfTame = new ResourceLocation(ENTITY_LOCATION + "default/wolf_tame.png");
-    public static final ResourceLocation defaultWolfAngry = new ResourceLocation(ENTITY_LOCATION + "default/wolf_angry.png");
 }
