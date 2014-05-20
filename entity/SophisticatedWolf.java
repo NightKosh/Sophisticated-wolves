@@ -16,6 +16,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.FurnaceRecipes;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.potion.Potion;
+import net.minecraft.util.DamageSource;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.BiomeGenBase;
@@ -41,25 +42,44 @@ public class SophisticatedWolf extends EntityWolf implements ISophisticatedWolf 
     public SophisticatedWolf(World world) {
         super(world);
 
-        this.tasks.addTask(1, new EntityAISwimming(this));
+        for (Object taskEntry : this.tasks.taskEntries) {
+            EntityAIBase task = ((EntityAITasks.EntityAITaskEntry) taskEntry).action;
+            if (task instanceof EntityAISit) {
+                taskEntry = this.tasks.new EntityAITaskEntry(5, new EntityAISit(this));
+            } else if (task instanceof EntityAILeapAtTarget) {
+                taskEntry = this.tasks.new EntityAITaskEntry(15, new EntityAILeapAtTarget(this, 0.4F));
+            } else if (task instanceof EntityAIAttackOnCollide) {
+                taskEntry = this.tasks.new EntityAITaskEntry(20, new EntityAIAttackOnCollide(this, 1, true));
+            } else if (task instanceof EntityAIFollowOwner) {
+                taskEntry = this.tasks.new EntityAITaskEntry(25, new EntityAINewFollowOwner(this, 1, 6, 2)); //changed 10.0F to 6.0F, mod class
+            } else if (task instanceof EntityAIMate) {
+                taskEntry = this.tasks.new EntityAITaskEntry(30, new EntityAIMate(this, 1));
+            } else if (task instanceof EntityAIWander) {
+                taskEntry = this.tasks.new EntityAITaskEntry(40, new EntityAIWander(this, 1)); //changed order with Beg
+            } else if (task instanceof EntityAIBeg) {
+                taskEntry = this.tasks.new EntityAITaskEntry(35, new EntityAINewBeg(this, 8)); //changed order with Wander, mod class
+            } else if (task instanceof EntityAIWatchClosest) {
+                taskEntry = this.tasks.new EntityAITaskEntry(45, new EntityAIWatchClosest(this, EntityPlayer.class, 8));
+            } else if (task instanceof EntityAILookIdle) {
+                taskEntry = this.tasks.new EntityAITaskEntry(50, new EntityAILookIdle(this));
+            }
+        }
+
+        for (Object taskEntry : this.targetTasks.taskEntries) {
+            EntityAIBase task = ((EntityAITasks.EntityAITaskEntry) taskEntry).action;
+            if (task instanceof EntityAIOwnerHurtByTarget) {
+                taskEntry = this.tasks.new EntityAITaskEntry(1, new EntityAINewOwnerHurtByTarget(this)); //mod class
+            } else if (task instanceof EntityAIOwnerHurtTarget) {
+                taskEntry = this.tasks.new EntityAITaskEntry(2, new EntityAINewOwnerHurtTarget(this)); //mod class
+            }
+        }
+
         this.tasks.addTask(3, new EntityAIAvoidCreeper(this, 8, 6, 1, 1.4)); //new behavior
-        this.tasks.addTask(5, this.aiSit);
         this.tasks.addTask(7, new EntityAIShake(this)); //behavior for shaking
         this.tasks.addTask(10, new EntityAIAttackCancel(this)); //new behavior
-        this.tasks.addTask(15, new EntityAILeapAtTarget(this, 0.4F));
-        this.tasks.addTask(20, new EntityAIAttackOnCollide(this, 1, true));
         this.tasks.addTask(22, new EntityAIMoveCancel(this, 6));
-        this.tasks.addTask(25, new EntityAINewFollowOwner(this, 1, 6, 2)); //changed 10.0F to 6.0F, mod class
-        this.tasks.addTask(27, new EntityAIAvoidFire(this, 1, 1.4D)); //new behavior
-        this.tasks.addTask(30, new EntityAIMate(this, 1));
-        this.tasks.addTask(35, new EntityAINewBeg(this, 8)); //changed order with Wander, mod class
-        this.tasks.addTask(40, new EntityAIWander(this, 1)); //changed order with Beg
-        this.tasks.addTask(45, new EntityAIWatchClosest(this, EntityPlayer.class, 8));
-        this.tasks.addTask(50, new EntityAILookIdle(this));
-        this.targetTasks.addTask(1, new EntityAINewOwnerHurtByTarget(this)); //mod class
-        this.targetTasks.addTask(2, new EntityAINewOwnerHurtTarget(this)); //mod class
+        this.tasks.addTask(27, new EntityAIAvoidFire(this, 1, 1.4)); //new behavior
 
-        //Sophisticated Wolves variables
         fireResistance = 5; //modified from default value
     }
 
@@ -123,7 +143,7 @@ public class SophisticatedWolf extends EntityWolf implements ISophisticatedWolf 
         }
 
         if (this.rand.nextInt(3) == 0 && !this.CreeperAlert()) {
-            if (this.isTamed() && this.getHealth() < 10.0F) {
+            if (this.isTamed() && this.getHealth() < 10) {
                 return "mob.wolf.whine";
             } else {
                 return "mob.wolf.panting";
@@ -150,7 +170,7 @@ public class SophisticatedWolf extends EntityWolf implements ISophisticatedWolf 
         } else if (this.isTamed()) {
             return (0.55F - (20 - this.getHealth()) * 0.02F) * (float) Math.PI;
         } else {
-            return  (float) Math.PI / 5F;
+            return (float) Math.PI / 5F;
         }
     }
 
@@ -178,7 +198,7 @@ public class SophisticatedWolf extends EntityWolf implements ISophisticatedWolf 
     @Override
     public void onUpdate() {        //Checks if wolf is burning and not currently standing in fire or if wolf is poison
         if (!this.getField_70928_h() &&
-                ((this.isBurning() && !this.worldObj.func_147470_e(this.boundingBox.contract(0.001D, 0.001D, 0.001D))) ||
+                ((this.isBurning() && !this.worldObj.func_147470_e(this.boundingBox.contract(0.001, 0.001, 0.001))) ||
                         ((this.isPotionActive(Potion.poison) || this.isPotionActive(Potion.wither))))) {
             this.setShaking(true);
             this.setTimeWolfIsShaking(0);
@@ -190,11 +210,11 @@ public class SophisticatedWolf extends EntityWolf implements ISophisticatedWolf 
             if (timeWolfIsShaking == 0) {
                 //checks if burning/poisoned/wet and sets variables
                 if (this.isBurning()) {
-                    this.playSound("mob.wolf.shake", this.getSoundVolume(), (this.rand.nextFloat() - this.rand.nextFloat()) * 0.2F + 1.0F);
+                    this.playSound("mob.wolf.shake", this.getSoundVolume(), (this.rand.nextFloat() - this.rand.nextFloat()) * 0.2F + 1);
                 } else if (this.isPotionActive(Potion.poison) || this.isPotionActive(Potion.wither)) {
                     this.puking = true;
                 } else {
-                    this.playSound("mob.wolf.shake", this.getSoundVolume(), (this.rand.nextFloat() - this.rand.nextFloat()) * 0.2F + 1.0F);
+                    this.playSound("mob.wolf.shake", this.getSoundVolume(), (this.rand.nextFloat() - this.rand.nextFloat()) * 0.2F + 1);
                 }
             }
 
@@ -218,8 +238,8 @@ public class SophisticatedWolf extends EntityWolf implements ISophisticatedWolf 
                     int var2 = (int) (MathHelper.sin((timeWolfIsShaking - 0.4F) * (float) Math.PI) * 7);
 
                     for (int var3 = 0; var3 < var2; ++var3) {
-                        float var4 = (this.rand.nextFloat() * 2.0F - 1.0F) * this.width * 0.5F;
-                        float var5 = (this.rand.nextFloat() * 2.0F - 1.0F) * this.width * 0.5F;
+                        float var4 = (this.rand.nextFloat() * 2 - 1) * this.width * 0.5F;
+                        float var5 = (this.rand.nextFloat() * 2 - 1) * this.width * 0.5F;
                         this.worldObj.spawnParticle("splash", this.posX + (double) var4, (double) (var1 + 0.8F), this.posZ + (double) var5, this.motionX, this.motionY, this.motionZ);
                     }
                 }
@@ -234,7 +254,6 @@ public class SophisticatedWolf extends EntityWolf implements ISophisticatedWolf 
     @Override
     public boolean interact(EntityPlayer player) {
         super.interact(player);
-
         ItemStack stack = player.inventory.getCurrentItem();
 
         if (this.isTamed()) {
@@ -250,7 +269,7 @@ public class SophisticatedWolf extends EntityWolf implements ISophisticatedWolf 
                         }
                     }
 
-                    if ((stack.getItem().equals(Items.cooked_fished) || stack.getItem().equals(Items.fish)) && this.getHealth() < 20.0F) {
+                    if ((stack.getItem().equals(Items.cooked_fished) || stack.getItem().equals(Items.fish)) && this.getHealth() < 20) {
                         if (!player.capabilities.isCreativeMode) {
                             --stack.stackSize;
                         }
@@ -261,9 +280,11 @@ public class SophisticatedWolf extends EntityWolf implements ISophisticatedWolf 
                         if (stack.stackSize <= 0) {
                             player.inventory.setInventorySlotContents(player.inventory.currentItem, (ItemStack) null);
                         }
+                        this.aiSit.setSitting(this.isSitting());
                         return true;
                     }
                 } else if (stack.getItem() instanceof ItemDogTag) {
+                    this.aiSit.setSitting(this.isSitting());
                     return false;
                 }
             }
@@ -279,7 +300,6 @@ public class SophisticatedWolf extends EntityWolf implements ISophisticatedWolf 
             }
             return false;
         }
-
         return false;
     }
 
@@ -392,8 +412,8 @@ public class SophisticatedWolf extends EntityWolf implements ISophisticatedWolf 
     }
 
     /*
-     * reads data for species
-     */
+         * reads data for species
+         */
     @Override
     public int getSpecies() {
         return this.dataWatcher.getWatchableObjectByte(22);
@@ -407,6 +427,13 @@ public class SophisticatedWolf extends EntityWolf implements ISophisticatedWolf 
         this.dataWatcher.updateObject(22, Byte.valueOf((byte) species));
     }
 
+    @Override
+    public void onDeath(DamageSource damageSource) {
+        if (isTamed() && this.getOwner() != null) {
+            ((EntityPlayer) this.getOwner()).addChatComponentMessage(this.func_110142_aN().func_151521_b());
+        }
+        super.onDeath(damageSource);
+    }
 
     // Reflection
     public boolean isShaking() {
