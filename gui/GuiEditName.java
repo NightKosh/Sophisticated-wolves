@@ -8,6 +8,12 @@ import net.minecraft.util.ChatAllowedCharacters;
 import org.lwjgl.input.Keyboard;
 import sophisticated_wolves.SophisticatedWolvesMod;
 
+/**
+ * Sophisticated Wolves
+ *
+ * @author metroidfood
+ * @license Lesser GNU Public License v3 (http://www.gnu.org/licenses/lgpl.html)
+ */
 public class GuiEditName extends GuiScreen {
 
     private final String screenTitle = SophisticatedWolvesMod.proxy.getLocalizedString("gui.edit_dog_name");

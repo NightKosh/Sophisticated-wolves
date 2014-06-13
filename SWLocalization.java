@@ -3,7 +3,10 @@ package sophisticated_wolves;
 import cpw.mods.fml.common.registry.LanguageRegistry;
 
 /**
- * Created by Fox on 14.05.2014.
+ * Sophisticated Wolves
+ *
+ * @author NightKosh
+ * @license Lesser GNU Public License v3 (http://www.gnu.org/licenses/lgpl.html)
  */
 public class SWLocalization {
     private SWLocalization() {

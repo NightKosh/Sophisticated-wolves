@@ -7,6 +7,12 @@ import net.minecraft.entity.ai.EntityAIFollowOwner;
 import net.minecraft.entity.passive.EntityTameable;
 import net.minecraft.util.MathHelper;
 
+/**
+ * Sophisticated Wolves
+ *
+ * @author metroidfood
+ * @license Lesser GNU Public License v3 (http://www.gnu.org/licenses/lgpl.html)
+ */
 public class EntityAINewFollowOwner extends EntityAIFollowOwner {
     private EntityTameable pet;
     private EntityLivingBase owner;

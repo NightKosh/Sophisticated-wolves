@@ -10,6 +10,12 @@ import net.minecraft.util.Vec3;
 
 import java.util.List;
 
+/**
+ * Sophisticated Wolves
+ *
+ * @author metroidfood
+ * @license Lesser GNU Public License v3 (http://www.gnu.org/licenses/lgpl.html)
+ */
 public class EntityAIAvoidCreeper extends EntityAIBase {
     /**
      * The entity we are attached to

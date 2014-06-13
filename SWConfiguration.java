@@ -4,6 +4,12 @@ import net.minecraftforge.common.config.Configuration;
 
 import java.io.File;
 
+/**
+ * Sophisticated Wolves
+ *
+ * @author NightKosh
+ * @license Lesser GNU Public License v3 (http://www.gnu.org/licenses/lgpl.html)
+ */
 public class SWConfiguration {
 
     private static SWConfiguration instance;

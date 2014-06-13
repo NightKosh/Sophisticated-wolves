@@ -7,6 +7,12 @@ import net.minecraft.entity.passive.EntityTameable;
 import net.minecraft.pathfinding.PathEntity;
 import net.minecraft.pathfinding.PathNavigate;
 
+/**
+ * Sophisticated Wolves
+ *
+ * @author metroidfood
+ * @license Lesser GNU Public License v3 (http://www.gnu.org/licenses/lgpl.html)
+ */
 public class EntityAIAttackCancel extends EntityAIBase {
     private EntityTameable thePet;
     private EntityLivingBase theOwner;

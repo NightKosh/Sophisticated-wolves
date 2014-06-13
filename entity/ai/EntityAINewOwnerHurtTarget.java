@@ -4,6 +4,12 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.ai.EntityAIOwnerHurtTarget;
 import net.minecraft.entity.passive.EntityTameable;
 
+/**
+ * Sophisticated Wolves
+ *
+ * @author metroidfood
+ * @license Lesser GNU Public License v3 (http://www.gnu.org/licenses/lgpl.html)
+ */
 public class EntityAINewOwnerHurtTarget extends EntityAIOwnerHurtTarget {
     protected EntityTameable theEntityTameable;
     protected EntityLivingBase theTarget;

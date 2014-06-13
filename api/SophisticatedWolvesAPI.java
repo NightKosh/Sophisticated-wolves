@@ -6,6 +6,12 @@ import net.minecraft.world.World;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 
+/**
+ * Sophisticated Wolves
+ *
+ * @author NightKosh
+ * @license Lesser GNU Public License v3 (http://www.gnu.org/licenses/lgpl.html)
+ */
 public class SophisticatedWolvesAPI {
     
     public static EntityWolf getSophisticatedWolf(World world) {

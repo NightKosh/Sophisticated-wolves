@@ -6,6 +6,12 @@ import net.minecraft.entity.ai.RandomPositionGenerator;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
 
+/**
+ * Sophisticated Wolves
+ *
+ * @author metroidfood
+ * @license Lesser GNU Public License v3 (http://www.gnu.org/licenses/lgpl.html)
+ */
 public class EntityAIAvoidFire extends EntityAIBase {
     private EntityCreature entity;
     private double xPath;

@@ -5,6 +5,12 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.ai.EntityAIOwnerHurtByTarget;
 import net.minecraft.entity.passive.EntityTameable;
 
+/**
+ * Sophisticated Wolves
+ *
+ * @author metroidfood
+ * @license Lesser GNU Public License v3 (http://www.gnu.org/licenses/lgpl.html)
+ */
 public class EntityAINewOwnerHurtByTarget extends EntityAIOwnerHurtByTarget {
     protected EntityTameable theDefendingTameable;
     protected int revengeTime;

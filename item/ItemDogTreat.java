@@ -10,6 +10,12 @@ import sophisticated_wolves.Resources;
 import sophisticated_wolves.api.ISophisticatedWolf;
 import sophisticated_wolves.entity.SophisticatedWolf;
 
+/**
+ * Sophisticated Wolves
+ *
+ * @author NightKosh
+ * @license Lesser GNU Public License v3 (http://www.gnu.org/licenses/lgpl.html)
+ */
 public class ItemDogTreat extends Item {
 
     public ItemDogTreat() {

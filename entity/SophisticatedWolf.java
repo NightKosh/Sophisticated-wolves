@@ -33,6 +33,12 @@ import sophisticated_wolves.item.ItemDogTag;
 import java.lang.reflect.Field;
 import java.util.List;
 
+/**
+ * Sophisticated Wolves
+ *
+ * @author metroidfood
+ * @license Lesser GNU Public License v3 (http://www.gnu.org/licenses/lgpl.html)
+ */
 public class SophisticatedWolf extends EntityWolf implements ISophisticatedWolf {
 
     private static boolean isDebugMode = false;

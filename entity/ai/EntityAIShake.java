@@ -5,6 +5,12 @@ import net.minecraft.pathfinding.PathNavigate;
 import net.minecraft.world.World;
 import sophisticated_wolves.entity.SophisticatedWolf;
 
+/**
+ * Sophisticated Wolves
+ *
+ * @author metroidfood
+ * @license Lesser GNU Public License v3 (http://www.gnu.org/licenses/lgpl.html)
+ */
 public class EntityAIShake extends EntityAIBase {
     private SophisticatedWolf theWolf;
     private World theWorld;

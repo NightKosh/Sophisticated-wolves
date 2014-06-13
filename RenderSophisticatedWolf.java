@@ -13,6 +13,12 @@ import org.apache.commons.lang3.StringUtils;
 import org.lwjgl.opengl.GL11;
 import sophisticated_wolves.entity.SophisticatedWolf;
 
+/**
+ * Sophisticated Wolves
+ *
+ * @author metroidfood
+ * @license Lesser GNU Public License v3 (http://www.gnu.org/licenses/lgpl.html)
+ */
 public class RenderSophisticatedWolf extends RenderWolf {
 
     public RenderSophisticatedWolf(ModelBase modelBase, ModelBase modelBase2) {

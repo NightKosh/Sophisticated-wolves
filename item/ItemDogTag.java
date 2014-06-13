@@ -13,6 +13,12 @@ import sophisticated_wolves.SophisticatedWolvesMod;
 import sophisticated_wolves.entity.SophisticatedWolf;
 import sophisticated_wolves.gui.GuiEditName;
 
+/**
+ * Sophisticated Wolves
+ *
+ * @author NightKosh
+ * @license Lesser GNU Public License v3 (http://www.gnu.org/licenses/lgpl.html)
+ */
 public class ItemDogTag extends Item {
 
     public ItemDogTag() {

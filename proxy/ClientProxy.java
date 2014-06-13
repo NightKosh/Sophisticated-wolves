@@ -6,6 +6,12 @@ import net.minecraft.client.model.ModelWolf;
 import sophisticated_wolves.RenderSophisticatedWolf;
 import sophisticated_wolves.entity.SophisticatedWolf;
 
+/**
+ * Sophisticated Wolves
+ *
+ * @author NightKosh
+ * @license Lesser GNU Public License v3 (http://www.gnu.org/licenses/lgpl.html)
+ */
 public class ClientProxy extends CommonProxy {
 
     @Override

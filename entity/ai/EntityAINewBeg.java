@@ -8,6 +8,12 @@ import net.minecraft.pathfinding.PathNavigate;
 import net.minecraft.world.World;
 import sophisticated_wolves.entity.SophisticatedWolf;
 
+/**
+ * Sophisticated Wolves
+ *
+ * @author metroidfood
+ * @license Lesser GNU Public License v3 (http://www.gnu.org/licenses/lgpl.html)
+ */
 public class EntityAINewBeg extends EntityAIBase {
     private SophisticatedWolf wolf;
     private EntityPlayer player;
