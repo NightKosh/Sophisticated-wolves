@@ -1,5 +1,7 @@
 package sophisticated_wolves.proxy;
 
+import net.minecraft.entity.passive.EntityTameable;
+
 /**
  * Sophisticated Wolves
  *
@@ -14,4 +16,7 @@ public class CommonProxy {
     public String getLocalizedString(String str) {
         return str;
     }
+
+
+    public void openPetGui(EntityTameable pet) {}
 }

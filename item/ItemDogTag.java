@@ -1,6 +1,5 @@
 package sophisticated_wolves.item;
 
-import cpw.mods.fml.client.FMLClientHandler;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.passive.EntityTameable;
@@ -11,7 +10,6 @@ import sophisticated_wolves.Resources;
 import sophisticated_wolves.SWConfiguration;
 import sophisticated_wolves.SophisticatedWolvesMod;
 import sophisticated_wolves.entity.SophisticatedWolf;
-import sophisticated_wolves.gui.GuiEditName;
 
 /**
  * Sophisticated Wolves
@@ -33,22 +31,23 @@ public class ItemDogTag extends Item {
      */
     @Override
     public boolean itemInteractionForEntity(ItemStack stack, EntityPlayer player, EntityLivingBase entity) {
-        if (!entity.worldObj.isRemote) {
-            if (SWConfiguration.nameTagForAnyPets) {
-                if (entity instanceof EntityTameable) {
-                    return setName((EntityTameable) entity, stack, player);
-                }
-            } else if (entity instanceof SophisticatedWolf) {
+        if (SWConfiguration.nameTagForAnyPets) {
+            if (entity instanceof EntityTameable) {
                 return setName((EntityTameable) entity, stack, player);
             }
+        } else if (entity instanceof SophisticatedWolf) {
+            return setName((EntityTameable) entity, stack, player);
         }
         return super.itemInteractionForEntity(stack, player, entity);
     }
 
     private static boolean setName(EntityTameable pet, ItemStack stack, EntityPlayer player) {
         if (pet.isTamed() && pet.getOwnerName().equals(player.getCommandSenderName())) {
-            FMLClientHandler.instance().getClient().displayGuiScreen(new GuiEditName(pet));
-            --stack.stackSize;
+            SophisticatedWolvesMod.proxy.openPetGui(pet);
+
+            if (!player.worldObj.isRemote) {
+                --stack.stackSize;
+            }
             return true;
         }
         return false;

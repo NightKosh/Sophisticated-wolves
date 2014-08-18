@@ -1,10 +1,13 @@
 package sophisticated_wolves.proxy;
 
+import cpw.mods.fml.client.FMLClientHandler;
 import cpw.mods.fml.client.registry.RenderingRegistry;
 import cpw.mods.fml.common.registry.LanguageRegistry;
 import net.minecraft.client.model.ModelWolf;
+import net.minecraft.entity.passive.EntityTameable;
 import sophisticated_wolves.RenderSophisticatedWolf;
 import sophisticated_wolves.entity.SophisticatedWolf;
+import sophisticated_wolves.gui.GuiEditName;
 
 /**
  * Sophisticated Wolves
@@ -33,5 +36,10 @@ public class ClientProxy extends CommonProxy {
         } else {
             return localizedString;
         }
+    }
+
+    @Override
+    public void openPetGui(EntityTameable pet) {
+        FMLClientHandler.instance().getClient().displayGuiScreen(new GuiEditName(pet));
     }
 }
