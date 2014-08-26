@@ -39,7 +39,7 @@ public class ItemDogTreat extends Item {
                 SWolf.setCustomNameTag(wolf.getCustomNameTag());
                 SWolf.setCollarColor(wolf.getCollarColor());
                 SWolf.setTamed(true);
-                SWolf.setOwner(wolf.getOwnerName());
+                SWolf.func_152115_b(wolf.func_152113_b());
                 SWolf.setHealth(wolf.getHealth());
 
                 wolf.setDead();

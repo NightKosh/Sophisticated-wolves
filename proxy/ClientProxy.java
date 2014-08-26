@@ -5,6 +5,7 @@ import cpw.mods.fml.client.registry.RenderingRegistry;
 import cpw.mods.fml.common.registry.LanguageRegistry;
 import net.minecraft.client.model.ModelWolf;
 import net.minecraft.entity.passive.EntityTameable;
+import org.apache.commons.lang3.StringUtils;
 import sophisticated_wolves.RenderSophisticatedWolf;
 import sophisticated_wolves.entity.SophisticatedWolf;
 import sophisticated_wolves.gui.GuiEditName;
@@ -30,8 +31,12 @@ public class ClientProxy extends CommonProxy {
 
     @Override
     public String getLocalizedString(String str) {
-        String localizedString = LanguageRegistry.instance().getStringLocalization(str);
-        if (localizedString.length() == 0) {
+        String localizedString = null;
+        try {
+            localizedString = LanguageRegistry.instance().getStringLocalization(str);
+        } catch (Exception e) {}
+
+        if (StringUtils.isBlank(localizedString)) {
             return LanguageRegistry.instance().getStringLocalization(str, "en_US");
         } else {
             return localizedString;

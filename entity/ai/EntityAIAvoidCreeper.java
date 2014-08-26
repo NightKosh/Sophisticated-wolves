@@ -67,7 +67,7 @@ public class EntityAIAvoidCreeper extends EntityAIBase {
 
             if (this.theEntity.getDistanceSqToEntity(CreeperEntity) < this.minDist * this.minDist) {
                 if (this.CreeperEntity.getCreeperState() > 0) {
-                    Vec3 vec3d = RandomPositionGenerator.findRandomTargetBlockAwayFrom(this.theEntity, 16, 7, this.theEntity.worldObj.getWorldVec3Pool().getVecFromPool(this.CreeperEntity.posX, this.CreeperEntity.posY, this.CreeperEntity.posZ));
+                    Vec3 vec3d = RandomPositionGenerator.findRandomTargetBlockAwayFrom(this.theEntity, 16, 7, Vec3.createVectorHelper(this.CreeperEntity.posX, this.CreeperEntity.posY, this.CreeperEntity.posZ));
 
                     if (vec3d != null) {
                         if (this.CreeperEntity.getDistanceSq(vec3d.xCoord, vec3d.yCoord, vec3d.zCoord) > this.CreeperEntity.getDistanceSqToEntity(this.theEntity)) {

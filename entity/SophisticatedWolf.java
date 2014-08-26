@@ -295,7 +295,7 @@ public class SophisticatedWolf extends EntityWolf implements ISophisticatedWolf 
                 }
             }
             //removed !isBreedingItem() check
-            if (player.getCommandSenderName().equalsIgnoreCase(this.getOwnerName())) {
+            if (player.getCommandSenderName().equalsIgnoreCase(this.func_152113_b())) {
                 //calls super.interact for breeding
                 if (stack != null && isBreedingItem(stack) && getGrowingAge() == 0) {
                     this.aiSit.setSitting(false);
@@ -329,10 +329,10 @@ public class SophisticatedWolf extends EntityWolf implements ISophisticatedWolf 
     public EntityWolf createChild(EntityAgeable entity) {
         SophisticatedWolf wolf = new SophisticatedWolf(this.worldObj);
         wolf.updateSpecies(this.getSpecies()); //setting species to same as parent that spawned it
-        String name = this.getOwnerName();
+        String name = this.func_152113_b();
 
         if (name != null && name.trim().length() > 0) {
-            wolf.setOwner(name);
+            wolf.func_152115_b(name);
             wolf.setTamed(true);
         }
         wolf.setHealth(20); //setting puppy health
