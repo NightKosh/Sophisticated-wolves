@@ -4,7 +4,9 @@ import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.GuiTextField;
 import net.minecraft.entity.passive.EntityTameable;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.ChatAllowedCharacters;
+import net.minecraft.world.WorldServer;
 import org.lwjgl.input.Keyboard;
 import sophisticated_wolves.SophisticatedWolvesMod;
 
@@ -39,6 +41,16 @@ public class GuiEditName extends GuiScreen {
         Keyboard.enableRepeatEvents(false); //unpauses the game
 
         this.pet.setCustomNameTag(this.nameField.getText());
+        if (MinecraftServer.getServer() != null && MinecraftServer.getServer().worldServers != null) {
+            for (WorldServer world : MinecraftServer.getServer().worldServers) {
+                if (world != null) {
+                    EntityTameable serverPet = (EntityTameable) world.getEntityByID(this.pet.getEntityId());
+                    if (serverPet != null) {
+                        serverPet.setCustomNameTag(this.nameField.getText());
+                    }
+                }
+            }
+        }
     }
 
     public void updateScreen() {
