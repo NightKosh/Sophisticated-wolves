@@ -80,18 +80,18 @@ public class RenderSophisticatedWolf extends RenderWolf {
         float f = 1.6F;
         float f1 = 0.01666667F * f;
         float f2 = wolf.getDistanceToEntity(this.renderManager.livingPlayer);
-        float f3 = wolf.isSitting() ? 32F : 64F;
+        float f3 = wolf.isSitting() ? 32 : 64;
         if (f2 < f3) {
             String wolfName = wolf.getCustomNameTag();
             FontRenderer fontRenderer = this.getFontRendererFromRenderManager();
             GL11.glPushMatrix();
-            GL11.glTranslatef((float) d + 0.0F, (float) d1 + 1.5F, (float) d2);
-            GL11.glNormal3f(0.0F, 1.0F, 0.0F);
-            GL11.glRotatef(-this.renderManager.playerViewY, 0.0F, 1.0F, 0.0F);
-            GL11.glRotatef(this.renderManager.playerViewX, 1.0F, 0.0F, 0.0F);
+            GL11.glTranslatef((float) d, (float) d1 + 1.5F, (float) d2);
+            GL11.glNormal3f(0, 1, 0);
+            GL11.glRotatef(-this.renderManager.playerViewY, 0, 1, 0);
+            GL11.glRotatef(this.renderManager.playerViewX, 1, 0, 0);
             GL11.glScalef(-f1, -f1, f1);
             GL11.glDisable(GL11.GL_LIGHTING);
-            GL11.glTranslatef(0.0F, 0.25F / f1, 0.0F);
+            GL11.glTranslatef(0, 0.25F / f1, 0);
             GL11.glDepthMask(false);
             GL11.glEnable(GL11.GL_BLEND);
             GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
@@ -99,11 +99,11 @@ public class RenderSophisticatedWolf extends RenderWolf {
             GL11.glDisable(GL11.GL_TEXTURE_2D);
             tessellator.startDrawingQuads();
             int var16 = fontRenderer.getStringWidth(wolfName) / 2;
-            tessellator.setColorRGBA_F(0.0F, 0.0F, 0.0F, 0.25F);
-            tessellator.addVertex((double) (-var16 - 1), -1.0D, 0.0D);
-            tessellator.addVertex((double) (-var16 - 1), 8.0D, 0.0D);
-            tessellator.addVertex((double) (var16 + 1), 8.0D, 0.0D);
-            tessellator.addVertex((double) (var16 + 1), -1.0D, 0.0D);
+            tessellator.setColorRGBA_F(0, 0, 0, 0.25F);
+            tessellator.addVertex(-var16 - 1, -1, 0);
+            tessellator.addVertex(-var16 - 1, 8, 0);
+            tessellator.addVertex(var16 + 1, 8, 0);
+            tessellator.addVertex(var16 + 1, -1, 0);
             tessellator.draw();
             GL11.glEnable(GL11.GL_TEXTURE_2D);
             if (!wolf.isSitting()) {
@@ -117,17 +117,17 @@ public class RenderSophisticatedWolf extends RenderWolf {
             }
             GL11.glEnable(GL11.GL_LIGHTING);
             GL11.glDisable(GL11.GL_BLEND);
-            GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
+            GL11.glColor4f(1, 1, 1, 1);
             GL11.glPopMatrix();
         }
     }
 
     //changes color of wolf's name based on health
     public int getWolfNameColor(EntityWolf wolf) {
-        if (wolf.getHealth() < 20.0F) {
-            if (wolf.getHealth() < 16.0F) {
-                if (wolf.getHealth() < 11.0F) {
-                    if (wolf.getHealth() < 6.0F) {
+        if (wolf.getHealth() < 20) {
+            if (wolf.getHealth() < 16) {
+                if (wolf.getHealth() < 11) {
+                    if (wolf.getHealth() < 6) {
                         return 0xffff0202;
                     }
                     return 0xfffe5656;
@@ -142,10 +142,10 @@ public class RenderSophisticatedWolf extends RenderWolf {
 
     //same function but with transparency
     public int getSitNameColor(EntityWolf wolf) {
-        if (wolf.getHealth() < 20.0F) {
-            if (wolf.getHealth() < 16.0F) {
-                if (wolf.getHealth() < 11.0F) {
-                    if (wolf.getHealth() < 6.0F) {
+        if (wolf.getHealth() < 20) {
+            if (wolf.getHealth() < 16) {
+                if (wolf.getHealth() < 11) {
+                    if (wolf.getHealth() < 6) {
                         return 0x40ff0202;
                     }
                     return 0x40fe5656;

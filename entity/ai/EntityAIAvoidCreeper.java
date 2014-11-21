@@ -113,7 +113,7 @@ public class EntityAIAvoidCreeper extends EntityAIBase {
      */
     @Override
     public void updateTask() {
-        if (this.theEntity.getDistanceSqToEntity(this.CreeperEntity) < 49D) {
+        if (this.theEntity.getDistanceSqToEntity(this.CreeperEntity) < 49) {
             this.theEntity.getNavigator().setSpeed(this.SprintSpeed);
         } else {
             this.theEntity.getNavigator().setSpeed(this.RegSpeed);

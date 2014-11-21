@@ -97,13 +97,7 @@ public class SophisticatedWolf extends EntityWolf implements ISophisticatedWolf 
         if (!this.getMoveHelper().isUpdating()) {
             this.setSprinting(false);
         } else {
-            double f = this.getMoveHelper().getSpeed();
-
-            if (f == 0.4F) {
-                this.setSprinting(true);
-            } else {
-                this.setSprinting(false);
-            }
+            this.setSprinting(this.getMoveHelper().getSpeed() == 0.4F);
         }
     }
 
@@ -114,9 +108,6 @@ public class SophisticatedWolf extends EntityWolf implements ISophisticatedWolf 
         this.dataWatcher.addObject(22, new Byte((byte) 0)); //species
     }
 
-    /**
-     * (abstract) Protected helper method to write subclass entity data to NBT.
-     */
     @Override
     public void writeEntityToNBT(NBTTagCompound nbtTagCompound) {
         super.writeEntityToNBT(nbtTagCompound);
@@ -124,9 +115,6 @@ public class SophisticatedWolf extends EntityWolf implements ISophisticatedWolf 
         nbtTagCompound.setInteger("Species", this.getSpecies());
     }
 
-    /**
-     * (abstract) Protected helper method to read subclass entity data from NBT.
-     */
     @Override
     public void readEntityFromNBT(NBTTagCompound nbtTagCompound) {
         super.readEntityFromNBT(nbtTagCompound);
@@ -367,7 +355,7 @@ public class SophisticatedWolf extends EntityWolf implements ISophisticatedWolf 
             return false;
         }
         if (itemstack.getItem() instanceof ItemFood) {
-            return this.getHealth() < 20.0F && (((ItemFood) itemstack.getItem()).isWolfsFavoriteMeat() || itemstack.getItem().equals(Items.fish) || itemstack.getItem().equals(Items.cooked_fished));
+            return this.getHealth() < 20 && (((ItemFood) itemstack.getItem()).isWolfsFavoriteMeat() || itemstack.getItem().equals(Items.fish) || itemstack.getItem().equals(Items.cooked_fished));
         } else {
             return itemstack.getItem().equals(SWItems.dogTreat) && getGrowingAge() == 0;
         }
@@ -375,9 +363,9 @@ public class SophisticatedWolf extends EntityWolf implements ISophisticatedWolf 
 
     //checks for creepers nearby
     public boolean CreeperAlert() {
-        List list = this.worldObj.getEntitiesWithinAABB(EntityCreeper.class, this.boundingBox.expand(16D, 4D, 16D));
+        List list = this.worldObj.getEntitiesWithinAABB(EntityCreeper.class, this.boundingBox.expand(16, 4, 16));
         if (!list.isEmpty()) {
-            this.playSound("mob.wolf.growl", getSoundVolume(), (rand.nextFloat() - rand.nextFloat()) * 0.2F + 1.0F);
+            this.playSound("mob.wolf.growl", getSoundVolume(), (rand.nextFloat() - rand.nextFloat()) * 0.2F + 1);
             return true;
         } else {
             return false;
@@ -554,6 +542,4 @@ public class SophisticatedWolf extends EntityWolf implements ISophisticatedWolf 
             }
         }
     }
-
-
 }

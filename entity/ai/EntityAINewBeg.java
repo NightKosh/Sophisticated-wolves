@@ -76,7 +76,7 @@ public class EntityAINewBeg extends EntityAIBase {
      */
     @Override
     public void updateTask() {
-        this.wolf.getLookHelper().setLookPosition(this.player.posX, this.player.posY + (double) this.player.getEyeHeight(), this.player.posZ, 10.0F, (float) this.wolf.getVerticalFaceSpeed());
+        this.wolf.getLookHelper().setLookPosition(this.player.posX, this.player.posY + (double) this.player.getEyeHeight(), this.player.posZ, 10, (float) this.wolf.getVerticalFaceSpeed());
         --this.randomBeg;
     }
 
