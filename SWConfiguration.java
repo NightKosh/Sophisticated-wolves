@@ -20,6 +20,8 @@ public class SWConfiguration {
     public static boolean respawningWolves = true;
     public static boolean customBreeding = true;
     public static boolean nameTagForAnyPets = true;
+    public static boolean immuneToCacti = true;
+    public static boolean isDevEnvironment = false;
     public static boolean logWolfErrors = true;
 
     private SWConfiguration(File configFile) {
@@ -42,6 +44,8 @@ public class SWConfiguration {
         respawningWolves = config.get(Configuration.CATEGORY_GENERAL, "RespawningWolves", true).getBoolean(true);
         customBreeding = config.get(Configuration.CATEGORY_GENERAL, "CustomBreeding", true).getBoolean(true);
         nameTagForAnyPets = config.get(Configuration.CATEGORY_GENERAL, "NameTagForAnyPets", true).getBoolean(true);
+        immuneToCacti = config.get(Configuration.CATEGORY_GENERAL, "ImmuneToCacti", true).getBoolean(true);
+        isDevEnvironment = config.get(Configuration.CATEGORY_GENERAL, "IsDevEnvironment", false).getBoolean(false);
         logWolfErrors = config.get(Configuration.CATEGORY_GENERAL, "LogWolfErrors", true).getBoolean(true);
 
         config.save();

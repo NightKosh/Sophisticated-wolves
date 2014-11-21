@@ -41,7 +41,7 @@ import java.util.List;
  */
 public class SophisticatedWolf extends EntityWolf implements ISophisticatedWolf {
 
-    private static boolean isDebugMode = false;
+    private static boolean isDebugMode = SWConfiguration.isDevEnvironment;
     //New Sophisticated Wolves variables
     public boolean puking;
 
@@ -104,7 +104,6 @@ public class SophisticatedWolf extends EntityWolf implements ISophisticatedWolf 
     @Override
     protected void entityInit() {
         super.entityInit();
-        this.dataWatcher.addObject(21, new String("")); //wolfname
         this.dataWatcher.addObject(22, new Byte((byte) 0)); //species
     }
 
@@ -427,6 +426,15 @@ public class SophisticatedWolf extends EntityWolf implements ISophisticatedWolf 
             ((EntityPlayer) this.getOwner()).addChatComponentMessage(this.func_110142_aN().func_151521_b());
         }
         super.onDeath(damageSource);
+    }
+
+    @Override
+    protected void damageEntity(DamageSource damageSource, float p_70665_2_) {
+        if (SWConfiguration.immuneToCacti && damageSource.equals(DamageSource.cactus)) {
+            return;
+        } else {
+            super.damageEntity(damageSource, p_70665_2_);
+        }
     }
 
     // Reflection
