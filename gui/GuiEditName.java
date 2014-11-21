@@ -4,11 +4,10 @@ import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.GuiTextField;
 import net.minecraft.entity.passive.EntityTameable;
-import net.minecraft.server.MinecraftServer;
-import net.minecraft.util.ChatAllowedCharacters;
-import net.minecraft.world.WorldServer;
 import org.lwjgl.input.Keyboard;
+import sophisticated_wolves.MessageHandler;
 import sophisticated_wolves.SophisticatedWolvesMod;
+import sophisticated_wolves.packets.PetNameMessageToServer;
 
 /**
  * Sophisticated Wolves
@@ -26,6 +25,7 @@ public class GuiEditName extends GuiScreen {
         this.pet = pet;
     }
 
+    @Override
     public void initGui() {
         this.buttonList.clear();
         super.initGui();
@@ -37,41 +37,32 @@ public class GuiEditName extends GuiScreen {
         this.nameField.setMaxStringLength(12); //string length
     }
 
+    @Override
     public void onGuiClosed() {
         Keyboard.enableRepeatEvents(false); //unpauses the game
-
-        this.pet.setCustomNameTag(this.nameField.getText());
-        if (MinecraftServer.getServer() != null && MinecraftServer.getServer().worldServers != null) {
-            for (WorldServer world : MinecraftServer.getServer().worldServers) {
-                if (world != null) {
-                    EntityTameable serverPet = (EntityTameable) world.getEntityByID(this.pet.getEntityId());
-                    if (serverPet != null) {
-                        serverPet.setCustomNameTag(this.nameField.getText());
-                    }
-                }
-            }
-        }
     }
 
+    @Override
     public void updateScreen() {
         super.updateScreen();
         this.nameField.updateCursorCounter();
     }
 
     //keys and input
+    @Override
     protected void actionPerformed(GuiButton guibutton) {
-        if (!guibutton.enabled) {
-            return;
-        }
         if (guibutton.id == 0) {
+            MessageHandler.networkWrapper.sendToServer(new PetNameMessageToServer(this.pet, this.nameField.getText()));
             this.mc.displayGuiScreen(null);
         }
     }
 
+    @Override
     protected void keyTyped(char c, int i) {
         this.nameField.textboxKeyTyped(c, i);
     }
 
+    @Override
     public void drawScreen(int i, int j, float f) {
         this.drawDefaultBackground();
         super.drawScreen(i, j, f);
@@ -80,5 +71,4 @@ public class GuiEditName extends GuiScreen {
             this.nameField.drawTextBox();
         }
     }
-
 }
