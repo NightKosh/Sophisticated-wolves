@@ -430,11 +430,11 @@ public class SophisticatedWolf extends EntityWolf implements ISophisticatedWolf 
     }
 
     @Override
-    protected void damageEntity(DamageSource damageSource, float p_70665_2_) {
+    public boolean attackEntityFrom(DamageSource damageSource, float p_70097_2_) {
         if (SWConfiguration.immuneToCacti && damageSource.equals(DamageSource.cactus)) {
-            return;
+            return false;
         } else {
-            super.damageEntity(damageSource, p_70665_2_);
+            return super.attackEntityFrom(damageSource, p_70097_2_);
         }
     }
 
