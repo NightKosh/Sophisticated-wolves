@@ -3,6 +3,7 @@ package sophisticated_wolves.entity;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityAgeable;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.ai.*;
@@ -434,6 +435,13 @@ public class SophisticatedWolf extends EntityWolf implements ISophisticatedWolf 
             return;
         } else {
             super.damageEntity(damageSource, p_70665_2_);
+        }
+    }
+
+    @Override
+    public void applyEntityCollision(Entity entity) {
+        if (!(entity instanceof SophisticatedWolf)) {
+            super.applyEntityCollision(entity);
         }
     }
 
