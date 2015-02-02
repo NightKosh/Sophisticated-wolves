@@ -8,6 +8,8 @@ gradlew.bat
 .idea
 .gradle
 eclipse
+gradle
+build
 
 # Mobile Tools for Java (J2ME)
 .mtj.tmp/
