@@ -1,8 +1,8 @@
 package sophisticated_wolves.proxy;
 
-import cpw.mods.fml.client.FMLClientHandler;
-import cpw.mods.fml.client.registry.RenderingRegistry;
-import cpw.mods.fml.common.registry.LanguageRegistry;
+import net.minecraftforge.fml.client.FMLClientHandler;
+import net.minecraftforge.fml.client.registry.RenderingRegistry;
+import net.minecraftforge.fml.common.registry.LanguageRegistry;
 import net.minecraft.client.model.ModelWolf;
 import net.minecraft.entity.passive.EntityTameable;
 import org.apache.commons.lang3.StringUtils;
@@ -25,8 +25,7 @@ public class ClientProxy extends CommonProxy {
     }
 
     private void registerMobsRenderers() {
-        // zombie dog
-        RenderingRegistry.registerEntityRenderingHandler(SophisticatedWolf.class, new RenderSophisticatedWolf(new ModelWolf(), new ModelWolf()));
+        RenderingRegistry.registerEntityRenderingHandler(SophisticatedWolf.class, new RenderSophisticatedWolf(new ModelWolf()));
     }
 
     @Override

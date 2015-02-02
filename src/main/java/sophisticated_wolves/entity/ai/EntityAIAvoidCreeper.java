@@ -17,17 +17,16 @@ import java.util.List;
  * @license Lesser GNU Public License v3 (http://www.gnu.org/licenses/lgpl.html)
  */
 public class EntityAIAvoidCreeper extends EntityAIBase {
-    /**
-     * The entity we are attached to
-     */
-    private EntityCreature theEntity;
-    private double RegSpeed;
-    private double SprintSpeed;
-    private EntityCreeper CreeperEntity;
-    private float Distance;
-    private float minDist;
-    private PathEntity pathEntity;
-    private float listSize;
+
+    protected EntityCreature entity;
+    protected double regSpeed;
+    protected double sprintSpeed;
+    protected EntityCreeper creeper;
+    protected int distance;
+    protected int minDistToCharged;
+    protected int minDist;
+    protected PathEntity pathEntity;
+    protected float listSize;
 
     /**
      * The PathNavigate of our entity
@@ -38,12 +37,13 @@ public class EntityAIAvoidCreeper extends EntityAIBase {
      * The class of the entity we should avoid
      */
 
-    public EntityAIAvoidCreeper(EntityCreature entity, float par2, float par3, double par4, double par5) {
-        this.theEntity = entity;
-        this.Distance = par2;
-        this.minDist = par3;
-        this.RegSpeed = par4;
-        this.SprintSpeed = par5;
+    public EntityAIAvoidCreeper(EntityCreature entity, int distance, int minDistToExplode, int minDist, double regSpeed, double sprintSpeed) {
+        this.entity = entity;
+        this.distance = distance;
+        this.minDistToCharged = minDistToExplode;
+        this.minDist = minDist;
+        this.regSpeed = regSpeed;
+        this.sprintSpeed = sprintSpeed;
         this.entityPathNavigate = entity.getNavigator();
         this.setMutexBits(1);
     }
@@ -53,29 +53,43 @@ public class EntityAIAvoidCreeper extends EntityAIBase {
      */
     @Override
     public boolean shouldExecute() {
-        List list = this.theEntity.worldObj.getEntitiesWithinAABB(EntityCreeper.class, this.theEntity.boundingBox.expand(this.Distance, 3D, this.Distance));
+        List list = this.entity.worldObj.getEntitiesWithinAABB(EntityCreeper.class, this.entity.getEntityBoundingBox().expand(this.distance, 3, this.distance));
 
         if (list.isEmpty()) {
             return false;
         }
 
-        this.CreeperEntity = null;
+        this.creeper = null;
         this.listSize = list.size();
 
         for (int cr = 0; cr < this.listSize; cr++) {
-            this.CreeperEntity = (EntityCreeper) list.get(cr);
+            this.creeper = (EntityCreeper) list.get(cr);
 
-            if (this.theEntity.getDistanceSqToEntity(CreeperEntity) < this.minDist * this.minDist) {
-                if (this.CreeperEntity.getCreeperState() > 0) {
-                    Vec3 vec3d = RandomPositionGenerator.findRandomTargetBlockAwayFrom(this.theEntity, 16, 7, Vec3.createVectorHelper(this.CreeperEntity.posX, this.CreeperEntity.posY, this.CreeperEntity.posZ));
+            if (this.entity.getDistanceSqToEntity(creeper) < this.minDistToCharged * this.minDistToCharged) {
+                if (this.creeper.getCreeperState() > 0) {
+                    Vec3 vec3d = RandomPositionGenerator.findRandomTargetBlockAwayFrom(this.entity, 16, 7, new Vec3(this.creeper.posX, this.creeper.posY, this.creeper.posZ));
 
                     if (vec3d != null) {
-                        if (this.CreeperEntity.getDistanceSq(vec3d.xCoord, vec3d.yCoord, vec3d.zCoord) > this.CreeperEntity.getDistanceSqToEntity(this.theEntity)) {
+                        if (this.creeper.getDistanceSq(vec3d.xCoord, vec3d.yCoord, vec3d.zCoord) > this.creeper.getDistanceSqToEntity(this.entity)) {
                             this.pathEntity = this.entityPathNavigate.getPathToXYZ(vec3d.xCoord, vec3d.yCoord, vec3d.zCoord);
 
                             if (this.pathEntity != null) {
                                 return pathEntity.isDestinationSame(vec3d);
                             }
+                        }
+                    }
+                }
+            }
+
+            if (this.entity.getDistanceSqToEntity(creeper) < this.minDist * this.minDist) {
+                Vec3 vec3d = RandomPositionGenerator.findRandomTargetBlockAwayFrom(this.entity, this.minDist, this.minDist, new Vec3(this.creeper.posX, this.creeper.posY, this.creeper.posZ));
+
+                if (vec3d != null) {
+                    if (this.creeper.getDistanceSq(vec3d.xCoord, vec3d.yCoord, vec3d.zCoord) > this.creeper.getDistanceSqToEntity(this.entity)) {
+                        this.pathEntity = this.entityPathNavigate.getPathToXYZ(vec3d.xCoord, vec3d.yCoord, vec3d.zCoord);
+
+                        if (this.pathEntity != null) {
+                            return pathEntity.isDestinationSame(vec3d);
                         }
                     }
                 }
@@ -97,7 +111,7 @@ public class EntityAIAvoidCreeper extends EntityAIBase {
      */
     @Override
     public void startExecuting() {
-        this.entityPathNavigate.setPath(this.pathEntity, RegSpeed);
+        this.entityPathNavigate.setPath(this.pathEntity, regSpeed);
     }
 
     /**
@@ -105,7 +119,7 @@ public class EntityAIAvoidCreeper extends EntityAIBase {
      */
     @Override
     public void resetTask() {
-        this.CreeperEntity = null;
+        this.creeper = null;
     }
 
     /**
@@ -113,10 +127,10 @@ public class EntityAIAvoidCreeper extends EntityAIBase {
      */
     @Override
     public void updateTask() {
-        if (this.theEntity.getDistanceSqToEntity(this.CreeperEntity) < 49) {
-            this.theEntity.getNavigator().setSpeed(this.SprintSpeed);
+        if (this.entity.getDistanceSqToEntity(this.creeper) < 49) {
+            this.entity.getNavigator().setSpeed(this.sprintSpeed);
         } else {
-            this.theEntity.getNavigator().setSpeed(this.RegSpeed);
+            this.entity.getNavigator().setSpeed(this.regSpeed);
         }
     }
 }

@@ -22,11 +22,11 @@ public class EntityAIAvoidFire extends EntityAIBase {
     private double maxSpeed;
     private World theWorld;
 
-    public EntityAIAvoidFire(EntityCreature entity, double par2, double par3) {
+    public EntityAIAvoidFire(EntityCreature entity, double minSpeed, double maxSpeed) {
         this.entity = entity;
         this.moveSpeed = this.entity.getMoveHelper().getSpeed();
-        this.minSpeed = par2;
-        this.maxSpeed = par3;
+        this.minSpeed = minSpeed;
+        this.maxSpeed = maxSpeed;
         this.theWorld = this.entity.worldObj;
         this.setMutexBits(1);
     }
@@ -48,7 +48,7 @@ public class EntityAIAvoidFire extends EntityAIBase {
             this.xPath = vec3d.xCoord;
             this.yPath = vec3d.yCoord;
             this.zPath = vec3d.zCoord;
-            return this.theWorld.func_147470_e(this.entity.boundingBox.contract(0.001D, 0.001D, 0.001D));
+            return this.theWorld.func_147470_e(this.entity.getEntityBoundingBox().contract(0.001D, 0.001D, 0.001D));
         }
     }
 

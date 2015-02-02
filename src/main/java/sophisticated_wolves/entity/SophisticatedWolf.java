@@ -1,8 +1,6 @@
 package sophisticated_wolves.entity;
 
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityAgeable;
 import net.minecraft.entity.EntityLivingBase;
@@ -17,21 +15,22 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.FurnaceRecipes;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.potion.Potion;
+import net.minecraft.util.BlockPos;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraft.world.biome.BiomeGenForest;
 import net.minecraft.world.biome.WorldChunkManager;
-import org.apache.logging.log4j.Level;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import sophisticated_wolves.SWConfiguration;
 import sophisticated_wolves.SWItems;
-import sophisticated_wolves.SophisticatedWolvesMod;
 import sophisticated_wolves.api.ISophisticatedWolf;
 import sophisticated_wolves.entity.ai.*;
 import sophisticated_wolves.item.ItemDogTag;
 
-import java.lang.reflect.Field;
 import java.util.List;
 
 /**
@@ -42,7 +41,6 @@ import java.util.List;
  */
 public class SophisticatedWolf extends EntityWolf implements ISophisticatedWolf {
 
-    private static boolean isDebugMode = SWConfiguration.isDevEnvironment;
     //New Sophisticated Wolves variables
     public boolean puking;
 
@@ -81,7 +79,7 @@ public class SophisticatedWolf extends EntityWolf implements ISophisticatedWolf 
             }
         }
 
-        this.tasks.addTask(3, new EntityAIAvoidCreeper(this, 8, 6, 1, 1.4)); //new behavior
+        this.tasks.addTask(3, new EntityAIAvoidCreeper(this, 8, 6, 3, 1, 1.4)); //new behavior
         this.tasks.addTask(7, new EntityAIShake(this)); //behavior for shaking
         this.tasks.addTask(10, new EntityAIAttackCancel(this)); //new behavior
         this.tasks.addTask(22, new EntityAIMoveCancel(this, 6));
@@ -191,16 +189,16 @@ public class SophisticatedWolf extends EntityWolf implements ISophisticatedWolf 
      */
     @Override
     public void onUpdate() {        //Checks if wolf is burning and not currently standing in fire or if wolf is poison
-        if (!this.getField_70928_h() &&
-                ((this.isBurning() && !this.worldObj.func_147470_e(this.boundingBox.contract(0.001, 0.001, 0.001))) ||
+        if (!this.isWet &&
+                ((this.isBurning() && !this.worldObj.func_147470_e(this.getEntityBoundingBox().contract(0.001, 0.001, 0.001))) ||
                         ((this.isPotionActive(Potion.poison) || this.isPotionActive(Potion.wither))))) {
-            this.setShaking(true);
-            this.setTimeWolfIsShaking(0);
-            this.setPrevTimeWolfIsShaking(0);
+            this.isShaking = true;
+            this.timeWolfIsShaking = 0;
+            this.prevTimeWolfIsShaking = 0;
         }
 
-        float timeWolfIsShaking = this.timeWolfIsShaking();
-        if (!this.isWet() && this.getField_70928_h()) {
+        float timeWolfIsShaking = this.timeWolfIsShaking;
+        if (!this.isWet() && this.isWet) {
             if (timeWolfIsShaking == 0) {
                 //checks if burning/poisoned/wet and sets variables
                 if (this.isBurning()) {
@@ -212,7 +210,7 @@ public class SophisticatedWolf extends EntityWolf implements ISophisticatedWolf 
                 }
             }
 
-            if (this.prevTimeWolfIsShaking() >= 1.95F) {
+            if (this.prevTimeWolfIsShaking >= 1.95F) {
                 //extinguishing added
                 if (this.isBurning()) {
                     this.extinguish();
@@ -228,13 +226,13 @@ public class SophisticatedWolf extends EntityWolf implements ISophisticatedWolf 
                     this.playTameEffect(false); //generates smoke particles while shaking
                 }
                 if (!this.puking) {
-                    float var1 = (float) this.boundingBox.minY;
+                    float var1 = (float) this.getEntityBoundingBox().minY;
                     int var2 = (int) (MathHelper.sin((timeWolfIsShaking - 0.4F) * (float) Math.PI) * 7);
 
                     for (int var3 = 0; var3 < var2; ++var3) {
                         float var4 = (this.rand.nextFloat() * 2 - 1) * this.width * 0.5F;
                         float var5 = (this.rand.nextFloat() * 2 - 1) * this.width * 0.5F;
-                        this.worldObj.spawnParticle("splash", this.posX + (double) var4, (double) (var1 + 0.8F), this.posZ + (double) var5, this.motionX, this.motionY, this.motionZ);
+                        this.worldObj.spawnParticle(EnumParticleTypes.WATER_SPLASH, this.posX + var4, var1 + 0.8F, this.posZ + var5, this.motionX, this.motionY, this.motionZ);
                     }
                 }
             }
@@ -255,20 +253,20 @@ public class SophisticatedWolf extends EntityWolf implements ISophisticatedWolf 
                 if (stack.getItem() instanceof ItemFood) {
                     ItemFood foodItem = (ItemFood) stack.getItem();
                     //checks static FurnaceRecipes for cooked version of held food
-                    ItemStack cookedStack = FurnaceRecipes.smelting().getSmeltingResult(stack);
+                    ItemStack cookedStack = FurnaceRecipes.instance().getSmeltingResult(stack);
                     if (cookedStack != null && cookedStack.getItem() instanceof ItemFood) {
                         ItemFood foodCooked = (ItemFood) cookedStack.getItem();
-                        if ((float) foodCooked.func_150905_g(cookedStack) > (float) foodItem.func_150905_g(stack)) {
+                        if ((float) foodCooked.getHealAmount(cookedStack) > (float) foodItem.getHealAmount(stack)) {
                             foodItem = (ItemFood) cookedStack.getItem(); //sets ID to cooked version of food if it exists
                         }
                     }
 
-                    if ((stack.getItem().equals(Items.cooked_fished) || stack.getItem().equals(Items.fish)) && this.getHealth() < 20) {
+                    if ((stack.getItem().equals(Items.cooked_fish) || stack.getItem().equals(Items.fish)) && this.getHealth() < 20) {
                         if (!player.capabilities.isCreativeMode) {
                             --stack.stackSize;
                         }
 
-                        this.heal((float) foodItem.func_150905_g(stack));
+                        this.heal((float) foodItem.getHealAmount(stack));
                         this.playTameEffect(false); //generates smoke particles on feeding
 
                         if (stack.stackSize <= 0) {
@@ -283,7 +281,8 @@ public class SophisticatedWolf extends EntityWolf implements ISophisticatedWolf 
                 }
             }
             //removed !isBreedingItem() check
-            if (player.getCommandSenderName().equalsIgnoreCase(this.func_152113_b())) {
+            //TODO
+            if (this.isOwner(player) && !this.worldObj.isRemote) {
                 //calls super.interact for breeding
                 if (stack != null && isBreedingItem(stack) && getGrowingAge() == 0) {
                     this.aiSit.setSitting(false);
@@ -317,10 +316,10 @@ public class SophisticatedWolf extends EntityWolf implements ISophisticatedWolf 
     public EntityWolf createChild(EntityAgeable entity) {
         SophisticatedWolf wolf = new SophisticatedWolf(this.worldObj);
         wolf.updateSpecies(this.getSpecies()); //setting species to same as parent that spawned it
-        String name = this.func_152113_b();
+        String ownerId = this.getOwnerId();
 
-        if (name != null && name.trim().length() > 0) {
-            wolf.func_152115_b(name);
+        if (ownerId != null && ownerId.trim().length() > 0) {
+            wolf.setOwnerId(ownerId);
             wolf.setTamed(true);
         }
         wolf.setHealth(20); //setting puppy health
@@ -355,7 +354,8 @@ public class SophisticatedWolf extends EntityWolf implements ISophisticatedWolf 
             return false;
         }
         if (itemstack.getItem() instanceof ItemFood) {
-            return this.getHealth() < 20 && (((ItemFood) itemstack.getItem()).isWolfsFavoriteMeat() || itemstack.getItem().equals(Items.fish) || itemstack.getItem().equals(Items.cooked_fished));
+            return this.getHealth() < 20 && (((ItemFood) itemstack.getItem()).isWolfsFavoriteMeat() ||
+                    itemstack.getItem().equals(Items.fish) || itemstack.getItem().equals(Items.cooked_fish));
         } else {
             return itemstack.getItem().equals(SWItems.dogTreat) && getGrowingAge() == 0;
         }
@@ -363,7 +363,7 @@ public class SophisticatedWolf extends EntityWolf implements ISophisticatedWolf 
 
     //checks for creepers nearby
     public boolean CreeperAlert() {
-        List list = this.worldObj.getEntitiesWithinAABB(EntityCreeper.class, this.boundingBox.expand(16, 4, 16));
+        List list = this.worldObj.getEntitiesWithinAABB(EntityCreeper.class, this.getEntityBoundingBox().expand(16, 4, 16));
         if (!list.isEmpty()) {
             this.playSound("mob.wolf.growl", getSoundVolume(), (rand.nextFloat() - rand.nextFloat()) * 0.2F + 1);
             return true;
@@ -387,11 +387,9 @@ public class SophisticatedWolf extends EntityWolf implements ISophisticatedWolf 
      */
     @Override
     public int setSpecies() {
-        int wi = MathHelper.floor_double(this.posX);
-        int wk = MathHelper.floor_double(this.posZ);
         WorldChunkManager worldchunkmanager = this.worldObj.getWorldChunkManager();
         if (worldchunkmanager != null) {
-            BiomeGenBase biomegenbase = worldchunkmanager.getBiomeGenAt(wi, wk);
+            BiomeGenBase biomegenbase = this.worldObj.getBiomeGenForCoords(new BlockPos(this));
             if (biomegenbase instanceof BiomeGenForest) {
                 if (this.rand.nextInt(7) == 0) {
                     return 4;
@@ -418,13 +416,13 @@ public class SophisticatedWolf extends EntityWolf implements ISophisticatedWolf 
      */
     @Override
     public void updateSpecies(int species) {
-        this.dataWatcher.updateObject(22, Byte.valueOf((byte) species));
+        this.dataWatcher.updateObject(22, (byte) species);
     }
 
     @Override
     public void onDeath(DamageSource damageSource) {
         if (isTamed() && this.getOwner() != null) {
-            ((EntityPlayer) this.getOwner()).addChatComponentMessage(this.func_110142_aN().func_151521_b());
+            ((EntityPlayer) this.getOwner()).addChatComponentMessage(this.getCombatTracker().getDeathMessage());
         }
         super.onDeath(damageSource);
     }
@@ -443,120 +441,6 @@ public class SophisticatedWolf extends EntityWolf implements ISophisticatedWolf 
     public void applyEntityCollision(Entity entity) {
         if (!(entity instanceof SophisticatedWolf)) {
             super.applyEntityCollision(entity);
-        }
-    }
-
-    // Reflection
-    public boolean isShaking() {
-        Object value = getPrivateFieldValue(isDebugMode ? "isShaking" : "field_70925_g");
-        if (value == null) {
-            if (SWConfiguration.logWolfErrors) {
-                SophisticatedWolvesMod.logger.log(Level.ERROR, "isShaking is null!!!");
-            }
-            return false;
-        } else {
-            return (Boolean) value;
-        }
-    }
-
-    public void setShaking(boolean isShaking) {
-        setPrivateFieldValue(isDebugMode ? "isShaking" : "field_70925_g", isShaking);
-    }
-
-    public boolean getField_70928_h() {
-        Object value = getPrivateFieldValue("field_70928_h");
-        if (value == null) {
-            if (SWConfiguration.logWolfErrors) {
-                SophisticatedWolvesMod.logger.log(Level.ERROR, "field_70928_h is null!!!");
-            }
-            return false;
-        } else {
-            return (Boolean) value;
-        }
-    }
-
-    public float timeWolfIsShaking() {
-        Object value = getPrivateFieldValue(isDebugMode ? "timeWolfIsShaking" : "field_70929_i");
-        if (value == null) {
-            if (SWConfiguration.logWolfErrors) {
-                SophisticatedWolvesMod.logger.log(Level.ERROR, "timeWolfIsShaking is null!!!");
-            }
-            return 0;
-        } else {
-            return (Float) value;
-        }
-    }
-
-    public void setTimeWolfIsShaking(float time) {
-        setPrivateFieldValue(isDebugMode ? "timeWolfIsShaking" : "field_70929_i", time);
-    }
-
-    public float prevTimeWolfIsShaking() {
-        Object value = getPrivateFieldValue(isDebugMode ? "prevTimeWolfIsShaking" : "field_70927_j");
-        if (value == null) {
-            if (SWConfiguration.logWolfErrors) {
-                SophisticatedWolvesMod.logger.log(Level.ERROR, "prevTimeWolfIsShaking is null!!!");
-            }
-            return 0;
-        } else {
-            return (Float) value;
-        }
-    }
-
-    public void setPrevTimeWolfIsShaking(float time) {
-        setPrivateFieldValue(isDebugMode ? "prevTimeWolfIsShaking" : "field_70927_j", time);
-    }
-
-    private Object getPrivateFieldValue(String fieldName) {
-        Field field = getField(this.getClass().getSuperclass(), fieldName);
-        if (field == null) {
-            if (SWConfiguration.logWolfErrors) {
-                SophisticatedWolvesMod.logger.log(Level.ERROR, "Can't get private field " + fieldName);
-            }
-            return null;
-        }
-        try {
-            field.setAccessible(true);
-            return field.get(this);
-        } catch (IllegalAccessException e) {
-            if (SWConfiguration.logWolfErrors) {
-                SophisticatedWolvesMod.logger.log(Level.ERROR, "IllegalAccessException " + fieldName);
-            }
-            return null;
-        }
-    }
-
-    private void setPrivateFieldValue(String fieldName, Object value) {
-        Field field = getField(this.getClass().getSuperclass(), fieldName);
-        if (field == null) {
-            if (SWConfiguration.logWolfErrors) {
-                SophisticatedWolvesMod.logger.log(Level.ERROR, "Can't set private field " + fieldName);
-            }
-            return;
-        }
-        try {
-            field.setAccessible(true);
-            field.set(this, value);
-        } catch (IllegalAccessException e) {
-            if (SWConfiguration.logWolfErrors) {
-                SophisticatedWolvesMod.logger.log(Level.ERROR, "IllegalAccessException " + fieldName);
-            }
-        }
-    }
-
-    private static Field getField(Class clazz, String fieldName) {
-        try {
-            return clazz.getDeclaredField(fieldName);
-        } catch (NoSuchFieldException e) {
-            Class superClass = clazz.getSuperclass();
-            if (superClass == null) {
-                if (SWConfiguration.logWolfErrors) {
-                    SophisticatedWolvesMod.logger.log(Level.ERROR, "Can't get field " + fieldName);
-                }
-                return null;
-            } else {
-                return getField(superClass, fieldName);
-            }
         }
     }
 }

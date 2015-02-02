@@ -6,7 +6,6 @@ import net.minecraft.entity.passive.EntityTameable;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import sophisticated_wolves.Resources;
 import sophisticated_wolves.SWConfiguration;
 import sophisticated_wolves.SophisticatedWolvesMod;
 import sophisticated_wolves.entity.SophisticatedWolf;
@@ -22,7 +21,6 @@ public class ItemDogTag extends Item {
     public ItemDogTag() {
         super();
         setUnlocalizedName("dogtag");
-        setTextureName(Resources.DOG_TAG);
         setCreativeTab(CreativeTabs.tabMisc);
     }
 
@@ -42,7 +40,7 @@ public class ItemDogTag extends Item {
     }
 
     private static boolean setName(EntityTameable pet, ItemStack stack, EntityPlayer player) {
-        if (pet.isTamed() && pet.func_152113_b().equals(player.getUniqueID().toString())) {
+        if (pet.isTamed() && pet.getOwnerId().equals(player.getUniqueID().toString())) {
 
             if (player.worldObj.isRemote) {
                 SophisticatedWolvesMod.proxy.openPetGui(pet);

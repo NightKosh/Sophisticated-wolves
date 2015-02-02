@@ -1,14 +1,14 @@
 package sophisticated_wolves.packets;
 
-import cpw.mods.fml.common.network.ByteBufUtils;
-import cpw.mods.fml.common.network.simpleimpl.IMessage;
-import cpw.mods.fml.common.network.simpleimpl.IMessageHandler;
-import cpw.mods.fml.common.network.simpleimpl.MessageContext;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.passive.EntityTameable;
 import net.minecraft.world.World;
 import net.minecraftforge.common.DimensionManager;
+import net.minecraftforge.fml.common.network.ByteBufUtils;
+import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
+import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
+import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 
 /**
  * GraveStone mod
@@ -28,7 +28,7 @@ public class PetNameMessageToServer implements IMessage, IMessageHandler<PetName
 
     public PetNameMessageToServer(EntityTameable entity, String text) {
         this.playerID = entity.getEntityId();
-        this.dimensionID = entity.worldObj.provider.dimensionId;
+        this.dimensionID = entity.worldObj.provider.getDimensionId();
         this.text = text;
     }
 

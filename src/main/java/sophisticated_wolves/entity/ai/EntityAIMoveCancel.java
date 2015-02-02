@@ -13,13 +13,13 @@ import net.minecraft.pathfinding.PathNavigate;
  * @license Lesser GNU Public License v3 (http://www.gnu.org/licenses/lgpl.html)
  */
 public class EntityAIMoveCancel extends EntityAIBase {
-    private EntityTameable thePet;
+    private EntityTameable pet;
     private PathNavigate petPathfinder;
-    private EntityPlayer thePlayer;
+    private EntityPlayer player;
     private float dist;
 
     public EntityAIMoveCancel(EntityTameable entity, float par2) {
-        this.thePet = entity;
+        this.pet = entity;
         this.petPathfinder = entity.getNavigator();
         this.dist = par2;
         this.setMutexBits(1);
@@ -30,43 +30,38 @@ public class EntityAIMoveCancel extends EntityAIBase {
      */
     @Override
     public boolean shouldExecute() {
-        if (!this.thePet.isTamed()) {
+        if (!this.pet.isTamed()) {
             return false;
         }
 
-        EntityLivingBase owner = this.thePet.getOwner();
+        EntityLivingBase owner = (EntityLivingBase) this.pet.getOwner();
         if (owner == null) {
             return false;
         }
 
-        if (this.thePet.isSitting()) {
+        if (this.pet.isSitting()) {
             return false;
         }
 
-        if (!this.thePet.onGround) {
+        if (!this.pet.onGround) {
             return false;
         }
 
-        if (this.thePet.getEntityToAttack() != null) {
+        if (this.pet.getAttackTarget() != null) {
             return false;
         }
 
-        if (this.thePet.isInLove()) {
+        if (this.pet.isInLove()) {
             return false;
         }
 
-        if (this.thePet.getDistanceSqToEntity(owner) > (double) (dist * dist * 4)) {
+        if (this.pet.getDistanceSqToEntity(owner) > (double) (dist * dist * 4)) {
             return false;
         }
 
         if (owner instanceof EntityPlayer) {
-            this.thePlayer = (EntityPlayer) owner;
-
-            if (this.thePlayer.isSwingInProgress || this.thePlayer.isUsingItem()) {
-                return true;
-            } else {
-                return false;
-            }
+            this.player = (EntityPlayer) owner;
+            return this.player.isSwingInProgress || this.player.isUsingItem();
         }
         return false;
     }
@@ -76,7 +71,7 @@ public class EntityAIMoveCancel extends EntityAIBase {
      */
     @Override
     public boolean continueExecuting() {
-        return (this.thePet.getEntityToAttack() == null) && (this.thePlayer.isSwingInProgress || this.thePlayer.isUsingItem()) && !this.thePet.isSitting() && !this.thePet.isInLove();
+        return (this.pet.getAttackTarget() == null) && (this.player.isSwingInProgress || this.player.isUsingItem()) && !this.pet.isSitting() && !this.pet.isInLove();
     }
 
     /**

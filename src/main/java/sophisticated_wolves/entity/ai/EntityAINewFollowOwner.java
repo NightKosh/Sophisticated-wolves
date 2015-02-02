@@ -1,10 +1,11 @@
 package sophisticated_wolves.entity.ai;
 
-import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.ai.EntityAIFollowOwner;
 import net.minecraft.entity.passive.EntityTameable;
+import net.minecraft.util.BlockPos;
 import net.minecraft.util.MathHelper;
 
 /**
@@ -23,7 +24,7 @@ public class EntityAINewFollowOwner extends EntityAIFollowOwner {
         super(entity, speed, par4, par5);
 
         this.pet = entity;
-        this.owner = this.pet.getOwner();
+        this.owner = (EntityLivingBase) this.pet.getOwner();
         this.speed = speed;
     }
 
@@ -61,15 +62,16 @@ public class EntityAINewFollowOwner extends EntityAIFollowOwner {
         --this.tick;
         if (!this.pet.isSitting() && this.tick <= 0) {
             this.tick = 10;
-            if (!this.pet.getNavigator().tryMoveToEntityLiving(this.owner, this.speed) && !this.pet.getLeashed() && this.pet.getDistanceSqToEntity(this.owner) >= 144.0D) {
+            if (!this.pet.getNavigator().tryMoveToEntityLiving(this.owner, this.speed) && !this.pet.getLeashed() && this.pet.getDistanceSqToEntity(this.owner) >= 144) {
                 int xPos = MathHelper.floor_double(this.owner.posX) - 2;
                 int zPos = MathHelper.floor_double(this.owner.posZ) - 2;
-                int yPos = MathHelper.floor_double(this.owner.boundingBox.minY);
+                int yPos = MathHelper.floor_double(this.owner.getEntityBoundingBox().minY);
 
                 for (int dX = 0; dX <= 4; ++dX) {
                     for (int dZ = 0; dZ <= 4; ++dZ) {
-                        if ((dX < 1 || dZ < 1 || dX > 3 || dZ > 3) && this.isTeleportSafe(xPos + dX, yPos - 1, zPos + dZ) && this.isAirSafe(xPos + dX, yPos, zPos + dZ) && this.isAirSafe(xPos + dX, yPos + 1, zPos + dZ)) {
-                            this.pet.setLocationAndAngles((double) ((float) (xPos + dX) + 0.5F), (double) yPos, (double) ((float) (zPos + dZ) + 0.5F), this.pet.rotationYaw, this.pet.rotationPitch);
+                        if ((dX < 1 || dZ < 1 || dX > 3 || dZ > 3) && this.isTeleportSafe(xPos + dX, yPos - 1, zPos + dZ) &&
+                                this.isAirSafe(xPos + dX, yPos, zPos + dZ) && this.isAirSafe(xPos + dX, yPos + 1, zPos + dZ)) {
+                            this.pet.setLocationAndAngles(xPos + dX + 0.5F, yPos, zPos + dZ + 0.5F, this.pet.rotationYaw, this.pet.rotationPitch);
                             this.pet.getNavigator().clearPathEntity();
                             return;
                         }
@@ -80,11 +82,11 @@ public class EntityAINewFollowOwner extends EntityAIFollowOwner {
     }
 
     private boolean isTeleportSafe(int x, int y, int z) {
-        Block block = pet.worldObj.getBlock(x, y, z);
-        if (block != null) {
-            Material material = block.getMaterial();
-            if ((pet.worldObj.isBlockNormalCubeDefault(x, y, z, false) || material.equals(Material.ice) || material.equals(Material.leaves) || material.equals(Material.glass)) &&
-                    !material.equals(Material.cactus) && !material.equals(material.plants)) {
+        IBlockState blockState = pet.worldObj.getBlockState(new BlockPos(x, y, z));
+        if (blockState != null) {
+            Material material = blockState.getBlock().getMaterial();
+            if ((blockState.getBlock().isNormalCube() || material.equals(Material.ice) || material.equals(Material.leaves) ||
+                    material.equals(Material.glass)) && !material.equals(Material.cactus) && !material.equals(material.plants)) {
                 return true;
             }
         }
@@ -92,10 +94,10 @@ public class EntityAINewFollowOwner extends EntityAIFollowOwner {
     }
 
     private boolean isAirSafe(int x, int y, int z) {
-        Block block = pet.worldObj.getBlock(x, y, z);
-        if (block != null) {
-            Material material = block.getMaterial();
-            if (!pet.worldObj.isBlockNormalCubeDefault(x, y, z, false) && !material.equals(Material.water) && !material.equals(Material.lava) &&
+        IBlockState blockState = pet.worldObj.getBlockState(new BlockPos(x, y, z));
+        if (blockState != null) {
+            Material material = blockState.getBlock().getMaterial();
+            if (!blockState.getBlock().isNormalCube() && !material.equals(Material.water) && !material.equals(Material.lava) &&
                     !material.equals(Material.fire) && !material.equals(Material.leaves) && !material.equals(Material.glass) && !material.equals(Material.ice)) {
                 return true;
             }

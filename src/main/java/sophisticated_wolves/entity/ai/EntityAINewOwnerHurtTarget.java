@@ -25,13 +25,13 @@ public class EntityAINewOwnerHurtTarget extends EntityAIOwnerHurtTarget {
     @Override
     public boolean shouldExecute() {
         if (super.shouldExecute()) {
-            //gets recentlyhit variable from entityliving that determines if a mob will drop exp
+            //gets recently hit variable from entityliving that determines if a mob will drop exp
             //only attacks if target was hit recently
             //only attacks if target was attacked by owner
-            EntityLivingBase owner = this.theEntityTameable.getOwner();
+            EntityLivingBase owner = (EntityLivingBase) this.theEntityTameable.getOwner();
             if (owner != null) {
                 this.theTarget = owner.getLastAttacker();
-                if (theTarget != null && (theTarget.func_142015_aE() <= 40 || (this.theTarget.getAITarget() != null && !this.theTarget.getAITarget().equals(owner)))) {
+                if (theTarget != null && (theTarget.getRevengeTimer() <= 40 || (this.theTarget.getAITarget() != null && !this.theTarget.getAITarget().equals(owner)))) {
                     return false;
                 }
                 return true;

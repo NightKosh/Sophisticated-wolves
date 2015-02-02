@@ -4,6 +4,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.renderer.Tessellator;
+import net.minecraft.client.renderer.WorldRenderer;
 import net.minecraft.client.renderer.entity.RenderWolf;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
@@ -21,8 +22,8 @@ import sophisticated_wolves.entity.SophisticatedWolf;
  */
 public class RenderSophisticatedWolf extends RenderWolf {
 
-    public RenderSophisticatedWolf(ModelBase modelBase, ModelBase modelBase2) {
-        super(modelBase, modelBase2, 0.5F);
+    public RenderSophisticatedWolf(ModelBase modelBase) {
+        super(Minecraft.getMinecraft().getRenderManager(), modelBase, 0.5F);
     }
 
     @Override
@@ -63,7 +64,7 @@ public class RenderSophisticatedWolf extends RenderWolf {
     //Custom Functions below here
     //Function called by RenderLiving for special renders, used to call nametag function
     @Override
-    protected void passSpecialRender(EntityLivingBase entity, double par2, double par3, double par4) {
+    public void passSpecialRender(EntityLivingBase entity, double par2, double par3, double par4) {
         if (entity instanceof EntityWolf) {
             SophisticatedWolf wolf = (SophisticatedWolf) entity;
 
@@ -95,15 +96,16 @@ public class RenderSophisticatedWolf extends RenderWolf {
             GL11.glDepthMask(false);
             GL11.glEnable(GL11.GL_BLEND);
             GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
-            Tessellator tessellator = Tessellator.instance;
+            Tessellator tessellator = Tessellator.getInstance();
+            WorldRenderer worldRenderer = tessellator.getWorldRenderer();
             GL11.glDisable(GL11.GL_TEXTURE_2D);
-            tessellator.startDrawingQuads();
+            worldRenderer.startDrawingQuads();
             int var16 = fontRenderer.getStringWidth(wolfName) / 2;
-            tessellator.setColorRGBA_F(0, 0, 0, 0.25F);
-            tessellator.addVertex(-var16 - 1, -1, 0);
-            tessellator.addVertex(-var16 - 1, 8, 0);
-            tessellator.addVertex(var16 + 1, 8, 0);
-            tessellator.addVertex(var16 + 1, -1, 0);
+            worldRenderer.setColorRGBA_F(0, 0, 0, 0.25F);
+            worldRenderer.addVertex(-var16 - 1, -1, 0);
+            worldRenderer.addVertex(-var16 - 1, 8, 0);
+            worldRenderer.addVertex(var16 + 1, 8, 0);
+            worldRenderer.addVertex(var16 + 1, -1, 0);
             tessellator.draw();
             GL11.glEnable(GL11.GL_TEXTURE_2D);
             if (!wolf.isSitting()) {

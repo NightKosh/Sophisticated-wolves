@@ -17,7 +17,8 @@ import sophisticated_wolves.packets.PetNameMessageToServer;
  */
 public class GuiEditName extends GuiScreen {
 
-    private final String screenTitle = SophisticatedWolvesMod.proxy.getLocalizedString("gui.edit_dog_name");
+    private final String screenTitle = SophisticatedWolvesMod.proxy.getLocalizedString("gui.edit_dog_name.title");
+    private final String doneButtonText = SophisticatedWolvesMod.proxy.getLocalizedString("gui.edit_dog_name.done_button");
     private GuiTextField nameField;
     private EntityTameable pet;
 
@@ -30,11 +31,11 @@ public class GuiEditName extends GuiScreen {
         this.buttonList.clear();
         super.initGui();
         Keyboard.enableRepeatEvents(true); //pauses the game when GUI is opened
-        this.buttonList.add(new GuiButton(0, this.width / 2 - 100, this.height / 4 + 120, "Done"));
-        this.nameField = new GuiTextField(this.fontRendererObj, this.width / 2 - 40, 100, 80, 20); //Textbox size
+        this.buttonList.add(new GuiButton(0, this.width / 2 - 100, this.height / 4 + 120, doneButtonText));
+        this.nameField = new GuiTextField(0, this.fontRendererObj, this.width / 2 - 50, 100, 100, 20); //Textbox size
         this.nameField.setText(this.pet.getCustomNameTag());
         this.nameField.setFocused(true);
-        this.nameField.setMaxStringLength(12); //string length
+        this.nameField.setMaxStringLength(16); //string length
     }
 
     @Override

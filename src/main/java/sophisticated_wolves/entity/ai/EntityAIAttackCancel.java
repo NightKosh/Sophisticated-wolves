@@ -4,7 +4,6 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.ai.EntityAIBase;
 import net.minecraft.entity.passive.EntityTameable;
-import net.minecraft.pathfinding.PathEntity;
 import net.minecraft.pathfinding.PathNavigate;
 
 /**
@@ -37,7 +36,7 @@ public class EntityAIAttackCancel extends EntityAIBase {
             return false;
         }
 
-        EntityLivingBase entity = this.thePet.getOwner();
+        EntityLivingBase entity = (EntityLivingBase) this.thePet.getOwner();
         if (entity == null) {
             return false;
         }
@@ -92,8 +91,9 @@ public class EntityAIAttackCancel extends EntityAIBase {
             if (this.theOwner.isSneaking()) {
                 this.sneakCounter++;
                 if (this.sneakCounter > 30) {
-                    this.thePet.setPathToEntity((PathEntity) null);
-                    this.thePet.setTarget((Entity) null);
+
+                    this.petPathfinder.getPathToEntityLiving((Entity) null);
+                    this.thePet.setAttackTarget(null);
                     this.theOwner.setRevengeTarget((EntityLivingBase) null);
                     this.thePet.setAttackTarget((EntityLivingBase) null);
                     this.sneakCounter = 0;

@@ -1,5 +1,6 @@
 package sophisticated_wolves;
 
+import net.minecraft.client.resources.model.ModelResourceLocation;
 import net.minecraft.util.ResourceLocation;
 
 /**
@@ -18,10 +19,6 @@ public class Resources {
     // localization path
     public static final String LOCALIZATION_LOCATION = "/assets/" + MOD_NAME + "/lang/";
 
-    //items
-    public static final String DOG_TAG = MOD_NAME + ":dogtag";
-    public static final String DOG_TREAT = MOD_NAME + ":dogtreat";
-
     //Brown Wolf
     public static final ResourceLocation brownWolf = new ResourceLocation(ENTITY_LOCATION + "brown/wolf.png");
     public static final ResourceLocation brownWolfTame = new ResourceLocation(ENTITY_LOCATION + "brown/wolf_tame.png");
@@ -36,4 +33,8 @@ public class Resources {
     public static final ResourceLocation forestWolf = new ResourceLocation(ENTITY_LOCATION + "forest/wolf.png");
     public static final ResourceLocation forestWolfTame = new ResourceLocation(ENTITY_LOCATION + "forest/wolf_tame.png");
     public static final ResourceLocation forestWolfAngry = new ResourceLocation(ENTITY_LOCATION + "forest/wolf_angry.png");
+
+    // MODEL RESOURCES
+    public static final ModelResourceLocation dogTagModel = new ModelResourceLocation(MOD_NAME + ":" + SWItems.DOG_TAG, "inventory");
+    public static final ModelResourceLocation dogTreatModel = new ModelResourceLocation(MOD_NAME + ":" + SWItems.DOG_TREAT, "inventory");
 }

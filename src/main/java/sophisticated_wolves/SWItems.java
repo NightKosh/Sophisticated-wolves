@@ -1,6 +1,7 @@
 package sophisticated_wolves;
 
-import cpw.mods.fml.common.registry.GameRegistry;
+import net.minecraft.client.Minecraft;
+import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraft.item.Item;
 import sophisticated_wolves.item.ItemDogTag;
 import sophisticated_wolves.item.ItemDogTreat;
@@ -20,11 +21,16 @@ public class SWItems {
 
     }
 
+    public static final String DOG_TAG = "SWDogTag";
+    public static final String DOG_TREAT = "SWDogTreat";
+
     public static void itemsRegistration() {
         dogTag = new ItemDogTag();
-        GameRegistry.registerItem(dogTag, "SWDogTag");
+        GameRegistry.registerItem(dogTag, DOG_TAG);
+        Minecraft.getMinecraft().getRenderItem().getItemModelMesher().register(dogTag, 0, Resources.dogTagModel);
 
         dogTreat = new ItemDogTreat();
-        GameRegistry.registerItem(dogTreat, "SWDogTreat");
+        GameRegistry.registerItem(dogTreat, DOG_TREAT);
+        Minecraft.getMinecraft().getRenderItem().getItemModelMesher().register(dogTreat, 0, Resources.dogTreatModel);
     }
 }

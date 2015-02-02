@@ -6,4 +6,5 @@ item.dogtreat.name=Собачье лакомство
 entity.SWWolf.name=Умный волк
 
 # gui
-gui.edit_dog_name=Дайте своему питомцу имя:
+gui.edit_dog_name.title=Дайте своему питомцу имя:
+gui.edit_dog_name.done_button=Готово

@@ -34,12 +34,12 @@ public class EntityAINewOwnerHurtByTarget extends EntityAIOwnerHurtByTarget {
      */
     @Override
     public void startExecuting() {
-        this.theDefendingTameable.func_70907_r().setSitting(false);
+        this.theDefendingTameable.getAISit().setSitting(false);
         super.startExecuting();
 
-        EntityLivingBase owner = this.theDefendingTameable.getOwner();
+        EntityLivingBase owner = (EntityLivingBase) this.theDefendingTameable.getOwner();
         if (owner != null) {
-            this.revengeTime = owner.func_142015_aE();
+            this.revengeTime = owner.getRevengeTimer();
         }
     }
 }

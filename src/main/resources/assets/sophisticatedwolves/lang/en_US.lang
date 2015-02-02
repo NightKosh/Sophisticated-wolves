@@ -6,4 +6,5 @@ item.dogtreat.name=Dog treat
 entity.SWWolf.name=Sophisticated wolf
 
 # gui
-gui.edit_dog_name=Give your pet a name:
+gui.edit_dog_name.title=Give your pet a name:
+gui.edit_dog_name.done_button=Done
