@@ -1,5 +1,13 @@
 *.class
 *.db
+*.iml
+*.ipr
+*.iws
+gradlew
+gradlew.bat
+.idea
+.gradle
+eclipse
 
 # Mobile Tools for Java (J2ME)
 .mtj.tmp/

@@ -1,9 +1,0 @@
-# items
-item.dogtag.name=Dog tag
-item.dogtreat.name=Dog treat
-
-# wolf
-entity.SWWolf.name=Sophisticated wolf
-
-# gui
-gui.edit_dog_name=Give your pet a name:
