@@ -43,10 +43,13 @@ public class SophisticatedWolf extends EntityWolf implements ISophisticatedWolf 
 
     //New Sophisticated Wolves variables
     public boolean puking;
+    protected boolean isDrowning = false;
+    protected int drownCount = 0;
 
     public SophisticatedWolf(World world) {
         super(world);
 
+        this.tasks.addTask(1, new EntityAISwimming(this));
         for (Object taskEntry : this.tasks.taskEntries) {
             EntityAIBase task = ((EntityAITasks.EntityAITaskEntry) taskEntry).action;
             if (task instanceof EntityAISit) {
@@ -73,9 +76,9 @@ public class SophisticatedWolf extends EntityWolf implements ISophisticatedWolf 
         for (Object taskEntry : this.targetTasks.taskEntries) {
             EntityAIBase task = ((EntityAITasks.EntityAITaskEntry) taskEntry).action;
             if (task instanceof EntityAIOwnerHurtByTarget) {
-                taskEntry = this.tasks.new EntityAITaskEntry(1, new EntityAINewOwnerHurtByTarget(this)); //mod class
+                taskEntry = this.targetTasks.new EntityAITaskEntry(1, new EntityAINewOwnerHurtByTarget(this)); //mod class
             } else if (task instanceof EntityAIOwnerHurtTarget) {
-                taskEntry = this.tasks.new EntityAITaskEntry(2, new EntityAINewOwnerHurtTarget(this)); //mod class
+                taskEntry = this.targetTasks.new EntityAITaskEntry(2, new EntityAINewOwnerHurtTarget(this)); //mod class
             }
         }
 
@@ -84,20 +87,9 @@ public class SophisticatedWolf extends EntityWolf implements ISophisticatedWolf 
         this.tasks.addTask(10, new EntityAIAttackCancel(this)); //new behavior
         this.tasks.addTask(22, new EntityAIMoveCancel(this, 6));
         this.tasks.addTask(27, new EntityAIAvoidFire(this, 1, 1.4)); //new behavior
+        this.tasks.addTask(30, new EntityAITeleportAtDrowning(this)); //new behavior
 
         fireResistance = 5; //modified from default value
-    }
-
-    /**
-     * main AI tick function, replaces updateEntityActionState
-     */
-    @Override
-    protected void updateAITick() {
-        if (!this.getMoveHelper().isUpdating()) {
-            this.setSprinting(false);
-        } else {
-            this.setSprinting(this.getMoveHelper().getSpeed() == 0.4F);
-        }
     }
 
     @Override
@@ -235,6 +227,13 @@ public class SophisticatedWolf extends EntityWolf implements ISophisticatedWolf 
                         this.worldObj.spawnParticle(EnumParticleTypes.WATER_SPLASH, this.posX + var4, var1 + 0.8F, this.posZ + var5, this.motionX, this.motionY, this.motionZ);
                     }
                 }
+            }
+        }
+        if (this.isDrowning) {
+            if (this.drownCount > 0) {
+                this.drownCount--;
+            } else {
+                this.isDrowning = false;
             }
         }
         super.onUpdate();
@@ -433,6 +432,10 @@ public class SophisticatedWolf extends EntityWolf implements ISophisticatedWolf 
                 (SWConfiguration.immuneToCacti && damageSource.equals(DamageSource.cactus))) {
             return false;
         } else {
+            if (damageSource.equals(DamageSource.drown)) {
+                this.isDrowning = true;
+                this.drownCount = 30;
+            }
             return super.attackEntityFrom(damageSource, p_70097_2_);
         }
     }
@@ -441,6 +444,17 @@ public class SophisticatedWolf extends EntityWolf implements ISophisticatedWolf 
     public void applyEntityCollision(Entity entity) {
         if (!(entity instanceof SophisticatedWolf)) {
             super.applyEntityCollision(entity);
+        }
+    }
+
+    public boolean isDrowning() {
+        return isDrowning;
+    }
+
+    public void setDrowning(boolean isDrowning) {
+        this.isDrowning = isDrowning;
+        if (isDrowning) {
+            this.drownCount = 30;
         }
     }
 }
