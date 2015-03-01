@@ -17,6 +17,9 @@ public class CommonProxy {
         return str;
     }
 
-
     public void openPetGui(EntityTameable pet) {}
+
+    public void modelsRegistration() {
+
+    }
 }
