@@ -17,7 +17,7 @@ public class Recipes {
     }
 
     public static void recipesRegistration() {
-        GameRegistry.addRecipe(new ItemStack(SWItems.dogTag), "s", "l", 's', Items.string, 'l', Items.leather);
+        GameRegistry.addRecipe(new ItemStack(SWItems.dogTag, 5), "s", "l", 's', Items.string, 'l', Items.leather);
         GameRegistry.addRecipe(new ItemStack(SWItems.dogTreat), "wpw", 'w', Items.wheat, 'p', Items.porkchop);
         GameRegistry.addRecipe(new ItemStack(SWItems.dogTreat), "wpw", 'w', Items.wheat, 'p', Items.cooked_porkchop);
     }
