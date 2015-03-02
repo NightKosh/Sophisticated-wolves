@@ -1,10 +1,10 @@
-# items
+# Items
 item.dogtag.name=Собачья бирка
 item.dogtreat.name=Собачье лакомство
 
-# wolf
+# Wolf
 entity.SWWolf.name=Умный волк
 
-# gui
+# GUI
 gui.edit_dog_name.title=Дайте своему питомцу имя:
 gui.edit_dog_name.done_button=Готово
