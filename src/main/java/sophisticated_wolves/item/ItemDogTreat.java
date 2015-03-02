@@ -8,7 +8,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.BlockPos;
 import sophisticated_wolves.api.ISophisticatedWolf;
-import sophisticated_wolves.entity.SophisticatedWolf;
+import sophisticated_wolves.entity.EntitySophisticatedWolf;
 
 /**
  * Sophisticated Wolves
@@ -32,7 +32,7 @@ public class ItemDogTreat extends Item {
         if (!player.worldObj.isRemote && entity instanceof EntityWolf && !(entity instanceof ISophisticatedWolf)) {
             EntityWolf wolf = (EntityWolf) entity;
             if (wolf.isTamed()) {
-                SophisticatedWolf SWolf = new SophisticatedWolf(player.worldObj);
+                EntitySophisticatedWolf SWolf = new EntitySophisticatedWolf(player.worldObj);
 
                 SWolf.copyLocationAndAnglesFrom(wolf);
                 SWolf.setCustomNameTag(wolf.getCustomNameTag());

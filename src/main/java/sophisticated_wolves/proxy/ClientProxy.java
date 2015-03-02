@@ -10,7 +10,7 @@ import org.apache.commons.lang3.StringUtils;
 import sophisticated_wolves.RenderSophisticatedWolf;
 import sophisticated_wolves.Resources;
 import sophisticated_wolves.SWItems;
-import sophisticated_wolves.entity.SophisticatedWolf;
+import sophisticated_wolves.entity.EntitySophisticatedWolf;
 import sophisticated_wolves.gui.GuiEditName;
 
 /**
@@ -28,7 +28,7 @@ public class ClientProxy extends CommonProxy {
     }
 
     private void registerMobsRenderers() {
-        RenderingRegistry.registerEntityRenderingHandler(SophisticatedWolf.class, new RenderSophisticatedWolf(new ModelWolf()));
+        RenderingRegistry.registerEntityRenderingHandler(EntitySophisticatedWolf.class, new RenderSophisticatedWolf(new ModelWolf()));
     }
 
     @Override

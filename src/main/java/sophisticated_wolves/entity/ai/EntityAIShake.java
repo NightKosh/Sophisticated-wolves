@@ -3,7 +3,7 @@ package sophisticated_wolves.entity.ai;
 import net.minecraft.entity.ai.EntityAIBase;
 import net.minecraft.pathfinding.PathNavigate;
 import net.minecraft.world.World;
-import sophisticated_wolves.entity.SophisticatedWolf;
+import sophisticated_wolves.entity.EntitySophisticatedWolf;
 
 /**
  * Sophisticated Wolves
@@ -12,11 +12,11 @@ import sophisticated_wolves.entity.SophisticatedWolf;
  * @license Lesser GNU Public License v3 (http://www.gnu.org/licenses/lgpl.html)
  */
 public class EntityAIShake extends EntityAIBase {
-    private SophisticatedWolf theWolf;
+    private EntitySophisticatedWolf theWolf;
     private World theWorld;
     private PathNavigate petPathfinder;
 
-    public EntityAIShake(SophisticatedWolf wolf) {
+    public EntityAIShake(EntitySophisticatedWolf wolf) {
         this.theWolf = wolf;
         this.theWorld = wolf.worldObj;
         this.petPathfinder = theWolf.getNavigator();

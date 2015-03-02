@@ -6,7 +6,7 @@ import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.pathfinding.PathNavigate;
 import net.minecraft.world.World;
-import sophisticated_wolves.entity.SophisticatedWolf;
+import sophisticated_wolves.entity.EntitySophisticatedWolf;
 
 /**
  * Sophisticated Wolves
@@ -15,14 +15,14 @@ import sophisticated_wolves.entity.SophisticatedWolf;
  * @license Lesser GNU Public License v3 (http://www.gnu.org/licenses/lgpl.html)
  */
 public class EntityAINewBeg extends EntityAIBase {
-    private SophisticatedWolf wolf;
+    private EntitySophisticatedWolf wolf;
     private EntityPlayer player;
     private World world;
     private float minPlayerDistance;
     private int randomBeg;
     private PathNavigate petPathfinder;
 
-    public EntityAINewBeg(SophisticatedWolf wolf, float minPlayerDistance) {
+    public EntityAINewBeg(EntitySophisticatedWolf wolf, float minPlayerDistance) {
         this.wolf = wolf;
         this.world = wolf.worldObj;
         this.minPlayerDistance = minPlayerDistance;

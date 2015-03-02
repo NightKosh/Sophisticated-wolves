@@ -16,7 +16,6 @@ import net.minecraft.util.MathHelper;
  */
 public class EntityAINewFollowOwner extends EntityAIFollowOwner {
     private EntityTameable pet;
-    private EntityLivingBase owner;
     private double speed;
     private int tick;
 
@@ -24,7 +23,6 @@ public class EntityAINewFollowOwner extends EntityAIFollowOwner {
         super(entity, speed, par4, par5);
 
         this.pet = entity;
-        this.owner = (EntityLivingBase) this.pet.getOwner();
         this.speed = speed;
     }
 
@@ -33,7 +31,7 @@ public class EntityAINewFollowOwner extends EntityAIFollowOwner {
      */
     @Override
     public boolean shouldExecute() {
-        return super.shouldExecute() && owner != null && this.owner.isOnLadder();
+        return super.shouldExecute() && this.pet.getOwner() != null && !((EntityLivingBase) this.pet.getOwner()).isOnLadder();
     }
 
     /**
@@ -41,7 +39,7 @@ public class EntityAINewFollowOwner extends EntityAIFollowOwner {
      */
     @Override
     public boolean continueExecuting() {
-        return super.continueExecuting() && !this.owner.isOnLadder();
+        return super.continueExecuting() && !((EntityLivingBase) this.pet.getOwner()).isOnLadder();
     }
 
 
@@ -58,19 +56,21 @@ public class EntityAINewFollowOwner extends EntityAIFollowOwner {
      */
     @Override
     public void updateTask() {
-        this.pet.getLookHelper().setLookPositionWithEntity(this.owner, 10, this.pet.getVerticalFaceSpeed());
+        EntityLivingBase owner = ((EntityLivingBase) this.pet.getOwner());
+        this.pet.getLookHelper().setLookPositionWithEntity(owner, 10, this.pet.getVerticalFaceSpeed());
         --this.tick;
         if (!this.pet.isSitting() && this.tick <= 0) {
             this.tick = 10;
-            if (!this.pet.getNavigator().tryMoveToEntityLiving(this.owner, this.speed) && !this.pet.getLeashed() && this.pet.getDistanceSqToEntity(this.owner) >= 144) {
-                int xPos = MathHelper.floor_double(this.owner.posX) - 2;
-                int zPos = MathHelper.floor_double(this.owner.posZ) - 2;
-                int yPos = MathHelper.floor_double(this.owner.getEntityBoundingBox().minY);
+            if (!this.pet.getNavigator().tryMoveToEntityLiving(owner, this.speed) && !this.pet.getLeashed() && this.pet.getDistanceSqToEntity(owner) >= 144) {
+                int xPos = MathHelper.floor_double(owner.posX) - 2;
+                int zPos = MathHelper.floor_double(owner.posZ) - 2;
+                int yPos = MathHelper.floor_double(owner.getEntityBoundingBox().minY);
 
-                for (int dX = 0; dX <= 4; ++dX) {
-                    for (int dZ = 0; dZ <= 4; ++dZ) {
-                        if ((dX < 1 || dZ < 1 || dX > 3 || dZ > 3) && this.isTeleportSafe(xPos + dX, yPos - 1, zPos + dZ) &&
-                                this.isAirSafe(xPos + dX, yPos, zPos + dZ) && this.isAirSafe(xPos + dX, yPos + 1, zPos + dZ)) {
+                for (int dX = -2; dX <= 2; ++dX) {
+                    for (int dZ = -2; dZ <= 2; ++dZ) {
+                        if (this.isTeleportSafe(xPos + dX, yPos - 1, zPos + dZ) &&
+                                this.isAirSafe(xPos + dX, yPos, zPos + dZ) &&
+                                this.isAirSafe(xPos + dX, yPos + 1, zPos + dZ)) {
                             this.pet.setLocationAndAngles(xPos + dX + 0.5F, yPos, zPos + dZ + 0.5F, this.pet.rotationYaw, this.pet.rotationPitch);
                             this.pet.getNavigator().clearPathEntity();
                             return;

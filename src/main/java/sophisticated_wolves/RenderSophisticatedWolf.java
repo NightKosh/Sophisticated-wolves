@@ -12,7 +12,7 @@ import net.minecraft.entity.passive.EntityWolf;
 import net.minecraft.util.ResourceLocation;
 import org.apache.commons.lang3.StringUtils;
 import org.lwjgl.opengl.GL11;
-import sophisticated_wolves.entity.SophisticatedWolf;
+import sophisticated_wolves.entity.EntitySophisticatedWolf;
 
 /**
  * Sophisticated Wolves
@@ -28,7 +28,7 @@ public class RenderSophisticatedWolf extends RenderWolf {
 
     @Override
     protected ResourceLocation getEntityTexture(Entity entity) {
-        SophisticatedWolf wolf = (SophisticatedWolf) entity;
+        EntitySophisticatedWolf wolf = (EntitySophisticatedWolf) entity;
         if (SWConfiguration.customWolfTextures) {
             if (wolf.getSpecies() == 4) {
                 if (wolf.isTamed())
@@ -66,7 +66,7 @@ public class RenderSophisticatedWolf extends RenderWolf {
     @Override
     public void passSpecialRender(EntityLivingBase entity, double par2, double par3, double par4) {
         if (entity instanceof EntityWolf) {
-            SophisticatedWolf wolf = (SophisticatedWolf) entity;
+            EntitySophisticatedWolf wolf = (EntitySophisticatedWolf) entity;
 
             if (wolf.isTamed() && Minecraft.isGuiEnabled() && StringUtils.isNotBlank(wolf.getCustomNameTag())) {
                 if (wolf.getCustomNameTag().length() > 0) {
@@ -77,7 +77,7 @@ public class RenderSophisticatedWolf extends RenderWolf {
     }
 
     //renders wolf nametag
-    public void renderWolfName(SophisticatedWolf wolf, double d, double d1, double d2) {
+    public void renderWolfName(EntitySophisticatedWolf wolf, double d, double d1, double d2) {
         float f = 1.6F;
         float f1 = 0.01666667F * f;
         float f2 = wolf.getDistanceToEntity(this.renderManager.livingPlayer);

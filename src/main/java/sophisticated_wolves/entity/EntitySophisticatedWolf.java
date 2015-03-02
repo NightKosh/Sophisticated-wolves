@@ -31,6 +31,7 @@ import sophisticated_wolves.api.ISophisticatedWolf;
 import sophisticated_wolves.entity.ai.*;
 import sophisticated_wolves.item.ItemDogTag;
 
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -39,55 +40,75 @@ import java.util.List;
  * @author metroidfood
  * @license Lesser GNU Public License v3 (http://www.gnu.org/licenses/lgpl.html)
  */
-public class SophisticatedWolf extends EntityWolf implements ISophisticatedWolf {
+public class EntitySophisticatedWolf extends EntityWolf implements ISophisticatedWolf {
 
     //New Sophisticated Wolves variables
     public boolean puking;
     protected boolean isDrowning = false;
     protected int drownCount = 0;
 
-    public SophisticatedWolf(World world) {
+    public EntitySophisticatedWolf(World world) {
         super(world);
 
-        this.tasks.addTask(1, new EntityAISwimming(this));
-        for (Object taskEntry : this.tasks.taskEntries) {
-            EntityAIBase task = ((EntityAITasks.EntityAITaskEntry) taskEntry).action;
+        Iterator taskIterator = this.tasks.taskEntries.iterator();
+        while (taskIterator.hasNext()) {
+            boolean removeTask = false;
+            EntityAIBase task = ((EntityAITasks.EntityAITaskEntry) taskIterator.next()).action;
             if (task instanceof EntityAISit) {
-                taskEntry = this.tasks.new EntityAITaskEntry(5, new EntityAISit(this));
+                removeTask = true;
             } else if (task instanceof EntityAILeapAtTarget) {
-                taskEntry = this.tasks.new EntityAITaskEntry(15, new EntityAILeapAtTarget(this, 0.4F));
+                removeTask = true;
             } else if (task instanceof EntityAIAttackOnCollide) {
-                taskEntry = this.tasks.new EntityAITaskEntry(20, new EntityAIAttackOnCollide(this, 1, true));
+                removeTask = true;
             } else if (task instanceof EntityAIFollowOwner) {
-                taskEntry = this.tasks.new EntityAITaskEntry(25, new EntityAINewFollowOwner(this, 1, 6, 2)); //changed 10.0F to 6.0F, mod class
+                removeTask = true;
             } else if (task instanceof EntityAIMate) {
-                taskEntry = this.tasks.new EntityAITaskEntry(30, new EntityAIMate(this, 1));
+                removeTask = true;
             } else if (task instanceof EntityAIWander) {
-                taskEntry = this.tasks.new EntityAITaskEntry(40, new EntityAIWander(this, 1)); //changed order with Beg
+                removeTask = true;
             } else if (task instanceof EntityAIBeg) {
-                taskEntry = this.tasks.new EntityAITaskEntry(35, new EntityAINewBeg(this, 8)); //changed order with Wander, mod class
+                removeTask = true;
             } else if (task instanceof EntityAIWatchClosest) {
-                taskEntry = this.tasks.new EntityAITaskEntry(45, new EntityAIWatchClosest(this, EntityPlayer.class, 8));
+                removeTask = true;
             } else if (task instanceof EntityAILookIdle) {
-                taskEntry = this.tasks.new EntityAITaskEntry(50, new EntityAILookIdle(this));
+                removeTask = true;
             }
-        }
-
-        for (Object taskEntry : this.targetTasks.taskEntries) {
-            EntityAIBase task = ((EntityAITasks.EntityAITaskEntry) taskEntry).action;
-            if (task instanceof EntityAIOwnerHurtByTarget) {
-                taskEntry = this.targetTasks.new EntityAITaskEntry(1, new EntityAINewOwnerHurtByTarget(this)); //mod class
-            } else if (task instanceof EntityAIOwnerHurtTarget) {
-                taskEntry = this.targetTasks.new EntityAITaskEntry(2, new EntityAINewOwnerHurtTarget(this)); //mod class
+            if (removeTask) {
+                taskIterator.remove();
             }
         }
 
         this.tasks.addTask(3, new EntityAIAvoidCreeper(this, 8, 6, 3, 1, 1.4)); //new behavior
+        this.tasks.addTask(5, this.aiSit);
         this.tasks.addTask(7, new EntityAIShake(this)); //behavior for shaking
         this.tasks.addTask(10, new EntityAIAttackCancel(this)); //new behavior
+        this.tasks.addTask(15, new EntityAILeapAtTarget(this, 0.4F));
+        this.tasks.addTask(20, new EntityAIAttackOnCollide(this, 1, true));
         this.tasks.addTask(22, new EntityAIMoveCancel(this, 6));
+        this.tasks.addTask(25, new EntityAINewFollowOwner(this, 1, 6, 2)); //changed 10.0F to 6.0F, mod class
         this.tasks.addTask(27, new EntityAIAvoidFire(this, 1, 1.4)); //new behavior
-        this.tasks.addTask(30, new EntityAITeleportAtDrowning(this)); //new behavior
+        this.tasks.addTask(28, new EntityAITeleportAtDrowning(this)); //new behavior
+        this.tasks.addTask(30, new EntityAIMate(this, 1));
+        this.tasks.addTask(40, new EntityAIWander(this, 1)); //changed order with Beg
+        this.tasks.addTask(35, new EntityAINewBeg(this, 8)); //changed order with Wander, mod class
+        this.tasks.addTask(45, new EntityAIWatchClosest(this, EntityPlayer.class, 8));
+        this.tasks.addTask(50, new EntityAILookIdle(this));
+
+        taskIterator = this.targetTasks.taskEntries.iterator();
+        while (taskIterator.hasNext()) {
+            boolean removeTask = false;
+            EntityAIBase task = ((EntityAITasks.EntityAITaskEntry) taskIterator.next()).action;
+            if (task instanceof EntityAIOwnerHurtByTarget) {
+                removeTask = true;
+            } else if (task instanceof EntityAIOwnerHurtTarget) {
+                removeTask = true;
+            }
+            if (removeTask) {
+                taskIterator.remove();
+            }
+        }
+        this.targetTasks.addTask(1, new EntityAINewOwnerHurtByTarget(this)); //mod class
+        this.targetTasks.addTask(2, new EntityAINewOwnerHurtTarget(this)); //mod class
 
         fireResistance = 5; //modified from default value
     }
@@ -313,7 +334,7 @@ public class SophisticatedWolf extends EntityWolf implements ISophisticatedWolf 
 
     @Override
     public EntityWolf createChild(EntityAgeable entity) {
-        SophisticatedWolf wolf = new SophisticatedWolf(this.worldObj);
+        EntitySophisticatedWolf wolf = new EntitySophisticatedWolf(this.worldObj);
         wolf.updateSpecies(this.getSpecies()); //setting species to same as parent that spawned it
         String ownerId = this.getOwnerId();
 
@@ -330,10 +351,10 @@ public class SophisticatedWolf extends EntityWolf implements ISophisticatedWolf 
      */
     @Override
     public boolean canMateWith(EntityAnimal animal) {
-        if (animal == this || !this.isTamed() || !(animal instanceof SophisticatedWolf)) {
+        if (animal == this || !this.isTamed() || !(animal instanceof EntitySophisticatedWolf)) {
             return false;
         } else {
-            SophisticatedWolf wolf = (SophisticatedWolf) animal;
+            EntitySophisticatedWolf wolf = (EntitySophisticatedWolf) animal;
             return !wolf.isTamed() ? false : (wolf.isSitting() ? false : this.isInLove() && wolf.isInLove());
         }
     }
@@ -442,7 +463,7 @@ public class SophisticatedWolf extends EntityWolf implements ISophisticatedWolf 
 
     @Override
     public void applyEntityCollision(Entity entity) {
-        if (!(entity instanceof SophisticatedWolf)) {
+        if (!(entity instanceof EntitySophisticatedWolf)) {
             super.applyEntityCollision(entity);
         }
     }

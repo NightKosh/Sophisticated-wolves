@@ -8,7 +8,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import sophisticated_wolves.SWConfiguration;
 import sophisticated_wolves.SophisticatedWolvesMod;
-import sophisticated_wolves.entity.SophisticatedWolf;
+import sophisticated_wolves.entity.EntitySophisticatedWolf;
 
 /**
  * Sophisticated Wolves
@@ -33,7 +33,7 @@ public class ItemDogTag extends Item {
             if (entity instanceof EntityTameable) {
                 return setName((EntityTameable) entity, stack, player);
             }
-        } else if (entity instanceof SophisticatedWolf) {
+        } else if (entity instanceof EntitySophisticatedWolf) {
             return setName((EntityTameable) entity, stack, player);
         }
         return super.itemInteractionForEntity(stack, player, entity);

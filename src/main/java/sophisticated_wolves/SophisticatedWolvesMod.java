@@ -12,7 +12,7 @@ import net.minecraftforge.fml.common.registry.EntityRegistry;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import sophisticated_wolves.entity.SophisticatedWolf;
+import sophisticated_wolves.entity.EntitySophisticatedWolf;
 import sophisticated_wolves.proxy.CommonProxy;
 
 /**
@@ -50,9 +50,9 @@ public class SophisticatedWolvesMod {
 
         Recipes.recipesRegistration();
 
-        EntityRegistry.registerGlobalEntityID(SophisticatedWolf.class, SW_NAME, EntityRegistry.findGlobalUniqueEntityId(), 14144467, 13545366);
+        EntityRegistry.registerGlobalEntityID(EntitySophisticatedWolf.class, SW_NAME, EntityRegistry.findGlobalUniqueEntityId(), 14144467, 13545366);
         if (SWConfiguration.respawningWolves) {
-            EntityRegistry.addSpawn(SophisticatedWolf.class, 1, 4, 4, EnumCreatureType.MONSTER, BiomeDictionary.getBiomesForType(BiomeDictionary.Type.FOREST));
+            EntityRegistry.addSpawn(EntitySophisticatedWolf.class, 1, 4, 4, EnumCreatureType.MONSTER, BiomeDictionary.getBiomesForType(BiomeDictionary.Type.FOREST));
         }
 
         proxy.registerRenderers();

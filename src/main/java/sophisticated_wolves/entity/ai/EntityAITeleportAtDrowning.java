@@ -6,7 +6,7 @@ import net.minecraft.pathfinding.PathNavigate;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
-import sophisticated_wolves.entity.SophisticatedWolf;
+import sophisticated_wolves.entity.EntitySophisticatedWolf;
 
 /**
  * Sophisticated Wolves
@@ -16,12 +16,12 @@ import sophisticated_wolves.entity.SophisticatedWolf;
  */
 public class EntityAITeleportAtDrowning extends EntityAIBase {
 
-    protected SophisticatedWolf pet;
+    protected EntitySophisticatedWolf pet;
     protected World world;
     protected PathNavigate petPathfinder;
 
     public EntityAITeleportAtDrowning(EntityTameable pet) {
-        this.pet = (SophisticatedWolf) pet;
+        this.pet = (EntitySophisticatedWolf) pet;
         this.world = pet.worldObj;
         this.petPathfinder = pet.getNavigator();
     }
