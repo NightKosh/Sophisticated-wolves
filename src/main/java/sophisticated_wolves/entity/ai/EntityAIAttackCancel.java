@@ -1,6 +1,5 @@
 package sophisticated_wolves.entity.ai;
 
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.ai.EntityAIBase;
 import net.minecraft.entity.passive.EntityTameable;
@@ -13,15 +12,15 @@ import net.minecraft.pathfinding.PathNavigate;
  * @license Lesser GNU Public License v3 (http://www.gnu.org/licenses/lgpl.html)
  */
 public class EntityAIAttackCancel extends EntityAIBase {
-    private EntityTameable thePet;
-    private EntityLivingBase theOwner;
+    private EntityTameable pet;
+    private EntityLivingBase owner;
     private PathNavigate petPathfinder;
 
     //SophWolves variables
     private int sneakCounter;
 
     public EntityAIAttackCancel(EntityTameable entity) {
-        this.thePet = entity;
+        this.pet = entity;
         this.petPathfinder = entity.getNavigator();
         this.setMutexBits(1);
         this.sneakCounter = 0;
@@ -32,25 +31,25 @@ public class EntityAIAttackCancel extends EntityAIBase {
      */
     @Override
     public boolean shouldExecute() {
-        if (!this.thePet.isTamed()) {
+        if (!this.pet.isTamed()) {
             return false;
         }
 
-        EntityLivingBase entity = (EntityLivingBase) this.thePet.getOwner();
+        EntityLivingBase entity = (EntityLivingBase) this.pet.getOwner();
         if (entity == null) {
             return false;
         }
 
-        if (this.thePet.isSitting()) {
+        if (this.pet.isSitting()) {
             return false;
         }
 
-        if (!this.thePet.onGround) {
+        if (!this.pet.onGround) {
             return false;
         }
 
         if (entity.isSneaking()) {
-            this.theOwner = entity;
+            this.owner = entity;
             return true;
         }
         return false;
@@ -61,7 +60,7 @@ public class EntityAIAttackCancel extends EntityAIBase {
      */
     @Override
     public boolean continueExecuting() {
-        return this.theOwner.isSneaking() && !this.thePet.isSitting();
+        return this.owner.isSneaking() && !this.pet.isSitting();
     }
 
     /**
@@ -87,15 +86,15 @@ public class EntityAIAttackCancel extends EntityAIBase {
     @Override
     public void updateTask() {
         //adds to sneakCounter if owner is sneaking
-        if (this.theOwner != null) {
-            if (this.theOwner.isSneaking()) {
+        if (this.owner != null) {
+            if (this.owner.isSneaking()) {
                 this.sneakCounter++;
                 if (this.sneakCounter > 30) {
+                    this.petPathfinder.clearPathEntity();
+                    this.pet.setAttackTarget((EntityLivingBase) null);
+                    this.pet.setRevengeTarget((EntityLivingBase) null);
 
-                    this.petPathfinder.getPathToEntityLiving((Entity) null);
-                    this.thePet.setAttackTarget(null);
-                    this.theOwner.setRevengeTarget((EntityLivingBase) null);
-                    this.thePet.setAttackTarget((EntityLivingBase) null);
+                    this.owner.setRevengeTarget((EntityLivingBase) null);
                     this.sneakCounter = 0;
                 }
             } else {
