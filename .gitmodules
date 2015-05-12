@@ -1,0 +1,3 @@
+[submodule "api/sophisticated-wolves"]
+	path = api/sophisticated-wolves
+	url = https://github.com/NightKosh/Sophisticated-wolves-API
