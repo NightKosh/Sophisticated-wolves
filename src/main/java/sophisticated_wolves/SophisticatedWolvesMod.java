@@ -31,7 +31,7 @@ public class SophisticatedWolvesMod {
 
     public static Logger logger = LogManager.getLogger(ModInfo.ID);
 
-    private static final String SW_NAME = "SWWolf";
+    public static final String SW_NAME = "SWWolf";
 
     public SophisticatedWolvesMod() {
         instance = this;
@@ -50,7 +50,8 @@ public class SophisticatedWolvesMod {
 
         Recipes.recipesRegistration();
 
-        EntityRegistry.registerGlobalEntityID(EntitySophisticatedWolf.class, SW_NAME, EntityRegistry.findGlobalUniqueEntityId(), 14144467, 13545366);
+        EntityRegistry.registerModEntity(EntitySophisticatedWolf.class, SW_NAME, 0, ModInfo.ID, 100, 1, true);
+//        EntityRegistry.registerGlobalEntityID(EntitySophisticatedWolf.class, SW_NAME, EntityRegistry.findGlobalUniqueEntityId(), 14144467, 13545366);
         if (SWConfiguration.respawningWolves) {
             EntityRegistry.addSpawn(EntitySophisticatedWolf.class, 1, 4, 4, EnumCreatureType.MONSTER, BiomeDictionary.getBiomesForType(BiomeDictionary.Type.FOREST));
         }

@@ -12,6 +12,7 @@ import sophisticated_wolves.Resources;
 import sophisticated_wolves.SWItems;
 import sophisticated_wolves.entity.EntitySophisticatedWolf;
 import sophisticated_wolves.gui.GuiEditName;
+import sophisticated_wolves.item.ItemGSMonsterPlacer;
 
 /**
  * Sophisticated Wolves
@@ -55,5 +56,9 @@ public class ClientProxy extends CommonProxy {
     public void modelsRegistration() {
         Minecraft.getMinecraft().getRenderItem().getItemModelMesher().register(SWItems.dogTag, 0, Resources.dogTagModel);
         Minecraft.getMinecraft().getRenderItem().getItemModelMesher().register(SWItems.dogTreat, 0, Resources.dogTreatModel);
+
+        for (ItemGSMonsterPlacer.EnumEggs egg : ItemGSMonsterPlacer.EnumEggs.values()) {
+            Minecraft.getMinecraft().getRenderItem().getItemModelMesher().register(SWItems.dogEgg, egg.ordinal(), Resources.spawnEggModel);
+        }
     }
 }
