@@ -10,9 +10,9 @@ import org.apache.commons.lang3.StringUtils;
 import sophisticated_wolves.RenderSophisticatedWolf;
 import sophisticated_wolves.Resources;
 import sophisticated_wolves.SWItems;
+import sophisticated_wolves.api.EnumWolfSpecies;
 import sophisticated_wolves.entity.EntitySophisticatedWolf;
 import sophisticated_wolves.gui.GuiEditName;
-import sophisticated_wolves.item.ItemWolfEgg;
 import sophisticated_wolves.item.WolfEggColor;
 
 /**
@@ -60,8 +60,8 @@ public class ClientProxy extends CommonProxy {
         Minecraft.getMinecraft().getRenderItem().getItemModelMesher().register(SWItems.dogTag, 0, Resources.dogTagModel);
         Minecraft.getMinecraft().getRenderItem().getItemModelMesher().register(SWItems.dogTreat, 0, Resources.dogTreatModel);
 
-        for (ItemWolfEgg.EnumEggs egg : ItemWolfEgg.EnumEggs.values()) {
-            Minecraft.getMinecraft().getRenderItem().getItemModelMesher().register(SWItems.dogEgg, egg.ordinal(), Resources.spawnEggModel);
+        for (EnumWolfSpecies wolfSpecies : EnumWolfSpecies.values()) {
+            Minecraft.getMinecraft().getRenderItem().getItemModelMesher().register(SWItems.dogEgg, wolfSpecies.ordinal(), Resources.spawnEggModel);
         }
     }
 }
