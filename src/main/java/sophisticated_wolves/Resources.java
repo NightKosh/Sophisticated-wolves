@@ -17,8 +17,6 @@ public class Resources {
 
     private static final String MOD_NAME = ModInfo.ID.toLowerCase();
     private static final String ENTITY_LOCATION = MOD_NAME + ":textures/entity/";
-    // localization path
-    public static final String LOCALIZATION_LOCATION = "/assets/" + MOD_NAME + "/lang/";
 
     //Brown Wolf
     public static final ResourceLocation brownWolf = new ResourceLocation(ENTITY_LOCATION + "brown/wolf.png");
