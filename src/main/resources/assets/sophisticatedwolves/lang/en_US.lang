@@ -5,6 +5,12 @@ item.dogtreat.name=Dog Treat
 # Wolf
 entity.SWWolf.name=Sophisticated Wolf
 
+#WOLF TYPE
+wolf_type.vanilla=Gray
+wolf_type.forest=Forest
+wolf_type.black=Black
+wolf_type.brown=Brown
+
 # GUI
 gui.edit_dog_name.title=Give your pet a name:
 gui.edit_dog_name.done_button=Done

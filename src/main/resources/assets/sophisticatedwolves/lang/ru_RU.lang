@@ -5,6 +5,12 @@ item.dogtreat.name=Собачье лакомство
 # Wolf
 entity.SWWolf.name=Умный волк
 
+#WOLF TYPE
+wolf_type.vanilla=Серый
+wolf_type.forest=Лесной
+wolf_type.black=Чёрный
+wolf_type.brown=Коричневый
+
 # GUI
 gui.edit_dog_name.title=Дайте своему питомцу имя:
 gui.edit_dog_name.done_button=Готово

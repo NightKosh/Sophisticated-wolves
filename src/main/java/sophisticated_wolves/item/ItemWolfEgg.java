@@ -82,7 +82,7 @@ public class ItemWolfEgg extends ItemMonsterPlacer {
         String name = EnumEggs.SOPHISTICATED_WOLF.getName();
         if (StringUtils.isNotBlank(name)) {
             str.append(" ").append(I18n.translateToLocal("entity." + name + ".name"))
-                    .append(" - ").append(I18n.translateToLocal("entity." + name + ".name"));
+                    .append(" - ").append(I18n.translateToLocal("wolf_type." + EnumWolfSpecies.getSpeciesByNum(itemStack.getItemDamage()).toString().toLowerCase()));
         }
 
         return str.toString();
