@@ -41,7 +41,7 @@ public class ItemDogTag extends Item {
     }
 
     private static boolean setName(EntityTameable pet, ItemStack stack, EntityPlayer player) {
-        if (pet.isTamed() && pet.getOwnerId().equals(player.getUniqueID().toString())) {
+        if (pet.isTamed() && pet.getOwnerId().equals(player.getUniqueID())) {
 
             if (player.worldObj.isRemote) {
                 SophisticatedWolvesMod.proxy.openPetGui(pet);

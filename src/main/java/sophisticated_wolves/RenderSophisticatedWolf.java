@@ -103,7 +103,7 @@ public class RenderSophisticatedWolf extends RenderWolf {
 //            worldRenderer.addVertex(-var16 - 1, 8, 0);
 //            worldRenderer.addVertex(var16 + 1, 8, 0);
 //            worldRenderer.addVertex(var16 + 1, -1, 0);
-            tessellator.draw();
+//            tessellator.draw();
             GL11.glEnable(GL11.GL_TEXTURE_2D);
             if (!wolf.isSitting()) {
                 fontRenderer.drawString(wolfName, -fontRenderer.getStringWidth(wolfName) / 2, 0, getSitNameColor(wolf));
