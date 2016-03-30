@@ -9,13 +9,14 @@ import net.minecraft.entity.passive.EntityWolf;
 import net.minecraft.util.ResourceLocation;
 import org.apache.commons.lang3.StringUtils;
 import org.lwjgl.opengl.GL11;
+import sophisticated_wolves.api.EnumWolfSpecies;
 import sophisticated_wolves.entity.EntitySophisticatedWolf;
 
 /**
  * Sophisticated Wolves
  *
  * @author metroidfood
- * @license Lesser GNU Public License v3 (http://www.gnu.org/licenses/lgpl.html)
+ * @license Lesser GNU Public License v3 (http://www.gnu.org/licenses/lgpl.html)git
  */
 public class RenderSophisticatedWolf extends RenderWolf {
 
@@ -23,12 +24,11 @@ public class RenderSophisticatedWolf extends RenderWolf {
         super(Minecraft.getMinecraft().getRenderManager(), modelBase, 0.5F);
     }
 
-
     @Override
     protected ResourceLocation getEntityTexture(EntityWolf entity) {
         EntitySophisticatedWolf wolf = (EntitySophisticatedWolf) entity;
         if (SWConfiguration.customWolfTextures) {
-            if (wolf.getSpecies() == 4) {
+            if (wolf.getSpecies() == EnumWolfSpecies.BROWN) {
                 if (wolf.isTamed())
                     return Resources.brownWolfTame;
                 if (wolf.isAngry())
@@ -36,7 +36,7 @@ public class RenderSophisticatedWolf extends RenderWolf {
                 else
                     return Resources.brownWolf;
             }
-            if (wolf.getSpecies() == 3) {
+            if (wolf.getSpecies() == EnumWolfSpecies.BLACK) {
                 if (wolf.isTamed())
                     return Resources.blackWolfTame;
                 if (wolf.isAngry())
@@ -44,7 +44,7 @@ public class RenderSophisticatedWolf extends RenderWolf {
                 else
                     return Resources.blackWolf;
             }
-            if (wolf.getSpecies() == 2) {
+            if (wolf.getSpecies() == EnumWolfSpecies.FOREST) {
                 if (wolf.isTamed())
                     return Resources.forestWolfTame;
                 if (wolf.isAngry())

@@ -23,6 +23,7 @@ import net.minecraft.util.text.translation.I18n;
 import net.minecraft.world.World;
 import org.apache.commons.lang3.StringUtils;
 import sophisticated_wolves.SophisticatedWolvesMod;
+import sophisticated_wolves.api.EnumWolfSpecies;
 import sophisticated_wolves.entity.EntitySophisticatedWolf;
 
 import java.util.List;
@@ -78,9 +79,10 @@ public class ItemWolfEgg extends ItemMonsterPlacer {
         StringBuilder str = new StringBuilder();
         str.append(I18n.translateToLocal(this.getUnlocalizedName() + ".name").trim());
 
-        String name = EnumEggs.getById(itemStack.getItemDamage()).getName();
+        String name = EnumEggs.SOPHISTICATED_WOLF.getName();
         if (StringUtils.isNotBlank(name)) {
-            str.append(" ").append(I18n.translateToLocal("entity." + name + ".name"));
+            str.append(" ").append(I18n.translateToLocal("entity." + name + ".name"))
+                    .append(" - ").append(I18n.translateToLocal("entity." + name + ".name"));
         }
 
         return str.toString();
@@ -158,27 +160,22 @@ public class ItemWolfEgg extends ItemMonsterPlacer {
     }
 
     public static Entity spawnCreature(World world, int eggMeta, double x, double y, double z) {
-//        name = EnumEggs.getById(item.getItemDamage()).getName()
-        if (eggMeta >= 0) {
-            EntitySophisticatedWolf wolf = new EntitySophisticatedWolf(world);
+        EntitySophisticatedWolf wolf = new EntitySophisticatedWolf(world);
 
-            wolf.setLocationAndAngles(x, y, z, MathHelper.wrapAngleTo180_float(world.rand.nextFloat() * 360), 0);
-            wolf.rotationYawHead = wolf.rotationYaw;
-            wolf.renderYawOffset = wolf.rotationYaw;
-            wolf.onInitialSpawn(world.getDifficultyForLocation(new BlockPos(wolf)), (IEntityLivingData) null);
-            wolf.updateSpecies(eggMeta);
-            world.spawnEntityInWorld(wolf);
-            wolf.playLivingSound();
+        wolf.setLocationAndAngles(x, y, z, MathHelper.wrapAngleTo180_float(world.rand.nextFloat() * 360), 0);
+        wolf.rotationYawHead = wolf.rotationYaw;
+        wolf.renderYawOffset = wolf.rotationYaw;
+        wolf.onInitialSpawn(world.getDifficultyForLocation(new BlockPos(wolf)), (IEntityLivingData) null);
+        wolf.updateSpecies(EnumWolfSpecies.getSpeciesByNum(eggMeta));
+        world.spawnEntityInWorld(wolf);
+        wolf.playLivingSound();
 
-            return wolf;
-        } else {
-            return null;
-        }
+        return wolf;
     }
 
     @Override
     public void getSubItems(Item item, CreativeTabs tabs, List subitems) {
-        for (int i = 0; i < EnumEggs.values().length; i++) {
+        for (int i = 0; i < EnumWolfSpecies.values().length; i++) {
             subitems.add(new ItemStack(item, 1, i));
         }
     }

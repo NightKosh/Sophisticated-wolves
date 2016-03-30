@@ -12,6 +12,8 @@ import net.minecraftforge.fml.common.registry.EntityRegistry;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import sophisticated_wolves.api.ModInfo;
+import sophisticated_wolves.api.SophisticatedWolvesAPI;
 import sophisticated_wolves.entity.EntitySophisticatedWolf;
 import sophisticated_wolves.proxy.CommonProxy;
 
@@ -35,6 +37,7 @@ public class SophisticatedWolvesMod {
 
     public SophisticatedWolvesMod() {
         instance = this;
+        SophisticatedWolvesAPI.entityHandler = new APIEntityHandler();
     }
 
     @Mod.EventHandler

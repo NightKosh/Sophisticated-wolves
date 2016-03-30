@@ -2,6 +2,7 @@ package sophisticated_wolves;
 
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.util.ResourceLocation;
+import sophisticated_wolves.api.ModInfo;
 
 /**
  * Sophisticated Wolves

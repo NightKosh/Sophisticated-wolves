@@ -32,7 +32,8 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import sophisticated_wolves.SWConfiguration;
 import sophisticated_wolves.SWItems;
-import sophisticated_wolves.api.ISophisticatedWolf;
+import sophisticated_wolves.api.AEntitySophisticatedWolf;
+import sophisticated_wolves.api.EnumWolfSpecies;
 import sophisticated_wolves.entity.ai.*;
 import sophisticated_wolves.item.ItemDogTag;
 
@@ -46,7 +47,7 @@ import java.util.UUID;
  * @author metroidfood
  * @license Lesser GNU Public License v3 (http://www.gnu.org/licenses/lgpl.html)
  */
-public class EntitySophisticatedWolf extends EntityWolf implements ISophisticatedWolf {
+public class EntitySophisticatedWolf extends AEntitySophisticatedWolf {
 
     private static final DataParameter<Integer> WOLF_SPECIES = EntityDataManager.createKey(EntityWolf.class, DataSerializers.VARINT);
     private static final int POTION_POISON_ID = 19;
@@ -121,6 +122,8 @@ public class EntitySophisticatedWolf extends EntityWolf implements ISophisticate
         this.targetTasks.addTask(2, new EntityAINewOwnerHurtTarget(this)); //mod class
 
         fireResistance = 5; //modified from default value
+
+        this.updateSpecies(this.getSpeciesByBiome());
     }
 
     @Override
@@ -133,14 +136,14 @@ public class EntitySophisticatedWolf extends EntityWolf implements ISophisticate
     public void writeEntityToNBT(NBTTagCompound nbtTagCompound) {
         super.writeEntityToNBT(nbtTagCompound);
 
-        nbtTagCompound.setInteger("Species", this.getSpecies());
+        nbtTagCompound.setInteger("Species", this.getSpecies().ordinal());
     }
 
     @Override
     public void readEntityFromNBT(NBTTagCompound nbtTagCompound) {
         super.readEntityFromNBT(nbtTagCompound);
 
-        this.updateSpecies(nbtTagCompound.getInteger("Species"));
+        this.updateSpecies(EnumWolfSpecies.getSpeciesByNum(nbtTagCompound.getInteger("Species")));
     }
 
     /**
@@ -200,10 +203,6 @@ public class EntitySophisticatedWolf extends EntityWolf implements ISophisticate
         //Stops tamed wolves from being angry at the player
         if (this.isTamed()) {
             this.setAngry(false);
-        }
-        //sets species
-        if (this.getSpecies() == 0) {
-            this.updateSpecies(this.setSpecies());
         }
     }
 
@@ -416,34 +415,34 @@ public class EntitySophisticatedWolf extends EntityWolf implements ISophisticate
      * determine species based on biome
      */
     @Override
-    public int setSpecies() {
+    public EnumWolfSpecies getSpeciesByBiome() {
         BiomeGenBase biomegenbase = this.worldObj.getBiomeGenForCoords(new BlockPos(this));
         if (biomegenbase instanceof BiomeGenForest) {
             if (this.rand.nextInt(7) == 0) {
-                return 4;
+                return EnumWolfSpecies.BROWN;
             }
-            return 2;
+            return EnumWolfSpecies.FOREST;
+        } else if (this.rand.nextInt(7) == 0) {
+            return EnumWolfSpecies.BLACK;
+        } else {
+            return EnumWolfSpecies.VANILLA;
         }
-        if (this.rand.nextInt(7) == 0) {
-            return 3;
-        }
-        return 1;
     }
 
     /*
          * reads data for species
          */
     @Override
-    public int getSpecies() {
-        return this.dataWatcher.get(WOLF_SPECIES);
+    public EnumWolfSpecies getSpecies() {
+        return EnumWolfSpecies.values()[this.dataWatcher.get(WOLF_SPECIES)];
     }
 
     /*
      * modifies data for species
      */
     @Override
-    public void updateSpecies(int species) {
-        this.dataWatcher.set(WOLF_SPECIES, species);
+    public void updateSpecies(EnumWolfSpecies species) {
+        this.dataWatcher.set(WOLF_SPECIES, species.ordinal());
     }
 
     @Override

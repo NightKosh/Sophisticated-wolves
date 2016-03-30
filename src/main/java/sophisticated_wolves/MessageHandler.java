@@ -3,6 +3,7 @@ package sophisticated_wolves;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper;
 import net.minecraftforge.fml.relauncher.Side;
+import sophisticated_wolves.api.ModInfo;
 import sophisticated_wolves.packets.PetNameMessageToServer;
 
 /**
