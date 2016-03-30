@@ -10,6 +10,7 @@ gradlew.bat
 eclipse
 gradle
 build
+run
 
 # Mobile Tools for Java (J2ME)
 .mtj.tmp/

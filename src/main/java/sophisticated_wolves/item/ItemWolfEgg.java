@@ -4,16 +4,26 @@ import net.minecraft.block.BlockFence;
 import net.minecraft.block.BlockLiquid;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.entity.*;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLiving;
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.IEntityLivingData;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemMonsterPlacer;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.*;
+import net.minecraft.util.ActionResult;
+import net.minecraft.util.EnumActionResult;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumHand;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.math.RayTraceResult;
+import net.minecraft.util.text.translation.I18n;
 import net.minecraft.world.World;
 import org.apache.commons.lang3.StringUtils;
-import sophisticated_wolves.ModInfo;
 import sophisticated_wolves.SophisticatedWolvesMod;
+import sophisticated_wolves.entity.EntitySophisticatedWolf;
 
 import java.util.List;
 
@@ -23,7 +33,7 @@ import java.util.List;
  * @author NightKosh
  * @license Lesser GNU Public License v3 (http://www.gnu.org/licenses/lgpl.html)
  */
-public class ItemGSMonsterPlacer extends ItemMonsterPlacer {
+public class ItemWolfEgg extends ItemMonsterPlacer {
     public static enum EnumEggs {
         SOPHISTICATED_WOLF(SophisticatedWolvesMod.SW_NAME, 14144467, 13545366);
 
@@ -57,7 +67,7 @@ public class ItemGSMonsterPlacer extends ItemMonsterPlacer {
         }
     }
 
-    public ItemGSMonsterPlacer() {
+    public ItemWolfEgg() {
         this.setHasSubtypes(true);
         this.setCreativeTab(CreativeTabs.tabMisc);
         this.setUnlocalizedName("monsterPlacer");
@@ -66,27 +76,14 @@ public class ItemGSMonsterPlacer extends ItemMonsterPlacer {
     @Override
     public String getItemStackDisplayName(ItemStack itemStack) {
         StringBuilder str = new StringBuilder();
-        str.append(StatCollector.translateToLocal(this.getUnlocalizedName() + ".name").trim());
+        str.append(I18n.translateToLocal(this.getUnlocalizedName() + ".name").trim());
 
         String name = EnumEggs.getById(itemStack.getItemDamage()).getName();
         if (StringUtils.isNotBlank(name)) {
-            str.append(" ").append(StatCollector.translateToLocal("entity." + name + ".name"));
+            str.append(" ").append(I18n.translateToLocal("entity." + name + ".name"));
         }
 
         return str.toString();
-    }
-
-    @Override
-    public int getColorFromItemStack(ItemStack item, int colorID) {
-        int itemDamage = item.getItemDamage();
-        if (itemDamage >= 0 && itemDamage < EnumEggs.values().length) {
-            if ((colorID & 1) == 0) {
-                return EnumEggs.getById(itemDamage).getBackgroundColor();
-            } else {
-                return EnumEggs.getById(itemDamage).getForegroundColor();
-            }
-        }
-        return 0xFFFFFF;
     }
 
     /**
@@ -94,9 +91,9 @@ public class ItemGSMonsterPlacer extends ItemMonsterPlacer {
      * True if something happen and false if it don't. This is for ITEMS, not BLOCKS
      */
     @Override
-    public boolean onItemUse(ItemStack item, EntityPlayer player, World world, BlockPos blockPos, EnumFacing facing, float hitX, float hitY, float hitZ) {
+    public EnumActionResult onItemUse(ItemStack item, EntityPlayer player, World world, BlockPos blockPos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
         if (world.isRemote) {
-            return true;
+            return EnumActionResult.SUCCESS;
         } else {
             IBlockState block = world.getBlockState(blockPos);
             double d0 = 0;
@@ -116,7 +113,7 @@ public class ItemGSMonsterPlacer extends ItemMonsterPlacer {
                 }
             }
 
-            return true;
+            return EnumActionResult.SUCCESS;
         }
     }
 
@@ -124,27 +121,24 @@ public class ItemGSMonsterPlacer extends ItemMonsterPlacer {
      * Called whenever this item is equipped and the right mouse button is pressed. Args: itemStack, world, entityPlayer
      */
     @Override
-    public ItemStack onItemRightClick(ItemStack item, World world, EntityPlayer player) {
+    public ActionResult<ItemStack> onItemRightClick(ItemStack item, World world, EntityPlayer player, EnumHand hand) {
         if (world.isRemote) {
-            return item;
+            return new ActionResult(EnumActionResult.PASS, item);
         } else {
-            MovingObjectPosition movingobjectposition = this.getMovingObjectPositionFromPlayer(world, player, true);
+            RayTraceResult rayTraceEesult = this.getMovingObjectPositionFromPlayer(world, player, true);
 
-            if (movingobjectposition == null) {
-                return item;
+            if (rayTraceEesult == null) {
+                return new ActionResult(EnumActionResult.PASS, item);
             } else {
-                if (movingobjectposition.typeOfHit == MovingObjectPosition.MovingObjectType.BLOCK) {
-                    if (!world.canMineBlockBody(player, movingobjectposition.getBlockPos())) {
-                        return item;
+                if (rayTraceEesult.typeOfHit == RayTraceResult.Type.BLOCK) {
+                    if (!world.canMineBlockBody(player, rayTraceEesult.getBlockPos()) ||
+                            !player.canPlayerEdit(rayTraceEesult.getBlockPos(), rayTraceEesult.sideHit, item)) {
+                        return new ActionResult(EnumActionResult.PASS, item);
                     }
 
-                    if (!player.canPlayerEdit(movingobjectposition.getBlockPos(), movingobjectposition.sideHit, item)) {
-                        return item;
-                    }
-
-                    if (world.getBlockState(movingobjectposition.getBlockPos()).getBlock() instanceof BlockLiquid) {
-                        Entity entity = spawnCreature(world, item.getItemDamage(), movingobjectposition.getBlockPos().getX(),
-                                movingobjectposition.getBlockPos().getY(), movingobjectposition.getBlockPos().getZ());
+                    if (world.getBlockState(rayTraceEesult.getBlockPos()).getBlock() instanceof BlockLiquid) {
+                        Entity entity = spawnCreature(world, item.getItemDamage(), rayTraceEesult.getBlockPos().getX(),
+                                rayTraceEesult.getBlockPos().getY(), rayTraceEesult.getBlockPos().getZ());
 
                         if (entity != null) {
                             if (entity instanceof EntityLivingBase && item.hasDisplayName()) {
@@ -158,30 +152,28 @@ public class ItemGSMonsterPlacer extends ItemMonsterPlacer {
                     }
                 }
 
-                return item;
+                return new ActionResult(EnumActionResult.SUCCESS, item);
             }
         }
     }
 
-    public static Entity spawnCreature(World world, int damageValue, double x, double y, double z) {
-        if (world.isRemote || damageValue < 0 || damageValue >= EnumEggs.values().length) {
+    public static Entity spawnCreature(World world, int eggMeta, double x, double y, double z) {
+//        name = EnumEggs.getById(item.getItemDamage()).getName()
+        if (eggMeta >= 0) {
+            EntitySophisticatedWolf wolf = new EntitySophisticatedWolf(world);
+
+            wolf.setLocationAndAngles(x, y, z, MathHelper.wrapAngleTo180_float(world.rand.nextFloat() * 360), 0);
+            wolf.rotationYawHead = wolf.rotationYaw;
+            wolf.renderYawOffset = wolf.rotationYaw;
+            wolf.onInitialSpawn(world.getDifficultyForLocation(new BlockPos(wolf)), (IEntityLivingData) null);
+            wolf.updateSpecies(eggMeta);
+            world.spawnEntityInWorld(wolf);
+            wolf.playLivingSound();
+
+            return wolf;
+        } else {
             return null;
         }
-
-        String fullEntityName = String.format("%s.%s", ModInfo.ID, EnumEggs.getById(damageValue).getName());
-        Entity entity = EntityList.createEntityByName(fullEntityName, world);
-
-        if (entity != null && entity instanceof EntityLivingBase) {
-            EntityLiving entityliving = (EntityLiving) entity;
-            entity.setLocationAndAngles(x, y, z, MathHelper.wrapAngleTo180_float(world.rand.nextFloat() * 360), 0);
-            entityliving.rotationYawHead = entityliving.rotationYaw;
-            entityliving.renderYawOffset = entityliving.rotationYaw;
-            entityliving.func_180482_a(world.getDifficultyForLocation(new BlockPos(entityliving)), (IEntityLivingData) null);
-            world.spawnEntityInWorld(entity);
-            entityliving.playLivingSound();
-        }
-
-        return entity;
     }
 
     @Override

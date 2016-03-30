@@ -6,7 +6,8 @@ import net.minecraft.entity.passive.EntityWolf;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.BlockPos;
+import net.minecraft.util.EnumHand;
+import net.minecraft.util.math.BlockPos;
 import sophisticated_wolves.api.ISophisticatedWolf;
 import sophisticated_wolves.entity.EntitySophisticatedWolf;
 
@@ -28,7 +29,7 @@ public class ItemDogTreat extends Item {
      * Returns true if the item can be used on the given entity, e.g. shears on sheep.
      */
     @Override
-    public boolean itemInteractionForEntity(ItemStack stack, EntityPlayer player, EntityLivingBase entity) {
+    public boolean itemInteractionForEntity(ItemStack stack, EntityPlayer player, EntityLivingBase entity, EnumHand hand) {
         if (!player.worldObj.isRemote && entity instanceof EntityWolf && !(entity instanceof ISophisticatedWolf)) {
             EntityWolf wolf = (EntityWolf) entity;
             if (wolf.isTamed()) {
@@ -51,7 +52,7 @@ public class ItemDogTreat extends Item {
             }
             return false;
         } else {
-            return super.itemInteractionForEntity(stack, player, entity);
+            return super.itemInteractionForEntity(stack, player, entity, hand);
         }
     }
 }

@@ -3,7 +3,7 @@ package sophisticated_wolves.entity.ai;
 import net.minecraft.entity.EntityCreature;
 import net.minecraft.entity.ai.EntityAIBase;
 import net.minecraft.entity.ai.RandomPositionGenerator;
-import net.minecraft.util.Vec3;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
 /**
@@ -40,7 +40,7 @@ public class EntityAIAvoidFire extends EntityAIBase {
             return false;
         }
 
-        Vec3 vec3d = RandomPositionGenerator.findRandomTarget(entity, 10, 7);
+        Vec3d vec3d = RandomPositionGenerator.findRandomTarget(entity, 10, 7);
 
         if (vec3d == null) {
             return false;
@@ -48,7 +48,7 @@ public class EntityAIAvoidFire extends EntityAIBase {
             this.xPath = vec3d.xCoord;
             this.yPath = vec3d.yCoord;
             this.zPath = vec3d.zCoord;
-            return this.theWorld.func_147470_e(this.entity.getEntityBoundingBox().contract(0.001D, 0.001D, 0.001D));
+            return this.theWorld.isFlammableWithin(this.entity.getEntityBoundingBox().addCoord(0.001D, 0.001D, 0.001D));
         }
     }
 

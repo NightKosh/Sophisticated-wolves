@@ -36,7 +36,7 @@ public class EntityAINewBeg extends EntityAIBase {
     @Override
     public boolean shouldExecute() {
         this.player = this.world.getClosestPlayerToEntity(this.wolf, (double) this.minPlayerDistance);
-        return (this.player == null) ? false : this.isHoldingMeat(this.player);
+        return this.player != null && this.isHoldingMeat(this.player);
     }
 
     /**
@@ -58,7 +58,7 @@ public class EntityAINewBeg extends EntityAIBase {
     @Override
     public void startExecuting() {
         this.petPathfinder.clearPathEntity();
-        this.wolf.func_70918_i(true);
+        this.wolf.setBegging(true);
         this.randomBeg = 40 + this.wolf.getRNG().nextInt(40);
     }
 
@@ -67,7 +67,7 @@ public class EntityAINewBeg extends EntityAIBase {
      */
     @Override
     public void resetTask() {
-        this.wolf.func_70918_i(false);
+        this.wolf.setBegging(false);
         this.player = null;
     }
 

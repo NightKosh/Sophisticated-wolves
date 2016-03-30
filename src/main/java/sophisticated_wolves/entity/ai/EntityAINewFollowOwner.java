@@ -5,8 +5,8 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.ai.EntityAIFollowOwner;
 import net.minecraft.entity.passive.EntityTameable;
-import net.minecraft.util.BlockPos;
-import net.minecraft.util.MathHelper;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.MathHelper;
 
 /**
  * Sophisticated Wolves
@@ -84,8 +84,8 @@ public class EntityAINewFollowOwner extends EntityAIFollowOwner {
     private boolean isTeleportSafe(int x, int y, int z) {
         IBlockState blockState = pet.worldObj.getBlockState(new BlockPos(x, y, z));
         if (blockState != null) {
-            Material material = blockState.getBlock().getMaterial();
-            if ((blockState.getBlock().isNormalCube() || material.equals(Material.ice) || material.equals(Material.leaves) ||
+            Material material = blockState.getBlock().getMaterial(blockState);
+            if ((blockState.getBlock().isNormalCube(blockState) || material.equals(Material.ice) || material.equals(Material.leaves) ||
                     material.equals(Material.glass)) && !material.equals(Material.cactus) && !material.equals(material.plants)) {
                 return true;
             }
@@ -96,8 +96,8 @@ public class EntityAINewFollowOwner extends EntityAIFollowOwner {
     private boolean isAirSafe(int x, int y, int z) {
         IBlockState blockState = pet.worldObj.getBlockState(new BlockPos(x, y, z));
         if (blockState != null) {
-            Material material = blockState.getBlock().getMaterial();
-            if (!blockState.getBlock().isNormalCube() && !material.equals(Material.water) && !material.equals(Material.lava) &&
+            Material material = blockState.getBlock().getMaterial(blockState);
+            if (!blockState.getBlock().isNormalCube(blockState) && !material.equals(Material.water) && !material.equals(Material.lava) &&
                     !material.equals(Material.fire) && !material.equals(Material.leaves) && !material.equals(Material.glass) && !material.equals(Material.ice)) {
                 return true;
             }

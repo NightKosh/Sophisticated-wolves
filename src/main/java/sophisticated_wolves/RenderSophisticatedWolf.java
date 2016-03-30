@@ -4,10 +4,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.client.renderer.WorldRenderer;
 import net.minecraft.client.renderer.entity.RenderWolf;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.passive.EntityWolf;
 import net.minecraft.util.ResourceLocation;
 import org.apache.commons.lang3.StringUtils;
@@ -26,8 +23,9 @@ public class RenderSophisticatedWolf extends RenderWolf {
         super(Minecraft.getMinecraft().getRenderManager(), modelBase, 0.5F);
     }
 
+
     @Override
-    protected ResourceLocation getEntityTexture(Entity entity) {
+    protected ResourceLocation getEntityTexture(EntityWolf entity) {
         EntitySophisticatedWolf wolf = (EntitySophisticatedWolf) entity;
         if (SWConfiguration.customWolfTextures) {
             if (wolf.getSpecies() == 4) {
@@ -64,14 +62,12 @@ public class RenderSophisticatedWolf extends RenderWolf {
     //Custom Functions below here
     //Function called by RenderLiving for special renders, used to call nametag function
     @Override
-    public void passSpecialRender(EntityLivingBase entity, double par2, double par3, double par4) {
-        if (entity instanceof EntityWolf) {
-            EntitySophisticatedWolf wolf = (EntitySophisticatedWolf) entity;
+    public void renderName(EntityWolf entity, double x, double y, double z) {
+        EntitySophisticatedWolf wolf = (EntitySophisticatedWolf) entity;
 
-            if (wolf.isTamed() && Minecraft.isGuiEnabled() && StringUtils.isNotBlank(wolf.getCustomNameTag())) {
-                if (wolf.getCustomNameTag().length() > 0) {
-                    this.renderWolfName(wolf, par2, par3, par4);
-                }
+        if (wolf.isTamed() && Minecraft.isGuiEnabled() && StringUtils.isNotBlank(wolf.getCustomNameTag())) {
+            if (wolf.getCustomNameTag().length() > 0) {
+                this.renderWolfName(wolf, x, y, z);
             }
         }
     }
@@ -97,15 +93,16 @@ public class RenderSophisticatedWolf extends RenderWolf {
             GL11.glEnable(GL11.GL_BLEND);
             GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
             Tessellator tessellator = Tessellator.getInstance();
-            WorldRenderer worldRenderer = tessellator.getWorldRenderer();
-            GL11.glDisable(GL11.GL_TEXTURE_2D);
-            worldRenderer.startDrawingQuads();
-            int var16 = fontRenderer.getStringWidth(wolfName) / 2;
-            worldRenderer.setColorRGBA_F(0, 0, 0, 0.25F);
-            worldRenderer.addVertex(-var16 - 1, -1, 0);
-            worldRenderer.addVertex(-var16 - 1, 8, 0);
-            worldRenderer.addVertex(var16 + 1, 8, 0);
-            worldRenderer.addVertex(var16 + 1, -1, 0);
+            //TODO !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+//            WorldRenderer worldRenderer = tessellator.getBuffer().getWorldRenderer();
+//            GL11.glDisable(GL11.GL_TEXTURE_2D);
+//            worldRenderer.startDrawingQuads();
+//            int var16 = fontRenderer.getStringWidth(wolfName) / 2;
+//            worldRenderer.setColorRGBA_F(0, 0, 0, 0.25F);
+//            worldRenderer.addVertex(-var16 - 1, -1, 0);
+//            worldRenderer.addVertex(-var16 - 1, 8, 0);
+//            worldRenderer.addVertex(var16 + 1, 8, 0);
+//            worldRenderer.addVertex(var16 + 1, -1, 0);
             tessellator.draw();
             GL11.glEnable(GL11.GL_TEXTURE_2D);
             if (!wolf.isSitting()) {

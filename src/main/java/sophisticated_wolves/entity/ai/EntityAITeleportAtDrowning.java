@@ -1,10 +1,11 @@
 package sophisticated_wolves.entity.ai;
 
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.ai.EntityAIBase;
 import net.minecraft.entity.passive.EntityTameable;
 import net.minecraft.pathfinding.PathNavigate;
-import net.minecraft.util.BlockPos;
-import net.minecraft.util.MathHelper;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 import sophisticated_wolves.entity.EntitySophisticatedWolf;
 
@@ -54,7 +55,8 @@ public class EntityAITeleportAtDrowning extends EntityAIBase {
         for (int x = -2; x <= 2; ++x) {
             for (int z = -2; z <= 2; ++z) {
                 BlockPos pos = new BlockPos(xPos + x, yPos, zPos + z);
-                if (this.world.getBlockState(pos).getBlock().isAir(world, pos)) {
+                IBlockState state = this.world.getBlockState(pos);
+                if (state.getBlock().isAir(state, world, pos)) {
                     this.pet.setLocationAndAngles(xPos + x + 0.5, yPos, zPos + z + 0.5, this.pet.rotationYaw, this.pet.rotationPitch);
                     this.petPathfinder.clearPathEntity();
                     return;

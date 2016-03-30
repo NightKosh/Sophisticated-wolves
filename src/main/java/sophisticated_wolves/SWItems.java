@@ -4,7 +4,7 @@ import net.minecraft.item.Item;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import sophisticated_wolves.item.ItemDogTag;
 import sophisticated_wolves.item.ItemDogTreat;
-import sophisticated_wolves.item.ItemGSMonsterPlacer;
+import sophisticated_wolves.item.ItemWolfEgg;
 
 /**
  * Sophisticated Wolves
@@ -33,7 +33,7 @@ public class SWItems {
         dogTreat = new ItemDogTreat();
         GameRegistry.registerItem(dogTreat, DOG_TREAT);
 
-        dogEgg = new ItemGSMonsterPlacer();
+        dogEgg = new ItemWolfEgg();
         GameRegistry.registerItem(dogEgg, DOG_EGG);
 
         SophisticatedWolvesMod.proxy.modelsRegistration();

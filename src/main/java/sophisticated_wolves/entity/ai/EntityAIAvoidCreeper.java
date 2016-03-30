@@ -6,7 +6,7 @@ import net.minecraft.entity.ai.RandomPositionGenerator;
 import net.minecraft.entity.monster.EntityCreeper;
 import net.minecraft.pathfinding.PathEntity;
 import net.minecraft.pathfinding.PathNavigate;
-import net.minecraft.util.Vec3;
+import net.minecraft.util.math.Vec3d;
 
 import java.util.List;
 
@@ -67,7 +67,7 @@ public class EntityAIAvoidCreeper extends EntityAIBase {
 
             if (this.entity.getDistanceSqToEntity(creeper) < this.minDistToCharged * this.minDistToCharged) {
                 if (this.creeper.getCreeperState() > 0) {
-                    Vec3 vec3d = RandomPositionGenerator.findRandomTargetBlockAwayFrom(this.entity, 16, 7, new Vec3(this.creeper.posX, this.creeper.posY, this.creeper.posZ));
+                    Vec3d vec3d = RandomPositionGenerator.findRandomTargetBlockAwayFrom(this.entity, 16, 7, new Vec3d(this.creeper.posX, this.creeper.posY, this.creeper.posZ));
 
                     if (vec3d != null) {
                         if (this.creeper.getDistanceSq(vec3d.xCoord, vec3d.yCoord, vec3d.zCoord) > this.creeper.getDistanceSqToEntity(this.entity)) {
@@ -82,7 +82,7 @@ public class EntityAIAvoidCreeper extends EntityAIBase {
             }
 
             if (this.entity.getDistanceSqToEntity(creeper) < this.minDist * this.minDist) {
-                Vec3 vec3d = RandomPositionGenerator.findRandomTargetBlockAwayFrom(this.entity, this.minDist, this.minDist, new Vec3(this.creeper.posX, this.creeper.posY, this.creeper.posZ));
+                Vec3d vec3d = RandomPositionGenerator.findRandomTargetBlockAwayFrom(this.entity, this.minDist, this.minDist, new Vec3d(this.creeper.posX, this.creeper.posY, this.creeper.posZ));
 
                 if (vec3d != null) {
                     if (this.creeper.getDistanceSq(vec3d.xCoord, vec3d.yCoord, vec3d.zCoord) > this.creeper.getDistanceSqToEntity(this.entity)) {

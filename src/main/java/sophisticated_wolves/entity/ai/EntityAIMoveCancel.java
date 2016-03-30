@@ -61,7 +61,7 @@ public class EntityAIMoveCancel extends EntityAIBase {
 
         if (owner instanceof EntityPlayer) {
             this.player = (EntityPlayer) owner;
-            return this.player.isSwingInProgress || this.player.isUsingItem();
+            return this.player.isSwingInProgress || this.player.isHandActive();
         }
         return false;
     }
@@ -71,7 +71,7 @@ public class EntityAIMoveCancel extends EntityAIBase {
      */
     @Override
     public boolean continueExecuting() {
-        return (this.pet.getAttackTarget() == null) && (this.player.isSwingInProgress || this.player.isUsingItem()) && !this.pet.isSitting() && !this.pet.isInLove();
+        return (this.pet.getAttackTarget() == null) && (this.player.isSwingInProgress || this.player.isHandActive()) && !this.pet.isSitting() && !this.pet.isInLove();
     }
 
     /**

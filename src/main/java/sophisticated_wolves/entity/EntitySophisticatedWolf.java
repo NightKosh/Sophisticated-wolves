@@ -10,19 +10,24 @@ import net.minecraft.entity.passive.EntityAnimal;
 import net.minecraft.entity.passive.EntityWolf;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
+import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemFood;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.FurnaceRecipes;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.network.datasync.DataParameter;
+import net.minecraft.network.datasync.DataSerializers;
+import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.potion.Potion;
-import net.minecraft.util.BlockPos;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.EnumHand;
 import net.minecraft.util.EnumParticleTypes;
-import net.minecraft.util.MathHelper;
+import net.minecraft.util.SoundEvent;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraft.world.biome.BiomeGenForest;
-import net.minecraft.world.biome.WorldChunkManager;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import sophisticated_wolves.SWConfiguration;
@@ -33,6 +38,7 @@ import sophisticated_wolves.item.ItemDogTag;
 
 import java.util.Iterator;
 import java.util.List;
+import java.util.UUID;
 
 /**
  * Sophisticated Wolves
@@ -41,6 +47,10 @@ import java.util.List;
  * @license Lesser GNU Public License v3 (http://www.gnu.org/licenses/lgpl.html)
  */
 public class EntitySophisticatedWolf extends EntityWolf implements ISophisticatedWolf {
+
+    private static final DataParameter<Integer> WOLF_SPECIES = EntityDataManager.createKey(EntityWolf.class, DataSerializers.VARINT);
+    private static final int POTION_POISON_ID = 19;
+    private static final int POTION_WITHER_ID = 20;
 
     //New Sophisticated Wolves variables
     public boolean puking;
@@ -58,7 +68,7 @@ public class EntitySophisticatedWolf extends EntityWolf implements ISophisticate
                 removeTask = true;
             } else if (task instanceof EntityAILeapAtTarget) {
                 removeTask = true;
-            } else if (task instanceof EntityAIAttackOnCollide) {
+            } else if (task instanceof EntityAIAttackMelee) {
                 removeTask = true;
             } else if (task instanceof EntityAIFollowOwner) {
                 removeTask = true;
@@ -79,11 +89,11 @@ public class EntitySophisticatedWolf extends EntityWolf implements ISophisticate
         }
 
         this.tasks.addTask(3, new EntityAIAvoidCreeper(this, 8, 6, 3, 1, 1.4)); //new behavior
-        this.tasks.addTask(5, this.aiSit);
+        this.tasks.addTask(5, this.aiSit = new EntityAISit(this));
         this.tasks.addTask(7, new EntityAIShake(this)); //behavior for shaking
         this.tasks.addTask(10, new EntityAIAttackCancel(this)); //new behavior
         this.tasks.addTask(15, new EntityAILeapAtTarget(this, 0.4F));
-        this.tasks.addTask(20, new EntityAIAttackOnCollide(this, 1, true));
+        this.tasks.addTask(20, new EntityAIAttackMelee(this, 1, true));
         this.tasks.addTask(22, new EntityAIMoveCancel(this, 6));
         this.tasks.addTask(25, new EntityAINewFollowOwner(this, 1, 6, 2)); //changed 10.0F to 6.0F, mod class
         this.tasks.addTask(27, new EntityAIAvoidFire(this, 1, 1.4)); //new behavior
@@ -116,7 +126,7 @@ public class EntitySophisticatedWolf extends EntityWolf implements ISophisticate
     @Override
     protected void entityInit() {
         super.entityInit();
-        this.dataWatcher.addObject(22, new Byte((byte) 0)); //species
+        this.dataWatcher.register(WOLF_SPECIES, 0);
     }
 
     @Override
@@ -137,29 +147,29 @@ public class EntitySophisticatedWolf extends EntityWolf implements ISophisticate
      * Returns the sound this mob makes while it's alive.
      */
     @Override
-    protected String getLivingSound() {
+    protected SoundEvent getAmbientSound() {
         if (this.isAngry()) {
-            return "mob.wolf.growl";
+            return SoundEvents.entity_wolf_growl;
         }
 
         //Growls if creeper is near
         if (this.isTamed() && this.CreeperAlert()) {
-            return "mob.wolf.growl";
+            return SoundEvents.entity_wolf_growl;
         }
 
         if (this.rand.nextInt(3) == 0 && !this.CreeperAlert()) {
             if (this.isTamed() && this.getHealth() < 10) {
-                return "mob.wolf.whine";
+                return SoundEvents.entity_wolf_whine;
             } else {
-                return "mob.wolf.panting";
+                return SoundEvents.entity_wolf_pant;
             }
         } else {
             //sitting wolves will only bark 1/4 of the time
             if (!this.isSitting()) {
-                return "mob.wolf.bark";
+                return SoundEvents.entity_wolf_ambient;
             } else {
                 if (this.rand.nextInt(3) == 0) {
-                    return "mob.wolf.bark";
+                    return SoundEvents.entity_wolf_ambient;
                 } else {
                     return null;
                 }
@@ -203,8 +213,9 @@ public class EntitySophisticatedWolf extends EntityWolf implements ISophisticate
     @Override
     public void onUpdate() {        //Checks if wolf is burning and not currently standing in fire or if wolf is poison
         if (!this.isWet &&
-                ((this.isBurning() && !this.worldObj.func_147470_e(this.getEntityBoundingBox().contract(0.001, 0.001, 0.001))) ||
-                        ((this.isPotionActive(Potion.poison) || this.isPotionActive(Potion.wither))))) {
+                ((this.isBurning() && !this.worldObj.isFlammableWithin(this.getEntityBoundingBox().addCoord(0.001, 0.001, 0.001))) ||
+                        (this.isPotionActive(Potion.potionRegistry.getObjectById(POTION_POISON_ID)) ||
+                                this.isPotionActive(Potion.potionRegistry.getObjectById(POTION_WITHER_ID))))) {
             this.isShaking = true;
             this.timeWolfIsShaking = 0;
             this.prevTimeWolfIsShaking = 0;
@@ -215,11 +226,11 @@ public class EntitySophisticatedWolf extends EntityWolf implements ISophisticate
             if (timeWolfIsShaking == 0) {
                 //checks if burning/poisoned/wet and sets variables
                 if (this.isBurning()) {
-                    this.playSound("mob.wolf.shake", this.getSoundVolume(), (this.rand.nextFloat() - this.rand.nextFloat()) * 0.2F + 1);
-                } else if (this.isPotionActive(Potion.poison) || this.isPotionActive(Potion.wither)) {
+                    this.playSound(SoundEvents.entity_wolf_shake, this.getSoundVolume(), (this.rand.nextFloat() - this.rand.nextFloat()) * 0.2F + 1);
+                } else if (this.isPotionActive(Potion.potionRegistry.getObjectById(POTION_POISON_ID)) || this.isPotionActive(Potion.potionRegistry.getObjectById(POTION_WITHER_ID))) {
                     this.puking = true;
                 } else {
-                    this.playSound("mob.wolf.shake", this.getSoundVolume(), (this.rand.nextFloat() - this.rand.nextFloat()) * 0.2F + 1);
+                    this.playSound(SoundEvents.entity_wolf_shake, this.getSoundVolume(), (this.rand.nextFloat() - this.rand.nextFloat()) * 0.2F + 1);
                 }
             }
 
@@ -227,7 +238,7 @@ public class EntitySophisticatedWolf extends EntityWolf implements ISophisticate
                 //extinguishing added
                 if (this.isBurning()) {
                     this.extinguish();
-                    this.playSound("random.fizz", 0.7F, 1.6F + (rand.nextFloat() - rand.nextFloat()) * 0.4F);
+                    this.playSound(SoundEvents.block_fire_extinguish, 0.7F, 1.6F + (rand.nextFloat() - rand.nextFloat()) * 0.4F);
                 }
                 if (this.puking) {
                     this.clearActivePotions();
@@ -264,9 +275,8 @@ public class EntitySophisticatedWolf extends EntityWolf implements ISophisticate
      * Called when a player interacts with a mob. e.g. gets milk from a cow, gets into the saddle on a pig.
      */
     @Override
-    public boolean interact(EntityPlayer player) {
-        super.interact(player);
-        ItemStack stack = player.inventory.getCurrentItem();
+    public boolean processInteract(EntityPlayer player, EnumHand hand, ItemStack stack) {
+        super.processInteract(player, hand, stack);
 
         if (this.isTamed()) {
             if (stack != null) {
@@ -336,9 +346,9 @@ public class EntitySophisticatedWolf extends EntityWolf implements ISophisticate
     public EntityWolf createChild(EntityAgeable entity) {
         EntitySophisticatedWolf wolf = new EntitySophisticatedWolf(this.worldObj);
         wolf.updateSpecies(this.getSpecies()); //setting species to same as parent that spawned it
-        String ownerId = this.getOwnerId();
+        UUID ownerId = this.getOwnerId();
 
-        if (ownerId != null && ownerId.trim().length() > 0) {
+        if (ownerId != null) {
             wolf.setOwnerId(ownerId);
             wolf.setTamed(true);
         }
@@ -355,7 +365,7 @@ public class EntitySophisticatedWolf extends EntityWolf implements ISophisticate
             return false;
         } else {
             EntitySophisticatedWolf wolf = (EntitySophisticatedWolf) animal;
-            return !wolf.isTamed() ? false : (wolf.isSitting() ? false : this.isInLove() && wolf.isInLove());
+            return wolf.isTamed() && (!wolf.isSitting() && this.isInLove() && wolf.isInLove());
         }
     }
 
@@ -385,7 +395,7 @@ public class EntitySophisticatedWolf extends EntityWolf implements ISophisticate
     public boolean CreeperAlert() {
         List list = this.worldObj.getEntitiesWithinAABB(EntityCreeper.class, this.getEntityBoundingBox().expand(16, 4, 16));
         if (!list.isEmpty()) {
-            this.playSound("mob.wolf.growl", getSoundVolume(), (rand.nextFloat() - rand.nextFloat()) * 0.2F + 1);
+            this.playSound(SoundEvents.entity_wolf_growl, getSoundVolume(), (rand.nextFloat() - rand.nextFloat()) * 0.2F + 1);
             return true;
         } else {
             return false;
@@ -407,18 +417,15 @@ public class EntitySophisticatedWolf extends EntityWolf implements ISophisticate
      */
     @Override
     public int setSpecies() {
-        WorldChunkManager worldchunkmanager = this.worldObj.getWorldChunkManager();
-        if (worldchunkmanager != null) {
-            BiomeGenBase biomegenbase = this.worldObj.getBiomeGenForCoords(new BlockPos(this));
-            if (biomegenbase instanceof BiomeGenForest) {
-                if (this.rand.nextInt(7) == 0) {
-                    return 4;
-                }
-                return 2;
-            }
+        BiomeGenBase biomegenbase = this.worldObj.getBiomeGenForCoords(new BlockPos(this));
+        if (biomegenbase instanceof BiomeGenForest) {
             if (this.rand.nextInt(7) == 0) {
-                return 3;
+                return 4;
             }
+            return 2;
+        }
+        if (this.rand.nextInt(7) == 0) {
+            return 3;
         }
         return 1;
     }
@@ -428,7 +435,7 @@ public class EntitySophisticatedWolf extends EntityWolf implements ISophisticate
          */
     @Override
     public int getSpecies() {
-        return this.dataWatcher.getWatchableObjectByte(22);
+        return this.dataWatcher.get(WOLF_SPECIES);
     }
 
     /*
@@ -436,7 +443,7 @@ public class EntitySophisticatedWolf extends EntityWolf implements ISophisticate
      */
     @Override
     public void updateSpecies(int species) {
-        this.dataWatcher.updateObject(22, (byte) species);
+        this.dataWatcher.set(WOLF_SPECIES, species);
     }
 
     @Override
