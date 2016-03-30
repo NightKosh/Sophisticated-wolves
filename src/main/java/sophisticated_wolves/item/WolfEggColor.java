@@ -13,14 +13,10 @@ public class WolfEggColor implements IItemColor {
 
     @Override
     public int getColorFromItemstack(ItemStack item, int tintIndex) {
-        int itemDamage = item.getItemDamage();
-        if (itemDamage >= 0 && itemDamage < ItemWolfEgg.EnumEggs.values().length) {
-            if ((tintIndex & 1) == 0) {
-                return ItemWolfEgg.EnumEggs.getById(itemDamage).getBackgroundColor();
-            } else {
-                return ItemWolfEgg.EnumEggs.getById(itemDamage).getForegroundColor();
-            }
+        if ((tintIndex & 1) == 0) {
+            return ItemWolfEgg.EnumEggs.SOPHISTICATED_WOLF.getBackgroundColor();
+        } else {
+            return ItemWolfEgg.EnumEggs.SOPHISTICATED_WOLF.getForegroundColor();
         }
-        return 0xFFFFFF;
     }
 }
