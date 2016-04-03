@@ -48,7 +48,7 @@ public class EntityAIAvoidFire extends EntityAIBase {
             this.xPath = vec3d.xCoord;
             this.yPath = vec3d.yCoord;
             this.zPath = vec3d.zCoord;
-            return this.theWorld.func_147470_e(this.entity.getEntityBoundingBox().contract(0.001D, 0.001D, 0.001D));
+            return this.theWorld.isFlammableWithin(this.entity.getEntityBoundingBox().contract(0.001D, 0.001D, 0.001D));
         }
     }
 

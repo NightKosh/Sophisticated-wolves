@@ -176,7 +176,7 @@ public class ItemGSMonsterPlacer extends ItemMonsterPlacer {
             entity.setLocationAndAngles(x, y, z, MathHelper.wrapAngleTo180_float(world.rand.nextFloat() * 360), 0);
             entityliving.rotationYawHead = entityliving.rotationYaw;
             entityliving.renderYawOffset = entityliving.rotationYaw;
-            entityliving.func_180482_a(world.getDifficultyForLocation(new BlockPos(entityliving)), (IEntityLivingData) null);
+            entityliving.onInitialSpawn(world.getDifficultyForLocation(new BlockPos(entityliving)), (IEntityLivingData) null);
             world.spawnEntityInWorld(entity);
             entityliving.playLivingSound();
         }

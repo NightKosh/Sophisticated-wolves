@@ -18,7 +18,20 @@ public class Recipes {
 
     public static void recipesRegistration() {
         GameRegistry.addRecipe(new ItemStack(SWItems.dogTag, 5), "s", "l", 's', Items.string, 'l', Items.leather);
-        GameRegistry.addRecipe(new ItemStack(SWItems.dogTreat), "wpw", 'w', Items.wheat, 'p', Items.porkchop);
-        GameRegistry.addRecipe(new ItemStack(SWItems.dogTreat), "wpw", 'w', Items.wheat, 'p', Items.cooked_porkchop);
+
+        GameRegistry.addRecipe(new ItemStack(SWItems.dogTreat, 2), "wpw", 'w', Items.wheat, 'p', Items.porkchop);
+        GameRegistry.addRecipe(new ItemStack(SWItems.dogTreat, 2), "wpw", 'w', Items.wheat, 'p', Items.cooked_porkchop);
+
+        GameRegistry.addRecipe(new ItemStack(SWItems.dogTreat, 2), "wpw", 'w', Items.wheat, 'p', Items.beef);
+        GameRegistry.addRecipe(new ItemStack(SWItems.dogTreat, 2), "wpw", 'w', Items.wheat, 'p', Items.cooked_beef);
+
+        GameRegistry.addRecipe(new ItemStack(SWItems.dogTreat, 2), "wpw", 'w', Items.wheat, 'p', Items.chicken);
+        GameRegistry.addRecipe(new ItemStack(SWItems.dogTreat, 2), "wpw", 'w', Items.wheat, 'p', Items.cooked_chicken);
+
+        GameRegistry.addRecipe(new ItemStack(SWItems.dogTreat, 2), "wpw", 'w', Items.wheat, 'p', Items.rabbit);
+        GameRegistry.addRecipe(new ItemStack(SWItems.dogTreat, 2), "wpw", 'w', Items.wheat, 'p', Items.cooked_rabbit);
+
+        GameRegistry.addRecipe(new ItemStack(SWItems.dogTreat, 2), "wpw", 'w', Items.wheat, 'p', Items.mutton);
+        GameRegistry.addRecipe(new ItemStack(SWItems.dogTreat, 2), "wpw", 'w', Items.wheat, 'p', Items.cooked_mutton);
     }
 }

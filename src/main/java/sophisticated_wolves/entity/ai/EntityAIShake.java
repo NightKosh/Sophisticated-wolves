@@ -37,7 +37,7 @@ public class EntityAIShake extends EntityAIBase {
         }
 
         if (this.theWolf.isShaking && this.theWolf.isWet) {
-            if (this.theWorld.func_147470_e(this.theWolf.getEntityBoundingBox().contract(0.001D, 0.001D, 0.001D))) {
+            if (this.theWorld.isFlammableWithin(this.theWolf.getEntityBoundingBox().contract(0.001D, 0.001D, 0.001D))) {
                 return false;
             }
             if (this.theWolf.isWet()) {
@@ -57,7 +57,7 @@ public class EntityAIShake extends EntityAIBase {
     @Override
     public boolean continueExecuting() {
         if (this.theWolf.isShaking && this.theWolf.isWet) {
-            if (this.theWorld.func_147470_e(this.theWolf.getEntityBoundingBox().contract(0.001D, 0.001D, 0.001D))) {
+            if (this.theWorld.isFlammableWithin(this.theWolf.getEntityBoundingBox().contract(0.001D, 0.001D, 0.001D))) {
                 return false;
             }
             if (this.theWolf.isWet()) {

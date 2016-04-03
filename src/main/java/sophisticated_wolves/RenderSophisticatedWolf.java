@@ -27,7 +27,7 @@ public class RenderSophisticatedWolf extends RenderWolf {
     }
 
     @Override
-    protected ResourceLocation getEntityTexture(Entity entity) {
+    protected ResourceLocation getEntityTexture(EntityWolf entity) {
         EntitySophisticatedWolf wolf = (EntitySophisticatedWolf) entity;
         if (SWConfiguration.customWolfTextures) {
             if (wolf.getSpecies() == 4) {
@@ -64,13 +64,13 @@ public class RenderSophisticatedWolf extends RenderWolf {
     //Custom Functions below here
     //Function called by RenderLiving for special renders, used to call nametag function
     @Override
-    public void passSpecialRender(EntityLivingBase entity, double par2, double par3, double par4) {
+    public void renderName(EntityWolf entity, double x, double y, double z) {
         if (entity instanceof EntityWolf) {
             EntitySophisticatedWolf wolf = (EntitySophisticatedWolf) entity;
 
             if (wolf.isTamed() && Minecraft.isGuiEnabled() && StringUtils.isNotBlank(wolf.getCustomNameTag())) {
                 if (wolf.getCustomNameTag().length() > 0) {
-                    this.renderWolfName(wolf, par2, par3, par4);
+                    this.renderWolfName(wolf, x, y, z);
                 }
             }
         }
@@ -97,16 +97,20 @@ public class RenderSophisticatedWolf extends RenderWolf {
             GL11.glEnable(GL11.GL_BLEND);
             GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
             Tessellator tessellator = Tessellator.getInstance();
-            WorldRenderer worldRenderer = tessellator.getWorldRenderer();
-            GL11.glDisable(GL11.GL_TEXTURE_2D);
-            worldRenderer.startDrawingQuads();
-            int var16 = fontRenderer.getStringWidth(wolfName) / 2;
-            worldRenderer.setColorRGBA_F(0, 0, 0, 0.25F);
-            worldRenderer.addVertex(-var16 - 1, -1, 0);
-            worldRenderer.addVertex(-var16 - 1, 8, 0);
-            worldRenderer.addVertex(var16 + 1, 8, 0);
-            worldRenderer.addVertex(var16 + 1, -1, 0);
-            tessellator.draw();
+//            WorldRenderer worldRenderer = tessellator.getWorldRenderer();
+//            GL11.glDisable(GL11.GL_TEXTURE_2D);
+//            worldRenderer.startDrawingQuads();
+//            int var16 = fontRenderer.getStringWidth(wolfName) / 2;
+//            worldRenderer.putColorRGB_F4(0, 0, 0);//.setColorRGBA_F(0, 0, 0, 0.25F);
+//            int[] a1 = {-var16 - 1, -1, 0};
+//            worldRenderer.addVertexData(a1);
+//            int[] a2 = {-var16 - 1, 8, 0};
+//            worldRenderer.addVertexData(a2);
+//            int[] a3 = {var16 + 1, 8, 0};
+//            worldRenderer.addVertexData(a3);
+//            int[] a4 = {var16 + 1, -1, 0};
+//            worldRenderer.addVertexData(a4);
+//            tessellator.draw();
             GL11.glEnable(GL11.GL_TEXTURE_2D);
             if (!wolf.isSitting()) {
                 fontRenderer.drawString(wolfName, -fontRenderer.getStringWidth(wolfName) / 2, 0, getSitNameColor(wolf));

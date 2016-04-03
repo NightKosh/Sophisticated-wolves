@@ -58,7 +58,7 @@ public class EntityAINewBeg extends EntityAIBase {
     @Override
     public void startExecuting() {
         this.petPathfinder.clearPathEntity();
-        this.wolf.func_70918_i(true);
+        this.wolf.setBegging(true);
         this.randomBeg = 40 + this.wolf.getRNG().nextInt(40);
     }
 
@@ -67,7 +67,7 @@ public class EntityAINewBeg extends EntityAIBase {
      */
     @Override
     public void resetTask() {
-        this.wolf.func_70918_i(false);
+        this.wolf.setBegging(false);
         this.player = null;
     }
 

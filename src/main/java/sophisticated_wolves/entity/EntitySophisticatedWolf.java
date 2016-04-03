@@ -203,7 +203,7 @@ public class EntitySophisticatedWolf extends EntityWolf implements ISophisticate
     @Override
     public void onUpdate() {        //Checks if wolf is burning and not currently standing in fire or if wolf is poison
         if (!this.isWet &&
-                ((this.isBurning() && !this.worldObj.func_147470_e(this.getEntityBoundingBox().contract(0.001, 0.001, 0.001))) ||
+                ((this.isBurning() && !this.worldObj.isFlammableWithin(this.getEntityBoundingBox().contract(0.001, 0.001, 0.001))) ||
                         ((this.isPotionActive(Potion.poison) || this.isPotionActive(Potion.wither))))) {
             this.isShaking = true;
             this.timeWolfIsShaking = 0;
