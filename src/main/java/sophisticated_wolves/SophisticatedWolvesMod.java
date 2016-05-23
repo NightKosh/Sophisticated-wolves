@@ -1,18 +1,19 @@
 package sophisticated_wolves;
 
+import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import sophisticated_wolves.api.*;
 import net.minecraft.entity.EnumCreatureType;
 import net.minecraftforge.common.BiomeDictionary;
 import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.common.*;
 import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.registry.EntityRegistry;
-import org.apache.logging.log4j.Level;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-import sophisticated_wolves.api.ModInfo;
 import sophisticated_wolves.api.SophisticatedWolvesAPI;
 import sophisticated_wolves.entity.EntitySophisticatedWolf;
 import sophisticated_wolves.proxy.CommonProxy;

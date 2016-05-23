@@ -4,7 +4,7 @@ import net.minecraft.entity.EntityCreature;
 import net.minecraft.entity.ai.EntityAIBase;
 import net.minecraft.entity.ai.RandomPositionGenerator;
 import net.minecraft.entity.monster.EntityCreeper;
-import net.minecraft.pathfinding.PathEntity;
+import net.minecraft.pathfinding.*;
 import net.minecraft.pathfinding.PathNavigate;
 import net.minecraft.util.math.Vec3d;
 
@@ -25,7 +25,7 @@ public class EntityAIAvoidCreeper extends EntityAIBase {
     protected int distance;
     protected int minDistToCharged;
     protected int minDist;
-    protected PathEntity pathEntity;
+    protected Path pathEntity;
     protected float listSize;
 
     /**

@@ -86,7 +86,7 @@ public class EntityAINewBeg extends EntityAIBase {
             return false;
         }
 
-        if (!this.wolf.isTamed() && stack.getItem().equals(Items.bone)) {
+        if (!this.wolf.isTamed() && stack.getItem().equals(Items.BONE)) {
             return true;
         } else {
             return this.wolf.isTamed() && this.wolf.isFavoriteFood(stack);

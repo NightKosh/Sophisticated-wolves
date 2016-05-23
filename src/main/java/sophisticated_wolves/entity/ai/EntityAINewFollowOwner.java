@@ -85,8 +85,8 @@ public class EntityAINewFollowOwner extends EntityAIFollowOwner {
         IBlockState blockState = pet.worldObj.getBlockState(new BlockPos(x, y, z));
         if (blockState != null) {
             Material material = blockState.getBlock().getMaterial(blockState);
-            if ((blockState.getBlock().isNormalCube(blockState) || material.equals(Material.ice) || material.equals(Material.leaves) ||
-                    material.equals(Material.glass)) && !material.equals(Material.cactus) && !material.equals(material.plants)) {
+            if ((blockState.getBlock().isNormalCube(blockState) || material.equals(Material.ICE) || material.equals(Material.LEAVES) ||
+                    material.equals(Material.GLASS)) && !material.equals(Material.CACTUS) && !material.equals(material.PLANTS)) {
                 return true;
             }
         }
@@ -97,8 +97,8 @@ public class EntityAINewFollowOwner extends EntityAIFollowOwner {
         IBlockState blockState = pet.worldObj.getBlockState(new BlockPos(x, y, z));
         if (blockState != null) {
             Material material = blockState.getBlock().getMaterial(blockState);
-            if (!blockState.getBlock().isNormalCube(blockState) && !material.equals(Material.water) && !material.equals(Material.lava) &&
-                    !material.equals(Material.fire) && !material.equals(Material.leaves) && !material.equals(Material.glass) && !material.equals(Material.ice)) {
+            if (!blockState.getBlock().isNormalCube(blockState) && !material.equals(Material.WATER) && !material.equals(Material.LAVA) &&
+                    !material.equals(Material.FIRE) && !material.equals(Material.LEAVES) && !material.equals(Material.GLASS) && !material.equals(Material.ICE)) {
                 return true;
             }
         }

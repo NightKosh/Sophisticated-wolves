@@ -70,7 +70,7 @@ public class ItemWolfEgg extends ItemMonsterPlacer {
 
     public ItemWolfEgg() {
         this.setHasSubtypes(true);
-        this.setCreativeTab(CreativeTabs.tabMisc);
+        this.setCreativeTab(CreativeTabs.MISC);
         this.setUnlocalizedName("monsterPlacer");
     }
 
@@ -127,7 +127,7 @@ public class ItemWolfEgg extends ItemMonsterPlacer {
         if (world.isRemote) {
             return new ActionResult(EnumActionResult.PASS, item);
         } else {
-            RayTraceResult rayTraceEesult = this.getMovingObjectPositionFromPlayer(world, player, true);
+            RayTraceResult rayTraceEesult = this.rayTrace(world, player, true);
 
             if (rayTraceEesult == null) {
                 return new ActionResult(EnumActionResult.PASS, item);
@@ -162,7 +162,7 @@ public class ItemWolfEgg extends ItemMonsterPlacer {
     public static Entity spawnCreature(World world, int eggMeta, double x, double y, double z) {
         EntitySophisticatedWolf wolf = new EntitySophisticatedWolf(world);
 
-        wolf.setLocationAndAngles(x, y, z, MathHelper.wrapAngleTo180_float(world.rand.nextFloat() * 360), 0);
+        wolf.setLocationAndAngles(x, y, z, MathHelper.wrapDegrees(world.rand.nextFloat() * 360), 0);
         wolf.rotationYawHead = wolf.rotationYaw;
         wolf.renderYawOffset = wolf.rotationYaw;
         wolf.onInitialSpawn(world.getDifficultyForLocation(new BlockPos(wolf)), (IEntityLivingData) null);

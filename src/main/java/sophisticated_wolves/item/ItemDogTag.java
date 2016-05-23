@@ -22,7 +22,7 @@ public class ItemDogTag extends Item {
     public ItemDogTag() {
         super();
         setUnlocalizedName("dogtag");
-        setCreativeTab(CreativeTabs.tabMisc);
+        setCreativeTab(CreativeTabs.MISC);
     }
 
     /**

@@ -17,21 +17,21 @@ public class Recipes {
     }
 
     public static void recipesRegistration() {
-        GameRegistry.addRecipe(new ItemStack(SWItems.dogTag, 5), "s", "l", 's', Items.string, 'l', Items.leather);
+        GameRegistry.addRecipe(new ItemStack(SWItems.dogTag, 5), "s", "l", 's', Items.STRING, 'l', Items.LEATHER);
 
-        GameRegistry.addRecipe(new ItemStack(SWItems.dogTreat, 2), "wpw", 'w', Items.wheat, 'p', Items.porkchop);
-        GameRegistry.addRecipe(new ItemStack(SWItems.dogTreat, 2), "wpw", 'w', Items.wheat, 'p', Items.cooked_porkchop);
+        GameRegistry.addRecipe(new ItemStack(SWItems.dogTreat, 2), "wpw", 'w', Items.WHEAT, 'p', Items.PORKCHOP);
+        GameRegistry.addRecipe(new ItemStack(SWItems.dogTreat, 2), "wpw", 'w', Items.WHEAT, 'p', Items.COOKED_PORKCHOP);
 
-        GameRegistry.addRecipe(new ItemStack(SWItems.dogTreat, 2), "wpw", 'w', Items.wheat, 'p', Items.beef);
-        GameRegistry.addRecipe(new ItemStack(SWItems.dogTreat, 2), "wpw", 'w', Items.wheat, 'p', Items.cooked_beef);
+        GameRegistry.addRecipe(new ItemStack(SWItems.dogTreat, 2), "wpw", 'w', Items.WHEAT, 'p', Items.BEEF);
+        GameRegistry.addRecipe(new ItemStack(SWItems.dogTreat, 2), "wpw", 'w', Items.WHEAT, 'p', Items.COOKED_BEEF);
 
-        GameRegistry.addRecipe(new ItemStack(SWItems.dogTreat, 2), "wpw", 'w', Items.wheat, 'p', Items.chicken);
-        GameRegistry.addRecipe(new ItemStack(SWItems.dogTreat, 2), "wpw", 'w', Items.wheat, 'p', Items.cooked_chicken);
+        GameRegistry.addRecipe(new ItemStack(SWItems.dogTreat, 2), "wpw", 'w', Items.WHEAT, 'p', Items.CHICKEN);
+        GameRegistry.addRecipe(new ItemStack(SWItems.dogTreat, 2), "wpw", 'w', Items.WHEAT, 'p', Items.COOKED_CHICKEN);
 
-        GameRegistry.addRecipe(new ItemStack(SWItems.dogTreat, 2), "wpw", 'w', Items.wheat, 'p', Items.rabbit);
-        GameRegistry.addRecipe(new ItemStack(SWItems.dogTreat, 2), "wpw", 'w', Items.wheat, 'p', Items.cooked_rabbit);
+        GameRegistry.addRecipe(new ItemStack(SWItems.dogTreat, 2), "wpw", 'w', Items.WHEAT, 'p', Items.RABBIT);
+        GameRegistry.addRecipe(new ItemStack(SWItems.dogTreat, 2), "wpw", 'w', Items.WHEAT, 'p', Items.COOKED_RABBIT);
 
-        GameRegistry.addRecipe(new ItemStack(SWItems.dogTreat, 2), "wpw", 'w', Items.wheat, 'p', Items.mutton);
-        GameRegistry.addRecipe(new ItemStack(SWItems.dogTreat, 2), "wpw", 'w', Items.wheat, 'p', Items.cooked_mutton);
+        GameRegistry.addRecipe(new ItemStack(SWItems.dogTreat, 2), "wpw", 'w', Items.WHEAT, 'p', Items.MUTTON);
+        GameRegistry.addRecipe(new ItemStack(SWItems.dogTreat, 2), "wpw", 'w', Items.WHEAT, 'p', Items.COOKED_MUTTON);
     }
 }
