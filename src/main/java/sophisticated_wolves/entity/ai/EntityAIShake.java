@@ -3,7 +3,6 @@ package sophisticated_wolves.entity.ai;
 import net.minecraft.entity.ai.EntityAIBase;
 import net.minecraft.pathfinding.PathNavigate;
 import net.minecraft.world.World;
-import net.minecraft.entity.passive.*;
 import sophisticated_wolves.entity.EntitySophisticatedWolf;
 
 /**
@@ -37,7 +36,7 @@ public class EntityAIShake extends EntityAIBase {
             return false;
         }
 
-        if (this.theWolf.isWolfWet()) {
+        if (this.theWolf.isShaking && this.theWolf.isWolfWet()) {
             if (this.theWorld.isFlammableWithin(this.theWolf.getEntityBoundingBox().addCoord(0.001D, 0.001D, 0.001D))) {
                 return false;
             }
@@ -57,7 +56,7 @@ public class EntityAIShake extends EntityAIBase {
      */
     @Override
     public boolean continueExecuting() {
-        if (this.theWolf.isWolfWet()) {
+        if (this.theWolf.isShaking && this.theWolf.isWolfWet()) {
             if (this.theWorld.isFlammableWithin(this.theWolf.getEntityBoundingBox().addCoord(0.001D, 0.001D, 0.001D))) {
                 return false;
             }
