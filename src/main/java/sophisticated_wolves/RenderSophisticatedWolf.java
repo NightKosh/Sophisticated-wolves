@@ -1,7 +1,6 @@
 package sophisticated_wolves;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.entity.*;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.renderer.Tessellator;
@@ -77,7 +76,7 @@ public class RenderSophisticatedWolf extends RenderWolf {
     public void renderWolfName(EntitySophisticatedWolf wolf, double d, double d1, double d2) {
         float f = 1.6F;
         float f1 = 0.01666667F * f;
-        float f2 = wolf.getDistanceToEntity(this.renderManager.pointedEntity);
+        float f2 = wolf.getDistanceToEntity(this.renderManager.renderViewEntity);
         float f3 = wolf.isSitting() ? 32 : 64;
         if (f2 < f3) {
             String wolfName = wolf.getCustomNameTag();
