@@ -4,7 +4,7 @@ import net.minecraft.entity.EntityCreature;
 import net.minecraft.entity.ai.EntityAIBase;
 import net.minecraft.entity.ai.RandomPositionGenerator;
 import net.minecraft.entity.monster.EntityCreeper;
-import net.minecraft.pathfinding.*;
+import net.minecraft.pathfinding.Path;
 import net.minecraft.pathfinding.PathNavigate;
 import net.minecraft.util.math.Vec3d;
 
@@ -65,18 +65,14 @@ public class EntityAIAvoidCreeper extends EntityAIBase {
         for (int cr = 0; cr < this.listSize; cr++) {
             this.creeper = (EntityCreeper) list.get(cr);
 
-            if (this.entity.getDistanceSqToEntity(creeper) < this.minDistToCharged * this.minDistToCharged) {
-                if (this.creeper.getCreeperState() > 0) {
-                    Vec3d vec3d = RandomPositionGenerator.findRandomTargetBlockAwayFrom(this.entity, 16, 7, new Vec3d(this.creeper.posX, this.creeper.posY, this.creeper.posZ));
+            if (this.entity.getDistanceSqToEntity(creeper) < this.minDistToCharged * this.minDistToCharged && this.creeper.getCreeperState() > 0) {
+                Vec3d vec3d = RandomPositionGenerator.findRandomTargetBlockAwayFrom(this.entity, 16, 7, new Vec3d(this.creeper.posX, this.creeper.posY, this.creeper.posZ));
 
-                    if (vec3d != null) {
-                        if (this.creeper.getDistanceSq(vec3d.xCoord, vec3d.yCoord, vec3d.zCoord) > this.creeper.getDistanceSqToEntity(this.entity)) {
-                            this.pathEntity = this.entityPathNavigate.getPathToXYZ(vec3d.xCoord, vec3d.yCoord, vec3d.zCoord);
+                if (vec3d != null) {
+                    if (this.creeper.getDistanceSq(vec3d.xCoord, vec3d.yCoord, vec3d.zCoord) > this.creeper.getDistanceSqToEntity(this.entity)) {
+                        this.pathEntity = this.entityPathNavigate.getPathToXYZ(vec3d.xCoord, vec3d.yCoord, vec3d.zCoord);
 
-                            if (this.pathEntity != null) {
-                                return pathEntity.isDestinationSame(vec3d);
-                            }
-                        }
+                        return this.pathEntity != null;
                     }
                 }
             }
@@ -88,9 +84,7 @@ public class EntityAIAvoidCreeper extends EntityAIBase {
                     if (this.creeper.getDistanceSq(vec3d.xCoord, vec3d.yCoord, vec3d.zCoord) > this.creeper.getDistanceSqToEntity(this.entity)) {
                         this.pathEntity = this.entityPathNavigate.getPathToXYZ(vec3d.xCoord, vec3d.yCoord, vec3d.zCoord);
 
-                        if (this.pathEntity != null) {
-                            return pathEntity.isDestinationSame(vec3d);
-                        }
+                        return this.pathEntity != null;
                     }
                 }
             }
