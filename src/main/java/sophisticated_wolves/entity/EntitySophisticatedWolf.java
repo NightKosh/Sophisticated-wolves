@@ -211,7 +211,7 @@ public class EntitySophisticatedWolf extends AEntitySophisticatedWolf {
      */
     @Override
     public void onUpdate() {        //Checks if wolf is burning and not currently standing in fire or if wolf is poison
-        if (!this.isWolfWet() &&
+        if (!this.isWet && //isWolfWet method is client side!
                 ((this.isBurning() && !this.worldObj.isFlammableWithin(this.getEntityBoundingBox().contract(0.001))) ||
                         (this.isPotionActive(Potion.REGISTRY.getObjectById(POTION_POISON_ID)) ||
                                 this.isPotionActive(Potion.REGISTRY.getObjectById(POTION_WITHER_ID))))) {
@@ -221,7 +221,7 @@ public class EntitySophisticatedWolf extends AEntitySophisticatedWolf {
             this.isWet = true;
         }
 
-        if (!this.isWet() && this.isWolfWet()) {
+        if (!this.isWet() && this.isWet()) {//isWolfWet method is client side!
             if (this.timeWolfIsShaking == 0) {
                 //checks if burning/poisoned/wet and sets variables
                 if (this.isBurning()) {

@@ -36,7 +36,7 @@ public class EntityAIShake extends EntityAIBase {
             return false;
         }
 
-        if (this.theWolf.isShaking && this.theWolf.isWolfWet()) {
+        if (this.theWolf.isShaking && this.theWolf.isWet) {//isWolfWet method is client side!
             if (this.theWorld.isFlammableWithin(this.theWolf.getEntityBoundingBox().contract(0.001))) {
                 return false;
             }
@@ -56,7 +56,7 @@ public class EntityAIShake extends EntityAIBase {
      */
     @Override
     public boolean continueExecuting() {
-        if (this.theWolf.isShaking && this.theWolf.isWolfWet()) {
+        if (this.theWolf.isShaking && this.theWolf.isWet) {//isWolfWet method is client side!
             if (this.theWorld.isFlammableWithin(this.theWolf.getEntityBoundingBox().contract(0.001))) {
                 return false;
             }
