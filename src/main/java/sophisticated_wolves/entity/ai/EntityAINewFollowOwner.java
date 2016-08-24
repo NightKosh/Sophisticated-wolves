@@ -39,7 +39,7 @@ public class EntityAINewFollowOwner extends EntityAIFollowOwner {
      */
     @Override
     public boolean continueExecuting() {
-        return super.continueExecuting() && !((EntityLivingBase) this.pet.getOwner()).isOnLadder();
+        return super.continueExecuting() && this.pet.getOwner() != null && !((EntityLivingBase) this.pet.getOwner()).isOnLadder();
     }
 
 
