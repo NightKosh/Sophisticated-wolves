@@ -18,7 +18,7 @@ public class EntityAIShake extends EntityAIBase {
 
     public EntityAIShake(EntitySophisticatedWolf wolf) {
         this.theWolf = wolf;
-        this.theWorld = wolf.worldObj;
+        this.theWorld = wolf.world;
         this.petPathfinder = theWolf.getNavigator();
         this.setMutexBits(1);
     }

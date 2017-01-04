@@ -5,7 +5,6 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.passive.EntityWolf;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
-import net.minecraft.world.*;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
@@ -31,10 +30,10 @@ public class ItemDogTreat extends Item {
      */
     @Override
     public boolean itemInteractionForEntity(ItemStack stack, EntityPlayer player, EntityLivingBase entity, EnumHand hand) {
-        if (!player.worldObj.isRemote && entity instanceof EntityWolf && !(entity instanceof ISophisticatedWolf)) {
+        if (!player.world.isRemote && entity instanceof EntityWolf && !(entity instanceof ISophisticatedWolf)) {
             EntityWolf wolf = (EntityWolf) entity;
             if (wolf.isTamed()) {
-                EntitySophisticatedWolf SWolf = new EntitySophisticatedWolf(player.worldObj);
+                EntitySophisticatedWolf SWolf = new EntitySophisticatedWolf(player.world);
 
                 SWolf.copyLocationAndAnglesFrom(wolf);
                 SWolf.setCustomNameTag(wolf.getCustomNameTag());
@@ -46,9 +45,9 @@ public class ItemDogTreat extends Item {
 
                 wolf.setDead();
 
-                player.worldObj.spawnEntityInWorld(SWolf);
-                player.worldObj.playSound((player), new BlockPos(SWolf.posX, SWolf.posY, SWolf.posZ), null, null, 1016, 0);
-                --stack.stackSize;
+                player.world.spawnEntity(SWolf);
+                player.world.playSound((player), new BlockPos(SWolf.posX, SWolf.posY, SWolf.posZ), null, null, 1016, 0);
+                stack.shrink(1);
                 return true;
             }
             return false;

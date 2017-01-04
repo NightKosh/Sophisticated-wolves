@@ -28,7 +28,7 @@ public class PetNameMessageToServer implements IMessage, IMessageHandler<PetName
 
     public PetNameMessageToServer(EntityTameable entity, String text) {
         this.playerID = entity.getEntityId();
-        this.dimensionID = entity.worldObj.provider.getDimension();
+        this.dimensionID = entity.world.provider.getDimension();
         this.text = text;
     }
 

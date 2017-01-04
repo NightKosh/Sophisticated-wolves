@@ -1,7 +1,6 @@
 package sophisticated_wolves.proxy;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.model.ModelWolf;
 import net.minecraft.entity.passive.EntityTameable;
 import net.minecraft.util.text.translation.I18n;
 import net.minecraftforge.fml.client.FMLClientHandler;
@@ -32,7 +31,7 @@ public class ClientProxy extends CommonProxy {
     }
 
     private void registerMobsRenderers() {
-        RenderingRegistry.registerEntityRenderingHandler(EntitySophisticatedWolf.class, new RenderSophisticatedWolf(new ModelWolf()));
+        RenderingRegistry.registerEntityRenderingHandler(EntitySophisticatedWolf.class, new RenderSophisticatedWolf());
     }
 
     @Override

@@ -53,7 +53,7 @@ public class EntityAIAvoidCreeper extends EntityAIBase {
      */
     @Override
     public boolean shouldExecute() {
-        List list = this.entity.worldObj.getEntitiesWithinAABB(EntityCreeper.class, this.entity.getEntityBoundingBox().expand(this.distance, 3, this.distance));
+        List list = this.entity.world.getEntitiesWithinAABB(EntityCreeper.class, this.entity.getEntityBoundingBox().expand(this.distance, 3, this.distance));
 
         if (list.isEmpty()) {
             return false;

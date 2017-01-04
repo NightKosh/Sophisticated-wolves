@@ -21,11 +21,11 @@ plugins {
 }
 */
 version = "3.6.4"
-group= "com.yourname.modid" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
+group= "sophisticated_wolves" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = "SophisticatedWolves"
 
 minecraft {
-    version = "1.10.2-12.18.1.2049"
+    version = "1.11-13.19.1.2199"
     runDir = "run"
     
     // the mappings can be changed at any time, and must be in the following format.
@@ -33,7 +33,7 @@ minecraft {
     // stable_#            stables are built at the discretion of the MCP team.
     // Use non-default mappings at your own risk. they may not allways work.
     // simply re-run your setup task after changing the mappings to update your workspace.
-    mappings = "snapshot_20160518"
+    mappings = "snapshot_20161220"
     // makeObfSourceJar = false // an Srg named sources jar is made by default. uncomment this to disable.
 }
 ext.apiSophisticatedWolves = "./api/sophisticated-wolves"

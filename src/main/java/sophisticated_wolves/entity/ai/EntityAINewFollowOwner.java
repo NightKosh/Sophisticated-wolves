@@ -62,9 +62,9 @@ public class EntityAINewFollowOwner extends EntityAIFollowOwner {
         if (!this.pet.isSitting() && this.tick <= 0) {
             this.tick = 10;
             if (!this.pet.getNavigator().tryMoveToEntityLiving(owner, this.speed) && !this.pet.getLeashed() && this.pet.getDistanceSqToEntity(owner) >= 144) {
-                int xPos = MathHelper.floor_double(owner.posX) - 2;
-                int zPos = MathHelper.floor_double(owner.posZ) - 2;
-                int yPos = MathHelper.floor_double(owner.getEntityBoundingBox().minY);
+                int xPos = MathHelper.floor(owner.posX) - 2;
+                int zPos = MathHelper.floor(owner.posZ) - 2;
+                int yPos = MathHelper.floor(owner.getEntityBoundingBox().minY);
 
                 for (int dX = -2; dX <= 2; ++dX) {
                     for (int dZ = -2; dZ <= 2; ++dZ) {
@@ -82,7 +82,7 @@ public class EntityAINewFollowOwner extends EntityAIFollowOwner {
     }
 
     private boolean isTeleportSafe(int x, int y, int z) {
-        IBlockState blockState = pet.worldObj.getBlockState(new BlockPos(x, y, z));
+        IBlockState blockState = pet.world.getBlockState(new BlockPos(x, y, z));
         if (blockState != null) {
             Material material = blockState.getBlock().getMaterial(blockState);
             if ((blockState.getBlock().isNormalCube(blockState) || material.equals(Material.ICE) || material.equals(Material.LEAVES) ||
@@ -94,7 +94,7 @@ public class EntityAINewFollowOwner extends EntityAIFollowOwner {
     }
 
     private boolean isAirSafe(int x, int y, int z) {
-        IBlockState blockState = pet.worldObj.getBlockState(new BlockPos(x, y, z));
+        IBlockState blockState = pet.world.getBlockState(new BlockPos(x, y, z));
         if (blockState != null) {
             Material material = blockState.getBlock().getMaterial(blockState);
             if (!blockState.getBlock().isNormalCube(blockState) && !material.equals(Material.WATER) && !material.equals(Material.LAVA) &&

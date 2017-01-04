@@ -2,7 +2,6 @@ package sophisticated_wolves;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
-import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.entity.RenderWolf;
 import net.minecraft.entity.passive.EntityWolf;
@@ -20,8 +19,8 @@ import sophisticated_wolves.entity.EntitySophisticatedWolf;
  */
 public class RenderSophisticatedWolf extends RenderWolf {
 
-    public RenderSophisticatedWolf(ModelBase modelBase) {
-        super(Minecraft.getMinecraft().getRenderManager(), modelBase, 0.5F);
+    public RenderSophisticatedWolf() {
+        super(Minecraft.getMinecraft().getRenderManager());
     }
 
     @Override

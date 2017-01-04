@@ -27,7 +27,7 @@ public class EntityAIAvoidFire extends EntityAIBase {
         this.moveSpeed = this.entity.getMoveHelper().getSpeed();
         this.minSpeed = minSpeed;
         this.maxSpeed = maxSpeed;
-        this.theWorld = this.entity.worldObj;
+        this.theWorld = this.entity.world;
         this.setMutexBits(1);
     }
 

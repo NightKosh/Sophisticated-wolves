@@ -24,7 +24,7 @@ public class EntityAINewBeg extends EntityAIBase {
 
     public EntityAINewBeg(EntitySophisticatedWolf wolf, float minPlayerDistance) {
         this.wolf = wolf;
-        this.world = wolf.worldObj;
+        this.world = wolf.world;
         this.minPlayerDistance = minPlayerDistance;
         this.petPathfinder = this.wolf.getNavigator();
         this.setMutexBits(3);

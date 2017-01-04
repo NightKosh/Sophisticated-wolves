@@ -23,7 +23,7 @@ public class EntityAITeleportAtDrowning extends EntityAIBase {
 
     public EntityAITeleportAtDrowning(EntityTameable pet) {
         this.pet = (EntitySophisticatedWolf) pet;
-        this.world = pet.worldObj;
+        this.world = pet.world;
         this.petPathfinder = pet.getNavigator();
     }
 
@@ -48,9 +48,9 @@ public class EntityAITeleportAtDrowning extends EntityAIBase {
 
     @Override
     public void updateTask() {
-        int xPos = MathHelper.floor_double(this.pet.getOwner().posX) - 2;
-        int yPos = MathHelper.floor_double(this.pet.getOwner().getEntityBoundingBox().minY);
-        int zPos = MathHelper.floor_double(this.pet.getOwner().posZ) - 2;
+        int xPos = MathHelper.floor(this.pet.getOwner().posX) - 2;
+        int yPos = MathHelper.floor(this.pet.getOwner().getEntityBoundingBox().minY);
+        int zPos = MathHelper.floor(this.pet.getOwner().posZ) - 2;
 
         for (int x = -2; x <= 2; ++x) {
             for (int z = -2; z <= 2; ++z) {

@@ -121,8 +121,6 @@ public class EntitySophisticatedWolf extends AEntitySophisticatedWolf {
         this.targetTasks.addTask(1, new EntityAINewOwnerHurtByTarget(this)); //mod class
         this.targetTasks.addTask(2, new EntityAINewOwnerHurtTarget(this)); //mod class
 
-        fireResistance = 5; //modified from default value
-
         this.updateSpecies(this.getSpeciesByBiome());
     }
 
@@ -212,7 +210,7 @@ public class EntitySophisticatedWolf extends AEntitySophisticatedWolf {
     @Override
     public void onUpdate() {        //Checks if wolf is burning and not currently standing in fire or if wolf is poison
         if (!this.isWet && //isWolfWet method is client side!
-                ((this.isBurning() && !this.worldObj.isFlammableWithin(this.getEntityBoundingBox().contract(0.001))) ||
+                ((this.isBurning() && !this.world.isFlammableWithin(this.getEntityBoundingBox().contract(0.001))) ||
                         (this.isPotionActive(Potion.REGISTRY.getObjectById(POTION_POISON_ID)) ||
                                 this.isPotionActive(Potion.REGISTRY.getObjectById(POTION_WITHER_ID))))) {
             this.isShaking = true;
@@ -221,7 +219,7 @@ public class EntitySophisticatedWolf extends AEntitySophisticatedWolf {
             this.isWet = true;
         }
 
-        if (!this.isWet() && this.isWet()) {//isWolfWet method is client side!
+        if (!this.isWet() && this.isWet) {//isWolfWet method is client side!
             if (this.timeWolfIsShaking == 0) {
                 //checks if burning/poisoned/wet and sets variables
                 if (this.isBurning()) {
@@ -255,7 +253,7 @@ public class EntitySophisticatedWolf extends AEntitySophisticatedWolf {
                     for (int var3 = 0; var3 < var2; ++var3) {
                         float var4 = (this.rand.nextFloat() * 2 - 1) * this.width * 0.5F;
                         float var5 = (this.rand.nextFloat() * 2 - 1) * this.width * 0.5F;
-                        this.worldObj.spawnParticle(EnumParticleTypes.WATER_SPLASH, this.posX + var4, var1 + 0.8, this.posZ + var5, this.motionX, this.motionY, this.motionZ);
+                        this.world.spawnParticle(EnumParticleTypes.WATER_SPLASH, this.posX + var4, var1 + 0.8, this.posZ + var5, this.motionX, this.motionY, this.motionZ);
                     }
                 }
             }
@@ -270,12 +268,11 @@ public class EntitySophisticatedWolf extends AEntitySophisticatedWolf {
         super.onUpdate();
     }
 
-    /**
-     * Called when a player interacts with a mob. e.g. gets milk from a cow, gets into the saddle on a pig.
-     */
     @Override
-    public boolean processInteract(EntityPlayer player, EnumHand hand, ItemStack stack) {
-        super.processInteract(player, hand, stack);
+    public boolean processInteract(EntityPlayer player, EnumHand hand) {
+        super.processInteract(player, hand);
+
+        ItemStack stack = player.getHeldItem(hand);
 
         if (this.isTamed()) {
             if (stack != null) {
@@ -292,13 +289,13 @@ public class EntitySophisticatedWolf extends AEntitySophisticatedWolf {
 
                     if ((stack.getItem().equals(Items.COOKED_FISH) || stack.getItem().equals(Items.FISH)) && this.getHealth() < 20) {
                         if (!player.capabilities.isCreativeMode) {
-                            --stack.stackSize;
+                            stack.shrink(1);
                         }
 
                         this.heal((float) foodItem.getHealAmount(stack));
                         this.playTameEffect(false); //generates smoke particles on feeding
 
-                        if (stack.stackSize <= 0) {
+                        if (stack.getCount() <= 0) {
                             player.inventory.setInventorySlotContents(player.inventory.currentItem, (ItemStack) null);
                         }
                         this.aiSit.setSitting(this.isSitting());
@@ -311,7 +308,7 @@ public class EntitySophisticatedWolf extends AEntitySophisticatedWolf {
             }
             //removed !isBreedingItem() check
             //TODO
-            if (this.isOwner(player) && !this.worldObj.isRemote) {
+            if (this.isOwner(player) && !this.world.isRemote) {
                 //calls super.interact for breeding
                 if (stack != null && isBreedingItem(stack) && getGrowingAge() == 0) {
                     this.aiSit.setSitting(false);
@@ -343,7 +340,7 @@ public class EntitySophisticatedWolf extends AEntitySophisticatedWolf {
 
     @Override
     public EntityWolf createChild(EntityAgeable entity) {
-        EntitySophisticatedWolf wolf = new EntitySophisticatedWolf(this.worldObj);
+        EntitySophisticatedWolf wolf = new EntitySophisticatedWolf(this.world);
         wolf.updateSpecies(this.getSpecies()); //setting species to same as parent that spawned it
         UUID ownerId = this.getOwnerId();
 
@@ -392,7 +389,7 @@ public class EntitySophisticatedWolf extends AEntitySophisticatedWolf {
 
     //checks for creepers nearby
     public boolean CreeperAlert() {
-        List list = this.worldObj.getEntitiesWithinAABB(EntityCreeper.class, this.getEntityBoundingBox().expand(16, 4, 16));
+        List list = this.world.getEntitiesWithinAABB(EntityCreeper.class, this.getEntityBoundingBox().expand(16, 4, 16));
         if (!list.isEmpty()) {
             this.playSound(SoundEvents.ENTITY_WOLF_GROWL, getSoundVolume(), (rand.nextFloat() - rand.nextFloat()) * 0.2F + 1);
             return true;
@@ -416,7 +413,7 @@ public class EntitySophisticatedWolf extends AEntitySophisticatedWolf {
      */
     @Override
     public EnumWolfSpecies getSpeciesByBiome() {
-        Biome biome = this.worldObj.getBiomeGenForCoords(new BlockPos(this));
+        Biome biome = this.world.getBiomeForCoordsBody(new BlockPos(this));
         if (biome instanceof BiomeForest) {
             if (this.rand.nextInt(7) == 0) {
                 return EnumWolfSpecies.BROWN;
@@ -448,7 +445,7 @@ public class EntitySophisticatedWolf extends AEntitySophisticatedWolf {
     @Override
     public void onDeath(DamageSource damageSource) {
         if (isTamed() && this.getOwner() != null) {
-            ((EntityPlayer) this.getOwner()).addChatComponentMessage(this.getCombatTracker().getDeathMessage());
+            ((EntityPlayer) this.getOwner()).sendMessage(this.getCombatTracker().getDeathMessage());
         }
         super.onDeath(damageSource);
     }
@@ -456,10 +453,10 @@ public class EntitySophisticatedWolf extends AEntitySophisticatedWolf {
     @Override
     public boolean attackEntityFrom(DamageSource damageSource, float amount) {
         if ((damageSource.getEntity() != null && damageSource.getEntity().equals(this.getOwner()) && !damageSource.getEntity().isSneaking()) ||
-                (SWConfiguration.immuneToCacti && damageSource.equals(DamageSource.cactus))) {
+                (SWConfiguration.immuneToCacti && damageSource.equals(DamageSource.CACTUS))) {
             return false;
         } else {
-            if (damageSource.equals(DamageSource.drown)) {
+            if (damageSource.equals(DamageSource.DROWN)) {
                 this.isDrowning = true;
                 this.drownCount = 30;
             }
@@ -483,5 +480,10 @@ public class EntitySophisticatedWolf extends AEntitySophisticatedWolf {
         if (isDrowning) {
             this.drownCount = 30;
         }
+    }
+
+    @Override
+    protected int getFireImmuneTicks() {
+        return 5;
     }
 }
