@@ -14,18 +14,13 @@ buildscript {
 }
 apply plugin: 'net.minecraftforge.gradle.forge'
 
-/*
-// for people who want stable - not yet functional for MC 1.8.8 - we require the forgegradle 2.1 snapshot
-plugins {
-    id "net.minecraftforge.gradle.forge" version "2.0.2"
-}
-*/
-version = "3.6.4"
-group= "sophisticated_wolves" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
+
+version = "3.6.5"
+group= "sophisticated_wolves"
 archivesBaseName = "SophisticatedWolves"
 
 minecraft {
-    version = "1.11-13.19.1.2199"
+    version = "1.11.2-13.20.0.2259"
     runDir = "run"
     
     // the mappings can be changed at any time, and must be in the following format.
