@@ -370,8 +370,7 @@ public class EntitySophisticatedWolf extends AEntitySophisticatedWolf {
      */
     @Override
     protected boolean canDespawn() {
-        //Changed for respawning wolves
-        return super.canDespawn() && (SWConfiguration.respawningWolves || this.isAngry());
+        return !this.isTamed() && SWConfiguration.respawningWolves && this.ticksExisted > 5000;
     }
 
     //Custom functions below here
@@ -401,11 +400,11 @@ public class EntitySophisticatedWolf extends AEntitySophisticatedWolf {
     //reduces wolf spawning rate (necessary as monster spawn rate is called faster than animal)
     @Override
     public boolean getCanSpawnHere() {
-        if (SWConfiguration.respawningWolves) {
-            int k1 = this.rand.nextInt(3);
-            return k1 == 0 && super.getCanSpawnHere();
-        }
-        return super.getCanSpawnHere();
+        BlockPos blockpos = new BlockPos(MathHelper.floor(this.posX), MathHelper.floor(this.getEntityBoundingBox().minY), MathHelper.floor(this.posZ));
+        return this.world.getLight(blockpos) < 5 && this.rand.nextInt(3) == 0 &&
+                this.world.getBlockState(blockpos.down()).getBlock() == this.spawnableBlock &&
+                this.world.getBlockState((new BlockPos(this)).down()).canEntitySpawn(this) &&
+                this.getBlockPathWeight(new BlockPos(this.posX, this.getEntityBoundingBox().minY, this.posZ)) >= 0.0F;
     }
 
     /*
