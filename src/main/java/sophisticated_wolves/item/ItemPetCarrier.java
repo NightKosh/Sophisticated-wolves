@@ -40,7 +40,7 @@ public class ItemPetCarrier extends Item {
      */
     @Override
     public boolean itemInteractionForEntity(ItemStack stack, EntityPlayer player, EntityLivingBase entity, EnumHand hand) {
-        if (!entity.world.isRemote && stack != null && (!stack.hasTagCompound() || !stack.getTagCompound().hasKey("ClassName"))) {
+        if (!entity.world.isRemote && stack != null && !(stack.hasTagCompound() && stack.getTagCompound().hasKey("ClassName"))) {
             if (entity instanceof EntityTameable) {
                 EntityTameable pet = (EntityTameable) entity;
                 if (pet.isTamed() && pet.getOwnerId() != null && pet.getOwnerId().equals(player.getUniqueID())) {

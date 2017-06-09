@@ -36,6 +36,7 @@ import sophisticated_wolves.api.AEntitySophisticatedWolf;
 import sophisticated_wolves.api.EnumWolfSpecies;
 import sophisticated_wolves.entity.ai.*;
 import sophisticated_wolves.item.ItemDogTag;
+import sophisticated_wolves.item.ItemPetCarrier;
 
 import java.util.Iterator;
 import java.util.List;
@@ -301,7 +302,7 @@ public class EntitySophisticatedWolf extends AEntitySophisticatedWolf {
                         this.aiSit.setSitting(this.isSitting());
                         return true;
                     }
-                } else if (stack.getItem() instanceof ItemDogTag) {
+                } else if (stack.getItem() instanceof ItemDogTag || stack.getItem() instanceof ItemPetCarrier) {
                     this.aiSit.setSitting(this.isSitting());
                     return false;
                 }
