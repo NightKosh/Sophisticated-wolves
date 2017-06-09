@@ -1,6 +1,7 @@
 # Items
 item.dogtag.name=Dog Tag
 item.dogtreat.name=Dog Treat
+item.petcarrier.name=Pet Carrier
 
 # Wolf
 entity.SWWolf.name=Sophisticated Wolf

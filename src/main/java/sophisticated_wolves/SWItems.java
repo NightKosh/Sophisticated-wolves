@@ -6,6 +6,7 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 import sophisticated_wolves.api.ModInfo;
 import sophisticated_wolves.item.ItemDogTag;
 import sophisticated_wolves.item.ItemDogTreat;
+import sophisticated_wolves.item.ItemPetCarrier;
 import sophisticated_wolves.item.ItemWolfEgg;
 
 /**
@@ -20,6 +21,7 @@ public class SWItems {
 
     public static Item dogTag;
     public static Item dogTreat;
+    public static Item petCarrier;
     public static Item dogEgg;
 
     private SWItems() {
@@ -28,16 +30,18 @@ public class SWItems {
 
     public static final String DOG_TAG = "SWDogTag";
     public static final String DOG_TREAT = "SWDogTreat";
+    public static final String PET_CARRIER = "SWPetCarrier";
     public static final String DOG_EGG = "SWDogEgg";
 
     public static void itemsRegistration() {
         dogTag = new ItemDogTag();
-//        GameRegistry.registerItem(dogTag, DOG_TAG);
         GameRegistry.register(dogTag, new ResourceLocation(MOD_NAME + ":" + DOG_TAG));
-//        GameRegistry.register(dogTag.setRegistryName(DOG_TAG));
 
         dogTreat = new ItemDogTreat();
         GameRegistry.register(dogTreat, new ResourceLocation(MOD_NAME + ":" + DOG_TREAT.toLowerCase()));
+
+        petCarrier = new ItemPetCarrier();
+        GameRegistry.register(petCarrier, new ResourceLocation(MOD_NAME + ":" + PET_CARRIER.toLowerCase()));
 
         dogEgg = new ItemWolfEgg();
         GameRegistry.register(dogEgg, new ResourceLocation(MOD_NAME + ":" + DOG_EGG));

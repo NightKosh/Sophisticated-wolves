@@ -1,5 +1,7 @@
 package sophisticated_wolves;
 
+import net.minecraft.init.Blocks;
+import net.minecraft.item.EnumDyeColor;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
@@ -33,5 +35,9 @@ public class Recipes {
 
         GameRegistry.addRecipe(new ItemStack(SWItems.dogTreat, 2), "wpw", 'w', Items.WHEAT, 'p', Items.MUTTON);
         GameRegistry.addRecipe(new ItemStack(SWItems.dogTreat, 2), "wpw", 'w', Items.WHEAT, 'p', Items.COOKED_MUTTON);
+
+        GameRegistry.addRecipe(new ItemStack(SWItems.petCarrier), " i ", "bwb", "sss",
+                'i', Items.IRON_INGOT, 'b', Blocks.IRON_BARS, 'w', new ItemStack(Blocks.WOOL, 1, EnumDyeColor.WHITE.ordinal()),
+                's', Blocks.STONE_SLAB);
     }
 }

@@ -58,6 +58,7 @@ public class ClientProxy extends CommonProxy {
     public void modelsRegistration() {
         Minecraft.getMinecraft().getRenderItem().getItemModelMesher().register(SWItems.dogTag, 0, Resources.dogTagModel);
         Minecraft.getMinecraft().getRenderItem().getItemModelMesher().register(SWItems.dogTreat, 0, Resources.dogTreatModel);
+        Minecraft.getMinecraft().getRenderItem().getItemModelMesher().register(SWItems.petCarrier, 0, Resources.petCarrierModel);
 
         for (EnumWolfSpecies wolfSpecies : EnumWolfSpecies.values()) {
             Minecraft.getMinecraft().getRenderItem().getItemModelMesher().register(SWItems.dogEgg, wolfSpecies.ordinal(), Resources.spawnEggModel);

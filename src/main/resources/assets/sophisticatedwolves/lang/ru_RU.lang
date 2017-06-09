@@ -1,6 +1,7 @@
 # Items
 item.dogtag.name=Собачья бирка
 item.dogtreat.name=Собачье лакомство
+item.petcarrier.name=Переноска
 
 # Wolf
 entity.SWWolf.name=Умный волк

@@ -36,5 +36,6 @@ public class Resources {
     // MODEL RESOURCES
     public static final ModelResourceLocation dogTagModel = new ModelResourceLocation(MOD_NAME + ":" + SWItems.DOG_TAG, "inventory");
     public static final ModelResourceLocation dogTreatModel = new ModelResourceLocation(MOD_NAME + ":" + SWItems.DOG_TREAT, "inventory");
+    public static final ModelResourceLocation petCarrierModel = new ModelResourceLocation(MOD_NAME + ":" + SWItems.PET_CARRIER, "inventory");
     public static final ModelResourceLocation spawnEggModel = new ModelResourceLocation(MOD_NAME + ":" + SWItems.DOG_EGG, "inventory");
 }
