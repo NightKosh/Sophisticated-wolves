@@ -297,7 +297,7 @@ public class EntitySophisticatedWolf extends AEntitySophisticatedWolf {
                         this.playTameEffect(false); //generates smoke particles on feeding
 
                         if (stack.getCount() <= 0) {
-                            player.inventory.setInventorySlotContents(player.inventory.currentItem, (ItemStack) null);
+                            player.inventory.removeStackFromSlot(player.inventory.currentItem);
                         }
                         this.aiSit.setSitting(this.isSitting());
                         return true;
