@@ -14,7 +14,9 @@ import java.util.List;
  * @author NightKosh
  * @license Lesser GNU Public License v3 (http://www.gnu.org/licenses/lgpl.html)
  */
-public abstract class CustomPetCarrier {
+public abstract class PetCarrier {
+
+    public abstract Class getPetClass();
 
     public abstract String getPetId();
 
@@ -26,5 +28,22 @@ public abstract class CustomPetCarrier {
 
     public NBTTagCompound getInfo(EntityLivingBase pet) {
         return null;
+    }
+
+    public abstract List<NBTTagCompound> getDefaultPetCarriers();
+
+    public final NBTTagCompound getDefaultPetCarrier(NBTTagCompound infoNbt, NBTTagCompound entityNbt) {
+        NBTTagCompound nbt = new NBTTagCompound();
+        nbt.setString("ClassName", getPetClass().getSimpleName());
+
+        if (infoNbt != null) {
+            nbt.setTag("InfoList", infoNbt);
+        }
+
+        if (entityNbt != null) {
+            nbt.setTag("MobData", entityNbt);
+        }
+
+        return nbt;
     }
 }

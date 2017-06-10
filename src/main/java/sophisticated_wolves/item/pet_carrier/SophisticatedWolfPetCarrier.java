@@ -18,7 +18,12 @@ import java.util.List;
  * @author NightKosh
  * @license Lesser GNU Public License v3 (http://www.gnu.org/licenses/lgpl.html)
  */
-public class SophisticatedWolfPetCarrier extends CustomPetCarrier {
+public class SophisticatedWolfPetCarrier extends PetCarrier {
+
+    @Override
+    public Class getPetClass() {
+        return EntitySophisticatedWolf.class;
+    }
 
     @Override
     public String getPetId() {
@@ -49,5 +54,21 @@ public class SophisticatedWolfPetCarrier extends CustomPetCarrier {
         nbt.setInteger("WolfType", ((EntitySophisticatedWolf) pet).getSpecies().ordinal());
 
         return nbt;
+    }
+
+    @Override
+    public List<NBTTagCompound> getDefaultPetCarriers() {
+        List<NBTTagCompound> list = new ArrayList<>();
+        for (EnumWolfSpecies species : EnumWolfSpecies.values()) {
+            NBTTagCompound infoNbt = new NBTTagCompound();
+            infoNbt.setInteger("WolfType", species.ordinal());
+
+            NBTTagCompound entityNbt = new NBTTagCompound();
+            entityNbt.setInteger("Species", species.ordinal());
+
+            list.add(getDefaultPetCarrier(infoNbt, entityNbt));
+        }
+
+        return list;
     }
 }

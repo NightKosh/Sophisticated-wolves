@@ -16,6 +16,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
@@ -23,7 +24,9 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import sophisticated_wolves.SophisticatedWolvesMod;
 
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Sophisticated Wolves
@@ -69,7 +72,7 @@ public class ItemPetCarrier extends Item {
         NBTTagCompound nbt = new NBTTagCompound();
         nbt.setString("ClassName", entity.getClass().getSimpleName());
 
-        CustomPetCarrier petCarrier = PetCarrierHelper.PETS_MAP.get(entity.getClass().getSimpleName());
+        PetCarrier petCarrier = PetCarrierHelper.PETS_MAP.get(entity.getClass().getSimpleName());
         if (petCarrier != null) {
             NBTTagCompound infoNbt = petCarrier.getInfo(entity);
             if (infoNbt != null) {
@@ -100,7 +103,7 @@ public class ItemPetCarrier extends Item {
             if (stack != null && stack.hasTagCompound()) {
                 NBTTagCompound nbt = stack.getTagCompound();
                 if (nbt.hasKey("ClassName")) {
-                    CustomPetCarrier petCarrier = PetCarrierHelper.PETS_MAP.get(nbt.getString("ClassName"));
+                    PetCarrier petCarrier = PetCarrierHelper.PETS_MAP.get(nbt.getString("ClassName"));
                     if (petCarrier != null) {
                         EntityLiving entity = petCarrier.spawnPet(world, player);
                         if (entity != null) {
@@ -144,7 +147,7 @@ public class ItemPetCarrier extends Item {
         if (stack != null && stack.hasTagCompound()) {
             NBTTagCompound nbt = stack.getTagCompound();
             if (nbt.hasKey("ClassName")) {
-                CustomPetCarrier petCarrier = PetCarrierHelper.PETS_MAP.get(nbt.getString("ClassName"));
+                PetCarrier petCarrier = PetCarrierHelper.PETS_MAP.get(nbt.getString("ClassName"));
                 if (petCarrier != null) {
                     StringBuilder str = new StringBuilder(SophisticatedWolvesMod.proxy.getLocalizedString("carrier.pet_type")).append(" - ")
                             .append(SophisticatedWolvesMod.proxy.getLocalizedString("entity." + petCarrier.getPetId() + ".name"));
@@ -172,5 +175,28 @@ public class ItemPetCarrier extends Item {
         }
 
         super.addInformation(stack, player, tooltip, advanced);
+    }
+
+    @Override
+    public void getSubItems(Item item, CreativeTabs tabs, NonNullList<ItemStack> subitems) {
+        subitems.add(new ItemStack(item, 1));
+
+        Iterator<Map.Entry<String, PetCarrier>> it = PetCarrierHelper.PETS_MAP.entrySet().iterator();
+        while (it.hasNext()) {
+            Map.Entry<String, PetCarrier> entry = it.next();
+            if (entry != null) {
+                PetCarrier petCarrier = entry.getValue();
+                if (petCarrier != null) {
+                    List<NBTTagCompound> nbtList = petCarrier.getDefaultPetCarriers();
+                    if (nbtList != null) {
+                        for (NBTTagCompound nbt : nbtList) {
+                            ItemStack stack = new ItemStack(item, 1);
+                            stack.setTagCompound(nbt);
+                            subitems.add(stack);
+                        }
+                    }
+                }
+            }
+        }
     }
 }

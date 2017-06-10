@@ -17,7 +17,7 @@ import java.util.List;
  * @author NightKosh
  * @license Lesser GNU Public License v3 (http://www.gnu.org/licenses/lgpl.html)
  */
-public class CatPetCarrier extends CustomPetCarrier {
+public class CatPetCarrier extends PetCarrier {
 
     public static enum EnumCatType {
         OCELOT,
@@ -32,6 +32,11 @@ public class CatPetCarrier extends CustomPetCarrier {
                 return OCELOT;
             }
         }
+    }
+
+    @Override
+    public Class getPetClass() {
+        return EntityOcelot.class;
     }
 
     @Override
@@ -63,5 +68,21 @@ public class CatPetCarrier extends CustomPetCarrier {
         nbt.setInteger("CatType", ((EntityOcelot) pet).getTameSkin());
 
         return nbt;
+    }
+
+    @Override
+    public List<NBTTagCompound> getDefaultPetCarriers() {
+        List<NBTTagCompound> list = new ArrayList<>();
+        for (EnumCatType species : EnumCatType.values()) {
+            NBTTagCompound infoNbt = new NBTTagCompound();
+            infoNbt.setInteger("CatType", species.ordinal());
+
+            NBTTagCompound entityNbt = new NBTTagCompound();
+            entityNbt.setInteger("CatType", species.ordinal());
+
+            list.add(getDefaultPetCarrier(infoNbt, entityNbt));
+        }
+
+        return list;
     }
 }

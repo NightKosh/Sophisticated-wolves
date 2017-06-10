@@ -6,7 +6,7 @@ import net.minecraft.entity.passive.EntityRabbit;
 import net.minecraft.entity.passive.EntityWolf;
 import sophisticated_wolves.entity.EntitySophisticatedWolf;
 
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 /**
@@ -17,9 +17,9 @@ import java.util.Map;
  */
 public class PetCarrierHelper {
 
-    public static final Map<String, CustomPetCarrier> PETS_MAP = new HashMap<>();
+    public static final Map<String, PetCarrier> PETS_MAP = new LinkedHashMap<>();
 
-    public static void addPet(Class petClass, CustomPetCarrier petCarrier) {
+    public static void addPet(Class petClass, PetCarrier petCarrier) {
         PETS_MAP.put(petClass.getSimpleName(), petCarrier);
     }
 
