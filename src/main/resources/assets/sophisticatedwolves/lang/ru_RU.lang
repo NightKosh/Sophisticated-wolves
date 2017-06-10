@@ -14,9 +14,9 @@ wolf_type.brown=Коричневый
 
 # Cat Type
 cat_type.ocelot=Оцелот
-cat_type.black=Чёрный
-cat_type.red=Рыжый
-cat_type.siamese=Сиамский
+cat_type.black=Чёрная
+cat_type.red=Рыжая
+cat_type.siamese=Сиамская
 
 # Pet Carrier
 carrier.pet_type=Тип питомца
