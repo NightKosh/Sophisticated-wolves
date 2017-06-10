@@ -20,6 +20,8 @@ cat_type.siamese=Siamese
 
 # Pet Carrier
 carrier.pet_type=Pet type
+carrier.dog_type=Dog type
+carrier.cat_type=Cat type
 carrier.pet_name=Name
 
 # GUI

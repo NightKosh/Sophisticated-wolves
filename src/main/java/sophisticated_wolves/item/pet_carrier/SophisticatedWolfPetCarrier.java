@@ -34,8 +34,10 @@ public class SophisticatedWolfPetCarrier extends CustomPetCarrier {
     public List<String> getInfo(NBTTagCompound infoNbt) {
         if (infoNbt.hasKey("WolfType")) {
             List<String> list = new ArrayList(1);
-            list.add(SophisticatedWolvesMod.proxy.getLocalizedString("wolf_type." + EnumWolfSpecies.getSpeciesByNum(infoNbt.getInteger("WolfType"))
+            StringBuilder str = new StringBuilder(SophisticatedWolvesMod.proxy.getLocalizedString("dog_type"))
+                    .append(" - ").append(SophisticatedWolvesMod.proxy.getLocalizedString("wolf_type." + EnumWolfSpecies.getSpeciesByNum(infoNbt.getInteger("WolfType"))
                     .toString().toLowerCase()));
+            list.add(str.toString());
             return list;
         }
         return null;

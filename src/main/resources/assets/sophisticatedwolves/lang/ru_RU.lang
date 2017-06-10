@@ -20,6 +20,8 @@ cat_type.siamese=Сиамский
 
 # Pet Carrier
 carrier.pet_type=Тип питомца
+carrier.dog_type=Тип собаки
+carrier.cat_type=Тип кошки
 carrier.pet_name=Имя
 
 # GUI
