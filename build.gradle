@@ -14,10 +14,14 @@ buildscript {
 }
 apply plugin: 'net.minecraftforge.gradle.forge'
 
+tasks.withType(JavaCompile) {
+    sourceCompatibility = "1.8"
+    targetCompatibility = "1.8"
+}
 
-version = "3.6.5"
-group= "sophisticated_wolves"
-archivesBaseName = "SophisticatedWolves"
+version = "3.7.0"
+group = "sophisticated_wolves"
+archivesBaseName = "SophisticatedWolves-1.11.2-"
 
 minecraft {
     version = "1.11.2-13.20.0.2259"
