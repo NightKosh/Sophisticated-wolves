@@ -6,11 +6,21 @@ item.petcarrier.name=Pet Carrier
 # Wolf
 entity.SWWolf.name=Sophisticated Wolf
 
-#WOLF TYPE
+# Wolf Type
 wolf_type.vanilla=Gray
 wolf_type.forest=Forest
 wolf_type.black=Black
 wolf_type.brown=Brown
+
+# Cat Type
+cat_type.ocelot=Ocelot
+cat_type.black=Black
+cat_type.red=Red
+cat_type.siamese=Siamese
+
+# Pet Carrier
+carrier.pet_type=Pet type
+carrier.pet_name=Name
 
 # GUI
 gui.edit_dog_name.title=Give your pet a name:

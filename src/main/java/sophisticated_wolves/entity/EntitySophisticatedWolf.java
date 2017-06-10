@@ -36,7 +36,7 @@ import sophisticated_wolves.api.AEntitySophisticatedWolf;
 import sophisticated_wolves.api.EnumWolfSpecies;
 import sophisticated_wolves.entity.ai.*;
 import sophisticated_wolves.item.ItemDogTag;
-import sophisticated_wolves.item.ItemPetCarrier;
+import sophisticated_wolves.item.pet_carrier.ItemPetCarrier;
 
 import java.util.Iterator;
 import java.util.List;

@@ -6,7 +6,7 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 import sophisticated_wolves.api.ModInfo;
 import sophisticated_wolves.item.ItemDogTag;
 import sophisticated_wolves.item.ItemDogTreat;
-import sophisticated_wolves.item.ItemPetCarrier;
+import sophisticated_wolves.item.pet_carrier.ItemPetCarrier;
 import sophisticated_wolves.item.ItemWolfEgg;
 
 /**

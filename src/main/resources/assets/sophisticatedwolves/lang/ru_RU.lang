@@ -6,11 +6,21 @@ item.petcarrier.name=Переноска
 # Wolf
 entity.SWWolf.name=Умный волк
 
-#WOLF TYPE
+# Wolf Type
 wolf_type.vanilla=Серый
 wolf_type.forest=Лесной
 wolf_type.black=Чёрный
 wolf_type.brown=Коричневый
+
+# Cat Type
+cat_type.ocelot=Оцелот
+cat_type.black=Чёрный
+cat_type.red=Рыжый
+cat_type.siamese=Сиамский
+
+# Pet Carrier
+carrier.pet_type=Тип питомца
+carrier.pet_name=Имя
 
 # GUI
 gui.edit_dog_name.title=Дайте своему питомцу имя:

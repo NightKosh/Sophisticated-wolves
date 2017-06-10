@@ -16,6 +16,7 @@ import org.apache.logging.log4j.Logger;
 import sophisticated_wolves.api.ModInfo;
 import sophisticated_wolves.api.SophisticatedWolvesAPI;
 import sophisticated_wolves.entity.EntitySophisticatedWolf;
+import sophisticated_wolves.item.pet_carrier.PetCarrierHelper;
 import sophisticated_wolves.proxy.CommonProxy;
 
 import java.util.Set;
@@ -69,6 +70,8 @@ public class SophisticatedWolvesMod {
 
     @Mod.EventHandler
     public void postInit(FMLPostInitializationEvent event) {
+        PetCarrierHelper.addPetCarriers();
+
         if (Loader.isModLoaded("Thaumcraft")) {
             try {
 //            ThaumcraftApi.registerEntityTag(SW_NAME, new AspectList().add(Aspect.BEAST, 3).add(Aspect.EARTH, 3).add(Aspect.MIND, 3));
