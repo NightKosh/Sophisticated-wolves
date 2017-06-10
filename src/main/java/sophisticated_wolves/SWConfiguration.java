@@ -49,8 +49,14 @@ public class SWConfiguration {
         immuneToCacti = config.get(Configuration.CATEGORY_GENERAL, "ImmuneToCacti", true).getBoolean(true);
 
         spawnProbability = config.get(Configuration.CATEGORY_GENERAL, "SpawnProbability", 1).getInt(1);
-        spawnMinCount = config.get(Configuration.CATEGORY_GENERAL, "SpawnMinCount", 4).getInt(5);
-        spawnMaxCount = config.get(Configuration.CATEGORY_GENERAL, "SpawnMaxCount", 4).getInt(5);
+        spawnMinCount = config.get(Configuration.CATEGORY_GENERAL, "SpawnMinCount", 4).getInt(4);
+        spawnMaxCount = config.get(Configuration.CATEGORY_GENERAL, "SpawnMaxCount", 4).getInt(4);
+        if (spawnMinCount < 0) {
+            spawnMinCount = 0;
+        }
+        if (spawnMaxCount < spawnMinCount) {
+            spawnMaxCount = spawnMinCount;
+        }
 
         config.save();
     }
