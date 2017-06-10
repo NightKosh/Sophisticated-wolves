@@ -72,12 +72,12 @@ public class ItemWolfEgg extends ItemMonsterPlacer {
     @Override
     public String getItemStackDisplayName(ItemStack itemStack) {
         StringBuilder str = new StringBuilder();
-        str.append(I18n.translateToLocal(this.getUnlocalizedName() + ".name").trim());
+        str.append(SophisticatedWolvesMod.proxy.getLocalizedString(this.getUnlocalizedName() + ".name").trim());
 
         String name = EnumEggs.SOPHISTICATED_WOLF.getName();
         if (StringUtils.isNotBlank(name)) {
-            str.append(" ").append(I18n.translateToLocal("entity." + name + ".name"))
-                    .append(" - ").append(I18n.translateToLocal("wolf_type." + EnumWolfSpecies.getSpeciesByNum(itemStack.getItemDamage()).toString().toLowerCase()));
+            str.append(" ").append(SophisticatedWolvesMod.proxy.getLocalizedString("entity." + name + ".name"))
+                    .append(" - ").append(SophisticatedWolvesMod.proxy.getLocalizedString("wolf_type." + EnumWolfSpecies.getSpeciesByNum(itemStack.getItemDamage()).toString().toLowerCase()));
         }
 
         return str.toString();
