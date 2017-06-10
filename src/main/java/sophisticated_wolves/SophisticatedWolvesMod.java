@@ -63,7 +63,7 @@ public class SophisticatedWolvesMod {
             Set<Biome> biomeSet = BiomeDictionary.getBiomes(BiomeDictionary.Type.FOREST);
             Biome[] biomeArray = new Biome[biomeSet.size()];
             biomeSet.toArray(biomeArray);
-            EntityRegistry.addSpawn(EntitySophisticatedWolf.class, 1, 4, 4, EnumCreatureType.MONSTER, biomeArray);
+            EntityRegistry.addSpawn(EntitySophisticatedWolf.class, SWConfiguration.spawnProbability, SWConfiguration.spawnMinCount, SWConfiguration.spawnMaxCount, EnumCreatureType.MONSTER, biomeArray);
         }
 
         proxy.registerRenderers();
