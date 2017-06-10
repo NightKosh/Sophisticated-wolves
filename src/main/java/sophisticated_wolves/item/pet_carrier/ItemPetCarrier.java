@@ -23,6 +23,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import sophisticated_wolves.SophisticatedWolvesMod;
+import sophisticated_wolves.api.pet_carrier.PetCarrier;
 
 import java.util.Iterator;
 import java.util.List;

@@ -5,6 +5,7 @@ import net.minecraft.entity.passive.EntityChicken;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
+import sophisticated_wolves.api.pet_carrier.PetCarrier;
 
 import java.util.ArrayList;
 import java.util.List;

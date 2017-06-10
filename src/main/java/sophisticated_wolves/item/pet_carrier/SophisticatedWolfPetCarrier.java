@@ -7,6 +7,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
 import sophisticated_wolves.SophisticatedWolvesMod;
 import sophisticated_wolves.api.EnumWolfSpecies;
+import sophisticated_wolves.api.pet_carrier.PetCarrier;
 import sophisticated_wolves.entity.EntitySophisticatedWolf;
 
 import java.util.ArrayList;

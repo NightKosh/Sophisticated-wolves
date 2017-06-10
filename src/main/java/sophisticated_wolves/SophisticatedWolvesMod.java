@@ -42,6 +42,7 @@ public class SophisticatedWolvesMod {
     public SophisticatedWolvesMod() {
         instance = this;
         SophisticatedWolvesAPI.entityHandler = new APIEntityHandler();
+        SophisticatedWolvesAPI.petCarrierHandler = PetCarrierHelper.INSTANCE;
     }
 
     @Mod.EventHandler
@@ -70,7 +71,7 @@ public class SophisticatedWolvesMod {
 
     @Mod.EventHandler
     public void postInit(FMLPostInitializationEvent event) {
-        PetCarrierHelper.addPetCarriers();
+        PetCarrierHelper.INSTANCE.addPetCarriers();
 
         if (Loader.isModLoaded("Thaumcraft")) {
             try {
