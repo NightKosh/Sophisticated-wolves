@@ -54,7 +54,7 @@ public class CatPetCarrier extends PetCarrier {
     public List<String> getInfo(NBTTagCompound infoNbt) {
         if (infoNbt.hasKey("CatType")) {
             List<String> list = new ArrayList(1);
-            StringBuilder str = new StringBuilder(SophisticatedWolvesMod.proxy.getLocalizedString("cat_type"))
+            StringBuilder str = new StringBuilder(SophisticatedWolvesMod.proxy.getLocalizedString("carrier.cat_type"))
                     .append(" - ").append(SophisticatedWolvesMod.proxy.getLocalizedString("cat_type." + EnumCatType.getSpeciesByNum(infoNbt.getInteger("CatType"))
                     .toString().toLowerCase()));
             list.add(str.toString());

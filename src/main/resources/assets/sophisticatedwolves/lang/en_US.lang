@@ -9,7 +9,7 @@ item.petcarrier.name=Pet Carrier
 # Wolf
 entity.SWWolf.name=Sophisticated Wolf
 
-# Wolf Type
+#WOLF TYPE
 wolf_type.vanilla=Gray
 wolf_type.forest=Forest
 wolf_type.black=Black

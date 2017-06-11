@@ -9,7 +9,7 @@ item.petcarrier.name=Переноска
 # Wolf
 entity.SWWolf.name=Умный волк
 
-# Wolf Type
+#WOLF TYPE
 wolf_type.vanilla=Серый
 wolf_type.forest=Лесной
 wolf_type.black=Чёрный
