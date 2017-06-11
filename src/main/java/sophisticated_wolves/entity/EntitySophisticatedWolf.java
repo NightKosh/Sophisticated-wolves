@@ -3,7 +3,6 @@ package sophisticated_wolves.entity;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityAgeable;
-import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.ai.*;
 import net.minecraft.entity.monster.EntityCreeper;
 import net.minecraft.entity.passive.EntityAnimal;
@@ -271,29 +270,38 @@ public class EntitySophisticatedWolf extends AEntitySophisticatedWolf {
 
     @Override
     public boolean processInteract(EntityPlayer player, EnumHand hand) {
-        super.processInteract(player, hand);
-
         ItemStack stack = player.getHeldItem(hand);
 
         if (this.isTamed()) {
             if (stack != null) {
-                if (stack.getItem() instanceof ItemFood) {
+                if (stack.getItem() instanceof ItemFood && this.getHealth() < 20) {
                     ItemFood foodItem = (ItemFood) stack.getItem();
+
                     //checks static FurnaceRecipes for cooked version of held food
                     ItemStack cookedStack = FurnaceRecipes.instance().getSmeltingResult(stack);
                     if (cookedStack != null && cookedStack.getItem() instanceof ItemFood) {
                         ItemFood foodCooked = (ItemFood) cookedStack.getItem();
-                        if ((float) foodCooked.getHealAmount(cookedStack) > (float) foodItem.getHealAmount(stack)) {
+                        if (foodCooked.getHealAmount(cookedStack) > foodItem.getHealAmount(stack)) {
                             foodItem = (ItemFood) cookedStack.getItem(); //sets ID to cooked version of food if it exists
                         }
                     }
 
-                    if ((stack.getItem().equals(Items.COOKED_FISH) || stack.getItem().equals(Items.FISH)) && this.getHealth() < 20) {
+                    if (foodItem.isWolfsFavoriteMeat()) {
                         if (!player.capabilities.isCreativeMode) {
                             stack.shrink(1);
                         }
 
                         this.heal((float) foodItem.getHealAmount(stack));
+                        this.aiSit.setSitting(this.isSitting());
+                        return true;
+                    }
+
+                    if ((stack.getItem().equals(Items.COOKED_FISH) || stack.getItem().equals(Items.FISH))) {
+                        if (!player.capabilities.isCreativeMode) {
+                            stack.shrink(1);
+                        }
+
+                        this.heal(foodItem.getHealAmount(stack));
                         this.playTameEffect(false); //generates smoke particles on feeding
 
                         if (stack.getCount() <= 0) {
@@ -307,20 +315,9 @@ public class EntitySophisticatedWolf extends AEntitySophisticatedWolf {
                     return false;
                 }
             }
-            //removed !isBreedingItem() check
-            //TODO
-            if (this.isOwner(player) && !this.world.isRemote) {
-                //calls super.interact for breeding
-                if (stack != null && isBreedingItem(stack) && getGrowingAge() == 0) {
-                    this.aiSit.setSitting(false);
-                }
-
-                player.setRevengeTarget((EntityLivingBase) null);
-                return true;
-            }
-            return false;
         }
-        return false;
+
+        return super.processInteract(player, hand);
     }
 
     /**
