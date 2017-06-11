@@ -16,9 +16,9 @@ import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.RayTraceResult;
-import net.minecraft.util.text.translation.I18n;
 import net.minecraft.world.World;
 import org.apache.commons.lang3.StringUtils;
+import sophisticated_wolves.SWTabs;
 import sophisticated_wolves.SophisticatedWolvesMod;
 import sophisticated_wolves.api.EnumWolfSpecies;
 import sophisticated_wolves.entity.EntitySophisticatedWolf;
@@ -65,7 +65,7 @@ public class ItemWolfEgg extends ItemMonsterPlacer {
 
     public ItemWolfEgg() {
         this.setHasSubtypes(true);
-        this.setCreativeTab(CreativeTabs.MISC);
+        this.setCreativeTab(SWTabs.tab);
         this.setUnlocalizedName("monsterPlacer");
     }
 

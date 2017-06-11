@@ -1,6 +1,5 @@
 package sophisticated_wolves.item;
 
-import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.passive.EntityTameable;
 import net.minecraft.entity.player.EntityPlayer;
@@ -8,6 +7,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumHand;
 import sophisticated_wolves.SWConfiguration;
+import sophisticated_wolves.SWTabs;
 import sophisticated_wolves.SophisticatedWolvesMod;
 import sophisticated_wolves.entity.EntitySophisticatedWolf;
 
@@ -22,7 +22,7 @@ public class ItemDogTag extends Item {
     public ItemDogTag() {
         super();
         setUnlocalizedName("dogtag");
-        setCreativeTab(CreativeTabs.MISC);
+        setCreativeTab(SWTabs.tab);
     }
 
     /**

@@ -54,6 +54,8 @@ public class SophisticatedWolvesMod {
 
     @Mod.EventHandler
     public void load(FMLInitializationEvent event) {
+        SWTabs.registration();
+
         SWItems.itemsRegistration();
 
         Recipes.recipesRegistration();

@@ -22,6 +22,7 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import sophisticated_wolves.SWTabs;
 import sophisticated_wolves.SophisticatedWolvesMod;
 import sophisticated_wolves.api.pet_carrier.PetCarrier;
 
@@ -40,7 +41,7 @@ public class ItemPetCarrier extends Item {
     public ItemPetCarrier() {
         super();
         setUnlocalizedName("petcarrier");
-        setCreativeTab(CreativeTabs.MISC);
+        setCreativeTab(SWTabs.tab);
         this.setMaxStackSize(1);
     }
 
