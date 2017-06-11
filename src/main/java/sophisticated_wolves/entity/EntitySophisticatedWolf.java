@@ -1,6 +1,7 @@
 package sophisticated_wolves.entity;
 
 
+import net.minecraft.block.material.Material;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityAgeable;
 import net.minecraft.entity.ai.*;
@@ -482,5 +483,10 @@ public class EntitySophisticatedWolf extends AEntitySophisticatedWolf {
     @Override
     protected int getFireImmuneTicks() {
         return 5;
+    }
+
+    @Override
+    public boolean isWet() {
+        return super.isWet() || this.world.handleMaterialAcceleration(this.getEntityBoundingBox().expand(0, -0.25, 0).contract(0.001D), Material.WATER, this);
     }
 }
