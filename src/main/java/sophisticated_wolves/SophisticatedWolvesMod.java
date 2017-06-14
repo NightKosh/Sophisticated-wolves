@@ -50,14 +50,16 @@ public class SophisticatedWolvesMod {
         SWConfiguration.getInstance(event.getSuggestedConfigurationFile());
 
         MessageHandler.init();
+
+        SWTabs.registration();
+
+        SWBlocks.registration();
+
+        SWItems.itemsRegistration();
     }
 
     @Mod.EventHandler
     public void load(FMLInitializationEvent event) {
-        SWTabs.registration();
-
-        SWItems.itemsRegistration();
-
         Recipes.recipesRegistration();
 
         EntityRegistry.registerModEntity(Resources.brownWolf, EntitySophisticatedWolf.class, SW_NAME, 0, ModInfo.ID, 100, 1, true);
@@ -68,6 +70,7 @@ public class SophisticatedWolvesMod {
             EntityRegistry.addSpawn(EntitySophisticatedWolf.class, SWConfiguration.spawnProbability, SWConfiguration.spawnMinCount, SWConfiguration.spawnMaxCount, EnumCreatureType.MONSTER, biomeArray);
         }
 
+        proxy.modelsRegistration();
         proxy.registerRenderers();
     }
 

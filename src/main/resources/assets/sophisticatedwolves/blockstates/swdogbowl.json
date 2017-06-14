@@ -1,0 +1,8 @@
+{
+    "variants": {
+        "variant=empty": { "model": "sophisticatedwolves:swdogbowl" },
+        "variant=filled1": { "model": "sophisticatedwolves:swdogbowl1" },
+        "variant=filled2": { "model": "sophisticatedwolves:swdogbowl2" },
+        "variant=filled3": { "model": "sophisticatedwolves:swdogbowl3" }
+    }
+}

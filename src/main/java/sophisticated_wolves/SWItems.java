@@ -1,13 +1,15 @@
 package sophisticated_wolves;
 
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemBlock;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import sophisticated_wolves.api.ModInfo;
+import sophisticated_wolves.item.ItemBlock.ItemBlockDogBowl;
 import sophisticated_wolves.item.ItemDogTag;
 import sophisticated_wolves.item.ItemDogTreat;
-import sophisticated_wolves.item.pet_carrier.ItemPetCarrier;
 import sophisticated_wolves.item.ItemWolfEgg;
+import sophisticated_wolves.item.pet_carrier.ItemPetCarrier;
 
 /**
  * Sophisticated Wolves
@@ -23,6 +25,8 @@ public class SWItems {
     public static Item dogTreat;
     public static Item petCarrier;
     public static Item dogEgg;
+
+    public static final ItemBlock DOG_BOWL_IB = new ItemBlockDogBowl(SWBlocks.DOG_BOWL);
 
     private SWItems() {
 
@@ -46,6 +50,6 @@ public class SWItems {
         dogEgg = new ItemWolfEgg();
         GameRegistry.register(dogEgg, new ResourceLocation(MOD_NAME + ":" + DOG_EGG));
 
-        SophisticatedWolvesMod.proxy.modelsRegistration();
+        GameRegistry.register(DOG_BOWL_IB);
     }
 }

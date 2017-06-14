@@ -38,4 +38,9 @@ public class Resources {
     public static final ModelResourceLocation dogTreatModel = new ModelResourceLocation(MOD_NAME + ":" + SWItems.DOG_TREAT, "inventory");
     public static final ModelResourceLocation petCarrierModel = new ModelResourceLocation(MOD_NAME + ":" + SWItems.PET_CARRIER, "inventory");
     public static final ModelResourceLocation spawnEggModel = new ModelResourceLocation(MOD_NAME + ":" + SWItems.DOG_EGG, "inventory");
+
+    public static final ModelResourceLocation DOG_BOWL = new ModelResourceLocation(MOD_NAME + ":" + SWBlocks.DOG_BOWL.getRegistryName(), "inventory");
+    public static final ModelResourceLocation DOG_BOWL1 = new ModelResourceLocation(MOD_NAME + ":" + SWBlocks.DOG_BOWL.getRegistryName() + "1", "inventory");
+    public static final ModelResourceLocation DOG_BOWL2 = new ModelResourceLocation(MOD_NAME + ":" + SWBlocks.DOG_BOWL.getRegistryName() + "2", "inventory");
+    public static final ModelResourceLocation DOG_BOWL3 = new ModelResourceLocation(MOD_NAME + ":" + SWBlocks.DOG_BOWL.getRegistryName() + "3", "inventory");
 }

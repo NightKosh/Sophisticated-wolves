@@ -1,6 +1,9 @@
 # Tabs
 itemGroup.tabSophisticatedWolves=Sophisticated Wolves
 
+# Blocks
+tile.dogbowl.name=Dog Bowl
+
 # Items
 item.dogtag.name=Dog Tag
 item.dogtreat.name=Dog Treat

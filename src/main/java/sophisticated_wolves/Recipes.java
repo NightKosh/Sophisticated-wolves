@@ -39,5 +39,7 @@ public class Recipes {
         GameRegistry.addRecipe(new ItemStack(SWItems.petCarrier), " i ", "bwb", "sss",
                 'i', Items.IRON_INGOT, 'b', Blocks.IRON_BARS, 'w', new ItemStack(Blocks.WOOL, 1, EnumDyeColor.WHITE.ordinal()),
                 's', Blocks.STONE_SLAB);
+
+        GameRegistry.addRecipe(new ItemStack(SWBlocks.DOG_BOWL), "cbc ", "ccc", 'c', Items.BRICK, 'b', Items.BOWL);
     }
 }
