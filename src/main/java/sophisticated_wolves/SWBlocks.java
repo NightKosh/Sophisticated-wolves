@@ -1,5 +1,6 @@
 package sophisticated_wolves;
 
+import net.minecraft.block.Block;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import sophisticated_wolves.block.BlockDogBowl;
 
@@ -11,7 +12,7 @@ import sophisticated_wolves.block.BlockDogBowl;
  */
 public class SWBlocks {
 
-    public static final BlockDogBowl DOG_BOWL = new BlockDogBowl();
+    public static final Block DOG_BOWL = new BlockDogBowl();
 
     public static void registration() {
         GameRegistry.register(DOG_BOWL);

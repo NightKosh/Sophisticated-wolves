@@ -1,25 +1,18 @@
 package sophisticated_wolves;
 
-import net.minecraft.entity.EnumCreatureType;
-import net.minecraft.world.biome.Biome;
-import net.minecraftforge.common.BiomeDictionary;
 import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
-import net.minecraftforge.fml.common.registry.EntityRegistry;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import sophisticated_wolves.api.ModInfo;
 import sophisticated_wolves.api.SophisticatedWolvesAPI;
-import sophisticated_wolves.entity.EntitySophisticatedWolf;
 import sophisticated_wolves.item.pet_carrier.PetCarrierHelper;
 import sophisticated_wolves.proxy.CommonProxy;
-
-import java.util.Set;
 
 /**
  * Sophisticated Wolves
@@ -37,7 +30,6 @@ public class SophisticatedWolvesMod {
 
     public static Logger logger = LogManager.getLogger(ModInfo.ID);
 
-    public static final String SW_NAME = "SWWolf";
 
     public SophisticatedWolvesMod() {
         instance = this;
@@ -55,20 +47,14 @@ public class SophisticatedWolvesMod {
 
         SWBlocks.registration();
 
-        SWItems.itemsRegistration();
+        SWItems.registration();
     }
 
     @Mod.EventHandler
     public void load(FMLInitializationEvent event) {
         Recipes.recipesRegistration();
 
-        EntityRegistry.registerModEntity(Resources.brownWolf, EntitySophisticatedWolf.class, SW_NAME, 0, ModInfo.ID, 100, 1, true);
-        if (SWConfiguration.respawningWolves) {
-            Set<Biome> biomeSet = BiomeDictionary.getBiomes(BiomeDictionary.Type.FOREST);
-            Biome[] biomeArray = new Biome[biomeSet.size()];
-            biomeSet.toArray(biomeArray);
-            EntityRegistry.addSpawn(EntitySophisticatedWolf.class, SWConfiguration.spawnProbability, SWConfiguration.spawnMinCount, SWConfiguration.spawnMaxCount, EnumCreatureType.MONSTER, biomeArray);
-        }
+        SWEntity.registration();
 
         proxy.modelsRegistration();
         proxy.registerRenderers();

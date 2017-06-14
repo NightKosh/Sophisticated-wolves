@@ -11,36 +11,32 @@ import sophisticated_wolves.api.ModInfo;
  * @license Lesser GNU Public License v3 (http://www.gnu.org/licenses/lgpl.html)
  */
 public class Resources {
-    private Resources() {
-        
-    }
-
     private static final String MOD_NAME = ModInfo.ID.toLowerCase();
     private static final String ENTITY_LOCATION = MOD_NAME + ":textures/entity/";
 
     //Brown Wolf
-    public static final ResourceLocation brownWolf = new ResourceLocation(ENTITY_LOCATION + "brown/wolf.png");
-    public static final ResourceLocation brownWolfTame = new ResourceLocation(ENTITY_LOCATION + "brown/wolf_tame.png");
-    public static final ResourceLocation brownWolfAngry = new ResourceLocation(ENTITY_LOCATION + "brown/wolf_angry.png");
+    public static final ResourceLocation BROWN_WOLF = new ResourceLocation(ENTITY_LOCATION + "brown/wolf.png");
+    public static final ResourceLocation BROWN_WOLF_TAME = new ResourceLocation(ENTITY_LOCATION + "brown/wolf_tame.png");
+    public static final ResourceLocation BROWN_WOLF_ANGRY = new ResourceLocation(ENTITY_LOCATION + "brown/wolf_angry.png");
 
     //Black Wolf
-    public static final ResourceLocation blackWolf = new ResourceLocation(ENTITY_LOCATION + "black/wolf.png");
-    public static final ResourceLocation blackWolfTame = new ResourceLocation(ENTITY_LOCATION + "black/wolf_tame.png");
-    public static final ResourceLocation blackWolfAngry = new ResourceLocation(ENTITY_LOCATION + "black/wolf_angry.png");
+    public static final ResourceLocation BLACK_WOLF = new ResourceLocation(ENTITY_LOCATION + "black/wolf.png");
+    public static final ResourceLocation BLACK_WOLF_TAME = new ResourceLocation(ENTITY_LOCATION + "black/wolf_tame.png");
+    public static final ResourceLocation BLACK_WOLF_ANGRY = new ResourceLocation(ENTITY_LOCATION + "black/wolf_angry.png");
 
     //Forest Wolf
-    public static final ResourceLocation forestWolf = new ResourceLocation(ENTITY_LOCATION + "forest/wolf.png");
-    public static final ResourceLocation forestWolfTame = new ResourceLocation(ENTITY_LOCATION + "forest/wolf_tame.png");
-    public static final ResourceLocation forestWolfAngry = new ResourceLocation(ENTITY_LOCATION + "forest/wolf_angry.png");
+    public static final ResourceLocation FOREST_WOLF = new ResourceLocation(ENTITY_LOCATION + "forest/wolf.png");
+    public static final ResourceLocation FOREST_WOLF_TAME = new ResourceLocation(ENTITY_LOCATION + "forest/wolf_tame.png");
+    public static final ResourceLocation FOREST_WOLF_ANGRY = new ResourceLocation(ENTITY_LOCATION + "forest/wolf_angry.png");
 
     // MODEL RESOURCES
-    public static final ModelResourceLocation dogTagModel = new ModelResourceLocation(MOD_NAME + ":" + SWItems.DOG_TAG, "inventory");
-    public static final ModelResourceLocation dogTreatModel = new ModelResourceLocation(MOD_NAME + ":" + SWItems.DOG_TREAT, "inventory");
-    public static final ModelResourceLocation petCarrierModel = new ModelResourceLocation(MOD_NAME + ":" + SWItems.PET_CARRIER, "inventory");
-    public static final ModelResourceLocation spawnEggModel = new ModelResourceLocation(MOD_NAME + ":" + SWItems.DOG_EGG, "inventory");
+    public static final ModelResourceLocation DOG_TAG_MODEL = new ModelResourceLocation(SWItems.DOG_TAG.getRegistryName(), "inventory");
+    public static final ModelResourceLocation DOG_TREAT_MODEL = new ModelResourceLocation(SWItems.DOG_TREAT.getRegistryName(), "inventory");
+    public static final ModelResourceLocation PET_CARRIER_MODEL = new ModelResourceLocation(SWItems.PET_CARRIER.getRegistryName(), "inventory");
+    public static final ModelResourceLocation SPAWN_EGG_MODEL = new ModelResourceLocation(SWItems.DOG_EGG.getRegistryName(), "inventory");
 
-    public static final ModelResourceLocation DOG_BOWL = new ModelResourceLocation(MOD_NAME + ":" + SWBlocks.DOG_BOWL.getRegistryName(), "inventory");
-    public static final ModelResourceLocation DOG_BOWL1 = new ModelResourceLocation(MOD_NAME + ":" + SWBlocks.DOG_BOWL.getRegistryName() + "1", "inventory");
-    public static final ModelResourceLocation DOG_BOWL2 = new ModelResourceLocation(MOD_NAME + ":" + SWBlocks.DOG_BOWL.getRegistryName() + "2", "inventory");
-    public static final ModelResourceLocation DOG_BOWL3 = new ModelResourceLocation(MOD_NAME + ":" + SWBlocks.DOG_BOWL.getRegistryName() + "3", "inventory");
+    public static final ModelResourceLocation DOG_BOWL = new ModelResourceLocation(SWBlocks.DOG_BOWL.getRegistryName(), "inventory");
+    public static final ModelResourceLocation DOG_BOWL1 = new ModelResourceLocation(SWBlocks.DOG_BOWL.getRegistryName() + "1", "inventory");
+    public static final ModelResourceLocation DOG_BOWL2 = new ModelResourceLocation(SWBlocks.DOG_BOWL.getRegistryName() + "2", "inventory");
+    public static final ModelResourceLocation DOG_BOWL3 = new ModelResourceLocation(SWBlocks.DOG_BOWL.getRegistryName() + "3", "inventory");
 }

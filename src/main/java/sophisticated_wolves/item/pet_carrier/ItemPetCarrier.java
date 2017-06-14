@@ -24,6 +24,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import sophisticated_wolves.SWTabs;
 import sophisticated_wolves.SophisticatedWolvesMod;
+import sophisticated_wolves.api.ModInfo;
 import sophisticated_wolves.api.pet_carrier.PetCarrier;
 
 import java.util.Iterator;
@@ -40,8 +41,9 @@ public class ItemPetCarrier extends Item {
 
     public ItemPetCarrier() {
         super();
-        setUnlocalizedName("petcarrier");
-        setCreativeTab(SWTabs.tab);
+        this.setRegistryName(ModInfo.ID, "SWPetCarrier");
+        this.setUnlocalizedName("petcarrier");
+        this.setCreativeTab(SWTabs.tab);
         this.setMaxStackSize(1);
     }
 

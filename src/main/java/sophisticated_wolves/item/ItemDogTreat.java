@@ -9,6 +9,7 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import sophisticated_wolves.SWTabs;
 import sophisticated_wolves.api.ISophisticatedWolf;
+import sophisticated_wolves.api.ModInfo;
 import sophisticated_wolves.entity.EntitySophisticatedWolf;
 
 /**
@@ -21,8 +22,9 @@ public class ItemDogTreat extends Item {
 
     public ItemDogTreat() {
         super();
-        setUnlocalizedName("dogtreat");
-        setCreativeTab(SWTabs.tab);
+        this.setRegistryName(ModInfo.ID, "SWDogTreat");
+        this.setUnlocalizedName("dogtreat");
+        this.setCreativeTab(SWTabs.tab);
     }
 
     /**

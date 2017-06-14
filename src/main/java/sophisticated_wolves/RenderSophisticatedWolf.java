@@ -29,27 +29,27 @@ public class RenderSophisticatedWolf extends RenderWolf {
         if (SWConfiguration.customWolfTextures) {
             if (wolf.getSpecies() == EnumWolfSpecies.BROWN) {
                 if (wolf.isTamed())
-                    return Resources.brownWolfTame;
+                    return Resources.BROWN_WOLF_TAME;
                 if (wolf.isAngry())
-                    return Resources.brownWolfAngry;
+                    return Resources.BROWN_WOLF_ANGRY;
                 else
-                    return Resources.brownWolf;
+                    return Resources.BROWN_WOLF;
             }
             if (wolf.getSpecies() == EnumWolfSpecies.BLACK) {
                 if (wolf.isTamed())
-                    return Resources.blackWolfTame;
+                    return Resources.BLACK_WOLF_TAME;
                 if (wolf.isAngry())
-                    return Resources.blackWolfAngry;
+                    return Resources.BLACK_WOLF_ANGRY;
                 else
-                    return Resources.blackWolf;
+                    return Resources.BLACK_WOLF;
             }
             if (wolf.getSpecies() == EnumWolfSpecies.FOREST) {
                 if (wolf.isTamed())
-                    return Resources.forestWolfTame;
+                    return Resources.FOREST_WOLF_TAME;
                 if (wolf.isAngry())
-                    return Resources.forestWolfAngry;
+                    return Resources.FOREST_WOLF_ANGRY;
                 else
-                    return Resources.forestWolf;
+                    return Resources.FOREST_WOLF;
             } else {
                 return super.getEntityTexture(wolf);
             }

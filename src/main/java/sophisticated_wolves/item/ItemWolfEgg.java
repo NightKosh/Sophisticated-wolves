@@ -18,9 +18,11 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
 import org.apache.commons.lang3.StringUtils;
+import sophisticated_wolves.SWEntity;
 import sophisticated_wolves.SWTabs;
 import sophisticated_wolves.SophisticatedWolvesMod;
 import sophisticated_wolves.api.EnumWolfSpecies;
+import sophisticated_wolves.api.ModInfo;
 import sophisticated_wolves.entity.EntitySophisticatedWolf;
 
 /**
@@ -31,7 +33,7 @@ import sophisticated_wolves.entity.EntitySophisticatedWolf;
  */
 public class ItemWolfEgg extends ItemMonsterPlacer {
     public static enum EnumEggs {
-        SOPHISTICATED_WOLF(SophisticatedWolvesMod.SW_NAME, 14144467, 13545366);
+        SOPHISTICATED_WOLF(SWEntity.SW_NAME, 14144467, 13545366);
 
         private String name;
         private int backgroundColor;
@@ -67,6 +69,7 @@ public class ItemWolfEgg extends ItemMonsterPlacer {
         this.setHasSubtypes(true);
         this.setCreativeTab(SWTabs.tab);
         this.setUnlocalizedName("monsterPlacer");
+        this.setRegistryName(ModInfo.ID, "SWDogEgg");
     }
 
     @Override

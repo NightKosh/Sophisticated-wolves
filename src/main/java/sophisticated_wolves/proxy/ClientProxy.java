@@ -30,7 +30,7 @@ public class ClientProxy extends CommonProxy {
         // Mobs renderers
         registerMobsRenderers();
 
-        Minecraft.getMinecraft().getItemColors().registerItemColorHandler(new WolfEggColor(), SWItems.dogEgg);
+        Minecraft.getMinecraft().getItemColors().registerItemColorHandler(new WolfEggColor(), SWItems.DOG_EGG);
     }
 
     private void registerMobsRenderers() {
@@ -59,22 +59,18 @@ public class ClientProxy extends CommonProxy {
 
     @Override
     public void modelsRegistration() {
-        Minecraft.getMinecraft().getRenderItem().getItemModelMesher().register(SWItems.dogTag, 0, Resources.dogTagModel);
-        Minecraft.getMinecraft().getRenderItem().getItemModelMesher().register(SWItems.dogTreat, 0, Resources.dogTreatModel);
-        Minecraft.getMinecraft().getRenderItem().getItemModelMesher().register(SWItems.petCarrier, 0, Resources.petCarrierModel);
+        Minecraft.getMinecraft().getRenderItem().getItemModelMesher().register(SWItems.DOG_TAG, 0, Resources.DOG_TAG_MODEL);
+        Minecraft.getMinecraft().getRenderItem().getItemModelMesher().register(SWItems.DOG_TREAT, 0, Resources.DOG_TREAT_MODEL);
+        Minecraft.getMinecraft().getRenderItem().getItemModelMesher().register(SWItems.PET_CARRIER, 0, Resources.PET_CARRIER_MODEL);
 
         for (EnumWolfSpecies wolfSpecies : EnumWolfSpecies.values()) {
-            Minecraft.getMinecraft().getRenderItem().getItemModelMesher().register(SWItems.dogEgg, wolfSpecies.ordinal(), Resources.spawnEggModel);
+            Minecraft.getMinecraft().getRenderItem().getItemModelMesher().register(SWItems.DOG_EGG, wolfSpecies.ordinal(), Resources.SPAWN_EGG_MODEL);
         }
 
         Minecraft.getMinecraft().getRenderItem().getItemModelMesher().register(Item.getItemFromBlock(SWBlocks.DOG_BOWL), 0, Resources.DOG_BOWL);
         Minecraft.getMinecraft().getRenderItem().getItemModelMesher().register(Item.getItemFromBlock(SWBlocks.DOG_BOWL), 1, Resources.DOG_BOWL1);
         Minecraft.getMinecraft().getRenderItem().getItemModelMesher().register(Item.getItemFromBlock(SWBlocks.DOG_BOWL), 2, Resources.DOG_BOWL2);
         Minecraft.getMinecraft().getRenderItem().getItemModelMesher().register(Item.getItemFromBlock(SWBlocks.DOG_BOWL), 3, Resources.DOG_BOWL3);
-//        ModelBakery.registerItemVariants(Item.getItemFromBlock(SWBlocks.DOG_BOWL), Resources.DOG_BOWL, Resources.DOG_BOWL1, Resources.DOG_BOWL2, Resources.DOG_BOWL3);
         ModelBakery.registerItemVariants(SWItems.DOG_BOWL_IB, Resources.DOG_BOWL, Resources.DOG_BOWL1, Resources.DOG_BOWL2, Resources.DOG_BOWL3);
-
-
-//        Minecraft.getMinecraft().getRenderItem().getItemModelMesher().register(SWItems.DOG_BOWL_IB, 0, Resources.DOG_BOWL);
     }
 }

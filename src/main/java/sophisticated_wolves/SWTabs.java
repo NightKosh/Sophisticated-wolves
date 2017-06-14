@@ -18,13 +18,13 @@ public class SWTabs {
         tab = new CreativeTabs("tabSophisticatedWolves") {
             @Override
             public ItemStack getIconItemStack() {
-                return new ItemStack(SWItems.dogTreat);
+                return new ItemStack(SWItems.DOG_TREAT);
             }
 
             @Override
             @SideOnly(Side.CLIENT)
             public ItemStack getTabIconItem() {
-                return new ItemStack(SWItems.dogTreat);
+                return new ItemStack(SWItems.DOG_TREAT);
             }
         };
     }

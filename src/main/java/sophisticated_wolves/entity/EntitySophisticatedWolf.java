@@ -331,7 +331,7 @@ public class EntitySophisticatedWolf extends AEntitySophisticatedWolf {
         }
 
         if (SWConfiguration.customBreeding) {
-            return stack.getItem().equals(SWItems.dogTreat);
+            return stack.getItem().equals(SWItems.DOG_TREAT);
         } else {
             return super.isBreedingItem(stack);
         }
@@ -381,7 +381,7 @@ public class EntitySophisticatedWolf extends AEntitySophisticatedWolf {
             return this.getHealth() < 20 && (((ItemFood) itemstack.getItem()).isWolfsFavoriteMeat() ||
                     itemstack.getItem().equals(Items.FISH) || itemstack.getItem().equals(Items.COOKED_FISH));
         } else {
-            return itemstack.getItem().equals(SWItems.dogTreat) && getGrowingAge() == 0;
+            return itemstack.getItem().equals(SWItems.DOG_TREAT) && getGrowingAge() == 0;
         }
     }
 

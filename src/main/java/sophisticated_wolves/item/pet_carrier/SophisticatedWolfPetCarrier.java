@@ -5,6 +5,7 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
+import sophisticated_wolves.SWEntity;
 import sophisticated_wolves.SophisticatedWolvesMod;
 import sophisticated_wolves.api.EnumWolfSpecies;
 import sophisticated_wolves.api.pet_carrier.PetCarrier;
@@ -28,7 +29,7 @@ public class SophisticatedWolfPetCarrier extends PetCarrier {
 
     @Override
     public String getPetId() {
-        return SophisticatedWolvesMod.SW_NAME;
+        return SWEntity.SW_NAME;
     }
 
     @Override
@@ -42,7 +43,7 @@ public class SophisticatedWolfPetCarrier extends PetCarrier {
             List<String> list = new ArrayList<>(1);
             StringBuilder str = new StringBuilder(SophisticatedWolvesMod.proxy.getLocalizedString("carrier.dog_type"))
                     .append(" - ").append(SophisticatedWolvesMod.proxy.getLocalizedString("wolf_type." + EnumWolfSpecies.getSpeciesByNum(infoNbt.getInteger("WolfType"))
-                    .toString().toLowerCase()));
+                            .toString().toLowerCase()));
             list.add(str.toString());
             return list;
         }

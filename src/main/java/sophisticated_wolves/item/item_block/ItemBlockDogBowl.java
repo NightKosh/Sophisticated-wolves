@@ -1,4 +1,4 @@
-package sophisticated_wolves.item.ItemBlock;
+package sophisticated_wolves.item.item_block;
 
 import net.minecraft.block.Block;
 import net.minecraft.item.ItemBlock;
