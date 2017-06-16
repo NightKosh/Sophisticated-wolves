@@ -1,6 +1,6 @@
 package sophisticated_wolves.block;
 
-import net.minecraft.block.Block;
+import net.minecraft.block.BlockContainer;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;
@@ -8,15 +8,21 @@ import net.minecraft.block.properties.PropertyEnum;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.IStringSerializable;
-import net.minecraft.util.NonNullList;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.*;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
+import net.minecraft.world.World;
+import sophisticated_wolves.SWGui;
 import sophisticated_wolves.SWTabs;
+import sophisticated_wolves.SophisticatedWolvesMod;
 import sophisticated_wolves.api.ModInfo;
+import sophisticated_wolves.tile_entity.TileEntityDogBowl;
 
 import javax.annotation.Nullable;
 
@@ -26,17 +32,23 @@ import javax.annotation.Nullable;
  * @author NightKosh
  * @license Lesser GNU Public License v3 (http://www.gnu.org/licenses/lgpl.html)
  */
-public class BlockDogBowl extends Block {
-    enum EnumDogBowl implements IStringSerializable {
-        EMPTY("empty"),
-        FILLED1("filled1"),
-        FILLED2("filled2"),
-        FILLED3("filled3");
+public class BlockDogBowl extends BlockContainer {
+
+    public enum EnumDogBowl implements IStringSerializable {
+        EMPTY("empty", 0),
+        FILLED1("filled1", 25),
+        FILLED2("filled2", 50),
+        FILLED3("filled3", 75),
+        FILLED4("filled4", 100);
+
+        public static final int BONES_PER_LEVEL = 25;
 
         private String blockModelName;
+        private int amountOfFood;
 
-        private EnumDogBowl(String blockModelName) {
+        private EnumDogBowl(String blockModelName, int amountOfFood) {
             this.blockModelName = blockModelName;
+            this.amountOfFood = amountOfFood;
         }
 
         @Override
@@ -49,6 +61,10 @@ public class BlockDogBowl extends Block {
                 return values()[id];
             }
             return EMPTY;
+        }
+
+        public int getAmountOfFood() {
+            return amountOfFood;
         }
     }
 
@@ -104,10 +120,42 @@ public class BlockDogBowl extends Block {
 //        return super.getItemDropped(state, rand, fortune);
 //    }
 
+    @Nullable
+    @Override
+    public TileEntity createNewTileEntity(World world, int meta) {
+        return new TileEntityDogBowl(world);
+    }
+
+    @Override
+    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
+        TileEntityDogBowl tileEntity = (TileEntityDogBowl) world.getTileEntity(pos);
+        if (tileEntity != null && !player.isSneaking()) {
+            player.openGui(SophisticatedWolvesMod.instance, SWGui.DOG_BOWL_ID, world, pos.getX(), pos.getY(), pos.getZ());
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public void onBlockPlacedBy(World world, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack stack) {
+        super.onBlockPlacedBy(world, pos, state, placer, stack);
+
+        TileEntityDogBowl tileEntity = (TileEntityDogBowl) world.getTileEntity(pos);
+        if (tileEntity != null) {
+            tileEntity.setFoodAmount(((EnumDogBowl) state.getValue(VARIANT)).getAmountOfFood());
+        }
+    }
+
+    @Override
+    public EnumBlockRenderType getRenderType(IBlockState state) {
+        return EnumBlockRenderType.MODEL;
+    }
+
     @Override
     public int damageDropped(IBlockState state) {
         return ((Enum) state.getValue(VARIANT)).ordinal();
     }
+
     @Override
     public IBlockState getStateFromMeta(int meta) {
         return this.getDefaultState().withProperty(VARIANT, EnumDogBowl.getById(meta));

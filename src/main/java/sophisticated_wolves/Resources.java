@@ -13,6 +13,7 @@ import sophisticated_wolves.api.ModInfo;
 public class Resources {
     private static final String MOD_NAME = ModInfo.ID.toLowerCase();
     private static final String ENTITY_LOCATION = MOD_NAME + ":textures/entity/";
+    private static final String GUI_LOCATION = MOD_NAME + ":textures/gui/";
 
     //Brown Wolf
     public static final ResourceLocation BROWN_WOLF = new ResourceLocation(ENTITY_LOCATION + "brown/wolf.png");
@@ -28,6 +29,9 @@ public class Resources {
     public static final ResourceLocation FOREST_WOLF = new ResourceLocation(ENTITY_LOCATION + "forest/wolf.png");
     public static final ResourceLocation FOREST_WOLF_TAME = new ResourceLocation(ENTITY_LOCATION + "forest/wolf_tame.png");
     public static final ResourceLocation FOREST_WOLF_ANGRY = new ResourceLocation(ENTITY_LOCATION + "forest/wolf_angry.png");
+
+    // Gui
+    public static final ResourceLocation DOG_BOWL_GUI = new ResourceLocation(GUI_LOCATION + "dog_bowl_gui.png");
 
     // MODEL RESOURCES
     public static final ModelResourceLocation DOG_TAG_MODEL = new ModelResourceLocation(SWItems.DOG_TAG.getRegistryName(), "inventory");
