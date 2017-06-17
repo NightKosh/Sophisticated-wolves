@@ -56,10 +56,13 @@ public class AIFeed extends EntityAIBase {
         if (this.foodEntity != null) {
             this.pet.getNavigator().setPath(this.pet.getNavigator().getPathToXYZ(this.foodEntity.posX, this.foodEntity.posY, this.foodEntity.posZ), 1);
             if (this.pet.getDistanceSqToEntity(this.foodEntity) <= 0.8) {
+                this.pet.getLookHelper().setLookPosition(this.foodEntity.posX, this.foodEntity.posY, this.foodEntity.posZ, 0.25F, 0.25F);
                 this.pet.heal(FoodHelper.getHealPoints(this.foodEntity.getEntityItem()));
                 this.foodEntity.getEntityItem().shrink(1);
-                if (this.foodEntity.getEntityItem().isEmpty()) {
-                    this.foodEntity.setDead();
+                if (this.foodEntity.getEntityItem().isEmpty() || this.pet.getHealth() >= 20) {
+                    if (this.foodEntity.getEntityItem().isEmpty()) {
+                        this.foodEntity.setDead();
+                    }
                     this.foodEntity = null;
                     this.pet.getNavigator().clearPathEntity();
                 }
