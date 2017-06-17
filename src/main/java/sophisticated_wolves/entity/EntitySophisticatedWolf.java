@@ -13,7 +13,6 @@ import net.minecraft.init.Items;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemFood;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.FurnaceRecipes;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
@@ -30,6 +29,7 @@ import net.minecraft.world.biome.Biome;
 import net.minecraft.world.biome.BiomeForest;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import sophisticated_wolves.FoodHelper;
 import sophisticated_wolves.SWConfiguration;
 import sophisticated_wolves.SWItems;
 import sophisticated_wolves.api.AEntitySophisticatedWolf;
@@ -94,6 +94,7 @@ public class EntitySophisticatedWolf extends AEntitySophisticatedWolf {
         this.tasks.addTask(5, this.aiSit = new EntityAISit(this));
         this.tasks.addTask(7, new EntityAIShake(this)); //behavior for shaking
         this.tasks.addTask(10, new EntityAIAttackCancel(this)); //new behavior
+        this.tasks.addTask(10, new AIFeed(this)); //new behavior
         this.tasks.addTask(15, new EntityAILeapAtTarget(this, 0.4F));
         this.tasks.addTask(20, new EntityAIAttackMelee(this, 1, true));
         this.tasks.addTask(22, new EntityAIMoveCancel(this, 6));
@@ -275,39 +276,15 @@ public class EntitySophisticatedWolf extends AEntitySophisticatedWolf {
 
         if (this.isTamed()) {
             if (stack != null) {
-                if (stack.getItem() instanceof ItemFood && this.getHealth() < 20) {
-                    ItemFood foodItem = (ItemFood) stack.getItem();
+                if (FoodHelper.isFoodItem(stack) && this.getHealth() < 20) {
+                    int hp = FoodHelper.getHealPoints(stack);
 
-                    //checks static FurnaceRecipes for cooked version of held food
-                    ItemStack cookedStack = FurnaceRecipes.instance().getSmeltingResult(stack);
-                    if (cookedStack != null && cookedStack.getItem() instanceof ItemFood) {
-                        ItemFood foodCooked = (ItemFood) cookedStack.getItem();
-                        if (foodCooked.getHealAmount(cookedStack) > foodItem.getHealAmount(stack)) {
-                            foodItem = (ItemFood) cookedStack.getItem(); //sets ID to cooked version of food if it exists
-                        }
-                    }
-
-                    if (foodItem.isWolfsFavoriteMeat()) {
+                    if (hp > 0) {
                         if (!player.capabilities.isCreativeMode) {
                             stack.shrink(1);
                         }
 
-                        this.heal((float) foodItem.getHealAmount(stack));
-                        this.aiSit.setSitting(this.isSitting());
-                        return true;
-                    }
-
-                    if ((stack.getItem().equals(Items.COOKED_FISH) || stack.getItem().equals(Items.FISH))) {
-                        if (!player.capabilities.isCreativeMode) {
-                            stack.shrink(1);
-                        }
-
-                        this.heal(foodItem.getHealAmount(stack));
-                        this.playTameEffect(false); //generates smoke particles on feeding
-
-                        if (stack.getCount() <= 0) {
-                            player.inventory.removeStackFromSlot(player.inventory.currentItem);
-                        }
+                        this.heal(hp);
                         this.aiSit.setSitting(this.isSitting());
                         return true;
                     }
