@@ -19,12 +19,12 @@ tasks.withType(JavaCompile) {
     targetCompatibility = "1.8"
 }
 
-version = "3.7.0"
+version = "3.8.0"
 group = "sophisticated_wolves"
-archivesBaseName = "SophisticatedWolves-1.11.2-"
+archivesBaseName = "SophisticatedWolves-1.11.2"
 
 minecraft {
-    version = "1.11.2-13.20.0.2259"
+    version = "1.11.2-13.20.0.2315"
     runDir = "run"
     
     // the mappings can be changed at any time, and must be in the following format.
@@ -68,8 +68,7 @@ dependencies {
 
 }
 
-processResources
-{
+processResources {
     // this will ensure that this task is redone when the versions change.
     inputs.property "version", project.version
     inputs.property "mcversion", project.minecraft.version
