@@ -94,7 +94,8 @@ public class EntitySophisticatedWolf extends AEntitySophisticatedWolf {
         this.tasks.addTask(5, this.aiSit = new EntityAISit(this));
         this.tasks.addTask(7, new EntityAIShake(this)); //behavior for shaking
         this.tasks.addTask(10, new EntityAIAttackCancel(this)); //new behavior
-        this.tasks.addTask(10, new AIFeed(this)); //new behavior
+        this.tasks.addTask(10, new AIFeedFromBowl(this)); //new behavior
+        this.tasks.addTask(12, new AIFeed(this)); //new behavior
         this.tasks.addTask(15, new EntityAILeapAtTarget(this, 0.4F));
         this.tasks.addTask(20, new EntityAIAttackMelee(this, 1, true));
         this.tasks.addTask(22, new EntityAIMoveCancel(this, 6));

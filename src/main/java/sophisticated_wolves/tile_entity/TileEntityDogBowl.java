@@ -47,6 +47,11 @@ public class TileEntityDogBowl extends TileEntity {
 
     public void setFoodAmount(int foodAmount) {
         this.foodAmount = foodAmount;
+        if (this.foodAmount > 100) {
+            this.foodAmount = 100;
+        } else if (this.foodAmount < 0) {
+            this.foodAmount = 0;
+        }
         this.amountOfFoodChanged();
     }
 
