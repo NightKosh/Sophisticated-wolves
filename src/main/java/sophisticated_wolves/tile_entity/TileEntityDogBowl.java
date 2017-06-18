@@ -1,9 +1,11 @@
 package sophisticated_wolves.tile_entity;
 
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import sophisticated_wolves.SWBlocks;
 import sophisticated_wolves.block.BlockDogBowl;
@@ -60,17 +62,24 @@ public class TileEntityDogBowl extends TileEntity {
     }
 
     private void amountOfFoodChanged() {
-        if (foodAmount == BlockDogBowl.EnumDogBowl.EMPTY.getAmountOfFood()) {
-            this.getWorld().setBlockState(this.getPos(), SWBlocks.DOG_BOWL.getDefaultState().withProperty(BlockDogBowl.VARIANT, BlockDogBowl.EnumDogBowl.EMPTY));
-        } else if (foodAmount <= BlockDogBowl.EnumDogBowl.FILLED1.getAmountOfFood()) {
-            this.getWorld().setBlockState(this.getPos(), SWBlocks.DOG_BOWL.getDefaultState().withProperty(BlockDogBowl.VARIANT, BlockDogBowl.EnumDogBowl.FILLED1));
-        } else if (foodAmount <= BlockDogBowl.EnumDogBowl.FILLED2.getAmountOfFood()) {
-            this.getWorld().setBlockState(this.getPos(), SWBlocks.DOG_BOWL.getDefaultState().withProperty(BlockDogBowl.VARIANT, BlockDogBowl.EnumDogBowl.FILLED2));
-        } else if (foodAmount <= BlockDogBowl.EnumDogBowl.FILLED3.getAmountOfFood()) {
-            this.getWorld().setBlockState(this.getPos(), SWBlocks.DOG_BOWL.getDefaultState().withProperty(BlockDogBowl.VARIANT, BlockDogBowl.EnumDogBowl.FILLED3));
-        } else {
-            this.getWorld().setBlockState(this.getPos(), SWBlocks.DOG_BOWL.getDefaultState().withProperty(BlockDogBowl.VARIANT, BlockDogBowl.EnumDogBowl.FILLED4));
+        BlockDogBowl.EnumDogBowl bowlType = BlockDogBowl.EnumDogBowl.getTypeByFood(foodAmount);
+
+        if (this.getBlockMetadata() != bowlType.ordinal()) {
+            this.getWorld().setBlockState(this.getPos(), SWBlocks.DOG_BOWL.getDefaultState().withProperty(BlockDogBowl.VARIANT, bowlType));
+        } else if (!this.getWorld().isRemote) {
+            IBlockState state =  this.getWorld().getBlockState(this.getPos());
+            this.getWorld().notifyBlockUpdate(this.getPos(), state, state, 3);
         }
+    }
+
+    @Override
+    public boolean shouldRefresh(World world, BlockPos pos, IBlockState oldState, IBlockState newSate) {
+        return false;
+    }
+
+    @Override
+    public boolean receiveClientEvent(int par1, int par2) {
+        return true;
     }
 
     @Override

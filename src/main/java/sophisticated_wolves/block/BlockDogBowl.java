@@ -63,6 +63,20 @@ public class BlockDogBowl extends BlockContainer {
             return EMPTY;
         }
 
+        public static EnumDogBowl getTypeByFood(int amountOfFood) {
+            if (amountOfFood > EnumDogBowl.FILLED3.getAmountOfFood()) {
+                return EnumDogBowl.FILLED4;
+            } else if (amountOfFood > EnumDogBowl.FILLED2.getAmountOfFood()) {
+                return EnumDogBowl.FILLED3;
+            } else if (amountOfFood > EnumDogBowl.FILLED1.getAmountOfFood()) {
+                return EnumDogBowl.FILLED2;
+            } else if (amountOfFood > EnumDogBowl.EMPTY.getAmountOfFood()) {
+                return EnumDogBowl.FILLED1;
+            } else {
+                return EnumDogBowl.EMPTY;
+            }
+        }
+
         public int getAmountOfFood() {
             return amountOfFood;
         }
@@ -71,12 +85,12 @@ public class BlockDogBowl extends BlockContainer {
     public static final PropertyEnum VARIANT = PropertyEnum.create("variant", EnumDogBowl.class);
 
     public BlockDogBowl() {
-        super(Material.ROCK);
+        super(Material.CIRCUITS);
         this.setRegistryName(ModInfo.ID, "SWDogBowl");
         this.setUnlocalizedName("dogbowl");
         this.setCreativeTab(SWTabs.tab);
         this.setSoundType(SoundType.STONE);
-        this.setHardness(0.1F);
+        this.setHardness(0.7F);
     }
 
     @Override
@@ -115,11 +129,6 @@ public class BlockDogBowl extends BlockContainer {
         }
     }
 
-//    @Override
-//    public Item getItemDropped(IBlockState state, Random rand, int fortune) {
-//        return super.getItemDropped(state, rand, fortune);
-//    }
-
     @Nullable
     @Override
     public TileEntity createNewTileEntity(World world, int meta) {
@@ -153,7 +162,8 @@ public class BlockDogBowl extends BlockContainer {
 
     @Override
     public int damageDropped(IBlockState state) {
-        return ((Enum) state.getValue(VARIANT)).ordinal();
+        int meta = ((EnumDogBowl) state.getValue(VARIANT)).ordinal();
+        return (meta == 0) ? 0 : meta -1;
     }
 
     @Override

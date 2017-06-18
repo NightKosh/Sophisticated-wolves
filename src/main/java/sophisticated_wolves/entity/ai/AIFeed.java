@@ -55,7 +55,7 @@ public class AIFeed extends EntityAIBase {
     public void updateTask() {
         if (this.foodEntity != null) {
             this.pet.getNavigator().setPath(this.pet.getNavigator().getPathToXYZ(this.foodEntity.posX, this.foodEntity.posY, this.foodEntity.posZ), 1);
-            if (this.pet.getDistanceSqToEntity(this.foodEntity) <= 0.8) {
+            if (this.pet.getDistanceSqToEntity(this.foodEntity) <= 1) {
                 this.pet.getLookHelper().setLookPosition(this.foodEntity.posX, this.foodEntity.posY, this.foodEntity.posZ, 0.25F, 0.25F);
                 this.pet.heal(FoodHelper.getHealPoints(this.foodEntity.getEntityItem()));
                 this.foodEntity.getEntityItem().shrink(1);

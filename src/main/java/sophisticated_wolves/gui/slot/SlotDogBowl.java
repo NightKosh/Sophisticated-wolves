@@ -1,11 +1,8 @@
 package sophisticated_wolves.gui.slot;
 
 import net.minecraft.inventory.Slot;
-import net.minecraft.item.ItemFood;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.FurnaceRecipes;
-import sophisticated_wolves.MessageHandler;
-import sophisticated_wolves.packets.DogBowlMessageToServer;
+import sophisticated_wolves.FoodHelper;
 import sophisticated_wolves.tile_entity.TileEntityDogBowl;
 
 /**
@@ -26,9 +23,7 @@ public class SlotDogBowl extends Slot {
     @Override
     public void putStack(ItemStack stack) {
         if (isItemValid(stack)) {
-//        if (isItemValid(stack) && !te.getWorld().isRemote) {
             int amountOfFood = getFoodAmount(stack);
-            MessageHandler.networkWrapper.sendToServer(new DogBowlMessageToServer(te, amountOfFood));
             te.addFood(amountOfFood);
         }
     }
@@ -53,7 +48,7 @@ public class SlotDogBowl extends Slot {
 
     @Override
     public boolean isItemValid(ItemStack stack) {
-        return te.getFoodAmount() < 100 && stack.getItem() instanceof ItemFood || stack.getItem().getUnlocalizedName().equals("item.bone");
+        return te.getFoodAmount() < 100 && (FoodHelper.isFoodItem(stack) || FoodHelper.isBone(stack));
     }
 
     @Override
@@ -63,22 +58,7 @@ public class SlotDogBowl extends Slot {
 
     public int getFoodAmount(ItemStack stack) {
         if (isItemValid(stack)) {
-            if (stack.getItem().getUnlocalizedName().equals("item.bone")) {
-                return 1;
-            } else {
-                ItemFood foodItem = (ItemFood) stack.getItem();
-
-                //checks static FurnaceRecipes for cooked version of held food
-                ItemStack cookedStack = FurnaceRecipes.instance().getSmeltingResult(stack);
-                if (cookedStack != null && cookedStack.getItem() instanceof ItemFood) {
-                    ItemFood foodCooked = (ItemFood) cookedStack.getItem();
-                    if (foodCooked.getHealAmount(cookedStack) > foodItem.getHealAmount(stack)) {
-                        foodItem = (ItemFood) cookedStack.getItem(); //sets ID to cooked version of food if it exists
-                    }
-                }
-
-                return foodItem.getHealAmount(stack);
-            }
+            return FoodHelper.getHealPoints(stack);
         } else {
             return 0;
         }

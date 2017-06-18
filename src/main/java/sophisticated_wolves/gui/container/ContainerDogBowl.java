@@ -25,7 +25,6 @@ public class ContainerDogBowl extends Container {
         tileEntity = te;
 
         this.addSlotToContainer(new SlotDogBowl(te, 0, 8, 35));
-//        this.addSlotToContainer(new Slot(inventoryPlayer, 0, 8, 35));
 
         for (int row = 0; row < PLAYER_INVENTORY_ROWS_COUNT; ++row) {
             for (int column = 0; column < COLUMNS_COUNT; ++column) {

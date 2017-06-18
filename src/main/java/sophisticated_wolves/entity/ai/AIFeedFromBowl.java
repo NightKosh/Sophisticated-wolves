@@ -43,7 +43,7 @@ public class AIFeedFromBowl extends EntityAIBase {
                 return true;
             } else if (getBowlTe(new BlockPos(this.pet.getPosition().getX() + 16, this.pet.getPosition().getY(), this.pet.getPosition().getZ() + 16))) {
                 return true;
-            }  else if (getBowlTe(new BlockPos(this.pet.getPosition().getX() + 16, this.pet.getPosition().getY(), this.pet.getPosition().getZ() - 16))) {
+            } else if (getBowlTe(new BlockPos(this.pet.getPosition().getX() + 16, this.pet.getPosition().getY(), this.pet.getPosition().getZ() - 16))) {
                 return true;
             } else if (getBowlTe(new BlockPos(this.pet.getPosition().getX() - 16, this.pet.getPosition().getY(), this.pet.getPosition().getZ() + 16))) {
                 return true;
@@ -75,7 +75,7 @@ public class AIFeedFromBowl extends EntityAIBase {
     public void updateTask() {
         if (this.dogBowl != null) {
             this.pet.getNavigator().setPath(this.pet.getNavigator().getPathToXYZ(this.dogBowl.getPos().getX(), this.dogBowl.getPos().getY(), this.dogBowl.getPos().getZ()), 1);
-            if (this.pet.getDistanceSq(this.dogBowl.getPos()) <= 1) {
+            if (this.pet.getDistanceSq(this.dogBowl.getPos()) <= 1.3F) {
                 this.pet.getLookHelper().setLookPosition(this.dogBowl.getPos().getX(), this.dogBowl.getPos().getY(), this.dogBowl.getPos().getZ(), 0.25F, 0.25F);
                 this.pet.heal(1);
                 this.dogBowl.addFood(-1);
