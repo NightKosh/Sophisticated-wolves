@@ -86,4 +86,10 @@ public class AIFeedFromBowl extends EntityAIBase {
             }
         }
     }
+
+    @Override
+    public void resetTask() {
+        this.dogBowl = null;
+        this.pet.getNavigator().clearPathEntity();
+    }
 }

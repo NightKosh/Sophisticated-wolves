@@ -69,4 +69,10 @@ public class AIFeed extends EntityAIBase {
             }
         }
     }
+
+    @Override
+    public void resetTask() {
+        this.foodEntity = null;
+        this.pet.getNavigator().clearPathEntity();
+    }
 }
