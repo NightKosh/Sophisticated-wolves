@@ -40,6 +40,8 @@ public class Recipes {
                 'i', Items.IRON_INGOT, 'b', Blocks.IRON_BARS, 'w', new ItemStack(Blocks.WOOL, 1, EnumDyeColor.WHITE.ordinal()),
                 's', Blocks.STONE_SLAB);
 
-        GameRegistry.addRecipe(new ItemStack(SWBlocks.DOG_BOWL), "cbc ", "ccc", 'c', Items.BRICK, 'b', Items.BOWL);
+        GameRegistry.addRecipe(new ItemStack(SWItems.WHISTLE), "iig", " di", 'i', Items.IRON_INGOT, 'g', Items.GOLD_INGOT, 'd', new ItemStack(Items.DYE, 1, EnumDyeColor.ORANGE.getDyeDamage()));
+
+        GameRegistry.addRecipe(new ItemStack(SWBlocks.DOG_BOWL), "cbc", "ccc", 'c', Items.BRICK, 'b', Items.BOWL);
     }
 }
