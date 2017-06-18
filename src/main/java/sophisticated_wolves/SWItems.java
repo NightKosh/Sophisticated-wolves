@@ -5,6 +5,7 @@ import net.minecraft.item.ItemBlock;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import sophisticated_wolves.item.ItemDogTag;
 import sophisticated_wolves.item.ItemDogTreat;
+import sophisticated_wolves.item.ItemWhistle;
 import sophisticated_wolves.item.ItemWolfEgg;
 import sophisticated_wolves.item.item_block.ItemBlockDogBowl;
 import sophisticated_wolves.item.pet_carrier.ItemPetCarrier;
@@ -19,6 +20,7 @@ public class SWItems {
 
     public static final Item DOG_TAG = new ItemDogTag();
     public static final Item DOG_TREAT = new ItemDogTreat();
+    public static final Item WHISTLE = new ItemWhistle();
     public static final Item PET_CARRIER = new ItemPetCarrier();
     public static final Item DOG_EGG = new ItemWolfEgg();
 
@@ -28,6 +30,8 @@ public class SWItems {
         GameRegistry.register(DOG_TAG);
 
         GameRegistry.register(DOG_TREAT);
+
+        GameRegistry.register(WHISTLE);
 
         GameRegistry.register(PET_CARRIER);
 

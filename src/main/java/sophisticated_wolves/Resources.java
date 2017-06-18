@@ -36,6 +36,7 @@ public class Resources {
     // MODEL RESOURCES
     public static final ModelResourceLocation DOG_TAG_MODEL = new ModelResourceLocation(SWItems.DOG_TAG.getRegistryName(), "inventory");
     public static final ModelResourceLocation DOG_TREAT_MODEL = new ModelResourceLocation(SWItems.DOG_TREAT.getRegistryName(), "inventory");
+    public static final ModelResourceLocation WHISTLE_MODEL = new ModelResourceLocation(SWItems.WHISTLE.getRegistryName(), "inventory");
     public static final ModelResourceLocation PET_CARRIER_MODEL = new ModelResourceLocation(SWItems.PET_CARRIER.getRegistryName(), "inventory");
     public static final ModelResourceLocation SPAWN_EGG_MODEL = new ModelResourceLocation(SWItems.DOG_EGG.getRegistryName(), "inventory");
 
@@ -44,4 +45,8 @@ public class Resources {
     public static final ModelResourceLocation DOG_BOWL2 = new ModelResourceLocation(SWBlocks.DOG_BOWL.getRegistryName() + "2", "inventory");
     public static final ModelResourceLocation DOG_BOWL3 = new ModelResourceLocation(SWBlocks.DOG_BOWL.getRegistryName() + "3", "inventory");
     public static final ModelResourceLocation DOG_BOWL4 = new ModelResourceLocation(SWBlocks.DOG_BOWL.getRegistryName() + "4", "inventory");
+
+    // Sounds
+    public static final ResourceLocation WHISTLE_SHORT = new ResourceLocation(MOD_NAME, SWSound.WHISTLE_SHORT_ID);
+    public static final ResourceLocation WHISTLE_LONG = new ResourceLocation(MOD_NAME, SWSound.WHISTLE_LONG_ID);
 }

@@ -1,0 +1,18 @@
+{
+    "player.whistle.short" : {
+        "category": "player",
+        "subtitle": "player.whistle.short",
+        "sounds" : [{
+            "name" : "sophisticatedwolves:player/whistle/short",
+            "stream" : true
+        }]
+    },
+    "player.whistle.long" : {
+        "category": "player",
+        "subtitle": "player.whistle.long",
+        "sounds" : [{
+            "name" : "sophisticatedwolves:player/whistle/long",
+            "stream" : true
+        }]
+    }
+}
