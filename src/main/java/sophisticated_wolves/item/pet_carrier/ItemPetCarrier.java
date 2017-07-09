@@ -124,6 +124,9 @@ public class ItemPetCarrier extends Item {
                             entity.rotationYawHead = entity.rotationYaw;
                             entity.renderYawOffset = entity.rotationYaw;
                             entity.onInitialSpawn(world.getDifficultyForLocation(new BlockPos(entity)), null);
+                            if (nbt.hasKey("CustomName")) {
+                                entity.setCustomNameTag(nbt.getString("CustomName"));
+                            }
                             world.spawnEntity(entity);
                             entity.playLivingSound();
 
