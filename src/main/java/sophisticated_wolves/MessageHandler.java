@@ -4,6 +4,7 @@ import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper;
 import net.minecraftforge.fml.relauncher.Side;
 import sophisticated_wolves.api.ModInfo;
+import sophisticated_wolves.packets.FoodMessageToServer;
 import sophisticated_wolves.packets.PetNameMessageToServer;
 
 /**
@@ -17,5 +18,6 @@ public class MessageHandler {
 
     public static void init() {
         networkWrapper.registerMessage(PetNameMessageToServer.class, PetNameMessageToServer.class, 0, Side.SERVER);
+        networkWrapper.registerMessage(FoodMessageToServer.class, FoodMessageToServer.class, 1, Side.SERVER);
     }
 }

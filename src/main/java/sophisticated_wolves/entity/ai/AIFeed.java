@@ -2,11 +2,11 @@ package sophisticated_wolves.entity.ai;
 
 import net.minecraft.entity.ai.EntityAIBase;
 import net.minecraft.entity.item.EntityItem;
-import net.minecraft.entity.passive.EntityTameable;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.world.World;
 import sophisticated_wolves.FoodHelper;
+import sophisticated_wolves.entity.EntitySophisticatedWolf;
 
 import java.util.List;
 
@@ -18,18 +18,18 @@ import java.util.List;
  */
 public class AIFeed extends EntityAIBase {
 
-    private EntityTameable pet;
+    private EntitySophisticatedWolf pet;
     private World world;
     protected EntityItem foodEntity;
 
-    public AIFeed(EntityTameable pet) {
+    public AIFeed(EntitySophisticatedWolf pet) {
         this.pet = pet;
         this.world = pet.world;
     }
 
     @Override
     public boolean shouldExecute() {
-        if (this.pet.isSitting() || this.pet.getHealth() >= 20) {
+        if (!this.pet.isTamed() || this.pet.isSitting() || this.pet.getHealth() >= 20) {
             return false;
         } else {
             List<EntityItem> foodList = this.world.getEntitiesWithinAABB(EntityItem.class,
@@ -37,7 +37,7 @@ public class AIFeed extends EntityAIBase {
                             this.pet.posX + 30, this.pet.posY + 30, this.pet.posZ + 30));
             for (EntityItem foodEntity : foodList) {
                 ItemStack stack = foodEntity.getEntityItem();
-                if (FoodHelper.isFoodItem(stack) && FoodHelper.isWolfFood(stack)) {
+                if ((FoodHelper.isFoodItem(stack) || FoodHelper.isBone(stack)) && FoodHelper.isWolfFood(pet, stack)) {
                     this.foodEntity = foodEntity;
                     return true;
                 }

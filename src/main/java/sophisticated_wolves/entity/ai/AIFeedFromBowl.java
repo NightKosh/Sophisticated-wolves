@@ -28,7 +28,7 @@ public class AIFeedFromBowl extends EntityAIBase {
 
     @Override
     public boolean shouldExecute() {
-        if (this.pet.isSitting() || this.pet.getHealth() >= 20) {
+        if (!this.pet.isTamed() || this.pet.isSitting() || this.pet.getHealth() >= 20) {
             return false;
         } else {
             if (getBowlTe(this.pet.getPosition())) {

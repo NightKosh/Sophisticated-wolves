@@ -32,6 +32,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import sophisticated_wolves.FoodHelper;
 import sophisticated_wolves.SWConfiguration;
 import sophisticated_wolves.SWItems;
+import sophisticated_wolves.SophisticatedWolvesMod;
 import sophisticated_wolves.api.AEntitySophisticatedWolf;
 import sophisticated_wolves.api.EnumWolfSpecies;
 import sophisticated_wolves.entity.ai.*;
@@ -53,6 +54,13 @@ public class EntitySophisticatedWolf extends AEntitySophisticatedWolf {
     private static final DataParameter<Integer> WOLF_SPECIES = EntityDataManager.createKey(EntityWolf.class, DataSerializers.VARINT);
     private static final int POTION_POISON_ID = 19;
     private static final int POTION_WITHER_ID = 20;
+    protected boolean rottenMeatAndBones;
+    protected boolean rawMeat;
+    protected boolean rawFish;
+    protected boolean specialFish;
+    protected boolean cookedMeat;
+    protected boolean cookedFish;
+    protected boolean anyFood;
 
     //New Sophisticated Wolves variables
     public boolean puking;
@@ -138,6 +146,13 @@ public class EntitySophisticatedWolf extends AEntitySophisticatedWolf {
         super.writeEntityToNBT(nbtTagCompound);
 
         nbtTagCompound.setInteger("Species", this.getSpecies().ordinal());
+
+        nbtTagCompound.setBoolean("RottenMeatAndBones", this.rottenMeatAndBones);
+        nbtTagCompound.setBoolean("RawMeat", this.rawMeat);
+        nbtTagCompound.setBoolean("RawFish", this.rawFish);
+        nbtTagCompound.setBoolean("SpecialFish", this.specialFish);
+        nbtTagCompound.setBoolean("CookedMeat", this.cookedMeat);
+        nbtTagCompound.setBoolean("CookedFish", this.cookedFish);
     }
 
     @Override
@@ -145,6 +160,26 @@ public class EntitySophisticatedWolf extends AEntitySophisticatedWolf {
         super.readEntityFromNBT(nbtTagCompound);
 
         this.updateSpecies(EnumWolfSpecies.getSpeciesByNum(nbtTagCompound.getInteger("Species")));
+
+        if (nbtTagCompound.hasKey("RottenMeatAndBones")) {
+            this.rottenMeatAndBones = nbtTagCompound.getBoolean("RottenMeatAndBones");
+        }
+        if (nbtTagCompound.hasKey("RawMeat")) {
+            this.rawMeat = nbtTagCompound.getBoolean("RawMeat");
+        }
+        if (nbtTagCompound.hasKey("RawFish")) {
+            this.rawFish = nbtTagCompound.getBoolean("RawFish");
+        }
+        if (nbtTagCompound.hasKey("SpecialFish")) {
+            this.specialFish = nbtTagCompound.getBoolean("SpecialFish");
+        }
+        if (nbtTagCompound.hasKey("CookedMeat")) {
+            this.cookedMeat = nbtTagCompound.getBoolean("CookedMeat");
+        }
+        if (nbtTagCompound.hasKey("CookedFish")) {
+            this.cookedFish = nbtTagCompound.getBoolean("CookedFish");
+        }
+        updateFood();
     }
 
     /**
@@ -292,6 +327,10 @@ public class EntitySophisticatedWolf extends AEntitySophisticatedWolf {
                 } else if (stack.getItem() instanceof ItemDogTag || stack.getItem() instanceof ItemPetCarrier) {
                     this.aiSit.setSitting(this.isSitting());
                     return false;
+                } else if (FoodHelper.isBone(stack)) {
+                    SophisticatedWolvesMod.proxy.openFoodGui(this);
+                    stack.shrink(1);
+                    return true;
                 }
             }
         }
@@ -466,5 +505,76 @@ public class EntitySophisticatedWolf extends AEntitySophisticatedWolf {
     @Override
     public boolean isWet() {
         return super.isWet() || this.world.handleMaterialAcceleration(this.getEntityBoundingBox().expand(0, -0.25, 0).contract(0.001D), Material.WATER, this);
+    }
+
+
+    public boolean isRottenMeatAndBones() {
+        return rottenMeatAndBones;
+    }
+
+    public void setRottenMeatAndBones(boolean rottenMeatAndBones) {
+        this.rottenMeatAndBones = rottenMeatAndBones;
+    }
+
+    public boolean isRawMeat() {
+        return rawMeat;
+    }
+
+    public void setRawMeat(boolean rawMeat) {
+        this.rawMeat = rawMeat;
+    }
+
+    public boolean isRawFish() {
+        return rawFish;
+    }
+
+    public void setRawFish(boolean rawFish) {
+        this.rawFish = rawFish;
+    }
+
+    public boolean isSpecialFish() {
+        return specialFish;
+    }
+
+    public void setSpecialFish(boolean specialFish) {
+        this.specialFish = specialFish;
+    }
+
+    public boolean isCookedMeat() {
+        return cookedMeat;
+    }
+
+    public void setCookedMeat(boolean cookedMeat) {
+        this.cookedMeat = cookedMeat;
+    }
+
+    public boolean isCookedFish() {
+        return cookedFish;
+    }
+
+    public void setCookedFish(boolean cookedFish) {
+        this.cookedFish = cookedFish;
+    }
+
+    public boolean isAnyFood() {
+        return anyFood;
+    }
+
+    public void setAnyFood(boolean anyFood) {
+        this.anyFood = anyFood;
+    }
+
+    public void updateFood(boolean rottenMeatAndBones, boolean rawMeat, boolean rawFish, boolean specialFish, boolean cookedMeat, boolean cookedFish) {
+        this.setRottenMeatAndBones(rottenMeatAndBones);
+        this.setRawMeat(rawMeat);
+        this.setRawFish(rawFish);
+        this.setSpecialFish(specialFish);
+        this.setCookedMeat(cookedMeat);
+        this.setCookedFish(cookedFish);
+        updateFood();
+    }
+
+    public void updateFood() {
+        this.anyFood = rottenMeatAndBones && rawMeat && rawFish && specialFish && cookedMeat && cookedFish;
     }
 }

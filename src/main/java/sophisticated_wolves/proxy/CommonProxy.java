@@ -1,6 +1,7 @@
 package sophisticated_wolves.proxy;
 
 import net.minecraft.entity.passive.EntityTameable;
+import sophisticated_wolves.entity.EntitySophisticatedWolf;
 
 /**
  * Sophisticated Wolves
@@ -18,6 +19,8 @@ public class CommonProxy {
     }
 
     public void openPetGui(EntityTameable pet) {}
+
+    public void openFoodGui(EntitySophisticatedWolf pet) {}
 
     public void modelsRegistration() {
 

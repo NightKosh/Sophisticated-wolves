@@ -15,6 +15,7 @@ import sophisticated_wolves.SWItems;
 import sophisticated_wolves.api.EnumWolfSpecies;
 import sophisticated_wolves.entity.EntitySophisticatedWolf;
 import sophisticated_wolves.gui.GuiEditName;
+import sophisticated_wolves.gui.GuiFood;
 import sophisticated_wolves.item.WolfEggColor;
 
 /**
@@ -55,6 +56,10 @@ public class ClientProxy extends CommonProxy {
     @Override
     public void openPetGui(EntityTameable pet) {
         FMLClientHandler.instance().getClient().displayGuiScreen(new GuiEditName(pet));
+    }
+
+    public void openFoodGui(EntitySophisticatedWolf pet) {
+        FMLClientHandler.instance().getClient().displayGuiScreen(new GuiFood(pet));
     }
 
     @Override

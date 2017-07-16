@@ -11,7 +11,7 @@ import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 
 /**
- * GraveStone mod
+ * Sophisticated Wolves
  *
  * @author NightKosh
  * @license Lesser GNU Public License v3 (http://www.gnu.org/licenses/lgpl.html)
@@ -54,7 +54,7 @@ public class PetNameMessageToServer implements IMessage, IMessageHandler<PetName
             if (world != null) {
                 Entity entity = world.getEntityByID(message.playerID);
                 if (entity != null && entity instanceof EntityTameable) {
-                    ((EntityTameable) entity).setCustomNameTag(message.text);
+                    entity.setCustomNameTag(message.text);
                 }
             }
         }

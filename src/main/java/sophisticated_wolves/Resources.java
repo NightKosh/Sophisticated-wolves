@@ -32,6 +32,8 @@ public class Resources {
 
     // Gui
     public static final ResourceLocation DOG_BOWL_GUI = new ResourceLocation(GUI_LOCATION + "dog_bowl_gui.png");
+    public static final ResourceLocation FOOD_GUI = new ResourceLocation(GUI_LOCATION + "food_background.png");
+    public static final ResourceLocation CHECKBOX_GUI = new ResourceLocation(GUI_LOCATION + "checkbox.png");
 
     // MODEL RESOURCES
     public static final ModelResourceLocation DOG_TAG_MODEL = new ModelResourceLocation(SWItems.DOG_TAG.getRegistryName(), "inventory");
