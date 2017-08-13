@@ -1,0 +1,42 @@
+//Translated by: Dorzar / VeryHardChamp
+//Act.: 31/07/2017
+//SophisticatedWolves 1.11.2-3.9.0
+
+# Tabs
+itemGroup.tabSophisticatedWolves=Sophisticated Wolves
+
+# Blocks
+tile.dogbowl.name=Cuenco para perros
+
+# Items
+item.dogtag.name=Placa de identidad
+item.dogtreat.name=Galleta para lobos
+item.whistle.name=Silbato
+item.petcarrier.name=Portador de mascotas
+
+# Wolf
+entity.SWWolf.name=Lobo
+
+#WOLF TYPE
+wolf_type.vanilla=Gris
+wolf_type.forest=Forestal
+wolf_type.black=Negro
+wolf_type.brown=Pardo
+
+# Cat Type
+cat_type.ocelot=Ocelote
+cat_type.black=Negro
+cat_type.red=Rojo
+cat_type.siamese=Siamés
+
+# Pet Carrier
+carrier.pet_type=Tipo de mascota
+carrier.dog_type=Tipo de perro
+carrier.cat_type=Tipo de gato
+carrier.pet_name=Nombre
+
+# GUI
+gui.edit_dog_name.title=Dele a su mascota un nombre:
+gui.edit_dog_name.done_button=Listo
+gui.food.title=Elija los tipos de alimentos que los lobos comen
+gui.food.done_button=Listo
