@@ -1,0 +1,18 @@
+//Translated by: Dorzar / VeryHardChamp
+//Act.: 30/07/2017
+# Items
+item.dogtag.name=Placa de identidad
+item.dogtreat.name=Galleta para lobos
+
+# Wolf
+entity.SWWolf.name=Lobo
+
+#WOLF TYPE
+wolf_type.vanilla=Gris
+wolf_type.forest=Forestal
+wolf_type.black=Negro
+wolf_type.brown=Marrón
+
+# GUI
+gui.edit_dog_name.title=Dele a su mascota un nombre:
+gui.edit_dog_name.done_button=Listo
