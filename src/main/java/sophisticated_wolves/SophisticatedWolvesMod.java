@@ -46,10 +46,6 @@ public class SophisticatedWolvesMod {
 
         SWTabs.registration();
 
-        SWBlocks.registration();
-
-        SWItems.registration();
-
         SWTileEntity.registration();
     }
 

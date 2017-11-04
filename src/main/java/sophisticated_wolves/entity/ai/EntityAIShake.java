@@ -37,7 +37,7 @@ public class EntityAIShake extends EntityAIBase {
         }
 
         if (this.theWolf.isShaking && this.theWolf.isWet) {//isWolfWet method is client side!
-            if (this.theWorld.isFlammableWithin(this.theWolf.getEntityBoundingBox().contract(0.001))) {
+            if (this.theWorld.isFlammableWithin(this.theWolf.getEntityBoundingBox().contract(0.001, 0.001, 0.001))) {
                 return false;
             }
             if (this.theWolf.isWet()) {
@@ -55,9 +55,9 @@ public class EntityAIShake extends EntityAIBase {
      * Returns whether an in-progress EntityAIBase should continue executing
      */
     @Override
-    public boolean continueExecuting() {
+    public boolean shouldContinueExecuting() {
         if (this.theWolf.isShaking && this.theWolf.isWet) {//isWolfWet method is client side!
-            if (this.theWorld.isFlammableWithin(this.theWolf.getEntityBoundingBox().contract(0.001))) {
+            if (this.theWorld.isFlammableWithin(this.theWolf.getEntityBoundingBox().contract(0.001, 0.001, 0.001))) {
                 return false;
             }
             if (this.theWolf.isWet()) {
@@ -76,7 +76,7 @@ public class EntityAIShake extends EntityAIBase {
      */
     @Override
     public void startExecuting() {
-        this.petPathfinder.clearPathEntity();
+        this.petPathfinder.clearPath();
     }
 
     /**

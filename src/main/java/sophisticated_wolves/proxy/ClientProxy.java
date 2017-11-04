@@ -78,6 +78,6 @@ public class ClientProxy extends CommonProxy {
         Minecraft.getMinecraft().getRenderItem().getItemModelMesher().register(Item.getItemFromBlock(SWBlocks.DOG_BOWL), 2, Resources.DOG_BOWL2);
         Minecraft.getMinecraft().getRenderItem().getItemModelMesher().register(Item.getItemFromBlock(SWBlocks.DOG_BOWL), 3, Resources.DOG_BOWL3);
         Minecraft.getMinecraft().getRenderItem().getItemModelMesher().register(Item.getItemFromBlock(SWBlocks.DOG_BOWL), 4, Resources.DOG_BOWL4);
-        ModelBakery.registerItemVariants(SWItems.DOG_BOWL_IB, Resources.DOG_BOWL, Resources.DOG_BOWL1, Resources.DOG_BOWL2, Resources.DOG_BOWL3, Resources.DOG_BOWL4);
+        ModelBakery.registerItemVariants(SWBlocks.DOG_BOWL_IB, Resources.DOG_BOWL, Resources.DOG_BOWL1, Resources.DOG_BOWL2, Resources.DOG_BOWL3, Resources.DOG_BOWL4);
     }
 }

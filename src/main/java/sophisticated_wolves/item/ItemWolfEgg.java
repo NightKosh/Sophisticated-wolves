@@ -9,7 +9,6 @@ import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.IEntityLivingData;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemMonsterPlacer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.*;
@@ -173,9 +172,9 @@ public class ItemWolfEgg extends ItemMonsterPlacer {
     }
 
     @Override
-    public void getSubItems(Item item, CreativeTabs tabs, NonNullList<ItemStack> subitems) {
+    public void getSubItems(CreativeTabs tab, NonNullList<ItemStack> items) {
         for (int i = 0; i < EnumWolfSpecies.values().length; i++) {
-            subitems.add(new ItemStack(item, 1, i));
+            items.add(new ItemStack(this, 1, i));
         }
     }
 }

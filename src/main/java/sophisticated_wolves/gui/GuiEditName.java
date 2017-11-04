@@ -32,7 +32,7 @@ public class GuiEditName extends GuiScreen {
         super.initGui();
         Keyboard.enableRepeatEvents(true); //pauses the game when GUI is opened
         this.buttonList.add(new GuiButton(0, this.width / 2 - 100, this.height / 4 + 120, doneButtonText));
-        this.nameField = new GuiTextField(0, this.fontRendererObj, this.width / 2 - 50, 100, 100, 20); //Textbox size
+        this.nameField = new GuiTextField(0, this.fontRenderer, this.width / 2 - 50, 100, 100, 20); //Textbox size
         this.nameField.setText(this.pet.getCustomNameTag());
         this.nameField.setFocused(true);
         this.nameField.setMaxStringLength(16); //string length
@@ -67,7 +67,7 @@ public class GuiEditName extends GuiScreen {
     public void drawScreen(int i, int j, float f) {
         this.drawDefaultBackground();
         super.drawScreen(i, j, f);
-        this.drawCenteredString(this.fontRendererObj, this.screenTitle, this.width / 2, 60, 0xffffff);
+        this.drawCenteredString(this.fontRenderer, this.screenTitle, this.width / 2, 60, 0xffffff);
         if (this.nameField != null && this.nameField.getText() != null) {
             this.nameField.drawTextBox();
         }

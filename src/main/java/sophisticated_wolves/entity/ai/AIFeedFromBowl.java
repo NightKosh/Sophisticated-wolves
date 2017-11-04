@@ -67,7 +67,7 @@ public class AIFeedFromBowl extends EntityAIBase {
     }
 
     @Override
-    public boolean continueExecuting() {
+    public boolean shouldContinueExecuting() {
         return this.pet.getHealth() < 20 && this.dogBowl != null;
     }
 
@@ -81,7 +81,7 @@ public class AIFeedFromBowl extends EntityAIBase {
                 this.dogBowl.addFood(-1);
                 if (this.dogBowl.getFoodAmount() == 0 || this.pet.getHealth() >= 20) {
                     this.dogBowl = null;
-                    this.pet.getNavigator().clearPathEntity();
+                    this.pet.getNavigator().clearPath();
                 }
             }
         }
@@ -90,6 +90,6 @@ public class AIFeedFromBowl extends EntityAIBase {
     @Override
     public void resetTask() {
         this.dogBowl = null;
-        this.pet.getNavigator().clearPathEntity();
+        this.pet.getNavigator().clearPath();
     }
 }

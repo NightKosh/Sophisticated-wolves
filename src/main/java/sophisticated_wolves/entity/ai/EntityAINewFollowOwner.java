@@ -38,8 +38,8 @@ public class EntityAINewFollowOwner extends EntityAIFollowOwner {
      * Returns whether an in-progress EntityAIBase should continue executing
      */
     @Override
-    public boolean continueExecuting() {
-        return super.continueExecuting() && this.pet.getOwner() != null && !((EntityLivingBase) this.pet.getOwner()).isOnLadder();
+    public boolean shouldContinueExecuting() {
+        return super.shouldContinueExecuting() && this.pet.getOwner() != null && !((EntityLivingBase) this.pet.getOwner()).isOnLadder();
     }
 
 
@@ -61,7 +61,7 @@ public class EntityAINewFollowOwner extends EntityAIFollowOwner {
         --this.tick;
         if (!this.pet.isSitting() && this.tick <= 0) {
             this.tick = 10;
-            if (!this.pet.getNavigator().tryMoveToEntityLiving(owner, this.speed) && !this.pet.getLeashed() && this.pet.getDistanceSqToEntity(owner) >= 144) {
+            if (!this.pet.getNavigator().tryMoveToEntityLiving(owner, this.speed) && !this.pet.getLeashed() && this.pet.getDistance(owner) >= 144) {
                 int xPos = MathHelper.floor(owner.posX) - 2;
                 int zPos = MathHelper.floor(owner.posZ) - 2;
                 int yPos = MathHelper.floor(owner.getEntityBoundingBox().minY);
@@ -72,7 +72,7 @@ public class EntityAINewFollowOwner extends EntityAIFollowOwner {
                                 this.isAirSafe(xPos + dX, yPos, zPos + dZ) &&
                                 this.isAirSafe(xPos + dX, yPos + 1, zPos + dZ)) {
                             this.pet.setLocationAndAngles(xPos + dX + 0.5F, yPos, zPos + dZ + 0.5F, this.pet.rotationYaw, this.pet.rotationPitch);
-                            this.pet.getNavigator().clearPathEntity();
+                            this.pet.getNavigator().clearPath();
                             return;
                         }
                     }

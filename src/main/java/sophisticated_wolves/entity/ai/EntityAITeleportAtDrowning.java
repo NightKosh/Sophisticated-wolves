@@ -33,7 +33,7 @@ public class EntityAITeleportAtDrowning extends EntityAIBase {
     }
 
     @Override
-    public boolean continueExecuting() {
+    public boolean shouldContinueExecuting() {
         return this.pet.isDrowning() && this.pet.isInWater() && this.pet.isTamed() && this.pet.getOwner() != null;
     }
 
@@ -58,7 +58,7 @@ public class EntityAITeleportAtDrowning extends EntityAIBase {
                 IBlockState state = this.world.getBlockState(pos);
                 if (state.getBlock().isAir(state, world, pos)) {
                     this.pet.setLocationAndAngles(xPos + x + 0.5, yPos, zPos + z + 0.5, this.pet.rotationYaw, this.pet.rotationPitch);
-                    this.petPathfinder.clearPathEntity();
+                    this.petPathfinder.clearPath();
                     return;
                 }
             }

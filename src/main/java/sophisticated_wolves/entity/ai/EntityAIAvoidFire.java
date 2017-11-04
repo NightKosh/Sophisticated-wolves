@@ -45,10 +45,10 @@ public class EntityAIAvoidFire extends EntityAIBase {
         if (vec3d == null) {
             return false;
         } else {
-            this.xPath = vec3d.xCoord;
-            this.yPath = vec3d.yCoord;
-            this.zPath = vec3d.zCoord;
-            return this.theWorld.isFlammableWithin(this.entity.getEntityBoundingBox().contract(0.001D));
+            this.xPath = vec3d.x;
+            this.yPath = vec3d.y;
+            this.zPath = vec3d.z;
+            return this.theWorld.isFlammableWithin(this.entity.getEntityBoundingBox().contract(0.001, 0.001, 0.001));
         }
     }
 
@@ -56,7 +56,7 @@ public class EntityAIAvoidFire extends EntityAIBase {
      * Returns whether an in-progress EntityAIBase should continue executing
      */
     @Override
-    public boolean continueExecuting() {
+    public boolean shouldContinueExecuting() {
         return !this.entity.getNavigator().noPath();
     }
 

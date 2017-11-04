@@ -57,7 +57,7 @@ public class ItemWhistle extends Item {
                                 if (state.getBlock().isAir(state, world, wolfPos)) {
                                     wolf.setSitting(false);
                                     wolf.setLocationAndAngles(xPos + x + 0.5, yPos, zPos + z + 0.5, wolf.rotationYaw, wolf.rotationPitch);
-                                    wolf.getNavigator().clearPathEntity();
+                                    wolf.getNavigator().clearPath();
                                     wolf.setAttackTarget(null);
                                 }
                             }

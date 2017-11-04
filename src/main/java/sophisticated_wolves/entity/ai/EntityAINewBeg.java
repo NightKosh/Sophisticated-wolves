@@ -43,9 +43,9 @@ public class EntityAINewBeg extends EntityAIBase {
      * Returns whether an in-progress EntityAIBase should continue executing
      */
     @Override
-    public boolean continueExecuting() {
+    public boolean shouldContinueExecuting() {
         if (this.player.isEntityAlive()) {
-            if (this.wolf.getDistanceSqToEntity(this.player) <= (this.minPlayerDistance * this.minPlayerDistance)) {
+            if (this.wolf.getDistance(this.player) <= (this.minPlayerDistance * this.minPlayerDistance)) {
                 return this.randomBeg > 0 && this.isHoldingMeat(this.player);
             }
         }
@@ -57,7 +57,7 @@ public class EntityAINewBeg extends EntityAIBase {
      */
     @Override
     public void startExecuting() {
-        this.petPathfinder.clearPathEntity();
+        this.petPathfinder.clearPath();
         this.wolf.setBegging(true);
         this.randomBeg = 40 + this.wolf.getRNG().nextInt(40);
     }

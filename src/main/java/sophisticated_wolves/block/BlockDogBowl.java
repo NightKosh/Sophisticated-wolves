@@ -123,7 +123,8 @@ public class BlockDogBowl extends BlockContainer {
     }
 
     @Override
-    public void getSubBlocks(Item item, CreativeTabs tab, NonNullList<ItemStack> list) {
+    public void getSubBlocks(CreativeTabs tab, NonNullList<ItemStack> list) {
+        Item item = Item.getItemFromBlock(this);
         for (int meta = 0; meta < EnumDogBowl.values().length; meta++) {
             list.add(new ItemStack(item, 1, meta));
         }

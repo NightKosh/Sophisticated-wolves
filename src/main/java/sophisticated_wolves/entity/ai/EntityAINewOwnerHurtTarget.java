@@ -30,8 +30,8 @@ public class EntityAINewOwnerHurtTarget extends EntityAIOwnerHurtTarget {
             //only attacks if target was attacked by owner
             EntityLivingBase owner = (EntityLivingBase) this.theEntityTameable.getOwner();
             if (owner != null) {
-                this.theTarget = owner.getLastAttacker();
-                if (theTarget != null && (theTarget.getRevengeTimer() <= 40 || (this.theTarget.getAITarget() != null && !this.theTarget.getAITarget().equals(owner)))) {
+                this.theTarget = owner.getLastAttackedEntity();
+                if (theTarget != null && (theTarget.getRevengeTimer() <= 40 || (this.theTarget.getRevengeTarget() != null && !this.theTarget.getRevengeTarget().equals(owner)))) {
                     return false;
                 }
                 return true;

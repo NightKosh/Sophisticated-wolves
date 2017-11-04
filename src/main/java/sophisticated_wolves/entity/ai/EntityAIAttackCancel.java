@@ -35,7 +35,7 @@ public class EntityAIAttackCancel extends EntityAIBase {
             return false;
         }
 
-        EntityLivingBase entity = (EntityLivingBase) this.pet.getOwner();
+        EntityLivingBase entity = this.pet.getOwner();
         if (entity == null) {
             return false;
         }
@@ -59,7 +59,7 @@ public class EntityAIAttackCancel extends EntityAIBase {
      * Returns whether an in-progress EntityAIBase should continue executing
      */
     @Override
-    public boolean continueExecuting() {
+    public boolean shouldContinueExecuting() {
         return this.owner.isSneaking() && !this.pet.isSitting();
     }
 
@@ -68,7 +68,7 @@ public class EntityAIAttackCancel extends EntityAIBase {
      */
     @Override
     public void startExecuting() {
-        this.petPathfinder.clearPathEntity();
+        this.petPathfinder.clearPath();
     }
 
     /**
@@ -76,7 +76,7 @@ public class EntityAIAttackCancel extends EntityAIBase {
      */
     @Override
     public void resetTask() {
-        this.petPathfinder.clearPathEntity();
+        this.petPathfinder.clearPath();
         this.sneakCounter = 0;
     }
 
@@ -90,11 +90,11 @@ public class EntityAIAttackCancel extends EntityAIBase {
             if (this.owner.isSneaking()) {
                 this.sneakCounter++;
                 if (this.sneakCounter > 30) {
-                    this.petPathfinder.clearPathEntity();
-                    this.pet.setAttackTarget((EntityLivingBase) null);
-                    this.pet.setRevengeTarget((EntityLivingBase) null);
+                    this.petPathfinder.clearPath();
+                    this.pet.setAttackTarget(null);
+                    this.pet.setRevengeTarget(null);
 
-                    this.owner.setRevengeTarget((EntityLivingBase) null);
+                    this.owner.setRevengeTarget(null);
                     this.sneakCounter = 0;
                 }
             } else {

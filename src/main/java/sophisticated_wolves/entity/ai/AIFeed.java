@@ -36,7 +36,7 @@ public class AIFeed extends EntityAIBase {
                     new AxisAlignedBB(this.pet.posX - 30, this.pet.posY - 30, this.pet.posZ - 30,
                             this.pet.posX + 30, this.pet.posY + 30, this.pet.posZ + 30));
             for (EntityItem foodEntity : foodList) {
-                ItemStack stack = foodEntity.getEntityItem();
+                ItemStack stack = foodEntity.getItem();
                 if ((FoodHelper.isFoodItem(stack) || FoodHelper.isBone(stack)) && FoodHelper.isWolfFood(pet, stack)) {
                     this.foodEntity = foodEntity;
                     return true;
@@ -47,7 +47,7 @@ public class AIFeed extends EntityAIBase {
     }
 
     @Override
-    public boolean continueExecuting() {
+    public boolean shouldContinueExecuting() {
         return this.pet.getHealth() < 20 && this.foodEntity != null;
     }
 
@@ -55,16 +55,16 @@ public class AIFeed extends EntityAIBase {
     public void updateTask() {
         if (this.foodEntity != null) {
             this.pet.getNavigator().setPath(this.pet.getNavigator().getPathToXYZ(this.foodEntity.posX, this.foodEntity.posY, this.foodEntity.posZ), 1);
-            if (this.pet.getDistanceSqToEntity(this.foodEntity) <= 1) {
+            if (this.pet.getDistance(this.foodEntity) <= 1) {
                 this.pet.getLookHelper().setLookPosition(this.foodEntity.posX, this.foodEntity.posY, this.foodEntity.posZ, 0.25F, 0.25F);
-                this.pet.heal(FoodHelper.getHealPoints(this.foodEntity.getEntityItem()));
-                this.foodEntity.getEntityItem().shrink(1);
-                if (this.foodEntity.getEntityItem().isEmpty() || this.pet.getHealth() >= 20) {
-                    if (this.foodEntity.getEntityItem().isEmpty()) {
+                this.pet.heal(FoodHelper.getHealPoints(this.foodEntity.getItem()));
+                this.foodEntity.getItem().shrink(1);
+                if (this.foodEntity.getItem().isEmpty() || this.pet.getHealth() >= 20) {
+                    if (this.foodEntity.getItem().isEmpty()) {
                         this.foodEntity.setDead();
                     }
                     this.foodEntity = null;
-                    this.pet.getNavigator().clearPathEntity();
+                    this.pet.getNavigator().clearPath();
                 }
             }
         }
@@ -73,6 +73,6 @@ public class AIFeed extends EntityAIBase {
     @Override
     public void resetTask() {
         this.foodEntity = null;
-        this.pet.getNavigator().clearPathEntity();
+        this.pet.getNavigator().clearPath();
     }
 }

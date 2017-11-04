@@ -248,7 +248,7 @@ public class EntitySophisticatedWolf extends AEntitySophisticatedWolf {
     @Override
     public void onUpdate() {        //Checks if wolf is burning and not currently standing in fire or if wolf is poison
         if (!this.isWet && //isWolfWet method is client side!
-                ((this.isBurning() && !this.world.isFlammableWithin(this.getEntityBoundingBox().contract(0.001))) ||
+                ((this.isBurning() && !this.world.isFlammableWithin(this.getEntityBoundingBox().contract(0.001, 0.001, 0.001))) ||
                         (this.isPotionActive(Potion.REGISTRY.getObjectById(POTION_POISON_ID)) ||
                                 this.isPotionActive(Potion.REGISTRY.getObjectById(POTION_WITHER_ID))))) {
             this.isShaking = true;
@@ -467,7 +467,7 @@ public class EntitySophisticatedWolf extends AEntitySophisticatedWolf {
 
     @Override
     public boolean attackEntityFrom(DamageSource damageSource, float amount) {
-        if ((damageSource.getEntity() != null && damageSource.getEntity().equals(this.getOwner()) && !damageSource.getEntity().isSneaking()) ||
+        if ((damageSource.getTrueSource() != null && damageSource.getTrueSource().equals(this.getOwner()) && !damageSource.getTrueSource().isSneaking()) ||
                 (SWConfiguration.immuneToCacti && damageSource.equals(DamageSource.CACTUS))) {
             return false;
         } else {
@@ -504,7 +504,7 @@ public class EntitySophisticatedWolf extends AEntitySophisticatedWolf {
 
     @Override
     public boolean isWet() {
-        return super.isWet() || this.world.handleMaterialAcceleration(this.getEntityBoundingBox().expand(0, -0.25, 0).contract(0.001D), Material.WATER, this);
+        return super.isWet() || this.world.handleMaterialAcceleration(this.getEntityBoundingBox().expand(0, -0.25, 0).contract(0.001, 0.001, 0.001), Material.WATER, this);
     }
 
 

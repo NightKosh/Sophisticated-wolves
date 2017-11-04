@@ -34,7 +34,7 @@ public class EntityAIMoveCancel extends EntityAIBase {
             return false;
         }
 
-        EntityLivingBase owner = (EntityLivingBase) this.pet.getOwner();
+        EntityLivingBase owner = this.pet.getOwner();
         if (owner == null) {
             return false;
         }
@@ -55,7 +55,7 @@ public class EntityAIMoveCancel extends EntityAIBase {
             return false;
         }
 
-        if (this.pet.getDistanceSqToEntity(owner) > (double) (dist * dist * 4)) {
+        if (this.pet.getDistance(owner) > (double) (dist * dist * 4)) {
             return false;
         }
 
@@ -70,7 +70,7 @@ public class EntityAIMoveCancel extends EntityAIBase {
      * Returns whether an in-progress EntityAIBase should continue executing
      */
     @Override
-    public boolean continueExecuting() {
+    public boolean shouldContinueExecuting() {
         return (this.pet.getAttackTarget() == null) && (this.player.isSwingInProgress || this.player.isHandActive()) && !this.pet.isSitting() && !this.pet.isInLove();
     }
 
@@ -79,7 +79,7 @@ public class EntityAIMoveCancel extends EntityAIBase {
      */
     @Override
     public void startExecuting() {
-        this.petPathfinder.clearPathEntity();
+        this.petPathfinder.clearPath();
     }
 
     /**
@@ -87,7 +87,7 @@ public class EntityAIMoveCancel extends EntityAIBase {
      */
     @Override
     public void resetTask() {
-        this.petPathfinder.clearPathEntity();
+        this.petPathfinder.clearPath();
     }
 
     /**

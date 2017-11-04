@@ -81,7 +81,7 @@ public class GuiFood extends GuiScreen {
         // draw bones background
         this.drawTexturedModalRect(i, j, 0, 0, this.xSize, this.ySize);
 
-        this.drawCenteredString(this.fontRendererObj, this.screenTitle, this.width / 2, 65, 0xffffff);
+        this.drawCenteredString(this.fontRenderer, this.screenTitle, this.width / 2, 65, 0xffffff);
 
         super.drawScreen(x, y, tick);
     }

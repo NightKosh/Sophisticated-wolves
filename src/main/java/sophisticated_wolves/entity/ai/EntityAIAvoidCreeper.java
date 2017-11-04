@@ -65,24 +65,24 @@ public class EntityAIAvoidCreeper extends EntityAIBase {
         for (int cr = 0; cr < this.listSize; cr++) {
             this.creeper = (EntityCreeper) list.get(cr);
 
-            if (this.entity.getDistanceSqToEntity(creeper) < this.minDistToCharged * this.minDistToCharged && this.creeper.getCreeperState() > 0) {
+            if (this.entity.getDistance(creeper) < this.minDistToCharged * this.minDistToCharged && this.creeper.getCreeperState() > 0) {
                 Vec3d vec3d = RandomPositionGenerator.findRandomTargetBlockAwayFrom(this.entity, 16, 7, new Vec3d(this.creeper.posX, this.creeper.posY, this.creeper.posZ));
 
                 if (vec3d != null) {
-                    if (this.creeper.getDistanceSq(vec3d.xCoord, vec3d.yCoord, vec3d.zCoord) > this.creeper.getDistanceSqToEntity(this.entity)) {
-                        this.pathEntity = this.entityPathNavigate.getPathToXYZ(vec3d.xCoord, vec3d.yCoord, vec3d.zCoord);
+                    if (this.creeper.getDistanceSq(vec3d.x, vec3d.y, vec3d.z) > this.creeper.getDistance(this.entity)) {
+                        this.pathEntity = this.entityPathNavigate.getPathToXYZ(vec3d.x, vec3d.y, vec3d.z);
 
                         return this.pathEntity != null;
                     }
                 }
             }
 
-            if (this.entity.getDistanceSqToEntity(creeper) < this.minDist * this.minDist) {
+            if (this.entity.getDistance(creeper) < this.minDist * this.minDist) {
                 Vec3d vec3d = RandomPositionGenerator.findRandomTargetBlockAwayFrom(this.entity, this.minDist, this.minDist, new Vec3d(this.creeper.posX, this.creeper.posY, this.creeper.posZ));
 
                 if (vec3d != null) {
-                    if (this.creeper.getDistanceSq(vec3d.xCoord, vec3d.yCoord, vec3d.zCoord) > this.creeper.getDistanceSqToEntity(this.entity)) {
-                        this.pathEntity = this.entityPathNavigate.getPathToXYZ(vec3d.xCoord, vec3d.yCoord, vec3d.zCoord);
+                    if (this.creeper.getDistanceSq(vec3d.x, vec3d.y, vec3d.z) > this.creeper.getDistance(this.entity)) {
+                        this.pathEntity = this.entityPathNavigate.getPathToXYZ(vec3d.x, vec3d.y, vec3d.z);
 
                         return this.pathEntity != null;
                     }
@@ -96,7 +96,7 @@ public class EntityAIAvoidCreeper extends EntityAIBase {
      * Returns whether an in-progress EntityAIBase should continue executing
      */
     @Override
-    public boolean continueExecuting() {
+    public boolean shouldContinueExecuting() {
         return !this.entityPathNavigate.noPath();
     }
 
@@ -121,7 +121,7 @@ public class EntityAIAvoidCreeper extends EntityAIBase {
      */
     @Override
     public void updateTask() {
-        if (this.entity.getDistanceSqToEntity(this.creeper) < 49) {
+        if (this.entity.getDistance(this.creeper) < 49) {
             this.entity.getNavigator().setSpeed(this.sprintSpeed);
         } else {
             this.entity.getNavigator().setSpeed(this.regSpeed);

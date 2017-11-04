@@ -1,13 +1,16 @@
 package sophisticated_wolves;
 
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemBlock;
+import net.minecraftforge.event.RegistryEvent;
+import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.registry.GameRegistry;
+import net.minecraftforge.registries.IForgeRegistry;
+import sophisticated_wolves.api.ModInfo;
 import sophisticated_wolves.item.ItemDogTag;
 import sophisticated_wolves.item.ItemDogTreat;
 import sophisticated_wolves.item.ItemWhistle;
 import sophisticated_wolves.item.ItemWolfEgg;
-import sophisticated_wolves.item.item_block.ItemBlockDogBowl;
 import sophisticated_wolves.item.pet_carrier.ItemPetCarrier;
 
 /**
@@ -16,6 +19,7 @@ import sophisticated_wolves.item.pet_carrier.ItemPetCarrier;
  * @author NightKosh
  * @license Lesser GNU Public License v3 (http://www.gnu.org/licenses/lgpl.html)
  */
+@GameRegistry.ObjectHolder(ModInfo.ID)
 public class SWItems {
 
     public static final Item DOG_TAG = new ItemDogTag();
@@ -24,19 +28,17 @@ public class SWItems {
     public static final Item PET_CARRIER = new ItemPetCarrier();
     public static final Item DOG_EGG = new ItemWolfEgg();
 
-    public static final ItemBlock DOG_BOWL_IB = new ItemBlockDogBowl(SWBlocks.DOG_BOWL);
+    @Mod.EventBusSubscriber(modid = ModInfo.ID)
+    public static class RegistrationHandler {
 
-    public static void registration() {
-        GameRegistry.register(DOG_TAG);
-
-        GameRegistry.register(DOG_TREAT);
-
-        GameRegistry.register(WHISTLE);
-
-        GameRegistry.register(PET_CARRIER);
-
-        GameRegistry.register(DOG_EGG);
-
-        GameRegistry.register(DOG_BOWL_IB);
+        @SubscribeEvent
+        public static void registerItems(final RegistryEvent.Register<Item> event) {
+            final IForgeRegistry<Item> registry = event.getRegistry();
+            registry.registerAll(DOG_TAG);
+            registry.registerAll(DOG_TREAT);
+            registry.registerAll(WHISTLE);
+            registry.registerAll(PET_CARRIER);
+            registry.registerAll(DOG_EGG);
+        }
     }
 }

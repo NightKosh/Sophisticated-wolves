@@ -2,6 +2,7 @@ package sophisticated_wolves.item.pet_carrier;
 
 import net.minecraft.block.BlockFence;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
@@ -27,7 +28,7 @@ import sophisticated_wolves.SophisticatedWolvesMod;
 import sophisticated_wolves.api.ModInfo;
 import sophisticated_wolves.api.pet_carrier.PetCarrier;
 
-import java.util.Iterator;
+import javax.annotation.Nullable;
 import java.util.List;
 import java.util.Map;
 
@@ -150,7 +151,7 @@ public class ItemPetCarrier extends Item {
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void addInformation(ItemStack stack, EntityPlayer player, List<String> tooltip, boolean advanced) {
+    public void addInformation(ItemStack stack, @Nullable World world, List<String> tooltip, ITooltipFlag flag) {
         if (stack != null && stack.hasTagCompound()) {
             NBTTagCompound nbt = stack.getTagCompound();
             if (nbt.hasKey("ClassName")) {
@@ -181,25 +182,23 @@ public class ItemPetCarrier extends Item {
             }
         }
 
-        super.addInformation(stack, player, tooltip, advanced);
+        super.addInformation(stack, world, tooltip, flag);
     }
 
     @Override
-    public void getSubItems(Item item, CreativeTabs tabs, NonNullList<ItemStack> subitems) {
-        subitems.add(new ItemStack(item, 1));
+    public void getSubItems(CreativeTabs tab, NonNullList<ItemStack> items) {
+        items.add(new ItemStack(this, 1));
 
-        Iterator<Map.Entry<String, PetCarrier>> it = PetCarrierHelper.PETS_MAP.entrySet().iterator();
-        while (it.hasNext()) {
-            Map.Entry<String, PetCarrier> entry = it.next();
+        for (Map.Entry<String, PetCarrier> entry : PetCarrierHelper.PETS_MAP.entrySet()) {
             if (entry != null) {
                 PetCarrier petCarrier = entry.getValue();
                 if (petCarrier != null) {
                     List<NBTTagCompound> nbtList = petCarrier.getDefaultPetCarriers();
                     if (nbtList != null) {
                         for (NBTTagCompound nbt : nbtList) {
-                            ItemStack stack = new ItemStack(item, 1);
+                            ItemStack stack = new ItemStack(this, 1);
                             stack.setTagCompound(nbt);
-                            subitems.add(stack);
+                            items.add(stack);
                         }
                     }
                 }

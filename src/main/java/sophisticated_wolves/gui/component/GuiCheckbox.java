@@ -27,12 +27,12 @@ public class GuiCheckbox extends GuiButton {
     }
 
     @Override
-    public void drawButton(Minecraft minecraft, int mouseX, int mouseY) {
+    public void drawButton(Minecraft mc, int mouseX, int mouseY, float partialTicks) {
         GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
-        minecraft.getTextureManager().bindTexture(Resources.CHECKBOX_GUI);
-        this.drawTexturedModalRect(this.xPosition, this.yPosition, 0, 0, this.width, this.height);
+        mc.getTextureManager().bindTexture(Resources.CHECKBOX_GUI);
+        this.drawTexturedModalRect(this.x, this.y, 0, 0, this.width, this.height);
         if (this.enabled) {
-            this.drawTexturedModalRect(this.xPosition, this.yPosition, 15, 0, this.width, this.height);
+            this.drawTexturedModalRect(this.x, this.y, 15, 0, this.width, this.height);
         }
 
     }
