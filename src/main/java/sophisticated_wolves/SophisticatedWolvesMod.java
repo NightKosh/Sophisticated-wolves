@@ -55,8 +55,6 @@ public class SophisticatedWolvesMod {
 
         SWEntity.registration();
 
-        SWSound.registration();
-
         NetworkRegistry.INSTANCE.registerGuiHandler(this, new SWGui());
 
         proxy.modelsRegistration();
