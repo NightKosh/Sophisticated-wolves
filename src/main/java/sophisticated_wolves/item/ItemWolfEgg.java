@@ -5,9 +5,7 @@ import net.minecraft.block.BlockLiquid;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.IEntityLivingData;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemMonsterPlacer;
 import net.minecraft.item.ItemStack;
@@ -106,7 +104,7 @@ public class ItemWolfEgg extends ItemMonsterPlacer {
             Entity entity = spawnCreature(world, item.getItemDamage(), blockPos.getX() + 0.5, blockPos.getY() + d0, blockPos.getZ() + 0.5);
             if (entity != null) {
                 if (entity instanceof EntityLivingBase && item.hasDisplayName()) {
-                    ((EntityLiving) entity).setCustomNameTag(item.getDisplayName());
+                    entity.setCustomNameTag(item.getDisplayName());
                 }
 
                 if (!player.capabilities.isCreativeMode) {
@@ -163,7 +161,7 @@ public class ItemWolfEgg extends ItemMonsterPlacer {
         wolf.setLocationAndAngles(x, y, z, MathHelper.wrapDegrees(world.rand.nextFloat() * 360), 0);
         wolf.rotationYawHead = wolf.rotationYaw;
         wolf.renderYawOffset = wolf.rotationYaw;
-        wolf.onInitialSpawn(world.getDifficultyForLocation(new BlockPos(wolf)), (IEntityLivingData) null);
+        wolf.onInitialSpawn(world.getDifficultyForLocation(new BlockPos(wolf)), null);
         wolf.updateSpecies(EnumWolfSpecies.getSpeciesByNum(eggMeta));
         world.spawnEntity(wolf);
         wolf.playLivingSound();
@@ -173,8 +171,10 @@ public class ItemWolfEgg extends ItemMonsterPlacer {
 
     @Override
     public void getSubItems(CreativeTabs tab, NonNullList<ItemStack> items) {
-        for (int i = 0; i < EnumWolfSpecies.values().length; i++) {
-            items.add(new ItemStack(this, 1, i));
+        if (this.isInCreativeTab(tab)) {
+            for (int i = 0; i < EnumWolfSpecies.values().length; i++) {
+                items.add(new ItemStack(this, 1, i));
+            }
         }
     }
 }

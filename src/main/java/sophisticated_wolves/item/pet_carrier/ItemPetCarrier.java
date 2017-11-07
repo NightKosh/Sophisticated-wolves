@@ -187,18 +187,20 @@ public class ItemPetCarrier extends Item {
 
     @Override
     public void getSubItems(CreativeTabs tab, NonNullList<ItemStack> items) {
-        items.add(new ItemStack(this, 1));
+        if (this.isInCreativeTab(tab)) {
+            items.add(new ItemStack(this, 1));
 
-        for (Map.Entry<String, PetCarrier> entry : PetCarrierHelper.PETS_MAP.entrySet()) {
-            if (entry != null) {
-                PetCarrier petCarrier = entry.getValue();
-                if (petCarrier != null) {
-                    List<NBTTagCompound> nbtList = petCarrier.getDefaultPetCarriers();
-                    if (nbtList != null) {
-                        for (NBTTagCompound nbt : nbtList) {
-                            ItemStack stack = new ItemStack(this, 1);
-                            stack.setTagCompound(nbt);
-                            items.add(stack);
+            for (Map.Entry<String, PetCarrier> entry : PetCarrierHelper.PETS_MAP.entrySet()) {
+                if (entry != null) {
+                    PetCarrier petCarrier = entry.getValue();
+                    if (petCarrier != null) {
+                        List<NBTTagCompound> nbtList = petCarrier.getDefaultPetCarriers();
+                        if (nbtList != null) {
+                            for (NBTTagCompound nbt : nbtList) {
+                                ItemStack stack = new ItemStack(this, 1);
+                                stack.setTagCompound(nbt);
+                                items.add(stack);
+                            }
                         }
                     }
                 }
