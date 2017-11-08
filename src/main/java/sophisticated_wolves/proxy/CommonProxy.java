@@ -21,8 +21,4 @@ public class CommonProxy {
     public void openPetGui(EntityTameable pet) {}
 
     public void openFoodGui(EntitySophisticatedWolf pet) {}
-
-    public void modelsRegistration() {
-
-    }
 }

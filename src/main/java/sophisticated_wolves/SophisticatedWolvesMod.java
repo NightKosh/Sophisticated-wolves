@@ -57,7 +57,6 @@ public class SophisticatedWolvesMod {
 
         NetworkRegistry.INSTANCE.registerGuiHandler(this, new SWGui());
 
-        proxy.modelsRegistration();
         proxy.registerRenderers();
     }
 

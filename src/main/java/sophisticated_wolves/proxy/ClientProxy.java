@@ -1,18 +1,13 @@
 package sophisticated_wolves.proxy;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.block.model.ModelBakery;
 import net.minecraft.entity.passive.EntityTameable;
-import net.minecraft.item.Item;
 import net.minecraft.util.text.translation.I18n;
 import net.minecraftforge.fml.client.FMLClientHandler;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import org.apache.commons.lang3.StringUtils;
 import sophisticated_wolves.RenderSophisticatedWolf;
-import sophisticated_wolves.Resources;
-import sophisticated_wolves.SWBlocks;
 import sophisticated_wolves.SWItems;
-import sophisticated_wolves.api.EnumWolfSpecies;
 import sophisticated_wolves.entity.EntitySophisticatedWolf;
 import sophisticated_wolves.gui.GuiEditName;
 import sophisticated_wolves.gui.GuiFood;
@@ -60,24 +55,5 @@ public class ClientProxy extends CommonProxy {
 
     public void openFoodGui(EntitySophisticatedWolf pet) {
         FMLClientHandler.instance().getClient().displayGuiScreen(new GuiFood(pet));
-    }
-
-    @Override
-    public void modelsRegistration() {
-        Minecraft.getMinecraft().getRenderItem().getItemModelMesher().register(SWItems.DOG_TAG, 0, Resources.DOG_TAG_MODEL);
-        Minecraft.getMinecraft().getRenderItem().getItemModelMesher().register(SWItems.DOG_TREAT, 0, Resources.DOG_TREAT_MODEL);
-        Minecraft.getMinecraft().getRenderItem().getItemModelMesher().register(SWItems.WHISTLE, 0, Resources.WHISTLE_MODEL);
-        Minecraft.getMinecraft().getRenderItem().getItemModelMesher().register(SWItems.PET_CARRIER, 0, Resources.PET_CARRIER_MODEL);
-
-        for (EnumWolfSpecies wolfSpecies : EnumWolfSpecies.values()) {
-            Minecraft.getMinecraft().getRenderItem().getItemModelMesher().register(SWItems.DOG_EGG, wolfSpecies.ordinal(), Resources.SPAWN_EGG_MODEL);
-        }
-
-        Minecraft.getMinecraft().getRenderItem().getItemModelMesher().register(Item.getItemFromBlock(SWBlocks.DOG_BOWL), 0, Resources.DOG_BOWL);
-        Minecraft.getMinecraft().getRenderItem().getItemModelMesher().register(Item.getItemFromBlock(SWBlocks.DOG_BOWL), 1, Resources.DOG_BOWL1);
-        Minecraft.getMinecraft().getRenderItem().getItemModelMesher().register(Item.getItemFromBlock(SWBlocks.DOG_BOWL), 2, Resources.DOG_BOWL2);
-        Minecraft.getMinecraft().getRenderItem().getItemModelMesher().register(Item.getItemFromBlock(SWBlocks.DOG_BOWL), 3, Resources.DOG_BOWL3);
-        Minecraft.getMinecraft().getRenderItem().getItemModelMesher().register(Item.getItemFromBlock(SWBlocks.DOG_BOWL), 4, Resources.DOG_BOWL4);
-        ModelBakery.registerItemVariants(SWBlocks.DOG_BOWL_IB, Resources.DOG_BOWL, Resources.DOG_BOWL1, Resources.DOG_BOWL2, Resources.DOG_BOWL3, Resources.DOG_BOWL4);
     }
 }
