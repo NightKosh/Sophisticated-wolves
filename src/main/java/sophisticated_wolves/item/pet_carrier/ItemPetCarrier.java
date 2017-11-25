@@ -119,12 +119,12 @@ public class ItemPetCarrier extends Item {
                             }
                             pos = pos.offset(facing);
 
+                            entity.onInitialSpawn(world.getDifficultyForLocation(new BlockPos(entity)), null);
                             entity.readEntityFromNBT(nbt.getCompoundTag("MobData"));
 
                             entity.setLocationAndAngles(pos.getX() + 0.5, pos.getY() + d0, pos.getZ() + 0.5, MathHelper.wrapDegrees(world.rand.nextFloat() * 360), 0);
                             entity.rotationYawHead = entity.rotationYaw;
                             entity.renderYawOffset = entity.rotationYaw;
-                            entity.onInitialSpawn(world.getDifficultyForLocation(new BlockPos(entity)), null);
                             if (nbt.hasKey("CustomName")) {
                                 entity.setCustomNameTag(nbt.getString("CustomName"));
                             }

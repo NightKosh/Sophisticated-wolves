@@ -25,10 +25,20 @@ cat_type.black=Чёрная
 cat_type.red=Рыжая
 cat_type.siamese=Сиамская
 
+# Rabbit Type
+rabbit_type.0=Коричневый
+rabbit_type.1=Белый
+rabbit_type.2=Чёрный
+rabbit_type.3=Чёрно-Белый
+rabbit_type.4=Золотой
+rabbit_type.5=Соль и Перец
+rabbit_type.99=Кролик Убийца
+
 # Pet Carrier
 carrier.pet_type=Тип питомца
 carrier.dog_type=Тип собаки
 carrier.cat_type=Тип кошки
+carrier.rabbit_type=Тип кролика
 carrier.pet_name=Имя
 
 # GUI

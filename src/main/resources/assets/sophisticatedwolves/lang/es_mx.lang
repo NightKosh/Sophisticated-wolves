@@ -29,10 +29,20 @@ cat_type.black=Negro
 cat_type.red=Rojo
 cat_type.siamese=Siamés
 
+# Rabbit Type
+rabbit_type.0=Brown
+rabbit_type.1=White
+rabbit_type.2=Black
+rabbit_type.3=Black & White
+rabbit_type.4=Gold
+rabbit_type.5=Salt & Pepper
+rabbit_type.99=The Killer Bunny
+
 # Pet Carrier
 carrier.pet_type=Tipo de mascota
 carrier.dog_type=Tipo de perro
 carrier.cat_type=Tipo de gato
+carrier.rabbit_type=Tipo de conejo
 carrier.pet_name=Nombre
 
 # GUI
