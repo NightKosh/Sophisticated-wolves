@@ -56,6 +56,7 @@ public class RabbitPetCarrier extends PetCarrier {
 
         return nbt;
     }
+
     @Override
     public List<NBTTagCompound> getDefaultPetCarriers() {
         List<NBTTagCompound> list = new ArrayList<>();
