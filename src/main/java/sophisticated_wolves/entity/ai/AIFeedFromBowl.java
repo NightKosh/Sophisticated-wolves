@@ -59,8 +59,10 @@ public class AIFeedFromBowl extends EntityAIBase {
         for (Map.Entry<BlockPos, TileEntity> teEntry : teMap.entrySet()) {
             if (teEntry != null && teEntry.getValue() instanceof TileEntityDogBowl &&
                     this.pet.getDistanceSq(teEntry.getKey()) < 50) {
-                this.dogBowl = (TileEntityDogBowl) teEntry.getValue();
-                return true;
+                if (((TileEntityDogBowl) teEntry.getValue()).getFoodAmount() > 0) {
+                    this.dogBowl = (TileEntityDogBowl) teEntry.getValue();
+                    return true;
+                }
             }
         }
         return false;
@@ -68,7 +70,7 @@ public class AIFeedFromBowl extends EntityAIBase {
 
     @Override
     public boolean shouldContinueExecuting() {
-        return this.pet.getHealth() < 20 && this.dogBowl != null;
+        return this.pet.getHealth() < 20 && this.dogBowl != null && this.dogBowl.getFoodAmount() > 0;
     }
 
     @Override
@@ -79,7 +81,7 @@ public class AIFeedFromBowl extends EntityAIBase {
                 this.pet.getLookHelper().setLookPosition(this.dogBowl.getPos().getX(), this.dogBowl.getPos().getY(), this.dogBowl.getPos().getZ(), 0.25F, 0.25F);
                 this.pet.heal(1);
                 this.dogBowl.addFood(-1);
-                if (this.dogBowl.getFoodAmount() == 0 || this.pet.getHealth() >= 20) {
+                if (this.dogBowl.getFoodAmount() <= 0 || this.pet.getHealth() >= 20) {
                     this.dogBowl = null;
                     this.pet.getNavigator().clearPath();
                 }
