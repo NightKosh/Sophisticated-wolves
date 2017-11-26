@@ -2,6 +2,7 @@ package sophisticated_wolves.item.pet_carrier;
 
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.passive.EntityWolf;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
@@ -9,6 +10,8 @@ import sophisticated_wolves.SWEntity;
 import sophisticated_wolves.SophisticatedWolvesMod;
 import sophisticated_wolves.api.EnumWolfSpecies;
 import sophisticated_wolves.api.pet_carrier.PetCarrier;
+import sophisticated_wolves.compatibility.Compatibility;
+import sophisticated_wolves.compatibility.CompatibilityWolfArmor;
 import sophisticated_wolves.entity.EntitySophisticatedWolf;
 
 import java.util.ArrayList;
@@ -56,6 +59,22 @@ public class SophisticatedWolfPetCarrier extends PetCarrier {
         nbt.setInteger("WolfType", ((EntitySophisticatedWolf) pet).getSpecies().ordinal());
 
         return nbt;
+    }
+
+    @Override
+    public NBTTagCompound getAdditionalData(EntityLivingBase pet) {
+        NBTTagCompound nbt = new NBTTagCompound();
+        if (Compatibility.IS_WOLF_ARMOR_INSTALLED) {
+            CompatibilityWolfArmor.storeWolfItems((EntityWolf) pet, nbt);
+        }
+        return nbt;
+    }
+
+    @Override
+    public void setAdditionalData(EntityLiving pet, NBTTagCompound nbt) {
+        if (Compatibility.IS_WOLF_ARMOR_INSTALLED) {
+            CompatibilityWolfArmor.getWolfItems((EntityWolf) pet, nbt);
+        }
     }
 
     @Override

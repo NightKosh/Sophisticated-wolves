@@ -6,10 +6,7 @@ import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.passive.EntityChicken;
-import net.minecraft.entity.passive.EntityPig;
-import net.minecraft.entity.passive.EntityRabbit;
-import net.minecraft.entity.passive.EntityTameable;
+import net.minecraft.entity.passive.*;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -83,6 +80,11 @@ public class ItemPetCarrier extends Item {
             if (infoNbt != null) {
                 nbt.setTag("InfoList", infoNbt);
             }
+
+            NBTTagCompound additionalNbt = petCarrier.getAdditionalData(entity);
+            if (additionalNbt != null) {
+                nbt.setTag("AdditionalData", additionalNbt);
+            }
         }
 
         if (entity.hasCustomName()) {
@@ -121,6 +123,10 @@ public class ItemPetCarrier extends Item {
 
                             entity.onInitialSpawn(world.getDifficultyForLocation(new BlockPos(entity)), null);
                             entity.readEntityFromNBT(nbt.getCompoundTag("MobData"));
+
+                            if (nbt.hasKey("AdditionalData")) {
+                                petCarrier.setAdditionalData(entity, nbt.getCompoundTag("AdditionalData"));
+                            }
 
                             entity.setLocationAndAngles(pos.getX() + 0.5, pos.getY() + d0, pos.getZ() + 0.5, MathHelper.wrapDegrees(world.rand.nextFloat() * 360), 0);
                             entity.rotationYawHead = entity.rotationYaw;

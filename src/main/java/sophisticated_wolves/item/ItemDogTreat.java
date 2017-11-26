@@ -10,6 +10,8 @@ import net.minecraft.util.math.BlockPos;
 import sophisticated_wolves.SWTabs;
 import sophisticated_wolves.api.ISophisticatedWolf;
 import sophisticated_wolves.api.ModInfo;
+import sophisticated_wolves.compatibility.Compatibility;
+import sophisticated_wolves.compatibility.CompatibilityWolfArmor;
 import sophisticated_wolves.entity.EntitySophisticatedWolf;
 
 /**
@@ -35,20 +37,24 @@ public class ItemDogTreat extends Item {
         if (!player.world.isRemote && entity instanceof EntityWolf && !(entity instanceof ISophisticatedWolf)) {
             EntityWolf wolf = (EntityWolf) entity;
             if (wolf.isTamed()) {
-                EntitySophisticatedWolf SWolf = new EntitySophisticatedWolf(player.world);
+                EntitySophisticatedWolf sWolf = new EntitySophisticatedWolf(player.world);
 
-                SWolf.copyLocationAndAnglesFrom(wolf);
-                SWolf.setCustomNameTag(wolf.getCustomNameTag());
-                SWolf.setCollarColor(wolf.getCollarColor());
-                SWolf.setTamed(true);
-                SWolf.setOwnerId(wolf.getOwnerId());
-                SWolf.setCustomNameTag(wolf.getCustomNameTag());
-                SWolf.setHealth(wolf.getHealth());
+                sWolf.copyLocationAndAnglesFrom(wolf);
+                sWolf.setCustomNameTag(wolf.getCustomNameTag());
+                sWolf.setCollarColor(wolf.getCollarColor());
+                sWolf.setTamed(true);
+                sWolf.setOwnerId(wolf.getOwnerId());
+                sWolf.setCustomNameTag(wolf.getCustomNameTag());
+                sWolf.setHealth(wolf.getHealth());
+
+                if (Compatibility.IS_WOLF_ARMOR_INSTALLED) {
+                    CompatibilityWolfArmor.copyWolfItems(wolf, sWolf);
+                }
 
                 wolf.setDead();
 
-                player.world.spawnEntity(SWolf);
-                player.world.playSound((player), new BlockPos(SWolf.posX, SWolf.posY, SWolf.posZ), null, null, 1016, 0);
+                player.world.spawnEntity(sWolf);
+                player.world.playSound((player), new BlockPos(sWolf.posX, sWolf.posY, sWolf.posZ), null, null, 1016, 0);
                 stack.shrink(1);
                 return true;
             }
