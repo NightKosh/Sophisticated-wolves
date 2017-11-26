@@ -34,11 +34,19 @@ rabbit_type.4=Gold
 rabbit_type.5=Salt & Pepper
 rabbit_type.99=The Killer Bunny
 
+# Parrot Type
+parrot_type.0=Red
+parrot_type.1=Blue
+parrot_type.2=Green
+parrot_type.3=Cyan
+parrot_type.4=Silver
+
 # Pet Carrier
 carrier.pet_type=Pet type
 carrier.dog_type=Dog type
 carrier.cat_type=Cat type
 carrier.rabbit_type=Rabbit type
+carrier.parrot_type=Parrot type
 carrier.pet_name=Name
 
 # GUI

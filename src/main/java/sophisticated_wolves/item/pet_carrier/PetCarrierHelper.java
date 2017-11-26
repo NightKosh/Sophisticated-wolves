@@ -1,9 +1,6 @@
 package sophisticated_wolves.item.pet_carrier;
 
-import net.minecraft.entity.passive.EntityChicken;
-import net.minecraft.entity.passive.EntityOcelot;
-import net.minecraft.entity.passive.EntityRabbit;
-import net.minecraft.entity.passive.EntityWolf;
+import net.minecraft.entity.passive.*;
 import sophisticated_wolves.api.pet_carrier.IPetCarrierHandler;
 import sophisticated_wolves.api.pet_carrier.PetCarrier;
 import sophisticated_wolves.entity.EntitySophisticatedWolf;
@@ -36,5 +33,6 @@ public class PetCarrierHelper implements IPetCarrierHandler {
         addPet(EntityOcelot.class, new CatPetCarrier());
         addPet(EntityChicken.class, new ChickenPetCarrier());
         addPet(EntityRabbit.class, new RabbitPetCarrier());
+        addPet(EntityParrot.class, new ParrotPetCarrier());
     }
 }

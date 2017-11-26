@@ -34,11 +34,19 @@ rabbit_type.4=Золотой
 rabbit_type.5=Соль и Перец
 rabbit_type.99=Кролик Убийца
 
+# Parrot Type
+parrot_type.0=Красный
+parrot_type.1=Синий
+parrot_type.2=Зелёный
+parrot_type.3=Голубой
+parrot_type.4=Серебряный
+
 # Pet Carrier
 carrier.pet_type=Тип питомца
 carrier.dog_type=Тип собаки
 carrier.cat_type=Тип кошки
 carrier.rabbit_type=Тип кролика
+carrier.parrot_type=Тип попугая
 carrier.pet_name=Имя
 
 # GUI
