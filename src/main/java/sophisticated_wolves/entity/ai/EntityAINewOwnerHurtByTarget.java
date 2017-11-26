@@ -26,7 +26,7 @@ public class EntityAINewOwnerHurtByTarget extends EntityAIOwnerHurtByTarget {
     @Override
     public boolean shouldExecute() {
         Entity owner = this.theDefendingTameable.getOwner();
-        return super.shouldExecute() && owner != null && this.theDefendingTameable.getDistance(owner) < 144;
+        return super.shouldExecute() && owner != null && this.theDefendingTameable.getDistanceSq(owner) < 144;
     }
 
     /**

@@ -31,7 +31,7 @@ public class EntityAINewFollowOwner extends EntityAIFollowOwner {
      */
     @Override
     public boolean shouldExecute() {
-        return super.shouldExecute() && this.pet.getOwner() != null && !((EntityLivingBase) this.pet.getOwner()).isOnLadder();
+        return super.shouldExecute() && this.pet.getOwner() != null && !this.pet.getOwner().isOnLadder();
     }
 
     /**
@@ -39,7 +39,7 @@ public class EntityAINewFollowOwner extends EntityAIFollowOwner {
      */
     @Override
     public boolean shouldContinueExecuting() {
-        return super.shouldContinueExecuting() && this.pet.getOwner() != null && !((EntityLivingBase) this.pet.getOwner()).isOnLadder();
+        return super.shouldContinueExecuting() && this.pet.getOwner() != null && !this.pet.getOwner().isOnLadder();
     }
 
 
@@ -56,12 +56,12 @@ public class EntityAINewFollowOwner extends EntityAIFollowOwner {
      */
     @Override
     public void updateTask() {
-        EntityLivingBase owner = ((EntityLivingBase) this.pet.getOwner());
+        EntityLivingBase owner = this.pet.getOwner();
         this.pet.getLookHelper().setLookPositionWithEntity(owner, 10, this.pet.getVerticalFaceSpeed());
         --this.tick;
         if (!this.pet.isSitting() && this.tick <= 0) {
             this.tick = 10;
-            if (!this.pet.getNavigator().tryMoveToEntityLiving(owner, this.speed) && !this.pet.getLeashed() && this.pet.getDistance(owner) >= 144) {
+            if (!this.pet.getNavigator().tryMoveToEntityLiving(owner, this.speed) && !this.pet.getLeashed() && this.pet.getDistanceSq(owner) >= 144) {
                 int xPos = MathHelper.floor(owner.posX) - 2;
                 int zPos = MathHelper.floor(owner.posZ) - 2;
                 int yPos = MathHelper.floor(owner.getEntityBoundingBox().minY);
