@@ -25,6 +25,7 @@ public class CompatibilityWolfArmor {
 //                    NBTTagCompound itemsNBT = new NBTTagCompound();
 //                    wolfCapability.getArmorItemStack().writeToNBT(itemsNBT);
 //                    nbt.setTag("Items", itemsNBT);
+                    wolfCapability.dropInventoryContents();
                 }
                 if (wolfCapability.getHasArmor()) {
                     NBTTagCompound armorNBT = new NBTTagCompound();
@@ -58,6 +59,7 @@ public class CompatibilityWolfArmor {
             if (wolfCapability.getHasChest()) {
                 sWolfCapability.setHasChest(true);
 //                sWolfCapability.setInventory(wolfCapability.getInventory());//TODO setInventory!!!!
+                wolfCapability.dropInventoryContents();
             }
             if (wolfCapability.getHasArmor()) {
                 sWolfCapability.equipArmor(wolfCapability.getArmorItemStack());
