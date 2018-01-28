@@ -102,8 +102,6 @@ public class EntitySophisticatedWolf extends AEntitySophisticatedWolf {
         this.tasks.addTask(5, this.aiSit = new EntityAISit(this));
         this.tasks.addTask(7, new EntityAIShake(this)); //behavior for shaking
         this.tasks.addTask(10, new EntityAIAttackCancel(this)); //new behavior
-        this.tasks.addTask(10, new AIFeedFromBowl(this)); //new behavior
-        this.tasks.addTask(12, new AIFeed(this)); //new behavior
         this.tasks.addTask(15, new EntityAILeapAtTarget(this, 0.4F));
         this.tasks.addTask(20, new EntityAIAttackMelee(this, 1, true));
         this.tasks.addTask(22, new EntityAIMoveCancel(this, 6));
@@ -111,6 +109,8 @@ public class EntitySophisticatedWolf extends AEntitySophisticatedWolf {
         this.tasks.addTask(27, new EntityAIAvoidFire(this, 1, 1.4)); //new behavior
         this.tasks.addTask(28, new EntityAITeleportAtDrowning(this)); //new behavior
         this.tasks.addTask(30, new EntityAIMate(this, 1));
+        this.tasks.addTask(31, new AIFeedFromBowl(this)); //new behavior
+        this.tasks.addTask(32, new AIFeed(this)); //new behavior
         this.tasks.addTask(40, new EntityAIWander(this, 1)); //changed order with Beg
         this.tasks.addTask(35, new EntityAINewBeg(this, 8)); //changed order with Wander, mod class
         this.tasks.addTask(45, new EntityAIWatchClosest(this, EntityPlayer.class, 8));
@@ -182,9 +182,6 @@ public class EntitySophisticatedWolf extends AEntitySophisticatedWolf {
         updateFood();
     }
 
-    /**
-     * Returns the sound this mob makes while it's alive.
-     */
     @Override
     protected SoundEvent getAmbientSound() {
         if (this.isAngry()) {
@@ -228,10 +225,6 @@ public class EntitySophisticatedWolf extends AEntitySophisticatedWolf {
         }
     }
 
-    /**
-     * Called frequently so the entity can update its state every tick as required. For example, zombies and skeletons
-     * use this to react to sunlight and start to burn.
-     */
     @Override
     public void onLivingUpdate() {
         super.onLivingUpdate();
@@ -242,9 +235,6 @@ public class EntitySophisticatedWolf extends AEntitySophisticatedWolf {
         }
     }
 
-    /**
-     * Called to update the entity's position/logic.
-     */
     @Override
     public void onUpdate() {        //Checks if wolf is burning and not currently standing in fire or if wolf is poison
         if (!this.isWet && //isWolfWet method is client side!
@@ -338,9 +328,6 @@ public class EntitySophisticatedWolf extends AEntitySophisticatedWolf {
         return super.processInteract(player, hand);
     }
 
-    /**
-     * changed to use treats for breeding
-     */
     @Override
     public boolean isBreedingItem(ItemStack stack) {
         if (stack == null) {
@@ -368,9 +355,6 @@ public class EntitySophisticatedWolf extends AEntitySophisticatedWolf {
         return wolf;
     }
 
-    /**
-     * Returns true if the mob is currently able to mate with the specified mob.
-     */
     @Override
     public boolean canMateWith(EntityAnimal animal) {
         if (animal == this || !this.isTamed() || !(animal instanceof EntitySophisticatedWolf)) {
@@ -381,9 +365,6 @@ public class EntitySophisticatedWolf extends AEntitySophisticatedWolf {
         }
     }
 
-    /**
-     * Determines if an entity can be despawned, used on idle far away entities
-     */
     @Override
     protected boolean canDespawn() {
         return !this.isTamed() && SWConfiguration.respawningWolves && this.ticksExisted > 5000;
@@ -413,7 +394,6 @@ public class EntitySophisticatedWolf extends AEntitySophisticatedWolf {
         }
     }
 
-    //reduces wolf spawning rate (necessary as monster spawn rate is called faster than animal)
     @Override
     public boolean getCanSpawnHere() {
         BlockPos blockpos = new BlockPos(MathHelper.floor(this.posX), MathHelper.floor(this.getEntityBoundingBox().minY), MathHelper.floor(this.posZ));
@@ -423,9 +403,6 @@ public class EntitySophisticatedWolf extends AEntitySophisticatedWolf {
                 this.getBlockPathWeight(new BlockPos(this.posX, this.getEntityBoundingBox().minY, this.posZ)) >= 0.0F;
     }
 
-    /*
-     * determine species based on biome
-     */
     @Override
     public EnumWolfSpecies getSpeciesByBiome() {
         Biome biome = this.world.getBiomeForCoordsBody(new BlockPos(this));
@@ -441,17 +418,11 @@ public class EntitySophisticatedWolf extends AEntitySophisticatedWolf {
         }
     }
 
-    /*
-         * reads data for species
-         */
     @Override
     public EnumWolfSpecies getSpecies() {
         return EnumWolfSpecies.values()[this.dataManager.get(WOLF_SPECIES)];
     }
 
-    /*
-     * modifies data for species
-     */
     @Override
     public void updateSpecies(EnumWolfSpecies species) {
         this.dataManager.set(WOLF_SPECIES, species.ordinal());
