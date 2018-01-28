@@ -17,6 +17,10 @@ import java.util.Set;
  */
 public class SWEntity {
 
+    public static final int DEFAULT_SPAWN_PROBABILITY = 5;
+    public static final int DEFAULT_SPAWN_MIN_COUNT = 4;
+    public static final int DEFAULT_SPAWN_MAX_COUNT = 6;
+
     public static final String SW_NAME = "SWWolf";
 
     public static void registration() {

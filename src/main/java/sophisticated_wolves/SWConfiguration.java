@@ -16,18 +16,18 @@ public class SWConfiguration {
     private static Configuration config;
 
 
-    public static boolean customWolfTextures = true;
-    public static boolean respawningWolves = true;
-    public static boolean customBreeding = true;
-    public static boolean nameTagForAnyPets = true;
-    public static boolean immuneToCacti = true;
+    public static boolean customWolfTextures;
+    public static boolean respawningWolves;
+    public static boolean customBreeding;
+    public static boolean nameTagForAnyPets;
+    public static boolean immuneToCacti;
 
-    public static boolean attackAnimals = false;
-    public static boolean attackSkeletons = true;
+    public static boolean attackAnimals;
+    public static boolean attackSkeletons;
 
-    public static int spawnProbability = 1;
-    public static int spawnMinCount = 4;
-    public static int spawnMaxCount = 4;
+    public static int spawnProbability;
+    public static int spawnMinCount;
+    public static int spawnMaxCount;
 
     private SWConfiguration(File configFile) {
         this.config = new Configuration(configFile);
@@ -45,17 +45,18 @@ public class SWConfiguration {
     public final void getConfigs() {
         config.load();
 
-        customWolfTextures = config.get(Configuration.CATEGORY_GENERAL, "CustomWolfTextures", true).getBoolean(true);
-        respawningWolves = config.get(Configuration.CATEGORY_GENERAL, "RespawningWolves", true).getBoolean(true);
-        customBreeding = config.get(Configuration.CATEGORY_GENERAL, "CustomBreeding", true).getBoolean(true);
-        nameTagForAnyPets = config.get(Configuration.CATEGORY_GENERAL, "NameTagForAnyPets", true).getBoolean(true);
-        immuneToCacti = config.get(Configuration.CATEGORY_GENERAL, "ImmuneToCacti", true).getBoolean(true);
-        attackAnimals = config.get(Configuration.CATEGORY_GENERAL, "AttackAnimals", false).getBoolean(false);
-        attackSkeletons = config.get(Configuration.CATEGORY_GENERAL, "AttackSkeletons", true).getBoolean(true);
+        customWolfTextures = config.get(Configuration.CATEGORY_GENERAL, "CustomWolfTextures", true).getBoolean();
+        respawningWolves = config.get(Configuration.CATEGORY_GENERAL, "RespawningWolves", true).getBoolean();
+        customBreeding = config.get(Configuration.CATEGORY_GENERAL, "CustomBreeding", true).getBoolean();
+        nameTagForAnyPets = config.get(Configuration.CATEGORY_GENERAL, "NameTagForAnyPets", true).getBoolean();
+        immuneToCacti = config.get(Configuration.CATEGORY_GENERAL, "ImmuneToCacti", true).getBoolean();
+        attackAnimals = config.get(Configuration.CATEGORY_GENERAL, "AttackAnimals", false).getBoolean();
+        attackSkeletons = config.get(Configuration.CATEGORY_GENERAL, "AttackSkeletons", true).getBoolean();
 
-        spawnProbability = config.get(Configuration.CATEGORY_GENERAL, "SpawnProbability", 1).getInt(1);
-        spawnMinCount = config.get(Configuration.CATEGORY_GENERAL, "SpawnMinCount", 4).getInt(4);
-        spawnMaxCount = config.get(Configuration.CATEGORY_GENERAL, "SpawnMaxCount", 4).getInt(4);
+        spawnProbability = config.get(Configuration.CATEGORY_GENERAL, "SpawnProbability", SWEntity.DEFAULT_SPAWN_PROBABILITY).getInt();
+        spawnMinCount = config.get(Configuration.CATEGORY_GENERAL, "SpawnMinCount", SWEntity.DEFAULT_SPAWN_MIN_COUNT).getInt();
+        spawnMaxCount = config.get(Configuration.CATEGORY_GENERAL, "SpawnMaxCount", SWEntity.DEFAULT_SPAWN_MAX_COUNT).getInt();
+
         if (spawnMinCount < 0) {
             spawnMinCount = 0;
         }

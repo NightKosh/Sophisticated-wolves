@@ -400,11 +400,7 @@ public class EntitySophisticatedWolf extends AEntitySophisticatedWolf {
 
     @Override
     public boolean getCanSpawnHere() {
-        BlockPos blockpos = new BlockPos(MathHelper.floor(this.posX), MathHelper.floor(this.getEntityBoundingBox().minY), MathHelper.floor(this.posZ));
-        return this.world.getLight(blockpos) < 5 && this.rand.nextInt(3) == 0 &&
-                this.world.getBlockState(blockpos.down()).getBlock() == this.spawnableBlock &&
-                this.world.getBlockState((new BlockPos(this)).down()).canEntitySpawn(this) &&
-                this.getBlockPathWeight(new BlockPos(this.posX, this.getEntityBoundingBox().minY, this.posZ)) >= 0.0F;
+        return super.getCanSpawnHere() && this.world.provider.getDimension() == 0;
     }
 
     @Override
