@@ -22,6 +22,9 @@ public class SWConfiguration {
     public static boolean nameTagForAnyPets = true;
     public static boolean immuneToCacti = true;
 
+    public static boolean attackAnimals = false;
+    public static boolean attackSkeletons = true;
+
     public static int spawnProbability = 1;
     public static int spawnMinCount = 4;
     public static int spawnMaxCount = 4;
@@ -47,6 +50,8 @@ public class SWConfiguration {
         customBreeding = config.get(Configuration.CATEGORY_GENERAL, "CustomBreeding", true).getBoolean(true);
         nameTagForAnyPets = config.get(Configuration.CATEGORY_GENERAL, "NameTagForAnyPets", true).getBoolean(true);
         immuneToCacti = config.get(Configuration.CATEGORY_GENERAL, "ImmuneToCacti", true).getBoolean(true);
+        attackAnimals = config.get(Configuration.CATEGORY_GENERAL, "AttackAnimals", false).getBoolean(false);
+        attackSkeletons = config.get(Configuration.CATEGORY_GENERAL, "AttackSkeletons", true).getBoolean(true);
 
         spawnProbability = config.get(Configuration.CATEGORY_GENERAL, "SpawnProbability", 1).getInt(1);
         spawnMinCount = config.get(Configuration.CATEGORY_GENERAL, "SpawnMinCount", 4).getInt(4);

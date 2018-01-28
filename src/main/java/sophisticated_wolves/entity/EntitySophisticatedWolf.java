@@ -124,6 +124,10 @@ public class EntitySophisticatedWolf extends AEntitySophisticatedWolf {
                 removeTask = true;
             } else if (task instanceof EntityAIOwnerHurtTarget) {
                 removeTask = true;
+            } else if (task instanceof EntityAITargetNonTamed && !SWConfiguration.attackAnimals) {
+                removeTask = true;
+            } else if (task instanceof EntityAINearestAttackableTarget && !SWConfiguration.attackSkeletons) {
+                removeTask = true;
             }
             if (removeTask) {
                 taskIterator.remove();
