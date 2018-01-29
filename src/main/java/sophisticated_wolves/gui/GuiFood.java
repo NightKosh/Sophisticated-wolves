@@ -41,16 +41,16 @@ public class GuiFood extends GuiScreen {
         super.initGui();
         Keyboard.enableRepeatEvents(true); //pauses the game when GUI is opened
 
-        int i = (this.width - this.xSize) / 2;
-        int j = (this.height - this.ySize) / 2;
+        int x = (this.width - this.xSize) / 2;
+        int y = (this.height - this.ySize) / 2;
 
-        this.buttonList.add(new GuiButton(0, this.width / 2 - 100, this.height / 4 + 100, doneButtonText));
-        this.buttonList.add(isRottenMeatAndBones = new GuiCheckbox(1, i + 14, j + 40, this.wolf.isRottenMeatAndBones()));
-        this.buttonList.add(isRawFish = new GuiCheckbox(2, i + 14, j + 60, this.wolf.isRawFish()));
-        this.buttonList.add(isCookedFish = new GuiCheckbox(3, i + 84, j + 60, this.wolf.isCookedFish()));
-        this.buttonList.add(isSpecialFish = new GuiCheckbox(4, i + 150, j + 60, this.wolf.isSpecialFish()));
-        this.buttonList.add(isRawMeat = new GuiCheckbox(5, i + 14, j + 81, this.wolf.isRawMeat()));
-        this.buttonList.add(isCookedMeat = new GuiCheckbox(6, i + 118, j + 81, this.wolf.isCookedMeat()));
+        this.buttonList.add(new GuiButton(0, x + 16, y + 113, doneButtonText));
+        this.buttonList.add(isRottenMeatAndBones = new GuiCheckbox(1, x + 14, y + 40, this.wolf.isRottenMeatAndBones()));
+        this.buttonList.add(isRawFish = new GuiCheckbox(2, x + 14, y + 60, this.wolf.isRawFish()));
+        this.buttonList.add(isCookedFish = new GuiCheckbox(3, x + 84, y + 60, this.wolf.isCookedFish()));
+        this.buttonList.add(isSpecialFish = new GuiCheckbox(4, x + 150, y + 60, this.wolf.isSpecialFish()));
+        this.buttonList.add(isRawMeat = new GuiCheckbox(5, x + 14, y + 81, this.wolf.isRawMeat()));
+        this.buttonList.add(isCookedMeat = new GuiCheckbox(6, x + 118, y + 81, this.wolf.isCookedMeat()));
     }
 
     @Override
@@ -75,13 +75,13 @@ public class GuiFood extends GuiScreen {
         this.drawDefaultBackground();
 
         this.mc.getTextureManager().bindTexture(Resources.FOOD_GUI);
-        int i = (this.width - this.xSize) / 2;
-        int j = (this.height - this.ySize) / 2;
+        int xPos = (this.width - this.xSize) / 2;
+        int yPos = (this.height - this.ySize) / 2;
 
         // draw bones background
-        this.drawTexturedModalRect(i, j, 0, 0, this.xSize, this.ySize);
+        this.drawTexturedModalRect(xPos, yPos, 0, 0, this.xSize, this.ySize);
 
-        this.drawCenteredString(this.fontRenderer, this.screenTitle, this.width / 2, 65, 0xffffff);
+        this.drawCenteredString(this.fontRenderer, this.screenTitle, xPos + 120, yPos + 15, 0xffffff);
 
         super.drawScreen(x, y, tick);
     }
