@@ -14,7 +14,7 @@ tasks.withType(JavaCompile) {
     targetCompatibility = "1.8"
 }
 
-version = "3.12.0"
+version = "3.13.0"
 group = "sophisticated_wolves"
 archivesBaseName = "SophisticatedWolves-1.12.2"
 
