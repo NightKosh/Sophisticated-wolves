@@ -18,7 +18,7 @@ public class VillageHandlerPetsSeller implements VillagerRegistry.IVillageCreati
 
     @Override
     public StructureVillagePieces.PieceWeight getVillagePieceWeight(Random random, int size) {
-        return new StructureVillagePieces.PieceWeight(ComponentVillagePetsSeller.class, 300, MathHelper.getInt(random, 10, 11));
+        return new StructureVillagePieces.PieceWeight(ComponentVillagePetsSeller.class, 4, MathHelper.getInt(random, 0, 1));
     }
 
     @Override
