@@ -19,7 +19,7 @@ import java.util.List;
  * @license Lesser GNU Public License v3 (http://www.gnu.org/licenses/lgpl.html)
  */
 public class ParrotPetCarrier extends PetCarrier {
-    private static final int[] PARROTS_SPECIES = {0, 1, 2, 3, 4};
+    public static final int[] PARROTS_SPECIES = {0, 1, 2, 3, 4};
     //0 = red, 1 = blue, 2 = green, 3 = cyan, 4 = silver.
 
     @Override

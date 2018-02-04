@@ -58,3 +58,7 @@ gui.edit_dog_name.title=Dele a su mascota un nombre:
 gui.edit_dog_name.done_button=Listo
 gui.food.title=Elija los tipos de alimentos que los lobos comen
 gui.food.done_button=Listo
+
+# Villager
+## TODO !!!!!!!!!!
+entity.Villager.sophisticatedwolves:pets_seller=Pets Seller

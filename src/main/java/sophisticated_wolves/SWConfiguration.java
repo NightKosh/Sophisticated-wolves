@@ -29,6 +29,8 @@ public class SWConfiguration {
     public static int spawnMinCount;
     public static int spawnMaxCount;
 
+    public static boolean enablePetsSeller;
+
     private SWConfiguration(File configFile) {
         this.config = new Configuration(configFile);
         getConfigs();
@@ -63,6 +65,8 @@ public class SWConfiguration {
         if (spawnMaxCount < spawnMinCount) {
             spawnMaxCount = spawnMinCount;
         }
+
+        enablePetsSeller = config.get(Configuration.CATEGORY_GENERAL, "EnablePetsSeller", true).getBoolean();
 
         config.save();
     }

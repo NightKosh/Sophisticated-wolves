@@ -54,3 +54,6 @@ gui.edit_dog_name.title=Дайте своему питомцу имя:
 gui.edit_dog_name.done_button=Готово
 gui.food.title=Выберите тип еды, которую могут есть собаки
 gui.food.done_button=Готово
+
+# Villager
+entity.Villager.sophisticatedwolves:pets_seller=Продавец питомцем

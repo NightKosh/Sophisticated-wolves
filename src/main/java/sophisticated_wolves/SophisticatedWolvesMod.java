@@ -13,6 +13,7 @@ import sophisticated_wolves.api.SophisticatedWolvesAPI;
 import sophisticated_wolves.compatibility.Compatibility;
 import sophisticated_wolves.item.pet_carrier.PetCarrierHelper;
 import sophisticated_wolves.proxy.CommonProxy;
+import sophisticated_wolves.village.VillagersHandler;
 
 /**
  * Sophisticated Wolves
@@ -46,6 +47,8 @@ public class SophisticatedWolvesMod {
         SWTabs.registration();
 
         SWTileEntity.registration();
+
+        SWStructures.preInit();
     }
 
     @Mod.EventHandler
@@ -57,6 +60,9 @@ public class SophisticatedWolvesMod {
         NetworkRegistry.INSTANCE.registerGuiHandler(this, new SWGui());
 
         proxy.registerRenderers();
+
+        VillagersHandler.registerVillagers();
+        SWStructures.registration();
     }
 
     @Mod.EventHandler

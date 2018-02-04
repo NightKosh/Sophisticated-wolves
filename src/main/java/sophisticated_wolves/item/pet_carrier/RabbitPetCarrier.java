@@ -19,7 +19,7 @@ import java.util.List;
  * @license Lesser GNU Public License v3 (http://www.gnu.org/licenses/lgpl.html)
  */
 public class RabbitPetCarrier extends PetCarrier {
-    private static final int[] RABBITS_SPECIES = {0, 1, 2, 3, 4, 5, 99};
+    public static final int[] RABBITS_SPECIES = {0, 1, 2, 3, 4, 5, 99};
 
     @Override
     public Class getPetClass() {
