@@ -1,0 +1,59 @@
+# Tabs
+itemGroup.tabSophisticatedWolves=Sophisticated Wolves
+
+# Blocks
+tile.dogbowl.name=Hundenapf
+
+# Items
+item.dogtag.name=Hundemarke
+item.dogtreat.name=Hundeleckerli
+item.whistle.name=Pfeife
+item.petcarrier.name=Transportbox
+
+# Wolf
+entity.SWWolf.name=Hoch entwickelter Wolf
+
+#WOLF TYPE
+wolf_type.vanilla=Grau
+wolf_type.forest=Waldfarben
+wolf_type.black=Schwarz
+wolf_type.brown=Braun
+
+# Cat Type
+cat_type.ocelot=Ozelot
+cat_type.black=Schwarz
+cat_type.red=Rot
+cat_type.siamese=Siam
+
+# Rabbit Type
+rabbit_type.0=Braun
+rabbit_type.1=Weiß
+rabbit_type.2=Schwarz
+rabbit_type.3=Schwarz & weiß
+rabbit_type.4=Goldfarben
+rabbit_type.5=Salz & Pfeffer
+rabbit_type.99=Der Killerhase
+
+# Parrot Type
+parrot_type.0=Rot
+parrot_type.1=Blau
+parrot_type.2=Grün
+parrot_type.3=Türkis
+parrot_type.4=Silber
+
+# Pet Carrier
+carrier.pet_type=Haustierart
+carrier.dog_type=Hundeart
+carrier.cat_type=Katzenart
+carrier.rabbit_type=Hasenart
+carrier.parrot_type=Papageienart
+carrier.pet_name=Name
+
+# GUI
+gui.edit_dog_name.title=Gib deinem Haustier einen Namen:
+gui.edit_dog_name.done_button=Fertig
+gui.food.title=Wähle die Arten von Lebensmitteln, die Hunde essen
+gui.food.done_button=Fertig
+
+# Villager
+entity.Villager.sophisticatedwolves:pets_seller=Haustierverkäufer
