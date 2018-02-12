@@ -4,6 +4,7 @@ package sophisticated_wolves.entity;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityAgeable;
+import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.*;
 import net.minecraft.entity.monster.EntityCreeper;
 import net.minecraft.entity.passive.EntityAnimal;
@@ -143,6 +144,12 @@ public class EntitySophisticatedWolf extends AEntitySophisticatedWolf {
     protected void entityInit() {
         super.entityInit();
         this.dataManager.register(WOLF_SPECIES, 0);
+    }
+
+    @Override
+    protected void applyEntityAttributes() {
+        super.applyEntityAttributes();
+        this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.4);
     }
 
     @Override
@@ -478,6 +485,10 @@ public class EntitySophisticatedWolf extends AEntitySophisticatedWolf {
         return super.isWet() || this.world.handleMaterialAcceleration(this.getEntityBoundingBox().expand(0, -0.25, 0).contract(0.001, 0.001, 0.001), Material.WATER, this);
     }
 
+    @Override
+    protected float getWaterSlowDown() {
+        return 1;
+    }
 
     public boolean isRottenMeatAndBones() {
         return rottenMeatAndBones;
