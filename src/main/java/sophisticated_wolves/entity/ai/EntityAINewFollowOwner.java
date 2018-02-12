@@ -7,6 +7,7 @@ import net.minecraft.entity.ai.EntityAIFollowOwner;
 import net.minecraft.entity.passive.EntityTameable;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.world.World;
 
 /**
  * Sophisticated Wolves
@@ -62,15 +63,13 @@ public class EntityAINewFollowOwner extends EntityAIFollowOwner {
         if (!this.pet.isSitting() && this.tick <= 0) {
             this.tick = 10;
             if (!this.pet.getNavigator().tryMoveToEntityLiving(owner, this.speed) && !this.pet.getLeashed() && this.pet.getDistanceSq(owner) >= 144) {
-                int xPos = MathHelper.floor(owner.posX) - 2;
-                int zPos = MathHelper.floor(owner.posZ) - 2;
+                int xPos = MathHelper.floor(owner.posX);
+                int zPos = MathHelper.floor(owner.posZ);
                 int yPos = MathHelper.floor(owner.getEntityBoundingBox().minY);
 
-                for (int dX = -2; dX <= 2; ++dX) {
-                    for (int dZ = -2; dZ <= 2; ++dZ) {
-                        if (this.isTeleportSafe(xPos + dX, yPos - 1, zPos + dZ) &&
-                                this.isAirSafe(xPos + dX, yPos, zPos + dZ) &&
-                                this.isAirSafe(xPos + dX, yPos + 1, zPos + dZ)) {
+                for (int dX = -2; dX <= 2; dX++) {
+                    for (int dZ = -2; dZ <= 2; dZ++) {
+                        if (canTeleport(pet.world, xPos + dX, yPos, zPos + dZ)) {
                             this.pet.setLocationAndAngles(xPos + dX + 0.5F, yPos, zPos + dZ + 0.5F, this.pet.rotationYaw, this.pet.rotationPitch);
                             this.pet.getNavigator().clearPath();
                             return;
@@ -81,20 +80,28 @@ public class EntityAINewFollowOwner extends EntityAIFollowOwner {
         }
     }
 
-    private boolean isTeleportSafe(int x, int y, int z) {
-        IBlockState blockState = pet.world.getBlockState(new BlockPos(x, y, z));
+    public static boolean canTeleport(World world, int x, int y, int z) {
+        return isTeleportSafe(world, x, y - 1, z) &&
+                isAirSafe(world, x, y, z) &&
+                isAirSafe(world, x, y + 1, z);
+    }
+
+    private static boolean isTeleportSafe(World world, int x, int y, int z) {
+        IBlockState blockState = world.getBlockState(new BlockPos(x, y, z));
         if (blockState != null) {
-            Material material = blockState.getBlock().getMaterial(blockState);
+            Material material = blockState.getMaterial();
             if ((blockState.getBlock().isNormalCube(blockState) || material.equals(Material.ICE) || material.equals(Material.LEAVES) ||
-                    material.equals(Material.GLASS)) && !material.equals(Material.CACTUS) && !material.equals(material.PLANTS)) {
+                    material.equals(Material.GLASS) ||
+                    material.equals(Material.WATER) && world.getBlockState(new BlockPos(x, y, z).up()).getMaterial().equals(Material.AIR)) &&
+                    !material.equals(Material.CACTUS) && !material.equals(material.PLANTS)) {
                 return true;
             }
         }
         return false;
     }
 
-    private boolean isAirSafe(int x, int y, int z) {
-        IBlockState blockState = pet.world.getBlockState(new BlockPos(x, y, z));
+    private static boolean isAirSafe(World world, int x, int y, int z) {
+        IBlockState blockState = world.getBlockState(new BlockPos(x, y, z));
         if (blockState != null) {
             Material material = blockState.getBlock().getMaterial(blockState);
             if (!blockState.getBlock().isNormalCube(blockState) && !material.equals(Material.WATER) && !material.equals(Material.LAVA) &&
