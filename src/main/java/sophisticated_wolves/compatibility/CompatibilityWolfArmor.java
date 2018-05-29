@@ -1,10 +1,12 @@
 package sophisticated_wolves.compatibility;
 
 import com.attributestudios.wolfarmor.api.IWolfArmorCapability;
-import com.attributestudios.wolfarmor.common.capabilities.CapabilityWolfArmor;
+import com.attributestudios.wolfarmor.api.util.Capabilities;
 import net.minecraft.entity.passive.EntityWolf;
+import net.minecraft.inventory.InventoryBasic;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.NBTTagList;
 import sophisticated_wolves.entity.EntitySophisticatedWolf;
 
 /**
@@ -16,16 +18,22 @@ import sophisticated_wolves.entity.EntitySophisticatedWolf;
 public class CompatibilityWolfArmor {
 
     public static NBTTagCompound storeWolfItems(EntityWolf wolf, NBTTagCompound nbt) {
-        if (wolf.hasCapability(CapabilityWolfArmor.WOLF_ARMOR_CAPABILITY, null)) {
-            IWolfArmorCapability wolfCapability = wolf.getCapability(CapabilityWolfArmor.WOLF_ARMOR_CAPABILITY, null);
+        if (wolf.hasCapability(Capabilities.CAPABILITY_WOLF_ARMOR, null)) {
+            IWolfArmorCapability wolfCapability = wolf.getCapability(Capabilities.CAPABILITY_WOLF_ARMOR, null);
             if (wolfCapability != null) {
                 nbt.setBoolean("HasChest", wolfCapability.getHasChest());
                 if (wolfCapability.getHasChest()) {
-//                    wolfCapability.setInventory(wolfCapability.getInventory());//TODO setInventory!!!!
-//                    NBTTagCompound itemsNBT = new NBTTagCompound();
-//                    wolfCapability.getArmorItemStack().writeToNBT(itemsNBT);
-//                    nbt.setTag("Items", itemsNBT);
-                    wolfCapability.dropInventoryContents();
+                    NBTTagList itemsNBT = new NBTTagList();
+                    InventoryBasic inventory = wolfCapability.getInventory();
+                    for (int slot = 0; slot < inventory.getSizeInventory(); slot++) {
+                        NBTTagCompound itemNbt = new NBTTagCompound();
+                        inventory.getStackInSlot(slot).writeToNBT(itemNbt);
+                        itemsNBT.appendTag(itemNbt);
+
+                        wolfCapability.setInventoryItem(slot, ItemStack.EMPTY);
+                    }
+
+                    nbt.setTag("Items", itemsNBT);
                 }
                 if (wolfCapability.getHasArmor()) {
                     NBTTagCompound armorNBT = new NBTTagCompound();
@@ -38,11 +46,14 @@ public class CompatibilityWolfArmor {
     }
 
     public static void getWolfItems(EntityWolf wolf, NBTTagCompound nbt) {
-        if (wolf.hasCapability(CapabilityWolfArmor.WOLF_ARMOR_CAPABILITY, null)) {
-            IWolfArmorCapability wolfCapability = wolf.getCapability(CapabilityWolfArmor.WOLF_ARMOR_CAPABILITY, null);
-            if (nbt.getBoolean("HasChest")) {
+        if (wolf.hasCapability(Capabilities.CAPABILITY_WOLF_ARMOR, null)) {
+            IWolfArmorCapability wolfCapability = wolf.getCapability(Capabilities.CAPABILITY_WOLF_ARMOR, null);
+            if (nbt.getBoolean("HasChest") && nbt.hasKey("Items")) {
                 wolfCapability.setHasChest(true);
-//                wolfCapability.setInventory(wolfCapability.getInventory());//TODO setInventory!!!!
+                NBTTagList ntbItemsList = nbt.getTagList("Items", 10);
+                for (int i = 0; i < ntbItemsList.tagCount(); i++) {
+                    wolfCapability.setInventoryItem(i, new ItemStack(ntbItemsList.getCompoundTagAt(i)));
+                }
             }
             if (nbt.hasKey("Armor")) {
                 wolfCapability.equipArmor(new ItemStack(nbt.getCompoundTag(("Armor"))));
@@ -52,14 +63,15 @@ public class CompatibilityWolfArmor {
     }
 
     public static void copyWolfItems(EntityWolf wolf, EntitySophisticatedWolf sWolf) {
-        //TODO CapabilityWolfArmor.WOLF_ARMOR_CAPABILITY !!!!!!!!
-        if (wolf.hasCapability(CapabilityWolfArmor.WOLF_ARMOR_CAPABILITY, null) && sWolf.hasCapability(CapabilityWolfArmor.WOLF_ARMOR_CAPABILITY, null)) {
-            IWolfArmorCapability wolfCapability = wolf.getCapability(CapabilityWolfArmor.WOLF_ARMOR_CAPABILITY, null);
-            IWolfArmorCapability sWolfCapability = sWolf.getCapability(CapabilityWolfArmor.WOLF_ARMOR_CAPABILITY, null);
+        if (wolf.hasCapability(Capabilities.CAPABILITY_WOLF_ARMOR, null) && sWolf.hasCapability(Capabilities.CAPABILITY_WOLF_ARMOR, null)) {
+            IWolfArmorCapability wolfCapability = wolf.getCapability(Capabilities.CAPABILITY_WOLF_ARMOR, null);
+            IWolfArmorCapability sWolfCapability = sWolf.getCapability(Capabilities.CAPABILITY_WOLF_ARMOR, null);
             if (wolfCapability.getHasChest()) {
                 sWolfCapability.setHasChest(true);
-//                sWolfCapability.setInventory(wolfCapability.getInventory());//TODO setInventory!!!!
-                wolfCapability.dropInventoryContents();
+                InventoryBasic inventory = wolfCapability.getInventory();
+                for (int slot = 0; slot < inventory.getSizeInventory(); slot++) {
+                    sWolfCapability.setInventoryItem(slot, inventory.getStackInSlot(slot).copy());
+                }
             }
             if (wolfCapability.getHasArmor()) {
                 sWolfCapability.equipArmor(wolfCapability.getArmorItemStack());
