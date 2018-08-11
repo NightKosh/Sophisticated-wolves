@@ -2,11 +2,11 @@
     "variants": {
         "facing=east": {
             "model": "sophisticatedwolves:swkennel",
-             "y" : 0
+             "y" : 90
         },
         "facing=west": {
             "model": "sophisticatedwolves:swkennel",
-             "y" : 90
+             "y" : 270
         },
         "facing=south": {
             "model": "sophisticatedwolves:swkennel",
@@ -14,7 +14,7 @@
         },
         "facing=north": {
             "model": "sophisticatedwolves:swkennel",
-            "y" : 270
+            "y" : 0
         }
     }
 }

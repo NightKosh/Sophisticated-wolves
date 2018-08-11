@@ -51,7 +51,7 @@ public class BlockKennel extends Block {
     }
 
 
-    private static final AxisAlignedBB BB = new AxisAlignedBB(0.1, 0, 0.1, 0.9, 0.9, 0.9);
+    private static final AxisAlignedBB BB = new AxisAlignedBB(0.1, 0, 0.1, 0.9, 0.8, 0.9);
 
     @Override
     public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
