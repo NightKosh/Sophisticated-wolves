@@ -459,7 +459,7 @@ public class EntitySophisticatedWolf extends AEntitySophisticatedWolf {
 
     @Override
     public void applyEntityCollision(Entity entity) {
-        if (!(entity instanceof EntitySophisticatedWolf)) {
+        if (!(entity instanceof EntitySophisticatedWolf && SWConfiguration.wolvesWalksThroughEachOther)) {
             super.applyEntityCollision(entity);
         }
     }

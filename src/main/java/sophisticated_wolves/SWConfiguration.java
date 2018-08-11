@@ -31,6 +31,8 @@ public class SWConfiguration {
 
     public static boolean enablePetsSeller;
 
+    public static boolean wolvesWalksThroughEachOther;
+
     private SWConfiguration(File configFile) {
         this.config = new Configuration(configFile);
         getConfigs();
@@ -67,6 +69,8 @@ public class SWConfiguration {
         }
 
         enablePetsSeller = config.get(Configuration.CATEGORY_GENERAL, "EnablePetsSeller", true).getBoolean();
+
+        wolvesWalksThroughEachOther = config.get(Configuration.CATEGORY_GENERAL, "WolvesWalksThroughEachOther", true).getBoolean();
 
         config.save();
     }
