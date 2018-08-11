@@ -42,7 +42,9 @@ public class WolfPetCarrier extends PetCarrier {
 
     @Override
     public void setAdditionalData(EntityLiving pet, NBTTagCompound nbt) {
-        CompatibilityWolfArmor.getWolfItems((EntityWolf) pet, nbt);
+        if (Compatibility.IS_WOLF_ARMOR_INSTALLED) {
+            CompatibilityWolfArmor.getWolfItems((EntityWolf) pet, nbt);
+        }
     }
 
     @Override
