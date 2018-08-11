@@ -40,6 +40,13 @@ public class SWModels {
             ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(SWBlocks.DOG_BOWL), 3, Resources.DOG_BOWL3);
             ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(SWBlocks.DOG_BOWL), 4, Resources.DOG_BOWL4);
             ModelBakery.registerItemVariants(SWBlocks.DOG_BOWL_IB, Resources.DOG_BOWL, Resources.DOG_BOWL1, Resources.DOG_BOWL2, Resources.DOG_BOWL3, Resources.DOG_BOWL4);
+
+            ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(SWBlocks.KENNEL), 0, Resources.KENNEL);
+            ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(SWBlocks.KENNEL), 1, Resources.KENNEL);
+            ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(SWBlocks.KENNEL), 2, Resources.KENNEL);
+            ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(SWBlocks.KENNEL), 3, Resources.KENNEL);
+            ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(SWBlocks.KENNEL), 4, Resources.KENNEL);
+            ModelBakery.registerItemVariants(SWBlocks.KENNEL_IB, Resources.KENNEL, Resources.KENNEL, Resources.KENNEL, Resources.KENNEL, Resources.KENNEL);
         }
     }
 }

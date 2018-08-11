@@ -3,6 +3,7 @@ itemGroup.tabSophisticatedWolves=Sophisticated Wolves
 
 # Blocks
 tile.dogbowl.name=Собачья миска
+tile.kennel.name=Будка
 
 # Items
 item.dogtag.name=Собачья бирка

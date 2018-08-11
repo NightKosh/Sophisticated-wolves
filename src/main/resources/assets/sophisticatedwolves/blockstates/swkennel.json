@@ -1,0 +1,20 @@
+{
+    "variants": {
+        "facing=east": {
+            "model": "sophisticatedwolves:swkennel",
+             "y" : 0
+        },
+        "facing=west": {
+            "model": "sophisticatedwolves:swkennel",
+             "y" : 90
+        },
+        "facing=south": {
+            "model": "sophisticatedwolves:swkennel",
+            "y" : 180
+        },
+        "facing=north": {
+            "model": "sophisticatedwolves:swkennel",
+            "y" : 270
+        }
+    }
+}

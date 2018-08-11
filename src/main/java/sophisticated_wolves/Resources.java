@@ -50,4 +50,6 @@ public class Resources {
     public static final ModelResourceLocation DOG_BOWL2 = new ModelResourceLocation(SWBlocks.DOG_BOWL.getRegistryName() + "2", "inventory");
     public static final ModelResourceLocation DOG_BOWL3 = new ModelResourceLocation(SWBlocks.DOG_BOWL.getRegistryName() + "3", "inventory");
     public static final ModelResourceLocation DOG_BOWL4 = new ModelResourceLocation(SWBlocks.DOG_BOWL.getRegistryName() + "4", "inventory");
+
+    public static final ModelResourceLocation KENNEL = new ModelResourceLocation(SWBlocks.KENNEL.getRegistryName(), "inventory");
 }

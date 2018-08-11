@@ -3,6 +3,8 @@ itemGroup.tabSophisticatedWolves=Sophisticated Wolves
 
 # Blocks
 tile.dogbowl.name=Hundenapf
+##TODO
+tile.kennel.name=Kennel
 
 # Items
 item.dogtag.name=Hundemarke
