@@ -53,7 +53,7 @@ carrier.pet_name=Nom
 # GUI
 gui.edit_dog_name.title=Donnez un nom à votre animal de compagnie:
 gui.edit_dog_name.done_button=Terminé
-gui.food.title=Choisissez les types de nourriture que mangent les chiens
+gui.food.title=Sélectionnez quels types de nourriture mangent les chiens
 gui.food.done_button=Terminé
 
 # Villager
