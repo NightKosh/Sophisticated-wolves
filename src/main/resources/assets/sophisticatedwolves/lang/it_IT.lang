@@ -1,0 +1,60 @@
+# Tabs
+itemGroup.tabSophisticatedWolves=Sophisticated Wolves
+
+# Blocks
+tile.dogbowl.name=Ciotola per cani
+tile.kennel.name=Cuccia
+
+# Items
+item.dogtag.name=Medaglietta
+item.dogtreat.name=Dolcetto per cani
+item.whistle.name=Fischietto
+item.petcarrier.name=Trasportino
+
+# Wolf
+entity.SWWolf.name=Lupo Sofisticato
+
+#WOLF TYPE
+wolf_type.vanilla=Grigio
+wolf_type.forest=Foresta
+wolf_type.black=Nero
+wolf_type.brown=Marrone
+
+# Cat Type
+cat_type.ocelot=Ocelot
+cat_type.black=Nero
+cat_type.red=Rosso
+cat_type.siamese=Siamese
+
+# Rabbit Type
+rabbit_type.0=Marrone
+rabbit_type.1=Bianco
+rabbit_type.2=Nero
+rabbit_type.3=Bianco & Nero
+rabbit_type.4=Dorato
+rabbit_type.5=Sale & Pepe
+rabbit_type.99=Il Coniglietto Killer
+
+# Parrot Type
+parrot_type.0=Rosso
+parrot_type.1=Blu
+parrot_type.2=Verde
+parrot_type.3=Ciano
+parrot_type.4=Argento
+
+# Pet Carrier
+carrier.pet_type=Tipo di animale domestico
+carrier.dog_type=Tipo di cane
+carrier.cat_type=Tipo di gatto
+carrier.rabbit_type=Tipo di coniglio
+carrier.parrot_type=Tipo di pappagallo
+carrier.pet_name=Nome
+
+# GUI
+gui.edit_dog_name.title=Dai un nome al tuo animale domestico:
+gui.edit_dog_name.done_button=Fatto
+gui.food.title=Selezione quali tipi di cibo mangia il cane
+gui.food.done_button=Fatto
+
+# Villager
+entity.Villager.sophisticatedwolves:pets_seller=Venditore di animali domestici
