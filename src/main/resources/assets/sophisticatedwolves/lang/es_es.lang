@@ -1,5 +1,5 @@
-//Translated by: Dorzar / VeryHardChamp
-//Act.: 31/07/2017
+//Translated by: Dorzar / VeryHardChamp /violetasdev
+//Updated.: 13/10/2018
 //SophisticatedWolves 1.11.2-3.9.0
 
 # Tabs
@@ -7,8 +7,7 @@ itemGroup.tabSophisticatedWolves=Sophisticated Wolves
 
 # Blocks
 tile.dogbowl.name=Cuenco para perros
-##TODO
-tile.kennel.name=Kennel
+tile.kennel.name=Casa para perros
 
 # Items
 item.dogtag.name=Placa de identidad
@@ -32,20 +31,20 @@ cat_type.red=Rojo
 cat_type.siamese=Siamés
 
 # Rabbit Type
-rabbit_type.0=Brown
-rabbit_type.1=White
-rabbit_type.2=Black
-rabbit_type.3=Black & White
-rabbit_type.4=Gold
-rabbit_type.5=Salt & Pepper
-rabbit_type.99=The Killer Bunny
+rabbit_type.0=Marrón
+rabbit_type.1=Blanco
+rabbit_type.2=Negro
+rabbit_type.3=Blanco y Negro
+rabbit_type.4=Dorado
+rabbit_type.5=Sal y Pimienta
+rabbit_type.99=El Conejito Killer
 
 # Parrot Type
-parrot_type.0=Red
-parrot_type.1=Blue
-parrot_type.2=Green
-parrot_type.3=Cyan
-parrot_type.4=Silver
+parrot_type.0=Rojo
+parrot_type.1=Azul
+parrot_type.2=Verde
+parrot_type.3=Azul cian
+parrot_type.4=Plata
 
 # Pet Carrier
 carrier.pet_type=Tipo de mascota
@@ -56,11 +55,10 @@ carrier.parrot_type=Tipo de loro
 carrier.pet_name=Nombre
 
 # GUI
-gui.edit_dog_name.title=Dele a su mascota un nombre:
+gui.edit_dog_name.title=Dale a tu mascota un nombre:
 gui.edit_dog_name.done_button=Listo
-gui.food.title=Elija los tipos de alimentos que los lobos comen
+gui.food.title=Elige los tipos de alimento que los lobos comen
 gui.food.done_button=Listo
 
 # Villager
-## TODO !!!!!!!!!!
-entity.Villager.sophisticatedwolves:pets_seller=Pets Seller
+entity.Villager.sophisticatedwolves:pets_seller=Vendedor de Mascotas
