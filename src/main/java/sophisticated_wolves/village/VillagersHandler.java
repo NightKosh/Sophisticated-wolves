@@ -8,13 +8,10 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.village.MerchantRecipe;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import net.minecraftforge.fml.common.registry.VillagerRegistry;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.registries.IForgeRegistry;
 import sophisticated_wolves.Resources;
 import sophisticated_wolves.SWBlocks;
 import sophisticated_wolves.SWItems;
-import sophisticated_wolves.SophisticatedWolvesMod;
 import sophisticated_wolves.api.IVillagerHandler;
 import sophisticated_wolves.api.pet_carrier.PetCarrier;
 import sophisticated_wolves.entity.EntitySophisticatedWolf;
@@ -107,8 +104,7 @@ public class VillagersHandler implements IVillagerHandler {
     }
 
     @Override
-    @SideOnly(Side.CLIENT)
     public String getPetsSellerName() {
-        return SophisticatedWolvesMod.proxy.getLocalizedString("entity.Villager.sophisticatedwolves:pets_seller");
+        return "entity.Villager.sophisticatedwolves:pets_seller";
     }
 }
