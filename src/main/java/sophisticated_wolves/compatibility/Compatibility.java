@@ -3,7 +3,7 @@ package sophisticated_wolves.compatibility;
 import net.minecraftforge.fml.common.Loader;
 
 /**
- * GraveStone mod
+ * Sophisticated Wolves
  *
  * @author NightKosh
  * @license Lesser GNU Public License v3 (http://www.gnu.org/licenses/lgpl.html)
