@@ -36,6 +36,7 @@ public class SophisticatedWolvesMod {
         instance = this;
         SophisticatedWolvesAPI.entityHandler = new APIEntityHandler();
         SophisticatedWolvesAPI.petCarrierHandler = PetCarrierHelper.INSTANCE;
+        SophisticatedWolvesAPI.villagerHandler = VillagersHandler.INSTANCE;
     }
 
     @Mod.EventHandler

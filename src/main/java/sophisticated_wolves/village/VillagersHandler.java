@@ -8,11 +8,14 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.village.MerchantRecipe;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import net.minecraftforge.fml.common.registry.VillagerRegistry;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.registries.IForgeRegistry;
 import sophisticated_wolves.Resources;
 import sophisticated_wolves.SWBlocks;
 import sophisticated_wolves.SWItems;
-import sophisticated_wolves.api.ModInfo;
+import sophisticated_wolves.SophisticatedWolvesMod;
+import sophisticated_wolves.api.IVillagerHandler;
 import sophisticated_wolves.api.pet_carrier.PetCarrier;
 import sophisticated_wolves.entity.EntitySophisticatedWolf;
 import sophisticated_wolves.item.pet_carrier.PetCarrierHelper;
@@ -27,19 +30,19 @@ import java.util.Random;
  * @author NightKosh
  * @license Lesser GNU Public License v3 (http://www.gnu.org/licenses/lgpl.html)
  */
-public class VillagersHandler {
+public class VillagersHandler implements IVillagerHandler {
 
-    public static final String PETS_SELLER_NAME = ModInfo.ID.toLowerCase() + ":pets_seller";
+    public static final VillagersHandler INSTANCE = new VillagersHandler();
 
     public static VillagerRegistry.VillagerProfession petsSellerProfession;
     public static VillagerRegistry.VillagerCareer petsSellerCareer;
 
     public static void registerVillagers() {
-        petsSellerProfession = new VillagerRegistry.VillagerProfession(PETS_SELLER_NAME, Resources.PETS_SELLER, Resources.PETS_SELLER_ZOMBIE);
+        petsSellerProfession = new VillagerRegistry.VillagerProfession(PETS_SELLER_ID, Resources.PETS_SELLER, Resources.PETS_SELLER_ZOMBIE);
         IForgeRegistry<VillagerRegistry.VillagerProfession> villagerProfessions = ForgeRegistries.VILLAGER_PROFESSIONS;
         villagerProfessions.register(petsSellerProfession);
 
-        petsSellerCareer = new VillagerRegistry.VillagerCareer(petsSellerProfession, PETS_SELLER_NAME);
+        petsSellerCareer = new VillagerRegistry.VillagerCareer(petsSellerProfession, PETS_SELLER_ID);
         petsSellerCareer.addTrade(1,
                 new EntityVillager.ListItemForEmeralds(new ItemStack(SWItems.DOG_TAG), new EntityVillager.PriceInfo(1, 2)),
                 new EntityVillager.ListItemForEmeralds(new ItemStack(SWItems.DOG_TREAT), new EntityVillager.PriceInfo(1, 3))
@@ -91,5 +94,21 @@ public class VillagersHandler {
             }
         }
         return list.get(random.nextInt(list.size()));
+    }
+
+    @Override
+    public VillagerRegistry.VillagerProfession getPetSellerProfession() {
+        return petsSellerProfession;
+    }
+
+    @Override
+    public VillagerRegistry.VillagerCareer getPetSellerCareer() {
+        return petsSellerCareer;
+    }
+
+    @Override
+    @SideOnly(Side.CLIENT)
+    public String getPetsSellerName() {
+        return SophisticatedWolvesMod.proxy.getLocalizedString("entity.Villager.sophisticatedwolves:pets_seller");
     }
 }
