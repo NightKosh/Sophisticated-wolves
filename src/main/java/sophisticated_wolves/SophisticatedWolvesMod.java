@@ -49,13 +49,13 @@ public class SophisticatedWolvesMod {
         SWTileEntity.registration();
 
         SWStructures.preInit();
+
+        SWEntity.registration();
     }
 
     @Mod.EventHandler
     public void load(FMLInitializationEvent event) {
         Recipes.recipesRegistration();
-
-        SWEntity.registration();
 
         NetworkRegistry.INSTANCE.registerGuiHandler(this, new SWGui());
 
