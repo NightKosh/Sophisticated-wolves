@@ -1,6 +1,7 @@
 package sophisticated_wolves;
 
 import net.minecraftforge.common.config.Configuration;
+import net.minecraftforge.common.config.Property;
 
 import java.io.File;
 
@@ -57,7 +58,10 @@ public class SWConfiguration {
         attackAnimals = config.get(Configuration.CATEGORY_GENERAL, "AttackAnimals", false).getBoolean();
         attackSkeletons = config.get(Configuration.CATEGORY_GENERAL, "AttackSkeletons", true).getBoolean();
 
-        spawnProbability = config.get(Configuration.CATEGORY_GENERAL, "SpawnProbability", SWEntity.DEFAULT_SPAWN_PROBABILITY).getInt();
+        Property spawnProbabilityProperty = config.get(Configuration.CATEGORY_GENERAL, "SpawnProbability", SWEntity.DEFAULT_SPAWN_PROBABILITY);
+        spawnProbabilityProperty.setComment("Chance to spawn wolf. The higher value - higher chance to be spawned. It should be in range of 0 an 100!");
+        spawnProbability = spawnProbabilityProperty.getInt();
+
         spawnMinCount = config.get(Configuration.CATEGORY_GENERAL, "SpawnMinCount", SWEntity.DEFAULT_SPAWN_MIN_COUNT).getInt();
         spawnMaxCount = config.get(Configuration.CATEGORY_GENERAL, "SpawnMaxCount", SWEntity.DEFAULT_SPAWN_MAX_COUNT).getInt();
 
