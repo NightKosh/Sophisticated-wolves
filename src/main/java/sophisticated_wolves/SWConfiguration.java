@@ -2,6 +2,7 @@ package sophisticated_wolves;
 
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.common.config.Property;
+import sophisticated_wolves.entity.EntitySophisticatedWolf;
 
 import java.io.File;
 
@@ -33,6 +34,9 @@ public class SWConfiguration {
     public static boolean enablePetsSeller;
 
     public static boolean wolvesWalksThroughEachOther;
+
+    public static int wolvesHealthWild;
+    public static int wolvesHealthTamed;
 
     private SWConfiguration(File configFile) {
         this.config = new Configuration(configFile);
@@ -75,6 +79,16 @@ public class SWConfiguration {
         enablePetsSeller = config.get(Configuration.CATEGORY_GENERAL, "EnablePetsSeller", true).getBoolean();
 
         wolvesWalksThroughEachOther = config.get(Configuration.CATEGORY_GENERAL, "WolvesWalksThroughEachOther", true).getBoolean();
+
+        wolvesHealthWild = config.get(Configuration.CATEGORY_GENERAL, "WolvesHealthWild", EntitySophisticatedWolf.DEFAULT_WILD_WOLF_HEALTH).getInt();
+        wolvesHealthTamed = config.get(Configuration.CATEGORY_GENERAL, "WolvesHealthTamed", EntitySophisticatedWolf.DEFAULT_TAMED_WOLF_HEALTH).getInt();
+
+        if (wolvesHealthWild <= 0) {
+            wolvesHealthWild = 1;
+        }
+        if (wolvesHealthTamed <= 0) {
+            wolvesHealthTamed = 1;
+        }
 
         config.save();
     }

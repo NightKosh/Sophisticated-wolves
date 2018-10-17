@@ -52,6 +52,9 @@ import java.util.UUID;
  */
 public class EntitySophisticatedWolf extends AEntitySophisticatedWolf {
 
+    public static final int DEFAULT_WILD_WOLF_HEALTH = 8;
+    public static final int DEFAULT_TAMED_WOLF_HEALTH = 20;
+
     private static final DataParameter<Integer> WOLF_SPECIES = EntityDataManager.createKey(EntityWolf.class, DataSerializers.VARINT);
     private static final int POTION_POISON_ID = 19;
     private static final int POTION_WITHER_ID = 20;
@@ -150,6 +153,11 @@ public class EntitySophisticatedWolf extends AEntitySophisticatedWolf {
     protected void applyEntityAttributes() {
         super.applyEntityAttributes();
         this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.4);
+        if (this.isTamed()) {
+            this.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(SWConfiguration.wolvesHealthTamed);
+        } else {
+            this.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(SWConfiguration.wolvesHealthWild);
+        }
     }
 
     @Override
@@ -205,7 +213,7 @@ public class EntitySophisticatedWolf extends AEntitySophisticatedWolf {
         }
 
         if (this.rand.nextInt(3) == 0 && !this.CreeperAlert()) {
-            if (this.isTamed() && this.getHealth() < 10) {
+            if (this.isTamed() && this.getHealth() < SWConfiguration.wolvesHealthTamed / 2) {
                 return SoundEvents.ENTITY_WOLF_WHINE;
             } else {
                 return SoundEvents.ENTITY_WOLF_PANT;
@@ -230,7 +238,7 @@ public class EntitySophisticatedWolf extends AEntitySophisticatedWolf {
         if (this.isAngry()) {
             return 1.5393804F;
         } else if (this.isTamed()) {
-            return (0.55F - (20 - this.getHealth()) * 0.02F) * (float) Math.PI;
+            return (0.55F - (SWConfiguration.wolvesHealthTamed - this.getHealth()) * 0.02F) * (float) Math.PI;
         } else {
             return (float) Math.PI / 5F;
         }
@@ -313,7 +321,7 @@ public class EntitySophisticatedWolf extends AEntitySophisticatedWolf {
 
         if (this.isTamed()) {
             if (stack != null) {
-                if (FoodHelper.isFoodItem(stack) && this.getHealth() < 20) {
+                if (FoodHelper.isFoodItem(stack) && this.getHealth() < SWConfiguration.wolvesHealthTamed) {
                     int hp = FoodHelper.getHealPoints(stack);
 
                     if (hp > 0) {
@@ -334,6 +342,13 @@ public class EntitySophisticatedWolf extends AEntitySophisticatedWolf {
                     return true;
                 }
             }
+        } else if (stack.getItem() == Items.BONE && !this.isAngry()) {
+            super.processInteract(player, hand);
+            if (this.isTamed() && !this.world.isRemote) {
+                this.setHealth(SWConfiguration.wolvesHealthTamed);
+            }
+
+            return true;
         }
 
         return super.processInteract(player, hand);
@@ -352,6 +367,18 @@ public class EntitySophisticatedWolf extends AEntitySophisticatedWolf {
         }
     }
 
+
+    @Override
+    public void setTamed(boolean tamed) {
+        super.setTamed(tamed);
+
+        if (tamed) {
+            this.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(SWConfiguration.wolvesHealthTamed);
+        } else {
+            this.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(SWConfiguration.wolvesHealthWild);
+        }
+    }
+
     @Override
     public EntityWolf createChild(EntityAgeable entity) {
         EntitySophisticatedWolf wolf = new EntitySophisticatedWolf(this.world);
@@ -362,7 +389,7 @@ public class EntitySophisticatedWolf extends AEntitySophisticatedWolf {
             wolf.setOwnerId(ownerId);
             wolf.setTamed(true);
         }
-        wolf.setHealth(20); //setting puppy health
+        wolf.setHealth(SWConfiguration.wolvesHealthTamed); //setting puppy health
         return wolf;
     }
 
@@ -387,7 +414,7 @@ public class EntitySophisticatedWolf extends AEntitySophisticatedWolf {
             return false;
         }
         if (itemstack.getItem() instanceof ItemFood) {
-            return this.getHealth() < 20 && (((ItemFood) itemstack.getItem()).isWolfsFavoriteMeat() ||
+            return this.getHealth() < SWConfiguration.wolvesHealthTamed && (((ItemFood) itemstack.getItem()).isWolfsFavoriteMeat() ||
                     itemstack.getItem().equals(Items.FISH) || itemstack.getItem().equals(Items.COOKED_FISH));
         } else {
             return itemstack.getItem().equals(SWItems.DOG_TREAT) && getGrowingAge() == 0;

@@ -120,12 +120,17 @@ public class RenderSophisticatedWolf extends RenderWolf {
         }
     }
 
+    private static int HEALTH_2 = SWConfiguration.wolvesHealthTamed / 4 * 3;
+    private static int HEALTH_3 = SWConfiguration.wolvesHealthTamed / 2;
+    private static int HEALTH_4 = SWConfiguration.wolvesHealthTamed / 4;
+
+
     //changes color of wolf's name based on health
     public int getWolfNameColor(EntityWolf wolf) {
-        if (wolf.getHealth() < 20) {
-            if (wolf.getHealth() < 16) {
-                if (wolf.getHealth() < 11) {
-                    if (wolf.getHealth() < 6) {
+        if (wolf.getHealth() < SWConfiguration.wolvesHealthTamed) {
+            if (wolf.getHealth() <= HEALTH_2) {
+                if (wolf.getHealth() <= HEALTH_3) {
+                    if (wolf.getHealth() <= HEALTH_4) {
                         return 0xffff0202;
                     }
                     return 0xfffe5656;
@@ -140,10 +145,10 @@ public class RenderSophisticatedWolf extends RenderWolf {
 
     //same function but with transparency
     public int getSitNameColor(EntityWolf wolf) {
-        if (wolf.getHealth() < 20) {
-            if (wolf.getHealth() < 16) {
-                if (wolf.getHealth() < 11) {
-                    if (wolf.getHealth() < 6) {
+        if (wolf.getHealth() < SWConfiguration.wolvesHealthTamed) {
+            if (wolf.getHealth() <= HEALTH_2) {
+                if (wolf.getHealth() <= HEALTH_3) {
+                    if (wolf.getHealth() <= HEALTH_4) {
                         return 0x40ff0202;
                     }
                     return 0x40fe5656;

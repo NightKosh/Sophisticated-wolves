@@ -5,6 +5,7 @@ import net.minecraft.entity.passive.EntityTameable;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import sophisticated_wolves.SWConfiguration;
 import sophisticated_wolves.tile_entity.TileEntityDogBowl;
 
 import java.util.Map;
@@ -28,7 +29,7 @@ public class AIFeedFromBowl extends EntityAIBase {
 
     @Override
     public boolean shouldExecute() {
-        if (!this.pet.isTamed() || this.pet.isSitting() || this.pet.getHealth() >= 20) {
+        if (!this.pet.isTamed() || this.pet.isSitting() || this.pet.getHealth() >= SWConfiguration.wolvesHealthTamed) {
             return false;
         } else {
             if (getBowlTe(this.pet.getPosition())) {
@@ -70,7 +71,7 @@ public class AIFeedFromBowl extends EntityAIBase {
 
     @Override
     public boolean shouldContinueExecuting() {
-        return this.pet.getHealth() < 20 && this.dogBowl != null && this.dogBowl.getFoodAmount() > 0;
+        return this.pet.getHealth() < SWConfiguration.wolvesHealthTamed && this.dogBowl != null && this.dogBowl.getFoodAmount() > 0;
     }
 
     @Override
@@ -81,7 +82,7 @@ public class AIFeedFromBowl extends EntityAIBase {
                 this.pet.getLookHelper().setLookPosition(this.dogBowl.getPos().getX(), this.dogBowl.getPos().getY(), this.dogBowl.getPos().getZ(), 0.25F, 0.25F);
                 this.pet.heal(1);
                 this.dogBowl.addFood(-1);
-                if (this.dogBowl.getFoodAmount() <= 0 || this.pet.getHealth() >= 20) {
+                if (this.dogBowl.getFoodAmount() <= 0 || this.pet.getHealth() >= SWConfiguration.wolvesHealthTamed) {
                     this.dogBowl = null;
                     this.pet.getNavigator().clearPath();
                 }

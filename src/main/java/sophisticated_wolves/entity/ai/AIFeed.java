@@ -6,6 +6,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.world.World;
 import sophisticated_wolves.FoodHelper;
+import sophisticated_wolves.SWConfiguration;
 import sophisticated_wolves.entity.EntitySophisticatedWolf;
 
 import java.util.List;
@@ -29,7 +30,7 @@ public class AIFeed extends EntityAIBase {
 
     @Override
     public boolean shouldExecute() {
-        if (!this.pet.isTamed() || this.pet.isSitting() || this.pet.getHealth() >= 20) {
+        if (!this.pet.isTamed() || this.pet.isSitting() || this.pet.getHealth() >= SWConfiguration.wolvesHealthTamed) {
             return false;
         } else {
             List<EntityItem> foodList = this.world.getEntitiesWithinAABB(EntityItem.class,
@@ -48,7 +49,7 @@ public class AIFeed extends EntityAIBase {
 
     @Override
     public boolean shouldContinueExecuting() {
-        return this.pet.getHealth() < 20 && this.foodEntity != null;
+        return this.pet.getHealth() < SWConfiguration.wolvesHealthTamed && this.foodEntity != null;
     }
 
     @Override
@@ -59,7 +60,7 @@ public class AIFeed extends EntityAIBase {
                 this.pet.getLookHelper().setLookPosition(this.foodEntity.posX, this.foodEntity.posY, this.foodEntity.posZ, 0.25F, 0.25F);
                 this.pet.heal(FoodHelper.getHealPoints(this.foodEntity.getItem()));
                 this.foodEntity.getItem().shrink(1);
-                if (this.foodEntity.getItem().isEmpty() || this.pet.getHealth() >= 20) {
+                if (this.foodEntity.getItem().isEmpty() || this.pet.getHealth() >= SWConfiguration.wolvesHealthTamed) {
                     if (this.foodEntity.getItem().isEmpty()) {
                         this.foodEntity.setDead();
                     }
