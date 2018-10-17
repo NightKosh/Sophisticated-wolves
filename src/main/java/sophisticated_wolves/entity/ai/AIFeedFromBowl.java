@@ -1,7 +1,9 @@
 package sophisticated_wolves.entity.ai;
 
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.ai.EntityAIBase;
 import net.minecraft.entity.passive.EntityTameable;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -81,7 +83,17 @@ public class AIFeedFromBowl extends EntityAIBase {
             if (this.pet.getDistanceSq(this.dogBowl.getPos()) <= 1.3F) {
                 this.pet.getLookHelper().setLookPosition(this.dogBowl.getPos().getX(), this.dogBowl.getPos().getY(), this.dogBowl.getPos().getZ(), 0.25F, 0.25F);
                 this.pet.heal(1);
-                this.dogBowl.addFood(-1);
+
+                EntityLivingBase owner = this.pet.getOwner();
+                if (owner != null && owner instanceof EntityPlayer) {
+                    EntityPlayer player = (EntityPlayer) this.pet.getOwner();
+                    if (!player.capabilities.isCreativeMode) {
+                        this.dogBowl.addFood(-1);
+                    }
+                } else {
+                    this.dogBowl.addFood(-1);
+                }
+
                 if (this.dogBowl.getFoodAmount() <= 0 || this.pet.getHealth() >= SWConfiguration.wolvesHealthTamed) {
                     this.dogBowl = null;
                     this.pet.getNavigator().clearPath();
