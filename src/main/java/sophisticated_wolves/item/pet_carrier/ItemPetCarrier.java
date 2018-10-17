@@ -6,7 +6,7 @@ import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.passive.*;
+import net.minecraft.entity.passive.EntityTameable;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -56,11 +56,7 @@ public class ItemPetCarrier extends Item {
                 if (pet.isTamed() && pet.getOwnerId() != null && pet.getOwnerId().equals(player.getUniqueID())) {
                     return getPetInfo(stack, player, entity, hand);
                 }
-            } else if (entity instanceof EntityChicken) {
-                return getPetInfo(stack, player, entity, hand);
-            } else if (entity instanceof EntityRabbit) {
-                return getPetInfo(stack, player, entity, hand);
-            } else if (entity instanceof EntityPig) {
+            } else if (PetCarrierHelper.PETS_MAP.containsKey(entity.getClass().getSimpleName())) {
                 return getPetInfo(stack, player, entity, hand);
             }
         }
