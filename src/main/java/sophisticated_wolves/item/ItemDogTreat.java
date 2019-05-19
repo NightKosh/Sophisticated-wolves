@@ -46,6 +46,7 @@ public class ItemDogTreat extends Item {
                 sWolf.setOwnerId(wolf.getOwnerId());
                 sWolf.setCustomNameTag(wolf.getCustomNameTag());
                 sWolf.setHealth(wolf.getHealth());
+                sWolf.setWolfSpeciesByBiome();
 
                 if (Compatibility.IS_WOLF_ARMOR_INSTALLED) {
                     CompatibilityWolfArmor.copyWolfItems(wolf, sWolf);

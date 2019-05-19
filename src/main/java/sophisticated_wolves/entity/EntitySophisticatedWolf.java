@@ -4,6 +4,7 @@ package sophisticated_wolves.entity;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityAgeable;
+import net.minecraft.entity.IEntityLivingData;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.*;
 import net.minecraft.entity.monster.EntityCreeper;
@@ -25,9 +26,9 @@ import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.World;
-import net.minecraft.world.biome.Biome;
-import net.minecraft.world.biome.BiomeForest;
+import net.minecraftforge.common.BiomeDictionary;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import sophisticated_wolves.FoodHelper;
@@ -40,8 +41,10 @@ import sophisticated_wolves.entity.ai.*;
 import sophisticated_wolves.item.ItemDogTag;
 import sophisticated_wolves.item.pet_carrier.ItemPetCarrier;
 
+import javax.annotation.Nullable;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 /**
@@ -140,7 +143,6 @@ public class EntitySophisticatedWolf extends AEntitySophisticatedWolf {
         this.targetTasks.addTask(1, new EntityAINewOwnerHurtByTarget(this)); //mod class
         this.targetTasks.addTask(2, new EntityAINewOwnerHurtTarget(this)); //mod class
 
-        this.updateSpecies(this.getSpeciesByBiome());
     }
 
     @Override
@@ -158,6 +160,13 @@ public class EntitySophisticatedWolf extends AEntitySophisticatedWolf {
         } else {
             this.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(SWConfiguration.wolvesHealthWild);
         }
+    }
+
+    @Nullable
+    @Override
+    public IEntityLivingData onInitialSpawn(DifficultyInstance difficulty, @Nullable IEntityLivingData data) {
+        this.setWolfSpeciesByBiome();
+        return super.onInitialSpawn(difficulty, data);
     }
 
     @Override
@@ -439,17 +448,27 @@ public class EntitySophisticatedWolf extends AEntitySophisticatedWolf {
 
     @Override
     public EnumWolfSpecies getSpeciesByBiome() {
-        Biome biome = this.world.getBiomeForCoordsBody(new BlockPos(this));
-        if (biome instanceof BiomeForest) {
+        Set<BiomeDictionary.Type> biomeTypes = BiomeDictionary.getTypes(this.world.getBiomeForCoordsBody(new BlockPos(this)));
+
+        if (biomeTypes.contains(BiomeDictionary.Type.SNOWY) || biomeTypes.contains(BiomeDictionary.Type.CONIFEROUS)) {
+            if (this.rand.nextInt(7) == 0) {
+                return EnumWolfSpecies.BLACK;
+            } else {
+                return EnumWolfSpecies.VANILLA;
+            }
+        } else if (biomeTypes.contains(BiomeDictionary.Type.FOREST)) {
             if (this.rand.nextInt(7) == 0) {
                 return EnumWolfSpecies.BROWN;
+            } else {
+                return EnumWolfSpecies.FOREST;
             }
-            return EnumWolfSpecies.FOREST;
-        } else if (this.rand.nextInt(7) == 0) {
-            return EnumWolfSpecies.BLACK;
-        } else {
-            return EnumWolfSpecies.VANILLA;
         }
+
+        return EnumWolfSpecies.VANILLA;
+    }
+
+    public void setWolfSpeciesByBiome() {
+        this.updateSpecies(this.getSpeciesByBiome());
     }
 
     @Override
