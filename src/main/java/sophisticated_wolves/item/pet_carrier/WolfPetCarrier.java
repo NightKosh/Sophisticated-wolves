@@ -8,7 +8,6 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
 import sophisticated_wolves.api.pet_carrier.PetCarrier;
 import sophisticated_wolves.compatibility.Compatibility;
-import sophisticated_wolves.compatibility.CompatibilityWolfArmor;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,20 +31,10 @@ public class WolfPetCarrier extends PetCarrier {
     }
 
     @Override
-    public NBTTagCompound getAdditionalData(EntityLivingBase pet) {
-        NBTTagCompound nbt = new NBTTagCompound();
-        if (Compatibility.IS_WOLF_ARMOR_INSTALLED) {
-            CompatibilityWolfArmor.storeWolfItems((EntityWolf) pet, nbt);
-        }
-        return nbt;
-    }
+    public NBTTagCompound getAdditionalData(EntityLivingBase pet) { return null; }
 
     @Override
-    public void setAdditionalData(EntityLiving pet, NBTTagCompound nbt) {
-        if (Compatibility.IS_WOLF_ARMOR_INSTALLED) {
-            CompatibilityWolfArmor.getWolfItems((EntityWolf) pet, nbt);
-        }
-    }
+    public void setAdditionalData(EntityLiving pet, NBTTagCompound nbt) { }
 
     @Override
     public EntityLiving spawnPet(World world, EntityPlayer player) {

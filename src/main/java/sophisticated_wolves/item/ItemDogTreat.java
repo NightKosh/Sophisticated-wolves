@@ -11,7 +11,6 @@ import sophisticated_wolves.SWTabs;
 import sophisticated_wolves.api.ISophisticatedWolf;
 import sophisticated_wolves.api.ModInfo;
 import sophisticated_wolves.compatibility.Compatibility;
-import sophisticated_wolves.compatibility.CompatibilityWolfArmor;
 import sophisticated_wolves.entity.EntitySophisticatedWolf;
 
 /**
@@ -47,10 +46,6 @@ public class ItemDogTreat extends Item {
                 sWolf.setCustomNameTag(wolf.getCustomNameTag());
                 sWolf.setHealth(wolf.getHealth());
                 sWolf.setWolfSpeciesByBiome();
-
-                if (Compatibility.IS_WOLF_ARMOR_INSTALLED) {
-                    CompatibilityWolfArmor.copyWolfItems(wolf, sWolf);
-                }
 
                 wolf.setDead();
 
