@@ -49,16 +49,16 @@ public class ItemWhistle extends Item {
 
                 for (EntityWolf wolf : wolvesList) {
                     if (wolf.isTamed() && wolf.isOwner(player) && (!wolf.isSitting() || player.isSneaking())) {
-                        for (int x = -2; x <= 2; x++) {
-                            for (int z = -2; z <= 2; z++) {
-                                if (EntityAINewFollowOwner.canTeleport(world, xPos + x, yPos, zPos + z) ||
-                                        EntityAINewFollowOwner.canTeleport(world, xPos + x, yPos + 1, zPos + z)) {
-                                    wolf.setSitting(false);
-                                    wolf.getAISit().setSitting(false);
-                                    wolf.setLocationAndAngles(xPos + x + 0.5, yPos, zPos + z + 0.5, wolf.rotationYaw, wolf.rotationPitch);
-                                    wolf.getNavigator().clearPath();
-                                    wolf.setAttackTarget(null);
-                                }
+                        for (int i = 0; i < 50; i++) {
+                            int xRand = player.world.rand.nextInt(5) + xPos - 2;
+                            int zRand = player.world.rand.nextInt(5) + zPos - 2;
+                            if (EntityAINewFollowOwner.canTeleport(world, xRand, yPos, zRand)) {
+                                wolf.setSitting(false);
+                                wolf.getAISit().setSitting(false);
+                                wolf.setLocationAndAngles(xRand + 0.5, yPos, zRand + 0.5, wolf.rotationYaw, wolf.rotationPitch);
+                                wolf.getNavigator().clearPath();
+                                wolf.setAttackTarget(null);
+                                break;
                             }
                         }
                     }
