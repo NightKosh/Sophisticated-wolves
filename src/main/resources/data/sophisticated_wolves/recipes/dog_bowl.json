@@ -1,0 +1,14 @@
+{
+  "type" : "minecraft:crafting_shapeless",
+  "ingredients" : [
+    {
+      "item" : "minecraft:brick"
+    },
+    {
+      "item" : "minecraft:bowl"
+    }
+  ],
+  "result" : {
+    "item" : "sophisticated_wolves:dog_bowl"
+  }
+}

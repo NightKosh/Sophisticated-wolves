@@ -1,0 +1,16 @@
+{
+  "type" : "minecraft:crafting_shapeless",
+  "group" : "dog_treat",
+  "ingredients" : [
+    {
+      "item" : "minecraft:wheat"
+    },
+    {
+      "item" : "minecraft:chicken"
+    }
+  ],
+  "result" : {
+    "item" : "sophisticated_wolves:dog_treat",
+    "count" : 1
+  }
+}
