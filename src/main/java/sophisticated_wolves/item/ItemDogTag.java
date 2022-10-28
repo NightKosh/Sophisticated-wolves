@@ -1,16 +1,16 @@
 package sophisticated_wolves.item;
 
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.passive.EntityTameable;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.EnumHand;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.TamableAnimal;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 import sophisticated_wolves.SWConfiguration;
-import sophisticated_wolves.SWTabs;
+import sophisticated_wolves.core.SWTabs;
 import sophisticated_wolves.SophisticatedWolvesMod;
-import sophisticated_wolves.api.ModInfo;
-import sophisticated_wolves.entity.EntitySophisticatedWolf;
+import sophisticated_wolves.entity.SophisticatedWolf;
 
 /**
  * Sophisticated Wolves
@@ -21,37 +21,35 @@ import sophisticated_wolves.entity.EntitySophisticatedWolf;
 public class ItemDogTag extends Item {
 
     public ItemDogTag() {
-        super();
-        this.setRegistryName(ModInfo.ID, "SWDogTag");
-        this.setUnlocalizedName("dogtag");
-        this.setCreativeTab(SWTabs.tab);
+        super(new Item.Properties()
+                .tab(SWTabs.TAB));
     }
 
     /**
      * Returns true if the item can be used on the given entity, e.g. shears on sheep.
      */
     @Override
-    public boolean itemInteractionForEntity(ItemStack stack, EntityPlayer player, EntityLivingBase entity, EnumHand hand) {
+    public InteractionResult interactLivingEntity(ItemStack stack, Player player, LivingEntity entity, InteractionHand hand) {
         if (SWConfiguration.nameTagForAnyPets) {
-            if (entity instanceof EntityTameable) {
-                return setName((EntityTameable) entity, stack, player);
+            if (entity instanceof TamableAnimal animal) {
+                return setName(animal, stack, player);
             }
-        } else if (entity instanceof EntitySophisticatedWolf) {
-            return setName((EntityTameable) entity, stack, player);
+        } else if (entity instanceof SophisticatedWolf wolf) {
+            return setName(wolf, stack, player);
         }
-        return super.itemInteractionForEntity(stack, player, entity, hand);
+        return super.interactLivingEntity(stack, player, entity, hand);
     }
 
-    private static boolean setName(EntityTameable pet, ItemStack stack, EntityPlayer player) {
-        if (pet.isTamed() && pet.getOwnerId().equals(player.getUniqueID())) {
-
-            if (player.world.isRemote) {
+    private static InteractionResult setName(TamableAnimal pet, ItemStack stack, Player player) {
+        if (pet.isTame() && pet.getOwnerUUID() != null && pet.getOwnerUUID().equals(player.getUUID())) {
+            if (player.getLevel().isClientSide()) {
                 SophisticatedWolvesMod.proxy.openPetGui(pet);
             } else {
                 stack.shrink(1);
             }
-            return true;
+            return InteractionResult.SUCCESS;
         }
-        return false;
+        return InteractionResult.FAIL;
     }
+
 }

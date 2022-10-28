@@ -1,22 +1,18 @@
 package sophisticated_wolves.item;
 
-import net.minecraft.entity.passive.EntityWolf;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.EnumActionResult;
-import net.minecraft.util.EnumHand;
-import net.minecraft.util.SoundCategory;
-import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.world.World;
-import sophisticated_wolves.SWSound;
-import sophisticated_wolves.SWTabs;
-import sophisticated_wolves.api.ModInfo;
-import sophisticated_wolves.entity.ai.EntityAINewFollowOwner;
-
-import java.util.List;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.util.Mth;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.entity.animal.Wolf;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.AABB;
+import sophisticated_wolves.core.SWSound;
+import sophisticated_wolves.core.SWTabs;
+import sophisticated_wolves.entity.ai.SWFollowOwnerGoal;
 
 /**
  * Sophisticated Wolves
@@ -27,37 +23,39 @@ import java.util.List;
 public class ItemWhistle extends Item {
 
     public ItemWhistle() {
-        super();
-        this.setRegistryName(ModInfo.ID, "SWWhistle");
-        this.setUnlocalizedName("whistle");
-        this.setCreativeTab(SWTabs.tab);
+        super(new Item.Properties()
+                .tab(SWTabs.TAB)
+                .stacksTo(1));
     }
 
     @Override
-    public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand) {
-        if (world.isRemote) {
-            world.playSound(player, player.getPosition(), player.isSneaking() ? SWSound.WHISTLE_LONG : SWSound.WHISTLE_SHORT, SoundCategory.PLAYERS, 1, 1);
+    public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
+        if (level.isClientSide()) {
+            level.playSound(player, player,
+                    player.isShiftKeyDown() ? SWSound.getWhistleLong() : SWSound.getWhistleShort(),
+                    SoundSource.PLAYERS, 1, 1);
         } else {
-            List<EntityWolf> wolvesList = world.getEntitiesWithinAABB(EntityWolf.class,
-                    new AxisAlignedBB(player.posX - 35, player.posY - 35, player.posZ - 35,
-                            player.posX + 35, player.posY + 35, player.posZ + 35));
+            var wolves = level.getEntitiesOfClass(Wolf.class,
+                    new AABB(player.getX() - 35, player.getY() - 35, player.getZ() - 35,
+                            player.getX() + 35, player.getY() + 35, player.getZ() + 35));
 
-            if (!wolvesList.isEmpty()) {
-                int xPos = MathHelper.floor(player.posX);
-                int zPos = MathHelper.floor(player.posZ);
-                int yPos = MathHelper.floor(player.getEntityBoundingBox().minY);
+            if (!wolves.isEmpty()) {
+                int xPos = Mth.floor(player.getX());
+                int zPos = Mth.floor(player.getZ());
+                int yPos = Mth.floor(player.getBoundingBox().minY);
 
-                for (EntityWolf wolf : wolvesList) {
-                    if (wolf.isTamed() && wolf.isOwner(player) && (!wolf.isSitting() || player.isSneaking())) {
+                for (Wolf wolf : wolves) {
+                    if (wolf.isTame() &&
+                            wolf.isOwnedBy(player) &&
+                            (!wolf.isInSittingPose() || player.isShiftKeyDown())) {
                         for (int i = 0; i < 50; i++) {
-                            int xRand = player.world.rand.nextInt(5) + xPos - 2;
-                            int zRand = player.world.rand.nextInt(5) + zPos - 2;
-                            if (EntityAINewFollowOwner.canTeleport(world, xRand, yPos, zRand)) {
-                                wolf.setSitting(false);
-                                wolf.getAISit().setSitting(false);
-                                wolf.setLocationAndAngles(xRand + 0.5, yPos, zRand + 0.5, wolf.rotationYaw, wolf.rotationPitch);
-                                wolf.getNavigator().clearPath();
-                                wolf.setAttackTarget(null);
+                            int xRand = player.getLevel().getRandom().nextInt(5) + xPos - 2;
+                            int zRand = player.getLevel().getRandom().nextInt(5) + zPos - 2;
+                            if (SWFollowOwnerGoal.canTeleport(level, xRand, yPos, zRand)) {
+                                wolf.setInSittingPose(false);
+                                wolf.moveTo(xRand + 0.5, yPos, zRand + 0.5, wolf.getYRot(), wolf.getXRot());
+                                wolf.getNavigation().stop();
+                                wolf.setTarget(null);
                                 break;
                             }
                         }
@@ -66,6 +64,7 @@ public class ItemWhistle extends Item {
             }
         }
 
-        return new ActionResult(EnumActionResult.SUCCESS, player.getHeldItem(hand));
+        return InteractionResultHolder.success(player.getItemInHand(hand));
     }
+
 }

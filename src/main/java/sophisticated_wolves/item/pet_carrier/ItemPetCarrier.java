@@ -1,29 +1,21 @@
 package sophisticated_wolves.item.pet_carrier;
 
-import net.minecraft.block.BlockFence;
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.entity.EntityLiving;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.passive.EntityTameable;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.EnumActionResult;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.EnumHand;
-import net.minecraft.util.NonNullList;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.world.World;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
-import sophisticated_wolves.SWTabs;
-import sophisticated_wolves.SophisticatedWolvesMod;
-import sophisticated_wolves.api.ModInfo;
+import net.minecraft.core.NonNullList;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.Component;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.TamableAnimal;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.CreativeModeTab;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.context.UseOnContext;
+import net.minecraft.world.level.Level;
 import sophisticated_wolves.api.pet_carrier.PetCarrier;
+import sophisticated_wolves.core.SWTabs;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -38,175 +30,169 @@ import java.util.Map;
 public class ItemPetCarrier extends Item {
 
     public ItemPetCarrier() {
-        super();
-        this.setRegistryName(ModInfo.ID, "SWPetCarrier");
-        this.setUnlocalizedName("petcarrier");
-        this.setCreativeTab(SWTabs.tab);
-        this.setMaxStackSize(1);
+        super(new Item.Properties()
+                .tab(SWTabs.TAB)
+                .stacksTo(1));
     }
 
     /**
      * Returns true if the item can be used on the given entity, e.g. shears on sheep.
      */
     @Override
-    public boolean itemInteractionForEntity(ItemStack stack, EntityPlayer player, EntityLivingBase entity, EnumHand hand) {
-        if (!entity.world.isRemote && stack != null && !(stack.hasTagCompound() && stack.getTagCompound().hasKey("ClassName"))) {
-            if (entity instanceof EntityTameable) {
-                EntityTameable pet = (EntityTameable) entity;
-                if (pet.isTamed() && pet.getOwnerId() != null && pet.getOwnerId().equals(player.getUniqueID())) {
+    public InteractionResult interactLivingEntity(ItemStack stack, Player player, LivingEntity entity, InteractionHand hand) {
+        if (!entity.getLevel().isClientSide() && stack != null &&
+                !(stack.hasTag() && stack.getTag().contains("ClassName"))) {
+            if (entity instanceof TamableAnimal pet) {
+                if (pet.isTame() && pet.getOwnerUUID() != null && pet.getOwnerUUID().equals(player.getUUID())) {
                     return getPetInfo(stack, player, entity, hand);
                 }
             } else if (PetCarrierHelper.PETS_MAP.containsKey(entity.getClass().getSimpleName())) {
                 return getPetInfo(stack, player, entity, hand);
             }
         }
-        return super.itemInteractionForEntity(stack, player, entity, hand);
+        return super.interactLivingEntity(stack, player, entity, hand);
     }
 
-    private static boolean getPetInfo(ItemStack stack, EntityPlayer player, EntityLivingBase entity, EnumHand hand) {
-        NBTTagCompound entityNbt = new NBTTagCompound();
-        entity.writeToNBT(entityNbt);
+    private static InteractionResult getPetInfo(ItemStack stack, Player player, LivingEntity entity, InteractionHand hand) {
+        var entityTag = new CompoundTag();
+        entity.save(entityTag);
 
-        NBTTagCompound nbt = new NBTTagCompound();
-        nbt.setString("ClassName", entity.getClass().getSimpleName());
+        var tag = new CompoundTag();
+        tag.putString("ClassName", entity.getClass().getSimpleName());
 
         PetCarrier petCarrier = PetCarrierHelper.PETS_MAP.get(entity.getClass().getSimpleName());
         if (petCarrier != null) {
-            NBTTagCompound infoNbt = petCarrier.getInfo(entity);
-            if (infoNbt != null) {
-                nbt.setTag("InfoList", infoNbt);
+            var infoTag = petCarrier.getInfo(entity);
+            if (infoTag != null) {
+                tag.put("InfoList", infoTag);
             }
 
-            NBTTagCompound additionalNbt = petCarrier.getAdditionalData(entity);
+            var additionalNbt = petCarrier.getAdditionalData(entity);
             if (additionalNbt != null) {
-                nbt.setTag("AdditionalData", additionalNbt);
+                tag.put("AdditionalData", additionalNbt);
             }
         }
 
         if (entity.hasCustomName()) {
-            nbt.setString("CustomName", entity.getCustomNameTag());
+            tag.putString("CustomName", entity.getCustomName().getString());
         }
 
-        nbt.setTag("MobData", entityNbt);
+        tag.put("MobData", entityTag);
 
-        stack.setTagCompound(nbt);
-        player.setHeldItem(hand, stack);
-        entity.setDead();
+        stack.setTag(tag);
+        player.setItemInHand(hand, stack);
+        //TODO
+//        entity.setDead();
 
-        return true;
+        return InteractionResult.SUCCESS;
     }
 
     @Override
-    public EnumActionResult onItemUse(EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
-        ItemStack stack = player.getHeldItem(hand);
+    public InteractionResult useOn(UseOnContext context) {
+        var level = context.getLevel();
 
-        if (world.isRemote) {
-            return EnumActionResult.SUCCESS;
+        if (level.isClientSide()) {
+            return InteractionResult.SUCCESS;
         } else {
-            if (stack != null && stack.hasTagCompound()) {
-                NBTTagCompound nbt = stack.getTagCompound();
-                if (nbt.hasKey("ClassName")) {
+            var stack = context.getItemInHand();
+            if (stack != null && stack.hasTag()) {
+                var nbt = stack.getTag();
+                if (nbt.contains("ClassName")) {
                     PetCarrier petCarrier = PetCarrierHelper.PETS_MAP.get(nbt.getString("ClassName"));
                     if (petCarrier != null) {
-                        EntityLiving entity = petCarrier.spawnPet(world, player);
+                        var player = context.getPlayer();
+                        var entity = petCarrier.spawnPet(level, player);
                         if (entity != null) {
-                            IBlockState block = world.getBlockState(pos);
+                            var pos = context.getClickedPos();
+                            var block = level.getBlockState(pos);
                             double d0 = 0;
-                            if (facing == EnumFacing.UP && block instanceof BlockFence) {
-                                d0 = 0.5;
+                            //TODO
+//                            if (facing == EnumFacing.UP && block instanceof BlockFence) {
+//                                d0 = 0.5;
+//                            }
+//                            pos = pos.offset(facing);
+//
+//                            entity.onInitialSpawn(level.getCurrentDifficultyAt(new BlockPos(entity.position())), null);
+//                            entity.readAdditionalSaveData(nbt.getCompound("MobData"));
+//
+//                            if (nbt.contains("AdditionalData")) {
+//                                petCarrier.setAdditionalData(entity, nbt.getCompound("AdditionalData"));
+//                            }
+//
+//                            entity.moveTo(pos.getX() + 0.5, pos.getY() + d0, pos.getZ() + 0.5,
+//                                    Mth.wrapDegrees(level.getRandom().nextFloat() * 360), 0);
+//                            entity.setYHeadRot(entity.getYRot());
+//                            entity.renderYawOffset = entity.getYRot();
+//                            if (nbt.contains("CustomName")) {
+//                                entity.setCustomName(nbt.getString("CustomName"));
+//                            }
+//                            level.spawnEntity(entity);
+//                            entity.playLivingSound();
+
+                            if (entity instanceof TamableAnimal animal) {
+                                animal.setOwnerUUID(player.getUUID());
+                                animal.setTame(true);
                             }
-                            pos = pos.offset(facing);
 
-                            entity.onInitialSpawn(world.getDifficultyForLocation(new BlockPos(entity)), null);
-                            entity.readEntityFromNBT(nbt.getCompoundTag("MobData"));
+                            stack.setTag(new CompoundTag());
 
-                            if (nbt.hasKey("AdditionalData")) {
-                                petCarrier.setAdditionalData(entity, nbt.getCompoundTag("AdditionalData"));
-                            }
-
-                            entity.setLocationAndAngles(pos.getX() + 0.5, pos.getY() + d0, pos.getZ() + 0.5, MathHelper.wrapDegrees(world.rand.nextFloat() * 360), 0);
-                            entity.rotationYawHead = entity.rotationYaw;
-                            entity.renderYawOffset = entity.rotationYaw;
-                            if (nbt.hasKey("CustomName")) {
-                                entity.setCustomNameTag(nbt.getString("CustomName"));
-                            }
-                            world.spawnEntity(entity);
-                            entity.playLivingSound();
-
-                            if (entity instanceof EntityTameable) {
-                                ((EntityTameable) entity).setOwnerId(player.getUniqueID());
-                                ((EntityTameable) entity).setTamed(true);
-                            }
-
-                            stack.setTagCompound(new NBTTagCompound());
-
-                            return EnumActionResult.SUCCESS;
+                            return InteractionResult.SUCCESS;
                         }
                     }
                 }
-                return EnumActionResult.FAIL;
+                return InteractionResult.FAIL;
             }
 
-            return EnumActionResult.SUCCESS;
+            return InteractionResult.SUCCESS;
         }
     }
 
     @Override
-    @SideOnly(Side.CLIENT)
-    public void addInformation(ItemStack stack, @Nullable World world, List<String> tooltip, ITooltipFlag flag) {
-        if (stack != null && stack.hasTagCompound()) {
-            NBTTagCompound nbt = stack.getTagCompound();
-            if (nbt.hasKey("ClassName")) {
-                PetCarrier petCarrier = PetCarrierHelper.PETS_MAP.get(nbt.getString("ClassName"));
+    public void appendHoverText(ItemStack stack, @Nullable Level world, List<Component> tooltip, TooltipFlag flag) {
+        if (stack != null && stack.hasTag()) {
+            var tag = stack.getTag();
+            if (tag != null && tag.contains("ClassName")) {
+                PetCarrier petCarrier = PetCarrierHelper.PETS_MAP.get(tag.getString("ClassName"));
                 if (petCarrier != null) {
-                    StringBuilder str = new StringBuilder(SophisticatedWolvesMod.proxy.getLocalizedString("carrier.pet_type")).append(" - ")
-                            .append(SophisticatedWolvesMod.proxy.getLocalizedString("entity." + petCarrier.getPetId() + ".name"));
-                    tooltip.add(str.toString());
+                    tooltip.add(Component.translatable("carrier.pet_type")
+                            .append(" - ")
+                            .append(Component.translatable(petCarrier.getPetNameLocalizationKey())));
 
-                    if (nbt.hasKey("CustomName")) {
-                        StringBuilder name = new StringBuilder(SophisticatedWolvesMod.proxy.getLocalizedString("carrier.pet_name"))
-                                .append(" - ").append(nbt.getString("CustomName"));
-                        tooltip.add(name.toString());
+                    if (tag.contains("CustomName")) {
+                        tooltip.add(Component.translatable("carrier.pet_name")
+                                .append(" - ")
+                                .append(Component.literal(tag.getString("CustomName"))));
                     }
 
-                    if (nbt.hasKey("InfoList")) {
-                        NBTTagCompound infoNbt = nbt.getCompoundTag("InfoList");
-                        if (infoNbt != null) {
-                            List<String> tooltipList = petCarrier.getInfo(infoNbt);
-                            if (tooltipList != null) {
-                                for (String tooltipStr : tooltipList) {
-                                    tooltip.add(tooltipStr);
-                                }
-                            }
+                    if (tag.contains("InfoList")) {
+                        var tooltipList = petCarrier.getInfo(tag.getCompound("InfoList"));
+                        if (tooltipList != null) {
+                            tooltip.addAll(tooltipList);
                         }
                     }
                 }
             }
         }
 
-        super.addInformation(stack, world, tooltip, flag);
+        super.appendHoverText(stack, world, tooltip, flag);
     }
 
     @Override
-    public void getSubItems(CreativeTabs tab, NonNullList<ItemStack> items) {
-        if (this.isInCreativeTab(tab)) {
+    public void fillItemCategory(CreativeModeTab tab, NonNullList<ItemStack> items) {
+        if (this.allowedIn(tab)) {
             items.add(new ItemStack(this, 1));
 
             for (Map.Entry<String, PetCarrier> entry : PetCarrierHelper.PETS_MAP.entrySet()) {
-                if (entry != null) {
-                    PetCarrier petCarrier = entry.getValue();
-                    if (petCarrier != null) {
-                        List<NBTTagCompound> nbtList = petCarrier.getDefaultPetCarriers();
-                        if (nbtList != null) {
-                            for (NBTTagCompound nbt : nbtList) {
-                                ItemStack stack = new ItemStack(this, 1);
-                                stack.setTagCompound(nbt);
-                                items.add(stack);
-                            }
-                        }
+                var petCarrier = entry.getValue();
+                if (petCarrier != null) {
+                    for (CompoundTag tag : petCarrier.getDefaultPetCarriers()) {
+                        var stack = new ItemStack(this, 1);
+                        stack.setTag(tag);
+                        items.add(stack);
                     }
                 }
             }
         }
     }
+
 }

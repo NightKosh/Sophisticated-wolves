@@ -1,11 +1,10 @@
 package sophisticated_wolves.item.pet_carrier;
 
-import net.minecraft.entity.EntityLiving;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.passive.EntityWolf;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.world.World;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.animal.Wolf;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.Level;
 import sophisticated_wolves.api.pet_carrier.PetCarrier;
 import sophisticated_wolves.compatibility.Compatibility;
 import sophisticated_wolves.compatibility.CompatibilityWolfArmor;
@@ -23,40 +22,44 @@ public class WolfPetCarrier extends PetCarrier {
 
     @Override
     public Class getPetClass() {
-        return EntityWolf.class;
+        return Wolf.class;
     }
 
     @Override
-    public String getPetId() {
-        return "Wolf";
+    public String getPetNameLocalizationKey() {
+        return "entity.minecraft.wolf";
     }
 
     @Override
-    public NBTTagCompound getAdditionalData(EntityLivingBase pet) {
-        NBTTagCompound nbt = new NBTTagCompound();
+    public CompoundTag getAdditionalData(LivingEntity pet) {
+        var tag = new CompoundTag();
         if (Compatibility.IS_WOLF_ARMOR_INSTALLED) {
-            CompatibilityWolfArmor.storeWolfItems((EntityWolf) pet, nbt);
+            //TODO
+//            CompatibilityWolfArmor.storeWolfItems((Wolf) pet, tag);
         }
-        return nbt;
+        return tag;
     }
 
     @Override
-    public void setAdditionalData(EntityLiving pet, NBTTagCompound nbt) {
+    public void setAdditionalData(LivingEntity pet, CompoundTag tag) {
         if (Compatibility.IS_WOLF_ARMOR_INSTALLED) {
-            CompatibilityWolfArmor.getWolfItems((EntityWolf) pet, nbt);
+            //TODO
+//            CompatibilityWolfArmor.getWolfItems((Wolf) pet, tag);
         }
     }
 
     @Override
-    public EntityLiving spawnPet(World world, EntityPlayer player) {
-        return new EntityWolf(world);
+    public LivingEntity spawnPet(Level level, Player player) {
+        //TODO
+        return null;//new Wolf(level);
     }
 
     @Override
-    public List<NBTTagCompound> getDefaultPetCarriers() {
-        List<NBTTagCompound> list = new ArrayList<>();
+    public List<CompoundTag> getDefaultPetCarriers() {
+        var list = new ArrayList<CompoundTag>();
         list.add(getDefaultPetCarrier(null, null));
 
         return list;
     }
+
 }

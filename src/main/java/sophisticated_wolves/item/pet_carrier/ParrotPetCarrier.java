@@ -1,11 +1,11 @@
 package sophisticated_wolves.item.pet_carrier;
 
-import net.minecraft.entity.EntityLiving;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.passive.EntityParrot;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.world.World;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.Component;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.animal.Parrot;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.Level;
 import sophisticated_wolves.SophisticatedWolvesMod;
 import sophisticated_wolves.api.pet_carrier.PetCarrier;
 
@@ -19,58 +19,60 @@ import java.util.List;
  * @license Lesser GNU Public License v3 (http://www.gnu.org/licenses/lgpl.html)
  */
 public class ParrotPetCarrier extends PetCarrier {
+
     public static final int[] PARROTS_SPECIES = {0, 1, 2, 3, 4};
     //0 = red, 1 = blue, 2 = green, 3 = cyan, 4 = silver.
 
     @Override
     public Class getPetClass() {
-        return EntityParrot.class;
+        return Parrot.class;
     }
 
     @Override
-    public String getPetId() {
-        return "Parrot";
+    public String getPetNameLocalizationKey() {
+        return "entity.minecraft.parrot";
     }
 
     @Override
-    public EntityLiving spawnPet(World world, EntityPlayer player) {
-        return new EntityParrot(world);
+    public LivingEntity spawnPet(Level level, Player player) {
+        //TODO
+        return null;//new Parrot(level);
     }
 
     @Override
-    public List<String> getInfo(NBTTagCompound infoNbt) {
-        if (infoNbt.hasKey("Variant")) {
-            List<String> list = new ArrayList<>(1);
-            StringBuilder str = new StringBuilder(SophisticatedWolvesMod.proxy.getLocalizedString("carrier.parrot_type"))
-                    .append(" - ").append(SophisticatedWolvesMod.proxy.getLocalizedString("parrot_type." + infoNbt.getInteger("Variant"))
-                            .toString().toLowerCase());
-            list.add(str.toString());
+    public List<Component> getInfo(CompoundTag infoTag) {
+        if (infoTag.contains("Variant")) {
+            var list = new ArrayList<Component>(1);
+            list.add(Component.translatable("carrier.parrot_type")
+                    .append(" - ")
+                    .append(Component.translatable("parrot_type." + infoTag.getInt("Variant"))));
             return list;
         }
         return null;
     }
 
     @Override
-    public NBTTagCompound getInfo(EntityLivingBase pet) {
-        NBTTagCompound nbt = new NBTTagCompound();
-        nbt.setInteger("Variant", ((EntityParrot) pet).getVariant());
+    public CompoundTag getInfo(LivingEntity pet) {
+        var tag = new CompoundTag();
+        tag.putInt("Variant", ((Parrot) pet).getVariant());
 
-        return nbt;
+        return tag;
     }
 
     @Override
-    public List<NBTTagCompound> getDefaultPetCarriers() {
-        List<NBTTagCompound> list = new ArrayList<>();
+    public List<CompoundTag> getDefaultPetCarriers() {
+        var list = new ArrayList<CompoundTag>();
         for (int species : PARROTS_SPECIES) {
-            NBTTagCompound infoNbt = new NBTTagCompound();
-            infoNbt.setInteger("Variant", species);
+            var infoTag = new CompoundTag();
+            infoTag.putInt("Variant", species);
 
-            NBTTagCompound entityNbt = new NBTTagCompound();
-            entityNbt.setInteger("Variant", species);
+            var entityTag = new CompoundTag();
+            entityTag.putInt("Variant", species);
 
-            list.add(getDefaultPetCarrier(infoNbt, entityNbt));
+            list.add(getDefaultPetCarrier(infoTag, entityTag));
         }
 
         return list;
     }
+
 }

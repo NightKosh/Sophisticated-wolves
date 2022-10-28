@@ -1,10 +1,10 @@
 package sophisticated_wolves.item.pet_carrier;
 
-import net.minecraft.entity.EntityLiving;
-import net.minecraft.entity.passive.EntityChicken;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.world.World;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.animal.Chicken;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.Level;
 import sophisticated_wolves.api.pet_carrier.PetCarrier;
 
 import java.util.ArrayList;
@@ -20,24 +20,26 @@ public class ChickenPetCarrier extends PetCarrier {
 
     @Override
     public Class getPetClass() {
-        return EntityChicken.class;
+        return Chicken.class;
     }
 
     @Override
-    public String getPetId() {
-        return "Chicken";
+    public String getPetNameLocalizationKey() {
+        return "entity.minecraft.chicken";
     }
 
     @Override
-    public EntityLiving spawnPet(World world, EntityPlayer player) {
-        return new EntityChicken(world);
+    public LivingEntity spawnPet(Level level, Player player) {
+        //TODO
+        return null;//new Chicken(level);
     }
 
     @Override
-    public List<NBTTagCompound> getDefaultPetCarriers() {
-        List<NBTTagCompound> list = new ArrayList<>();
+    public List<CompoundTag> getDefaultPetCarriers() {
+        var list = new ArrayList<CompoundTag>();
         list.add(getDefaultPetCarrier(null, null));
 
         return list;
     }
+
 }

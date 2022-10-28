@@ -1,15 +1,17 @@
 package sophisticated_wolves.item.pet_carrier;
 
-import net.minecraft.entity.EntityLiving;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.passive.EntityOcelot;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.world.World;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.Component;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.animal.Cat;
+import net.minecraft.world.entity.animal.Ocelot;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.Level;
 import sophisticated_wolves.SophisticatedWolvesMod;
 import sophisticated_wolves.api.pet_carrier.PetCarrier;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -20,7 +22,8 @@ import java.util.List;
  */
 public class CatPetCarrier extends PetCarrier {
 
-    public static enum EnumCatType {
+    public enum EnumCatType {
+        //TODO CatVariant
         OCELOT,
         BLACK,
         RED,
@@ -33,57 +36,63 @@ public class CatPetCarrier extends PetCarrier {
                 return OCELOT;
             }
         }
+
     }
 
     @Override
     public Class getPetClass() {
-        return EntityOcelot.class;
+        return Cat.class;
     }
 
     @Override
-    public String getPetId() {
-        return "Ozelot";
+    public String getPetNameLocalizationKey() {
+        return "entity.minecraft.cat";
     }
 
     @Override
-    public EntityLiving spawnPet(World world, EntityPlayer player) {
-        return new EntityOcelot(world);
+    public LivingEntity spawnPet(Level level, Player player) {
+        //TODO
+        return null;
+//        return new Cat(level);
     }
 
     @Override
-    public List<String> getInfo(NBTTagCompound infoNbt) {
-        if (infoNbt.hasKey("CatType")) {
-            List<String> list = new ArrayList<>(1);
-            StringBuilder str = new StringBuilder(SophisticatedWolvesMod.proxy.getLocalizedString("carrier.cat_type"))
-                    .append(" - ").append(SophisticatedWolvesMod.proxy.getLocalizedString("cat_type." + EnumCatType.getSpeciesByNum(infoNbt.getInteger("CatType"))
-                    .toString().toLowerCase()));
-            list.add(str.toString());
+    public List<Component> getInfo(CompoundTag infoTag) {
+        if (infoTag.contains("CatType")) {
+            var list = new ArrayList<Component>(1);
+            list.add(Component.translatable("carrier.cat_type")
+                    .append(" - ")
+                    .append(Component.translatable(
+                            "cat_type." + EnumCatType.getSpeciesByNum(infoTag.getInt("CatType"))
+                                    .toString().toLowerCase())));
             return list;
         }
         return null;
     }
 
     @Override
-    public NBTTagCompound getInfo(EntityLivingBase pet) {
-        NBTTagCompound nbt = new NBTTagCompound();
-        nbt.setInteger("CatType", ((EntityOcelot) pet).getTameSkin());
+    public CompoundTag getInfo(LivingEntity pet) {
+        var tag = new CompoundTag();
+        //TODO CatVariant
+//        tag.putInt("CatType", ((Ocelot) pet).getTameSkin());
 
-        return nbt;
+        return tag;
     }
 
     @Override
-    public List<NBTTagCompound> getDefaultPetCarriers() {
-        List<NBTTagCompound> list = new ArrayList<>();
+    public List<CompoundTag> getDefaultPetCarriers() {
+        var list = new ArrayList<CompoundTag>();
         for (EnumCatType species : EnumCatType.values()) {
-            NBTTagCompound infoNbt = new NBTTagCompound();
-            infoNbt.setInteger("CatType", species.ordinal());
+            var infoTag = new CompoundTag();
+            infoTag.putInt("CatType", species.ordinal());
 
-            NBTTagCompound entityNbt = new NBTTagCompound();
-            entityNbt.setInteger("CatType", species.ordinal());
+            var entityTag = new CompoundTag();
+            entityTag.putInt("CatType", species.ordinal());
 
-            list.add(getDefaultPetCarrier(infoNbt, entityNbt));
+            list.add(getDefaultPetCarrier(infoTag, entityTag));
         }
 
         return list;
     }
+
 }
