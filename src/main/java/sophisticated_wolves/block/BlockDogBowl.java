@@ -1,30 +1,30 @@
 package sophisticated_wolves.block;
 
-import net.minecraft.block.BlockContainer;
-import net.minecraft.block.SoundType;
-import net.minecraft.block.material.Material;
-import net.minecraft.block.properties.IProperty;
-import net.minecraft.block.properties.PropertyEnum;
-import net.minecraft.block.state.BlockStateContainer;
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.*;
-import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.IBlockAccess;
-import net.minecraft.world.World;
-import sophisticated_wolves.SWGui;
-import sophisticated_wolves.SWTabs;
-import sophisticated_wolves.SophisticatedWolvesMod;
-import sophisticated_wolves.api.ModInfo;
-import sophisticated_wolves.tile_entity.TileEntityDogBowl;
-
-import javax.annotation.Nullable;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.NonNullList;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.CreativeModeTab;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.BaseEntityBlock;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.SoundType;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.state.properties.IntegerProperty;
+import net.minecraft.world.level.material.Material;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.VoxelShape;
+import org.jetbrains.annotations.Nullable;
+import sophisticated_wolves.tile_entity.BlockEntityDogBowl;
 
 /**
  * Sophisticated Wolves
@@ -32,14 +32,14 @@ import javax.annotation.Nullable;
  * @author NightKosh
  * @license Lesser GNU Public License v3 (http://www.gnu.org/licenses/lgpl.html)
  */
-public class BlockDogBowl extends BlockContainer {
+public class BlockDogBowl extends BaseEntityBlock {
 
-    public enum EnumDogBowl implements IStringSerializable {
+    public enum EnumDogBowl {//TODO implements IStringSerializable {
         EMPTY("empty", 0),
-        FILLED1("filled1", 25),
-        FILLED2("filled2", 50),
-        FILLED3("filled3", 75),
-        FILLED4("filled4", 100);
+        FILLED1("filled_1", 25),
+        FILLED2("filled_2", 50),
+        FILLED3("filled_3", 75),
+        FILLED4("filled_4", 100);
 
         public static final int BONES_PER_LEVEL = 25;
 
@@ -51,7 +51,7 @@ public class BlockDogBowl extends BlockContainer {
             this.amountOfFood = amountOfFood;
         }
 
-        @Override
+        //        @Override
         public String getName() {
             return blockModelName;
         }
@@ -82,103 +82,74 @@ public class BlockDogBowl extends BlockContainer {
         }
     }
 
-    public static final PropertyEnum VARIANT = PropertyEnum.create("variant", EnumDogBowl.class);
+    public static final IntegerProperty FOOD_LEVEL = IntegerProperty.create("food_level", 0, 4);
+
+    protected static final VoxelShape SHAPE = Block.box(4, 0, 4, 10, 2, 12);
 
     public BlockDogBowl() {
-        super(Material.CIRCUITS);
-        this.setRegistryName(ModInfo.ID, "SWDogBowl");
-        this.setUnlocalizedName("dogbowl");
-        this.setCreativeTab(SWTabs.tab);
-        this.setSoundType(SoundType.STONE);
-        this.setHardness(0.7F);
+        super(BlockBehaviour.Properties.of(Material.STONE)
+                .sound(SoundType.STONE)
+                .noCollission()
+                .strength(0.7F));
+
+        this.registerDefaultState(this.stateDefinition.any()
+                .setValue(FOOD_LEVEL, EnumDogBowl.EMPTY.getAmountOfFood()));
     }
 
     @Override
-    public boolean isOpaqueCube(IBlockState state) {
-        return false;
-    }
-
-    @Override
-    public boolean isFullCube(IBlockState state) {
-        return false;
-    }
-
-
-    @Override
-    public boolean isCollidable() {
-        return super.isCollidable();
-    }
-
-    private static final AxisAlignedBB BB = new AxisAlignedBB(0.25, 0, 0.25, 0.75, 0.0625, 0.75);
-
-    @Override
-    public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
-        return BB;
-    }
-
-    @Nullable
-    @Override
-    public AxisAlignedBB getCollisionBoundingBox(IBlockState blockState, IBlockAccess worldIn, BlockPos pos) {
-        return null;
-    }
-
-    @Override
-    public void getSubBlocks(CreativeTabs tab, NonNullList<ItemStack> list) {
-        Item item = Item.getItemFromBlock(this);
-        for (int meta = 0; meta < EnumDogBowl.values().length; meta++) {
-            list.add(new ItemStack(item, 1, meta));
+    public void fillItemCategory(CreativeModeTab tab, NonNullList<ItemStack> list) {
+        for (int foodLevel = 0; foodLevel < EnumDogBowl.values().length; foodLevel++) {
+            list.add(new ItemStack(this, 1));//TODO, foodLevel));
         }
     }
 
     @Nullable
     @Override
-    public TileEntity createNewTileEntity(World world, int meta) {
-        return new TileEntityDogBowl(world);
+    public BlockEntity newBlockEntity(BlockPos blockPos, BlockState state) {
+        //TODO
+        return null;//new BlockEntityDogBowl(blockPos, state);
     }
 
     @Override
-    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
-        TileEntityDogBowl tileEntity = (TileEntityDogBowl) world.getTileEntity(pos);
-        if (tileEntity != null && !player.isSneaking()) {
-            player.openGui(SophisticatedWolvesMod.instance, SWGui.DOG_BOWL_ID, world, pos.getX(), pos.getY(), pos.getZ());
-            return true;
+    public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player,
+                                 InteractionHand hand, BlockHitResult hitResult) {
+        var dogBowl = (BlockEntityDogBowl) level.getBlockEntity(pos);
+        if (level.isClientSide()) {
+            return InteractionResult.SUCCESS;
+        } else if (dogBowl != null && !player.isShiftKeyDown()) {
+            //TODO
+//            player.openMenu(state.getMenuProvider(level, pos));
+//            player.openGui(SophisticatedWolvesMod.instance, SWGui.DOG_BOWL_ID, level, pos.getX(), pos.getY(), pos.getZ());
+            return InteractionResult.CONSUME;
         }
-        return false;
+        return InteractionResult.FAIL;
     }
 
     @Override
-    public void onBlockPlacedBy(World world, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack stack) {
-        super.onBlockPlacedBy(world, pos, state, placer, stack);
+    public void setPlacedBy(Level level, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack stack) {
+        super.setPlacedBy(level, pos, state, placer, stack);
 
-        TileEntityDogBowl tileEntity = (TileEntityDogBowl) world.getTileEntity(pos);
-        if (tileEntity != null) {
-            tileEntity.setFoodAmount(((EnumDogBowl) state.getValue(VARIANT)).getAmountOfFood());
+        var dogBowl = (BlockEntityDogBowl) level.getBlockEntity(pos);
+        if (dogBowl != null) {
+            //TODO
+//            dogBowl.setFoodAmount(((EnumDogBowl) state.getValue(VARIANT)).getAmountOfFood());
         }
     }
 
     @Override
-    public EnumBlockRenderType getRenderType(IBlockState state) {
-        return EnumBlockRenderType.MODEL;
+    public VoxelShape getShape(BlockState blockState, BlockGetter blockGetter,
+                               BlockPos blockPos, CollisionContext collisionContext) {
+        return SHAPE;
     }
 
     @Override
-    public int damageDropped(IBlockState state) {
-        int meta = ((EnumDogBowl) state.getValue(VARIANT)).ordinal();
-        return (meta == 0) ? 0 : meta -1;
+    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> stateBuilder) {
+        stateBuilder.add(FOOD_LEVEL);
     }
 
     @Override
-    public IBlockState getStateFromMeta(int meta) {
-        return this.getDefaultState().withProperty(VARIANT, EnumDogBowl.getById(meta));
+    public BlockState getStateForPlacement(BlockPlaceContext blockPlaceContext) {
+        return this.defaultBlockState().setValue(FOOD_LEVEL, 0);
     }
 
-    @Override
-    public int getMetaFromState(IBlockState state) {
-        return ((EnumDogBowl) state.getValue(VARIANT)).ordinal();
-    }
-
-    @Override
-    protected BlockStateContainer createBlockState() {
-        return new BlockStateContainer(this, new IProperty[]{VARIANT});
-    }
 }

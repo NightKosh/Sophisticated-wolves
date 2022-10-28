@@ -1,0 +1,9 @@
+{
+    "variants": {
+        "food_level=0": { "model": "sophisticated_wolves:block/dog_bowl" },
+        "food_level=1": { "model": "sophisticated_wolves:block/dog_bowl_1" },
+        "food_level=2": { "model": "sophisticated_wolves:block/dog_bowl_2" },
+        "food_level=3": { "model": "sophisticated_wolves:block/dog_bowl_3" },
+        "food_level=4": { "model": "sophisticated_wolves:block/dog_bowl_4" }
+    }
+}

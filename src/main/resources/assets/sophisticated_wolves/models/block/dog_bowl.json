@@ -1,8 +1,8 @@
 {
 	"credit": "Made with Blockbench, a free, modern block model editor by JannisX11",
 	"textures": {
-		"0": "sophisticatedwolves:block/dogbowl",
-		"particle": "sophisticatedwolves:block/dogbowl"
+		"0": "sophisticated_wolves:block/dog_bowl",
+		"particle": "sophisticated_wolves:block/dog_bowl"
 	},
 	"elements": [
 		{

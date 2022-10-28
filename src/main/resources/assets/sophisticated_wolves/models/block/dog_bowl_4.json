@@ -1,6 +1,6 @@
 {
 	"credit": "Made with Blockbench, a free, modern block model editor by JannisX11",
-	"parent": "sophisticatedwolves:block/swdogbowl",
+	"parent": "sophisticated_wolves:block/dog_bowl",
 	"elements": [
 		{
 			"name": "bottom",
