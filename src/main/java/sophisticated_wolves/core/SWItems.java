@@ -19,18 +19,18 @@ import sophisticated_wolves.item.pet_carrier.ItemPetCarrier;
  */
 public class SWItems {
 
-    public static final DeferredRegister<Item> ITEMS =
+    public static final DeferredRegister<Item> ITEMS_REGISTER =
             DeferredRegister.create(ForgeRegistries.ITEMS, ModInfo.ID);
 
-    private static final RegistryObject<Item> DOG_TAG = ITEMS.register("dog_tag", ItemDogTag::new);
-    private static final RegistryObject<Item> DOG_TREAT = ITEMS.register("dog_treat", ItemDogTreat::new);
-    private static final RegistryObject<Item> WHISTLE = ITEMS.register("whistle", ItemWhistle::new);
-    private static final RegistryObject<Item> PET_CARRIER = ITEMS.register("pet_carrier", ItemPetCarrier::new);
+    private static final RegistryObject<Item> DOG_TAG = ITEMS_REGISTER.register("dog_tag", ItemDogTag::new);
+    private static final RegistryObject<Item> DOG_TREAT = ITEMS_REGISTER.register("dog_treat", ItemDogTreat::new);
+    private static final RegistryObject<Item> WHISTLE = ITEMS_REGISTER.register("whistle", ItemWhistle::new);
+    private static final RegistryObject<Item> PET_CARRIER = ITEMS_REGISTER.register("pet_carrier", ItemPetCarrier::new);
 
     //TODO DOG_EGG -> ItemWolfEgg;
 
     public static void register(IEventBus eventBus) {
-        ITEMS.register(eventBus);
+        ITEMS_REGISTER.register(eventBus);
     }
 
     public static Item getDogTag() {

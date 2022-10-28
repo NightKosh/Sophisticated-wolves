@@ -1,11 +1,8 @@
 package sophisticated_wolves.core;
 
 import net.minecraft.world.item.BlockItem;
-import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.state.BlockBehaviour;
-import net.minecraft.world.level.material.Material;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -39,7 +36,7 @@ public class SWBlocks {
     private static <T extends Block> RegistryObject<Item> registerBlockItem(
             String name, RegistryObject<T> block) {
         return SWItems.ITEMS_REGISTER.register(name, () -> new BlockItem(block.get(),
-                new Item.Properties().tab(SWTabs.tab)));
+                new Item.Properties().tab(SWTabs.TAB)));
     }
 
     public static void register(IEventBus eventBus) {

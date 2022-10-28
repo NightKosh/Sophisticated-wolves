@@ -16,18 +16,18 @@ import sophisticated_wolves.api.ModInfo;
  */
 public class SWSound {
 
-    public static final DeferredRegister<SoundEvent> SOUND_EVENTS =
+    public static final DeferredRegister<SoundEvent> SOUND_EVENTS_REGISTER =
             DeferredRegister.create(ForgeRegistries.SOUND_EVENTS, ModInfo.ID);
 
     private static final RegistryObject<SoundEvent> WHISTLE_SHORT = registerSoundEvent("player.whistle.short");
     private static final RegistryObject<SoundEvent> WHISTLE_LONG = registerSoundEvent("player.whistle.long");
 
     private static RegistryObject<SoundEvent> registerSoundEvent(String name) {
-        return SOUND_EVENTS.register(name, () -> new SoundEvent(new ResourceLocation(ModInfo.ID, name)));
+        return SOUND_EVENTS_REGISTER.register(name, () -> new SoundEvent(new ResourceLocation(ModInfo.ID, name)));
     }
 
     public static void register(IEventBus eventBus) {
-        SOUND_EVENTS.register(eventBus);
+        SOUND_EVENTS_REGISTER.register(eventBus);
     }
 
     public static SoundEvent getWhistleShort() {
