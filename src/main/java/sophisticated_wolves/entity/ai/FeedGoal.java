@@ -7,7 +7,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
 import sophisticated_wolves.FoodHelper;
-import sophisticated_wolves.SWConfiguration;
+import sophisticated_wolves.core.SWConfiguration;
 import sophisticated_wolves.entity.SophisticatedWolf;
 
 /**
@@ -35,7 +35,7 @@ public class FeedGoal extends Goal {
     public boolean canUse() {
         if (!this.pet.isTame() ||
                 this.pet.isInSittingPose() ||
-                this.pet.getHealth() >= SWConfiguration.wolvesHealthTamed) {
+                this.pet.getHealth() >= SWConfiguration.WOLVES_HEALTH_TAMED.get()) {
             return false;
         } else {
             var foodList = this.level.getEntitiesOfClass(ItemEntity.class,
@@ -58,7 +58,7 @@ public class FeedGoal extends Goal {
      */
     @Override
     public boolean canContinueToUse() {
-        return this.pet.getHealth() < SWConfiguration.wolvesHealthTamed && this.foodEntity != null;
+        return this.pet.getHealth() < SWConfiguration.WOLVES_HEALTH_TAMED.get() && this.foodEntity != null;
     }
 
     /**
@@ -74,7 +74,7 @@ public class FeedGoal extends Goal {
                         0.25F, 0.25F);
                 this.pet.heal(FoodHelper.getHealPoints(this.foodEntity.getItem()));
                 this.foodEntity.getItem().shrink(1);
-                if (this.foodEntity.getItem().isEmpty() || this.pet.getHealth() >= SWConfiguration.wolvesHealthTamed) {
+                if (this.foodEntity.getItem().isEmpty() || this.pet.getHealth() >= SWConfiguration.WOLVES_HEALTH_TAMED.get()) {
                     if (this.foodEntity.getItem().isEmpty()) {
                         //TODO .setDead() ???
                         this.foodEntity.remove(Entity.RemovalReason.DISCARDED);

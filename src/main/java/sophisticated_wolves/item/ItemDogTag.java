@@ -7,7 +7,7 @@ import net.minecraft.world.entity.TamableAnimal;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import sophisticated_wolves.SWConfiguration;
+import sophisticated_wolves.core.SWConfiguration;
 import sophisticated_wolves.core.SWTabs;
 import sophisticated_wolves.SophisticatedWolvesMod;
 import sophisticated_wolves.entity.SophisticatedWolf;
@@ -30,7 +30,7 @@ public class ItemDogTag extends Item {
      */
     @Override
     public InteractionResult interactLivingEntity(ItemStack stack, Player player, LivingEntity entity, InteractionHand hand) {
-        if (SWConfiguration.nameTagForAnyPets) {
+        if (SWConfiguration.NAME_TAG_FOR_ANY_PETS.get()) {
             if (entity instanceof TamableAnimal animal) {
                 return setName(animal, stack, player);
             }

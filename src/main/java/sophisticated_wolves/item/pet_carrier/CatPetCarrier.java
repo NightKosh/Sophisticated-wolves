@@ -2,7 +2,9 @@ package sophisticated_wolves.item.pet_carrier;
 
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
+import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.animal.Cat;
 import net.minecraft.world.entity.animal.Ocelot;
 import net.minecraft.world.entity.player.Player;
@@ -50,10 +52,8 @@ public class CatPetCarrier extends PetCarrier {
     }
 
     @Override
-    public LivingEntity spawnPet(Level level, Player player) {
-        //TODO
-        return null;
-//        return new Cat(level);
+    public Mob spawnPet(Level level, Player player) {
+        return EntityType.CAT.create(level);
     }
 
     @Override

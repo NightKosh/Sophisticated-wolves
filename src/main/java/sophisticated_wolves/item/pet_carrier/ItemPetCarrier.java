@@ -3,6 +3,7 @@ package sophisticated_wolves.item.pet_carrier;
 import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
+import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.LivingEntity;
@@ -96,9 +97,9 @@ public class ItemPetCarrier extends Item {
         } else {
             var stack = context.getItemInHand();
             if (stack != null && stack.hasTag()) {
-                var nbt = stack.getTag();
-                if (nbt.contains("ClassName")) {
-                    PetCarrier petCarrier = PetCarrierHelper.PETS_MAP.get(nbt.getString("ClassName"));
+                var tag = stack.getTag();
+                if (tag.contains("ClassName")) {
+                    var petCarrier = PetCarrierHelper.PETS_MAP.get(tag.getString("ClassName"));
                     if (petCarrier != null) {
                         var player = context.getPlayer();
                         var entity = petCarrier.spawnPet(level, player);
@@ -113,26 +114,27 @@ public class ItemPetCarrier extends Item {
 //                            pos = pos.offset(facing);
 //
 //                            entity.onInitialSpawn(level.getCurrentDifficultyAt(new BlockPos(entity.position())), null);
-//                            entity.readAdditionalSaveData(nbt.getCompound("MobData"));
-//
-//                            if (nbt.contains("AdditionalData")) {
-//                                petCarrier.setAdditionalData(entity, nbt.getCompound("AdditionalData"));
-//                            }
-//
-//                            entity.moveTo(pos.getX() + 0.5, pos.getY() + d0, pos.getZ() + 0.5,
-//                                    Mth.wrapDegrees(level.getRandom().nextFloat() * 360), 0);
-//                            entity.setYHeadRot(entity.getYRot());
+                            entity.readAdditionalSaveData(tag.getCompound("MobData"));
+
+                            if (tag.contains("AdditionalData")) {
+                                petCarrier.setAdditionalData(entity, tag.getCompound("AdditionalData"));
+                            }
+
+                            entity.moveTo(pos.getX() + 0.5, pos.getY() + d0, pos.getZ() + 0.5,
+                                    Mth.wrapDegrees(level.getRandom().nextFloat() * 360), 0);
+                            entity.setYHeadRot(entity.getYRot());
 //                            entity.renderYawOffset = entity.getYRot();
-//                            if (nbt.contains("CustomName")) {
-//                                entity.setCustomName(nbt.getString("CustomName"));
-//                            }
+                            if (tag.contains("CustomName")) {
+                                entity.setCustomName(Component.literal(tag.getString("CustomName")));
+                            }
 //                            level.spawnEntity(entity);
-//                            entity.playLivingSound();
+                            entity.playAmbientSound();
 
                             if (entity instanceof TamableAnimal animal) {
                                 animal.setOwnerUUID(player.getUUID());
                                 animal.setTame(true);
                             }
+
 
                             stack.setTag(new CompoundTag());
 
