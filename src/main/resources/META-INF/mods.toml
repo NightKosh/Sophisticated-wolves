@@ -1,0 +1,37 @@
+# The name of the mod loader type to load - for regular FML @Mod mods it should be javafml
+modLoader="javafml"
+# A version range to match for said mod loader - for regular FML @Mod it will be the forge version
+# Forge for 1.19 is version 41
+loaderVersion="[41,)"
+# The license for your mod. This is mandatory and allows for easier comprehension of your redistributive properties.
+# Review your options at https://choosealicense.com/. All rights reserved is the default copyright stance, and is thus the default here.
+license="LGPL-3.0"
+# A URL to refer people to when problems occur with this mod
+issueTrackerURL="https://github.com/NightKosh/Sophisticated-wolves/issues"
+# If the mods defined in this file should show as separate resource packs
+showAsResourcePack=false
+
+[[mods]]
+  modId="sophisticated_wolves"
+  version="3.13.8"
+  displayName="Sophisticated Wolves Mod"
+  displayURL="http://sophisticated-wolves.nightkosh.com/"
+  logoFile="logo.png"
+  authors="NightKosh"
+  description='''
+  This is a mod that aims to improve wolves in the games through a series of gameplay tweaks, AI improvements, and added features. The focus is not to have overpowered items or crazy abilities, but rather balanced additions that make sense in the world of MC. Essentially, wolves should be able to better respond to your actions and take care of themselves, so you don't have to consider them a liability when mining, exploring or fighting.
+  '''
+
+  [[dependencies.sophisticated_wolves]]
+    modId="forge"
+    mandatory=true
+    versionRange="[41,)"
+    ordering="NONE"
+    side="BOTH"
+
+  [[dependencies.sophisticated_wolves]]
+    modId="minecraft"
+    mandatory=true
+    versionRange="[1.19,1.20)"
+    ordering="NONE"
+    side="BOTH"
