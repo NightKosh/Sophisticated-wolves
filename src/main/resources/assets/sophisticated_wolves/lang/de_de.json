@@ -1,0 +1,52 @@
+{
+  "itemGroup.tab_sophisticated_wolves" : "Sophisticated Wolves",
+
+  "block.sophisticated_wolves.dog_bowl" : "Hundenapf",
+  "block.sophisticated_wolves.kennel" : "Hundehütte",
+
+  "item.sophisticated_wolves.dog_tag" : "Hundemarke",
+  "item.sophisticated_wolves.dog_treat" : "Hundeleckerli",
+  "item.sophisticated_wolves.whistle" : "Pfeife",
+  "item.sophisticated_wolves.pet_carrier" : "Transportbox",
+  "item.sophisticated_wolves.dog_egg" : "Sophisticated Wolf Spawn Egg",
+
+  "entity.sophisticated_wolves.sophisticated_wolf" : "Hoch entwickelter Wolf",
+
+  "wolf_type.vanilla" : "Grau",
+  "wolf_type.forest" : "Waldfarben",
+  "wolf_type.black" : "Schwarz",
+  "wolf_type.brown" : "Braun",
+
+  "cat_type.ocelot" : "Ozelot",
+  "cat_type.black" : "Schwarz",
+  "cat_type.red" : "Rot",
+  "cat_type.siamese" : "Siam",
+
+  "rabbit_type.0" : "Braun",
+  "rabbit_type.1" : "Weiß",
+  "rabbit_type.2" : "Schwarz",
+  "rabbit_type.3" : "Schwarz & weiß",
+  "rabbit_type.4" : "Goldfarben",
+  "rabbit_type.5" : "Salz & Pfeffer",
+  "rabbit_type.99" : "Der Killerhase",
+
+  "parrot_type.0" : "Rot",
+  "parrot_type.1" : "Blau",
+  "parrot_type.2" : "Grün",
+  "parrot_type.3" : "Türkis",
+  "parrot_type.4" : "Silber",
+
+  "carrier.pet_type" : "Haustierart",
+  "carrier.dog_type" : "Hundeart",
+  "carrier.cat_type" : "Katzenart",
+  "carrier.rabbit_type" : "Hasenart",
+  "carrier.parrot_type" : "Papageienart",
+  "carrier.pet_name" : "Name",
+
+  "gui.edit_dog_name.title" : "Gib deinem Haustier einen Namen:",
+  "gui.edit_dog_name.done_button" : "Fertig",
+  "gui.food.title" : "Wähle die Arten von Lebensmitteln, die Hunde essen",
+  "gui.food.done_button" : "Fertig",
+
+  "entity.Villager.sophisticated_wolves:pets_seller" : "Haustierverkäufer"
+}

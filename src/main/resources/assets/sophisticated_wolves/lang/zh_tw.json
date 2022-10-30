@@ -1,0 +1,52 @@
+{
+  "itemGroup.tab_sophisticated_wolves" : "Sophisticated Wolves",
+
+  "block.sophisticated_wolves.dog_bowl" : "狗碗",
+  "block.sophisticated_wolves.kennel" : "狗窩",
+
+  "item.sophisticated_wolves.dog_tag" : "狗牌",
+  "item.sophisticated_wolves.dog_treat" : "狗飼料",
+  "item.sophisticated_wolves.whistle" : "哨子",
+  "item.sophisticated_wolves.pet_carrier" : "寵物運輸籠",
+  "item.sophisticated_wolves.dog_egg" : "Sophisticated Wolf Spawn Egg",
+
+  "entity.sophisticated_wolves.sophisticated_wolf" : "精緻的狼",
+
+  "wolf_type.vanilla" : "灰",
+  "wolf_type.forest" : "綠",
+  "wolf_type.black" : "黑",
+  "wolf_type.brown" : "棕",
+
+  "cat_type.ocelot" : "豹紋",
+  "cat_type.black" : "黑",
+  "cat_type.red" : "紅",
+  "cat_type.siamese" : "暹羅",
+
+  "rabbit_type.0" : "棕",
+  "rabbit_type.1" : "白",
+  "rabbit_type.2" : "黑",
+  "rabbit_type.3" : "黑白",
+  "rabbit_type.4" : "金",
+  "rabbit_type.5" : "椒鹽",
+  "rabbit_type.99" : "殺手",
+
+  "parrot_type.0" : "紅",
+  "parrot_type.1" : "藍",
+  "parrot_type.2" : "綠",
+  "parrot_type.3" : "青",
+  "parrot_type.4" : "銀",
+
+  "carrier.pet_type" : "寵物類型",
+  "carrier.dog_type" : "狗品種",
+  "carrier.cat_type" : "貓品種",
+  "carrier.rabbit_type" : "兔子品種",
+  "carrier.parrot_type" : "鸚鵡品種",
+  "carrier.pet_name" : "名稱",
+
+  "gui.edit_dog_name.title" : "給你的寵物取名：",
+  "gui.edit_dog_name.done_button" : "完成",
+  "gui.food.title" : "選擇狗要吃哪類食物",
+  "gui.food.done_button" : "完成",
+
+  "entity.Villager.sophisticated_wolves:pets_seller" : "寵物商人"
+}

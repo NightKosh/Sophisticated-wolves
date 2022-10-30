@@ -1,0 +1,52 @@
+{
+  "itemGroup.tab_sophisticated_wolves" : "Sophisticated Wolves",
+
+  "block.sophisticated_wolves.dog_bowl" : "Ciotola per cani",
+  "block.sophisticated_wolves.kennel" : "Cuccia",
+
+  "item.sophisticated_wolves.dog_tag" : "Medaglietta",
+  "item.sophisticated_wolves.dog_treat" : "Dolcetto per cani",
+  "item.sophisticated_wolves.whistle" : "Fischietto",
+  "item.sophisticated_wolves.pet_carrier" : "Trasportino",
+  "item.sophisticated_wolves.dog_egg" : "Sophisticated Wolf Spawn Egg",
+
+  "entity.sophisticated_wolves.sophisticated_wolf" : "Lupo Sofisticato",
+
+  "wolf_type.vanilla" : "Grigio",
+  "wolf_type.forest" : "Foresta",
+  "wolf_type.black" : "Nero",
+  "wolf_type.brown" : "Marrone",
+
+  "cat_type.ocelot" : "Ocelot",
+  "cat_type.black" : "Nero",
+  "cat_type.red" : "Rosso",
+  "cat_type.siamese" : "Siamese",
+
+  "rabbit_type.0" : "Marrone",
+  "rabbit_type.1" : "Bianco",
+  "rabbit_type.2" : "Nero",
+  "rabbit_type.3" : "Bianco & Nero",
+  "rabbit_type.4" : "Dorato",
+  "rabbit_type.5" : "Sale & Pepe",
+  "rabbit_type.99" : "Il Coniglietto Killer",
+
+  "parrot_type.0" : "Rosso",
+  "parrot_type.1" : "Blu",
+  "parrot_type.2" : "Verde",
+  "parrot_type.3" : "Ciano",
+  "parrot_type.4" : "Argento",
+
+  "carrier.pet_type" : "Tipo di animale domestico",
+  "carrier.dog_type" : "Tipo di cane",
+  "carrier.cat_type" : "Tipo di gatto",
+  "carrier.rabbit_type" : "Tipo di coniglio",
+  "carrier.parrot_type" : "Tipo di pappagallo",
+  "carrier.pet_name" : "Nome",
+
+  "gui.edit_dog_name.title" : "Dai un nome al tuo animale domestico:",
+  "gui.edit_dog_name.done_button" : "Fatto",
+  "gui.food.title" : "Selezione quali tipi di cibo mangia il cane",
+  "gui.food.done_button" : "Fatto",
+
+  "entity.Villager.sophisticated_wolves:pets_seller" : "Venditore di animali domestici"
+}

@@ -1,0 +1,52 @@
+{
+  "itemGroup.tab_sophisticated_wolves" : "Sophisticated Wolves",
+
+  "block.sophisticated_wolves.dog_bowl" : "Собачья миска",
+  "block.sophisticated_wolves.kennel" : "Будка",
+
+  "item.sophisticated_wolves.dog_tag" : "Собачья бирка",
+  "item.sophisticated_wolves.dog_treat" : "Собачье лакомство",
+  "item.sophisticated_wolves.whistle" : "Свисток",
+  "item.sophisticated_wolves.pet_carrier" : "Переноска",
+  "item.sophisticated_wolves.dog_egg" : "Яйцо призыва умного волка",
+
+  "entity.sophisticated_wolves.sophisticated_wolf" : "Умный волк",
+
+  "wolf_type.vanilla" : "Серый",
+  "wolf_type.forest" : "Лесной",
+  "wolf_type.black" : "Чёрный",
+  "wolf_type.brown" : "Коричневый",
+
+  "cat_type.ocelot" : "Оцелот",
+  "cat_type.black" : "Чёрная",
+  "cat_type.red" : "Рыжая",
+  "cat_type.siamese" : "Сиамская",
+
+  "rabbit_type.0" : "Коричневый",
+  "rabbit_type.1" : "Белый",
+  "rabbit_type.2" : "Чёрный",
+  "rabbit_type.3" : "Чёрно-Белый",
+  "rabbit_type.4" : "Золотой",
+  "rabbit_type.5" : "Соль и Перец",
+  "rabbit_type.99" : "Кролик Убийца",
+
+  "parrot_type.0" : "Красный",
+  "parrot_type.1" : "Синий",
+  "parrot_type.2" : "Зелёный",
+  "parrot_type.3" : "Голубой",
+  "parrot_type.4" : "Серебряный",
+
+  "carrier.pet_type" : "Тип питомца",
+  "carrier.dog_type" : "Тип собаки",
+  "carrier.cat_type" : "Тип кошки",
+  "carrier.rabbit_type" : "Тип кролика",
+  "carrier.parrot_type" : "Тип попугая",
+  "carrier.pet_name" : "Имя",
+
+  "gui.edit_dog_name.title" : "Дайте своему питомцу имя:",
+  "gui.edit_dog_name.done_button" : "Готово",
+  "gui.food.title" : "Выберите тип еды, которую могут есть собаки",
+  "gui.food.done_button" : "Готово",
+
+  "entity.Villager.sophisticated_wolves:pets_seller" : "Продавец питомцев"
+}

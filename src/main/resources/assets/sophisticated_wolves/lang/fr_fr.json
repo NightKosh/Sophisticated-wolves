@@ -1,0 +1,52 @@
+{
+  "itemGroup.tab_sophisticated_wolves" : "Sophisticated Wolves",
+
+  "block.sophisticated_wolves.dog_bowl" : "Gamelle",
+  "block.sophisticated_wolves.kennel" : "Niche",
+
+  "item.sophisticated_wolves.dog_tag" : "Médaille",
+  "item.sophisticated_wolves.dog_treat" : "Friandise",
+  "item.sophisticated_wolves.whistle" : "Sifflet",
+  "item.sophisticated_wolves.pet_carrier" : "Cage",
+  "item.sophisticated_wolves.dog_egg" : "Sophisticated Wolf Spawn Egg",
+
+  "entity.sophisticated_wolves.sophisticated_wolf" : "Loup sophistiqué",
+
+  "wolf_type.vanilla" : "Gris",
+  "wolf_type.forest" : "Forêt",
+  "wolf_type.black" : "Noir",
+  "wolf_type.brown" : "Marron",
+
+  "cat_type.ocelot" : "Ocelot",
+  "cat_type.black" : "Noire",
+  "cat_type.red" : "Rouge",
+  "cat_type.siamese" : "Siamois",
+
+  "rabbit_type.0" : "Marron",
+  "rabbit_type.1" : "Blanc",
+  "rabbit_type.2" : "Noir",
+  "rabbit_type.3" : "Noir & blanc",
+  "rabbit_type.4" : "Doré",
+  "rabbit_type.5" : "Sel & poivre",
+  "rabbit_type.99" : "Le lapin tueur",
+
+  "parrot_type.0" : "Rouge",
+  "parrot_type.1" : "Bleu",
+  "parrot_type.2" : "Vert",
+  "parrot_type.3" : "Cyan",
+  "parrot_type.4" : "Argenté",
+
+  "carrier.pet_type" : "Type d'animal de compagnie",
+  "carrier.dog_type" : "Type de chien",
+  "carrier.cat_type" : "Type de chat",
+  "carrier.rabbit_type" : "Type de lapin",
+  "carrier.parrot_type" : "Type de perroquet",
+  "carrier.pet_name" : "Nom",
+
+  "gui.edit_dog_name.title" : "Donnez un nom à votre animal de compagnie:",
+  "gui.edit_dog_name.done_button" : "Terminé",
+  "gui.food.title" : "Sélectionnez quels types de nourriture mangent les chiens",
+  "gui.food.done_button" : "Terminé",
+
+  "entity.Villager.sophisticated_wolves:pets_seller" : "Vendeur d'animaux de compagnie"
+}

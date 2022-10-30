@@ -1,0 +1,52 @@
+{
+  "itemGroup.tab_sophisticated_wolves" : "Serigala yang Canggih",
+
+  "block.sophisticated_wolves.dog_bowl" : "Mangkuk Anjing",
+  "block.sophisticated_wolves.kennel" : "Kandang Anjing",
+
+  "item.sophisticated_wolves.dog_tag" : "Tag Anjing",
+  "item.sophisticated_wolves.dog_treat" : "Makanan anjing",
+  "item.sophisticated_wolves.whistle" : "Peluit",
+  "item.sophisticated_wolves.pet_carrier" : "Pembawa Hewan Peliharaan",
+  "item.sophisticated_wolves.dog_egg" : "Sophisticated Wolf Spawn Egg",
+
+  "entity.sophisticated_wolves.sophisticated_wolf" : "Serigala Canggih",
+
+  "wolf_type.vanilla" : "Abu-abu",
+  "wolf_type.forest" : "Hutan",
+  "wolf_type.black" : "Hitam",
+  "wolf_type.brown" : "Coklat",
+
+  "cat_type.ocelot" : "Ocelot",
+  "cat_type.black" : "Hitam",
+  "cat_type.red" : "Merah",
+  "cat_type.siamese" : "Siam",
+
+  "rabbit_type.0" : "Coklat",
+  "rabbit_type.1" : "Putih",
+  "rabbit_type.2" : "Hitam",
+  "rabbit_type.3" : "Hitam & Putih",
+  "rabbit_type.4" : "Emas",
+  "rabbit_type.5" : "Garam Lada",
+  "rabbit_type.99" : "Kelinci Pembunuh",
+
+  "parrot_type.0" : "Merah",
+  "parrot_type.1" : "Biru",
+  "parrot_type.2" : "Hijau",
+  "parrot_type.3" : "Cyan",
+  "parrot_type.4" : "Perak",
+
+  "carrier.pet_type" : "Jenis hewan peliharaan",
+  "carrier.dog_type" : "Jenis anjing",
+  "carrier.cat_type" : "Jenis kucing",
+  "carrier.rabbit_type" : "Jenis kelinci",
+  "carrier.parrot_type" : "Jenis burung beo",
+  "carrier.pet_name" : "Nama",
+
+  "gui.edit_dog_name.title" : "Berikan nama binatang peliharaan Anda:",
+  "gui.edit_dog_name.done_button" : "Selesai",
+  "gui.food.title" : "Pilih jenis makanan anjing yang dimakan",
+  "gui.food.done_button" : "Selesai",
+
+  "entity.Villager.sophisticated_wolves:pets_seller" : "Penjual Hewan"
+}
