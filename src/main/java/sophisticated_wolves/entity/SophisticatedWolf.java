@@ -34,6 +34,8 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
+import net.minecraftforge.common.BiomeManager;
+import net.minecraftforge.common.Tags;
 import sophisticated_wolves.FoodHelper;
 import sophisticated_wolves.core.SWConfiguration;
 import sophisticated_wolves.SophisticatedWolvesMod;
@@ -456,26 +458,21 @@ public class SophisticatedWolf extends AEntitySophisticatedWolf {
 
     @Override
     public EnumWolfSpecies getSpeciesByBiome() {
-//TODO
-//        Set<BiomeDictionary.Type> biomeTypes = BiomeDictionary.getTypes(this.getLevel().getBiome((new BlockPos(this)));
-//
-//        if (biomeTypes.contains(BiomeDictionary.Type.SNOWY) || biomeTypes.contains(BiomeDictionary.Type.CONIFEROUS)) {
-//            if (this.getRandom().nextInt(7) == 0) {
-//                return EnumWolfSpecies.BLACK;
-//            } else {
-//                return EnumWolfSpecies.VANILLA;
-//            }
-//        } else if (biomeTypes.contains(BiomeDictionary.Type.FOREST)) {
-//            if (this.getRandom().nextInt(7) == 0) {
-//                return EnumWolfSpecies.BROWN;
-//            } else {
-//                return EnumWolfSpecies.FOREST;
-//            }
-//        }
-//
-        return EnumWolfSpecies.BLACK;
-        //TODO
-//        return EnumWolfSpecies.VANILLA;
+        var biome = this.getLevel().getBiome(this.getOnPos());
+
+        if (biome.containsTag(Tags.Biomes.IS_SNOWY) || biome.containsTag(Tags.Biomes.IS_CONIFEROUS)) {
+            if (this.getRandom().nextInt(7) == 0) {
+                return EnumWolfSpecies.BLACK;
+            } else {
+                return EnumWolfSpecies.VANILLA;
+            }
+        } else {
+            if (this.getRandom().nextInt(7) == 0) {
+                return EnumWolfSpecies.BROWN;
+            } else {
+                return EnumWolfSpecies.FOREST;
+            }
+        }
     }
 
     public void setWolfSpeciesByBiome() {
