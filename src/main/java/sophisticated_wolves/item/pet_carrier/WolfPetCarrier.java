@@ -1,15 +1,12 @@
 package sophisticated_wolves.item.pet_carrier;
 
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.animal.Wolf;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.level.Level;
 import sophisticated_wolves.api.pet_carrier.PetCarrier;
 import sophisticated_wolves.compatibility.Compatibility;
-import sophisticated_wolves.compatibility.CompatibilityWolfArmor;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,7 +40,7 @@ public class WolfPetCarrier extends PetCarrier {
     }
 
     @Override
-    public void setAdditionalData(LivingEntity pet, CompoundTag tag) {
+    public void setAdditionalData(Entity pet, CompoundTag tag) {
         if (Compatibility.IS_WOLF_ARMOR_INSTALLED) {
             //TODO
 //            CompatibilityWolfArmor.getWolfItems((Wolf) pet, tag);
@@ -51,8 +48,8 @@ public class WolfPetCarrier extends PetCarrier {
     }
 
     @Override
-    public Mob spawnPet(Level level, Player player) {
-        return EntityType.WOLF.create(level);
+    public EntityType getEntityType() {
+        return EntityType.WOLF;
     }
 
     @Override

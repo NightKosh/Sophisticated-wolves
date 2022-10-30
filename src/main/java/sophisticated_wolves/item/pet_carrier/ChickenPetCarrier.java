@@ -2,11 +2,7 @@ package sophisticated_wolves.item.pet_carrier;
 
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.animal.Chicken;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.level.Level;
 import sophisticated_wolves.api.pet_carrier.PetCarrier;
 
 import java.util.ArrayList;
@@ -31,8 +27,8 @@ public class ChickenPetCarrier extends PetCarrier {
     }
 
     @Override
-    public Mob spawnPet(Level level, Player player) {
-        return EntityType.CHICKEN.create(level);
+    public EntityType getEntityType() {
+        return EntityType.CHICKEN;
     }
 
     @Override
