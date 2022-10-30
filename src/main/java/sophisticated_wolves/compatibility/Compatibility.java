@@ -1,6 +1,6 @@
 package sophisticated_wolves.compatibility;
 
-import net.minecraftforge.fml.common.Loader;
+import net.minecraftforge.fml.ModList;
 
 /**
  * Sophisticated Wolves
@@ -13,7 +13,7 @@ public class Compatibility {
     public static boolean IS_WOLF_ARMOR_INSTALLED;
 
     public static void checkMods() {
-        IS_WOLF_ARMOR_INSTALLED = Loader.isModLoaded("wolfarmor");
+        IS_WOLF_ARMOR_INSTALLED = ModList.get().isLoaded("wolfarmor");
 
 
 
