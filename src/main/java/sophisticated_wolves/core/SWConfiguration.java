@@ -15,6 +15,7 @@ public class SWConfiguration {
     public static final ForgeConfigSpec.Builder BUILDER = new ForgeConfigSpec.Builder();
 
     public static ForgeConfigSpec.ConfigValue<Boolean> CUSTOM_WOLF_TEXTURES;
+    //TODO remove ???
     public static ForgeConfigSpec.ConfigValue<Boolean> RESPAWNING_WOLVES;
     public static ForgeConfigSpec.ConfigValue<Boolean> CUSTOM_BREEDING;
     public static ForgeConfigSpec.ConfigValue<Boolean> NAME_TAG_FOR_ANY_PETS;
@@ -26,10 +27,6 @@ public class SWConfiguration {
 
     public static ForgeConfigSpec.ConfigValue<Boolean> ATTACK_ANIMALS;
     public static ForgeConfigSpec.ConfigValue<Boolean> ATTACK_SKELETONS;
-
-    public static ForgeConfigSpec.ConfigValue<Integer> SPAWN_PROBABILITY;
-    public static ForgeConfigSpec.ConfigValue<Integer> SPAWN_MIN_COUNT;
-    public static ForgeConfigSpec.ConfigValue<Integer> SPAWN_MAX_COUNT;
 
     public static ForgeConfigSpec.ConfigValue<Boolean> ENABLE_PETS_SELLER;
 
@@ -58,17 +55,6 @@ public class SWConfiguration {
                 .define("Attack Animals", false);
         ATTACK_SKELETONS = BUILDER.comment("Should sophisticated wolves hunt on skeletons?")
                 .define("Attack Skeletons", false);
-
-        SPAWN_PROBABILITY = BUILDER.comment("Chance to spawn sophisticated wolf. The higher value - higher chance to be spawned.")
-                .defineInRange("Spawn Probability", SWEntity.DEFAULT_SPAWN_PROBABILITY, 0, 100);
-        SPAWN_MIN_COUNT = BUILDER.comment("Minimum amount of sophisticated wolves to be spawned.")
-                .defineInRange("Spawn Min Count", SWEntity.DEFAULT_SPAWN_MIN_COUNT, 1, Integer.MAX_VALUE);
-        SPAWN_MAX_COUNT = BUILDER.comment("Maximum amount of sophisticated wolves to be spawned. Should not be less than \"Spawn Min Count\"")
-                .define("Spawn Max Count", SWEntity.DEFAULT_SPAWN_MAX_COUNT);
-//TODO
-//        if (spawnMaxCount < spawnMinCount) {
-//            spawnMaxCount = spawnMinCount;
-//        }
 
         //TODO ???
         ENABLE_PETS_SELLER = BUILDER.comment("Add new villager - pets seller")
