@@ -1,6 +1,7 @@
 package sophisticated_wolves.core;
 
 import net.minecraft.world.item.Item;
+import net.minecraftforge.common.ForgeSpawnEggItem;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -9,6 +10,7 @@ import sophisticated_wolves.api.ModInfo;
 import sophisticated_wolves.item.ItemDogTag;
 import sophisticated_wolves.item.ItemDogTreat;
 import sophisticated_wolves.item.ItemWhistle;
+import sophisticated_wolves.item.ItemWolfEgg;
 import sophisticated_wolves.item.pet_carrier.ItemPetCarrier;
 
 /**
@@ -26,8 +28,7 @@ public class SWItems {
     private static final RegistryObject<Item> DOG_TREAT = ITEMS_REGISTER.register("dog_treat", ItemDogTreat::new);
     private static final RegistryObject<Item> WHISTLE = ITEMS_REGISTER.register("whistle", ItemWhistle::new);
     private static final RegistryObject<Item> PET_CARRIER = ITEMS_REGISTER.register("pet_carrier", ItemPetCarrier::new);
-
-    //TODO DOG_EGG -> ItemWolfEgg;
+    private static final RegistryObject<ForgeSpawnEggItem> DOG_EGG = ITEMS_REGISTER.register("dog_egg", ItemWolfEgg::new);
 
     public static void register(IEventBus eventBus) {
         ITEMS_REGISTER.register(eventBus);
@@ -47,6 +48,10 @@ public class SWItems {
 
     public static Item getPetCarrier() {
         return PET_CARRIER.get();
+    }
+
+    public static Item getDogEgg() {
+        return DOG_EGG.get();
     }
 
 }
