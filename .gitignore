@@ -16,14 +16,15 @@ out
 # gradle
 build
 .gradle
+gradlew
+gradlew.bat
+gradle/
 
 # other
 eclipse
 run
 
 # Files from Forge MDK
-gradlew
-gradlew.bat
 changelog.txt
 CREDITS.txt
 LICENSE.txt
