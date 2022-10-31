@@ -1,5 +1,6 @@
 package sophisticated_wolves.entity;
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
@@ -34,15 +35,14 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
-import net.minecraftforge.common.BiomeManager;
 import net.minecraftforge.common.Tags;
 import sophisticated_wolves.FoodHelper;
 import sophisticated_wolves.core.SWConfiguration;
-import sophisticated_wolves.SophisticatedWolvesMod;
 import sophisticated_wolves.api.AEntitySophisticatedWolf;
 import sophisticated_wolves.api.EnumWolfSpecies;
-import sophisticated_wolves.core.SWEntity;
+import sophisticated_wolves.core.SWEntities;
 import sophisticated_wolves.entity.ai.*;
+import sophisticated_wolves.gui.WolfFoodConfigScreen;
 import sophisticated_wolves.item.ItemDogTag;
 import sophisticated_wolves.item.pet_carrier.ItemPetCarrier;
 
@@ -351,7 +351,7 @@ public class SophisticatedWolf extends AEntitySophisticatedWolf {
                 //this.aiSit.setSitting(this.isInSittingPose());
                 return InteractionResult.FAIL;
             } else if (FoodHelper.isBone(stack)) {
-                SophisticatedWolvesMod.proxy.openFoodGui(this);
+                Minecraft.getInstance().setScreen(new WolfFoodConfigScreen(this));
                 stack.shrink(1);
                 return InteractionResult.SUCCESS;
             }
@@ -392,7 +392,7 @@ public class SophisticatedWolf extends AEntitySophisticatedWolf {
 
     @Override
     public Wolf getBreedOffspring(ServerLevel serverLevel, AgeableMob entity) {
-        var wolf = SWEntity.getSophisticatedWolfType().create(this.level);
+        var wolf = SWEntities.getSophisticatedWolfType().create(this.level);
         wolf.updateSpecies(this.getSpecies()); //setting species to same as parent that spawned it
         var ownerId = this.getOwnerUUID();
 

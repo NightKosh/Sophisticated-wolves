@@ -7,7 +7,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import sophisticated_wolves.core.SWConfiguration;
-import sophisticated_wolves.tile_entity.BlockEntityDogBowl;
+import sophisticated_wolves.block_entity.BlockEntityDogBowl;
 
 import java.util.Map;
 

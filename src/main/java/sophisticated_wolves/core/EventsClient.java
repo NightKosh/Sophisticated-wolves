@@ -18,7 +18,7 @@ public class EventsClient {
 
     @SubscribeEvent
     public static void entityRenderers(EntityRenderersEvent.RegisterRenderers event) {
-        event.registerEntityRenderer(SWEntity.getSophisticatedWolfType(), SophisticatedWolfRenderer::new);
+        event.registerEntityRenderer(SWEntities.getSophisticatedWolfType(), SophisticatedWolfRenderer::new);
     }
 
 }

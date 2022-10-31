@@ -7,7 +7,7 @@ import net.minecraft.client.renderer.entity.WolfRenderer;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.animal.Wolf;
-import sophisticated_wolves.Resources;
+import sophisticated_wolves.core.Resources;
 import sophisticated_wolves.core.SWConfiguration;
 import sophisticated_wolves.entity.SophisticatedWolf;
 
