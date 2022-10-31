@@ -44,8 +44,7 @@
   "carrier.parrot_type" : "Tipo di pappagallo",
   "carrier.pet_name" : "Nome",
 
-  "gui.edit_dog_name.title" : "Dai un nome al tuo animale domestico:",
-  "gui.edit_dog_name.done_button" : "Fatto",
+  "gui.sophisticated_wolves.edit_dog_name.title" : "Dai un nome al tuo animale domestico:",
   "gui.food.title" : "Selezione quali tipi di cibo mangia il cane",
   "gui.food.done_button" : "Fatto",
 

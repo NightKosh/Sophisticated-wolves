@@ -44,8 +44,7 @@
   "carrier.parrot_type" : "Tipo de loro",
   "carrier.pet_name" : "Nombre",
 
-  "gui.edit_dog_name.title" : "Dale a tu mascota un nombre:",
-  "gui.edit_dog_name.done_button" : "Listo",
+  "gui.sophisticated_wolves.edit_dog_name.title" : "Dale a tu mascota un nombre:",
   "gui.food.title" : "Elige los tipos de alimento que los lobos comen",
   "gui.food.done_button" : "Listo",
 

@@ -44,8 +44,7 @@
   "carrier.parrot_type" : "Papageienart",
   "carrier.pet_name" : "Name",
 
-  "gui.edit_dog_name.title" : "Gib deinem Haustier einen Namen:",
-  "gui.edit_dog_name.done_button" : "Fertig",
+  "gui.sophisticated_wolves.edit_dog_name.title" : "Gib deinem Haustier einen Namen:",
   "gui.food.title" : "Wähle die Arten von Lebensmitteln, die Hunde essen",
   "gui.food.done_button" : "Fertig",
 

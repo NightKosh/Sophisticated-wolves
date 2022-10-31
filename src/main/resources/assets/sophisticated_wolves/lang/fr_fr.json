@@ -44,8 +44,7 @@
   "carrier.parrot_type" : "Type de perroquet",
   "carrier.pet_name" : "Nom",
 
-  "gui.edit_dog_name.title" : "Donnez un nom à votre animal de compagnie:",
-  "gui.edit_dog_name.done_button" : "Terminé",
+  "gui.sophisticated_wolves.edit_dog_name.title" : "Donnez un nom à votre animal de compagnie:",
   "gui.food.title" : "Sélectionnez quels types de nourriture mangent les chiens",
   "gui.food.done_button" : "Terminé",
 

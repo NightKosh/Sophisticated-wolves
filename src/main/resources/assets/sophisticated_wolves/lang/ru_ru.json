@@ -44,8 +44,7 @@
   "carrier.parrot_type" : "Тип попугая",
   "carrier.pet_name" : "Имя",
 
-  "gui.edit_dog_name.title" : "Дайте своему питомцу имя:",
-  "gui.edit_dog_name.done_button" : "Готово",
+  "gui.sophisticated_wolves.edit_dog_name.title" : "Дайте своему питомцу имя:",
   "gui.food.title" : "Выберите тип еды, которую могут есть собаки",
   "gui.food.done_button" : "Готово",
 

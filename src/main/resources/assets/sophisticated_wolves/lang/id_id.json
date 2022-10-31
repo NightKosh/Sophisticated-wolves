@@ -44,8 +44,7 @@
   "carrier.parrot_type" : "Jenis burung beo",
   "carrier.pet_name" : "Nama",
 
-  "gui.edit_dog_name.title" : "Berikan nama binatang peliharaan Anda:",
-  "gui.edit_dog_name.done_button" : "Selesai",
+  "gui.sophisticated_wolves.edit_dog_name.title" : "Berikan nama binatang peliharaan Anda:",
   "gui.food.title" : "Pilih jenis makanan anjing yang dimakan",
   "gui.food.done_button" : "Selesai",
 

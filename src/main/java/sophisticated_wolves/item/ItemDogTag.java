@@ -1,5 +1,6 @@
 package sophisticated_wolves.item;
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.LivingEntity;
@@ -9,8 +10,8 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import sophisticated_wolves.core.SWConfiguration;
 import sophisticated_wolves.core.SWTabs;
-import sophisticated_wolves.SophisticatedWolvesMod;
 import sophisticated_wolves.entity.SophisticatedWolf;
+import sophisticated_wolves.gui.DogTagScreen;
 
 /**
  * Sophisticated Wolves
@@ -25,9 +26,6 @@ public class ItemDogTag extends Item {
                 .tab(SWTabs.TAB));
     }
 
-    /**
-     * Returns true if the item can be used on the given entity, e.g. shears on sheep.
-     */
     @Override
     public InteractionResult interactLivingEntity(ItemStack stack, Player player, LivingEntity entity, InteractionHand hand) {
         if (SWConfiguration.NAME_TAG_FOR_ANY_PETS.get()) {
@@ -43,7 +41,7 @@ public class ItemDogTag extends Item {
     private static InteractionResult setName(TamableAnimal pet, ItemStack stack, Player player) {
         if (pet.isTame() && pet.getOwnerUUID() != null && pet.getOwnerUUID().equals(player.getUUID())) {
             if (player.getLevel().isClientSide()) {
-                SophisticatedWolvesMod.proxy.openPetGui(pet);
+                Minecraft.getInstance().setScreen(new DogTagScreen(pet));
             } else {
                 stack.shrink(1);
             }

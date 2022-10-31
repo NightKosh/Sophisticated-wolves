@@ -44,8 +44,7 @@
   "carrier.parrot_type" : "鸚鵡品種",
   "carrier.pet_name" : "名稱",
 
-  "gui.edit_dog_name.title" : "給你的寵物取名：",
-  "gui.edit_dog_name.done_button" : "完成",
+  "gui.sophisticated_wolves.edit_dog_name.title" : "給你的寵物取名：",
   "gui.food.title" : "選擇狗要吃哪類食物",
   "gui.food.done_button" : "完成",
 

@@ -44,8 +44,7 @@
   "carrier.parrot_type" : "Parrot type",
   "carrier.pet_name" : "Name",
 
-  "gui.edit_dog_name.title" : "Give your pet a name:",
-  "gui.edit_dog_name.done_button" : "Done",
+  "gui.sophisticated_wolves.edit_dog_name.title" : "Give your pet a name:",
   "gui.food.title" : "Select which types of food dogs eat",
   "gui.food.done_button" : "Done",
 
