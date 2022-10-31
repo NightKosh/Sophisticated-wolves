@@ -20,7 +20,7 @@ import sophisticated_wolves.entity.SophisticatedWolf;
  * @license Lesser GNU Public License v3 (http://www.gnu.org/licenses/lgpl.html)
  */
 @Mod.EventBusSubscriber(modid = ModInfo.ID, bus = Mod.EventBusSubscriber.Bus.MOD)
-public class SWEntity {
+public class SWEntities {
 
     public static final String SW_NAME = "entity.sophisticated_wolves.sophisticated_wolf";
 

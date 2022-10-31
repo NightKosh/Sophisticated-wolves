@@ -28,15 +28,17 @@ public class SWConfiguration {
     public static ForgeConfigSpec.ConfigValue<Boolean> ATTACK_ANIMALS;
     public static ForgeConfigSpec.ConfigValue<Boolean> ATTACK_SKELETONS;
 
-    public static ForgeConfigSpec.ConfigValue<Boolean> ENABLE_PETS_SELLER;
+    //TODO remove ???
+//    public static ForgeConfigSpec.ConfigValue<Boolean> ENABLE_PETS_SELLER;
 
     static {
         BUILDER.push("Configs for Sophisticated Wolves Mod");
 
         CUSTOM_WOLF_TEXTURES = BUILDER.comment("Should sophisticated wolves use custom textures(or be like vanilla wolves)?")
                 .define("Use Custom Wolf Textures", true);
-        RESPAWNING_WOLVES = BUILDER.comment("Should sophisticated wolves respawn(and despawn for non tamed)?")
-                .define("Respawning Wolves", true);
+        //TODO remove ???
+//        RESPAWNING_WOLVES = BUILDER.comment("Should sophisticated wolves respawn(and despawn for non tamed)?")
+//                .define("Respawning Wolves", true);
         CUSTOM_BREEDING = BUILDER.comment("Should sophisticated wolves breed in its own way?")
                 .define("Custom Breeding", true);
         NAME_TAG_FOR_ANY_PETS = BUILDER.comment("Should name tags be used for any kind of pet?")
@@ -57,8 +59,8 @@ public class SWConfiguration {
                 .define("Attack Skeletons", false);
 
         //TODO ???
-        ENABLE_PETS_SELLER = BUILDER.comment("Add new villager - pets seller")
-                .define("Enable Pets Seller", true);
+//        ENABLE_PETS_SELLER = BUILDER.comment("Add new villager - pets seller")
+//                .define("Enable Pets Seller", true);
 
         BUILDER.pop();
         SPEC = BUILDER.build();

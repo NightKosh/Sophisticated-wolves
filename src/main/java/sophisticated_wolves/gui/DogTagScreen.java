@@ -19,9 +19,8 @@ import sophisticated_wolves.packets.PetNameMessageToServer;
  */
 public class DogTagScreen extends Screen {
 
-    private TamableAnimal animal;
-
     private final Component title = Component.translatable("gui.sophisticated_wolves.edit_dog_name.title");
+    private final TamableAnimal animal;
 
     private EditBox nameField;
 
@@ -43,7 +42,7 @@ public class DogTagScreen extends Screen {
         }
 
         this.addRenderableWidget(
-                new Button(this.width / 2 - 150, this.height / 4 + 120, 100, 20,
+                new Button(this.width / 2 - 50, this.height / 4 + 120, 100, 20,
                         CommonComponents.GUI_DONE,
                         (button) -> this.onDone()));
         this.addRenderableWidget(nameField);

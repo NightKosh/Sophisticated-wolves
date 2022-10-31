@@ -1,12 +1,16 @@
 package sophisticated_wolves.item.pet_carrier;
 
+import net.minecraft.core.Direction;
 import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.util.Mth;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.TamableAnimal;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.CreativeModeTab;
@@ -15,6 +19,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.gameevent.GameEvent;
 import sophisticated_wolves.api.pet_carrier.PetCarrier;
 import sophisticated_wolves.core.SWTabs;
 
@@ -36,12 +41,10 @@ public class ItemPetCarrier extends Item {
                 .stacksTo(1));
     }
 
-    /**
-     * Returns true if the item can be used on the given entity, e.g. shears on sheep.
-     */
     @Override
     public InteractionResult interactLivingEntity(ItemStack stack, Player player, LivingEntity entity, InteractionHand hand) {
-        if (!entity.getLevel().isClientSide() && stack != null &&
+        if (!entity.getLevel().isClientSide() &&
+                stack != null &&
                 !(stack.hasTag() && stack.getTag().contains("ClassName"))) {
             if (entity instanceof TamableAnimal pet) {
                 if (pet.isTame() && pet.getOwnerUUID() != null && pet.getOwnerUUID().equals(player.getUUID())) {
@@ -61,7 +64,7 @@ public class ItemPetCarrier extends Item {
         var tag = new CompoundTag();
         tag.putString("ClassName", entity.getClass().getSimpleName());
 
-        PetCarrier petCarrier = PetCarrierHelper.PETS_MAP.get(entity.getClass().getSimpleName());
+        var petCarrier = PetCarrierHelper.PETS_MAP.get(entity.getClass().getSimpleName());
         if (petCarrier != null) {
             var infoTag = petCarrier.getInfo(entity);
             if (infoTag != null) {
@@ -82,8 +85,7 @@ public class ItemPetCarrier extends Item {
 
         stack.setTag(tag);
         player.setItemInHand(hand, stack);
-        //TODO
-//        entity.setDead();
+        entity.remove(Entity.RemovalReason.DISCARDED);
 
         return InteractionResult.SUCCESS;
     }
@@ -101,42 +103,31 @@ public class ItemPetCarrier extends Item {
                 if (tag.contains("ClassName")) {
                     var petCarrier = PetCarrierHelper.PETS_MAP.get(tag.getString("ClassName"));
                     if (petCarrier != null) {
+                        var pos = context.getClickedPos();
                         var player = context.getPlayer();
-                        var entity = petCarrier.spawnPet(level, player);
+                        var entityType = petCarrier.getEntityType();
+                        var entity = entityType.spawn((ServerLevel) level, stack, player, pos, MobSpawnType.SPAWN_EGG,
+                                true, context.getClickedFace() == Direction.UP);
                         if (entity != null) {
-                            var pos = context.getClickedPos();
-                            var block = level.getBlockState(pos);
-                            double d0 = 0;
-                            //TODO
-//                            if (facing == EnumFacing.UP && block instanceof BlockFence) {
-//                                d0 = 0.5;
-//                            }
-//                            pos = pos.offset(facing);
-//
-//                            entity.onInitialSpawn(level.getCurrentDifficultyAt(new BlockPos(entity.position())), null);
-                            entity.readAdditionalSaveData(tag.getCompound("MobData"));
-
+                            if (entity instanceof Mob mob) {
+                                mob.readAdditionalSaveData(tag.getCompound("MobData"));
+                            }
                             if (tag.contains("AdditionalData")) {
                                 petCarrier.setAdditionalData(entity, tag.getCompound("AdditionalData"));
                             }
-
-                            entity.moveTo(pos.getX() + 0.5, pos.getY() + d0, pos.getZ() + 0.5,
-                                    Mth.wrapDegrees(level.getRandom().nextFloat() * 360), 0);
-                            entity.setYHeadRot(entity.getYRot());
-//                            entity.renderYawOffset = entity.getYRot();
                             if (tag.contains("CustomName")) {
                                 entity.setCustomName(Component.literal(tag.getString("CustomName")));
                             }
-//                            level.spawnEntity(entity);
-                            entity.playAmbientSound();
 
                             if (entity instanceof TamableAnimal animal) {
                                 animal.setOwnerUUID(player.getUUID());
                                 animal.setTame(true);
                             }
 
-
-                            stack.setTag(new CompoundTag());
+                            if (!player.isCreative()) {
+                                stack.setTag(new CompoundTag());
+                            }
+                            level.gameEvent(player, GameEvent.ENTITY_PLACE, pos);
 
                             return InteractionResult.SUCCESS;
                         }
@@ -150,18 +141,18 @@ public class ItemPetCarrier extends Item {
     }
 
     @Override
-    public void appendHoverText(ItemStack stack, @Nullable Level world, List<Component> tooltip, TooltipFlag flag) {
+    public void appendHoverText(ItemStack stack, @Nullable Level level, List<Component> tooltips, TooltipFlag flag) {
         if (stack != null && stack.hasTag()) {
             var tag = stack.getTag();
             if (tag != null && tag.contains("ClassName")) {
-                PetCarrier petCarrier = PetCarrierHelper.PETS_MAP.get(tag.getString("ClassName"));
+                var petCarrier = PetCarrierHelper.PETS_MAP.get(tag.getString("ClassName"));
                 if (petCarrier != null) {
-                    tooltip.add(Component.translatable("carrier.pet_type")
+                    tooltips.add(Component.translatable("carrier.pet_type")
                             .append(" - ")
                             .append(Component.translatable(petCarrier.getPetNameLocalizationKey())));
 
                     if (tag.contains("CustomName")) {
-                        tooltip.add(Component.translatable("carrier.pet_name")
+                        tooltips.add(Component.translatable("carrier.pet_name")
                                 .append(" - ")
                                 .append(Component.literal(tag.getString("CustomName"))));
                     }
@@ -169,14 +160,14 @@ public class ItemPetCarrier extends Item {
                     if (tag.contains("InfoList")) {
                         var tooltipList = petCarrier.getInfo(tag.getCompound("InfoList"));
                         if (tooltipList != null) {
-                            tooltip.addAll(tooltipList);
+                            tooltips.addAll(tooltipList);
                         }
                     }
                 }
             }
         }
 
-        super.appendHoverText(stack, world, tooltip, flag);
+        super.appendHoverText(stack, level, tooltips, flag);
     }
 
     @Override

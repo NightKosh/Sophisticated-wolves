@@ -8,7 +8,7 @@ import net.minecraft.world.entity.LivingEntity;
 import sophisticated_wolves.api.EnumWolfSpecies;
 import sophisticated_wolves.api.pet_carrier.PetCarrier;
 import sophisticated_wolves.compatibility.Compatibility;
-import sophisticated_wolves.core.SWEntity;
+import sophisticated_wolves.core.SWEntities;
 import sophisticated_wolves.entity.SophisticatedWolf;
 
 import java.util.ArrayList;
@@ -29,12 +29,12 @@ public class SophisticatedWolfPetCarrier extends PetCarrier {
 
     @Override
     public String getPetNameLocalizationKey() {
-        return SWEntity.SW_NAME;
+        return SWEntities.SW_NAME;
     }
 
     @Override
     public EntityType getEntityType() {
-        return SWEntity.getSophisticatedWolfType();
+        return SWEntities.getSophisticatedWolfType();
     }
 
     @Override

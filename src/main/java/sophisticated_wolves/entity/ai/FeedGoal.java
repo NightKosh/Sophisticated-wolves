@@ -76,7 +76,6 @@ public class FeedGoal extends Goal {
                 this.foodEntity.getItem().shrink(1);
                 if (this.foodEntity.getItem().isEmpty() || this.pet.getHealth() >= SWConfiguration.WOLVES_HEALTH_TAMED.get()) {
                     if (this.foodEntity.getItem().isEmpty()) {
-                        //TODO .setDead() ???
                         this.foodEntity.remove(Entity.RemovalReason.DISCARDED);
                     }
                     this.foodEntity = null;
