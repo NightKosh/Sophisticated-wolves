@@ -2,6 +2,7 @@
   "itemGroup.tab_sophisticated_wolves" : "Sophisticated Wolves",
 
   "block.sophisticated_wolves.dog_bowl" : "Dog Bowl",
+  "block.sophisticated_wolves.dog_bowl.amount_of_food" : "Amount of food:",
   "block.sophisticated_wolves.kennel" : "Kennel",
 
   "item.sophisticated_wolves.dog_tag" : "Dog Tag",

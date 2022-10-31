@@ -2,6 +2,7 @@
   "itemGroup.tab_sophisticated_wolves" : "Sophisticated Wolves",
 
   "block.sophisticated_wolves.dog_bowl" : "Cuenco para perros",
+  "block.sophisticated_wolves.dog_bowl.amount_of_food" : "Amount of food:",
   "block.sophisticated_wolves.kennel" : "Casa para perros",
 
   "item.sophisticated_wolves.dog_tag" : "Placa de identificación",

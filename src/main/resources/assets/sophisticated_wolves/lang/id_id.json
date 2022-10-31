@@ -2,6 +2,7 @@
   "itemGroup.tab_sophisticated_wolves" : "Serigala yang Canggih",
 
   "block.sophisticated_wolves.dog_bowl" : "Mangkuk Anjing",
+  "block.sophisticated_wolves.dog_bowl.amount_of_food" : "Amount of food:",
   "block.sophisticated_wolves.kennel" : "Kandang Anjing",
 
   "item.sophisticated_wolves.dog_tag" : "Tag Anjing",

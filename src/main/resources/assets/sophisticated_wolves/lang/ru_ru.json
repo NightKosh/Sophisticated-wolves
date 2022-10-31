@@ -2,6 +2,7 @@
   "itemGroup.tab_sophisticated_wolves" : "Sophisticated Wolves",
 
   "block.sophisticated_wolves.dog_bowl" : "Собачья миска",
+  "block.sophisticated_wolves.dog_bowl.amount_of_food" : "Количество еды:",
   "block.sophisticated_wolves.kennel" : "Будка",
 
   "item.sophisticated_wolves.dog_tag" : "Собачья бирка",
