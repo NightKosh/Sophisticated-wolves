@@ -45,7 +45,7 @@
   "carrier.pet_name" : "Nome",
 
   "gui.sophisticated_wolves.edit_dog_name.title" : "Dai un nome al tuo animale domestico:",
-  "gui.food.title" : "Selezione quali tipi di cibo mangia il cane",
+  "gui.sophisticated_wolves.wolf_food_configs.title" : "Selezione quali tipi di cibo mangia il cane",
   "gui.food.done_button" : "Fatto",
 
   "entity.Villager.sophisticated_wolves:pets_seller" : "Venditore di animali domestici"

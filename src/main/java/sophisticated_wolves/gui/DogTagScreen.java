@@ -44,7 +44,7 @@ public class DogTagScreen extends Screen {
         this.addRenderableWidget(
                 new Button(this.width / 2 - 50, this.height / 4 + 120, 100, 20,
                         CommonComponents.GUI_DONE,
-                        (button) -> this.onDone()));
+                        (button) -> this.minecraft.setScreen(null)));
         this.addRenderableWidget(nameField);
     }
 
@@ -68,14 +68,7 @@ public class DogTagScreen extends Screen {
     @Override
     public void removed() {
         this.minecraft.keyboardHandler.setSendRepeatsToGui(false);
-        var clientPacketListener = this.minecraft.getConnection();
-        if (clientPacketListener != null) {
-            SWMessages.sendToServer(new PetNameMessageToServer(this.animal, this.nameField.getValue()));
-        }
-    }
-
-    private void onDone() {
-        this.minecraft.setScreen(null);
+        SWMessages.sendToServer(new PetNameMessageToServer(this.animal, this.nameField.getValue()));
     }
 
 }

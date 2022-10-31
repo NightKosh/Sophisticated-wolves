@@ -45,7 +45,7 @@
   "carrier.pet_name" : "Name",
 
   "gui.sophisticated_wolves.edit_dog_name.title" : "Gib deinem Haustier einen Namen:",
-  "gui.food.title" : "Wähle die Arten von Lebensmitteln, die Hunde essen",
+  "gui.sophisticated_wolves.wolf_food_configs.title" : "Wähle die Arten von Lebensmitteln, die Hunde essen",
   "gui.food.done_button" : "Fertig",
 
   "entity.Villager.sophisticated_wolves:pets_seller" : "Haustierverkäufer"

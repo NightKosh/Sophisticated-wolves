@@ -45,7 +45,7 @@
   "carrier.pet_name" : "Nama",
 
   "gui.sophisticated_wolves.edit_dog_name.title" : "Berikan nama binatang peliharaan Anda:",
-  "gui.food.title" : "Pilih jenis makanan anjing yang dimakan",
+  "gui.sophisticated_wolves.wolf_food_configs.title" : "Pilih jenis makanan anjing yang dimakan",
   "gui.food.done_button" : "Selesai",
 
   "entity.Villager.sophisticated_wolves:pets_seller" : "Penjual Hewan"

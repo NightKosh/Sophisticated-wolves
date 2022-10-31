@@ -45,7 +45,7 @@
   "carrier.pet_name" : "Nombre",
 
   "gui.sophisticated_wolves.edit_dog_name.title" : "Dale a tu mascota un nombre:",
-  "gui.food.title" : "Elige los tipos de alimento que los lobos comen",
+  "gui.sophisticated_wolves.wolf_food_configs.title" : "Elige los tipos de alimento que los lobos comen",
   "gui.food.done_button" : "Listo",
 
   "entity.Villager.sophisticated_wolves:pets_seller" : "Vendedor de Mascotas"

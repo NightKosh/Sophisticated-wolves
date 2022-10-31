@@ -45,7 +45,7 @@
   "carrier.pet_name" : "Имя",
 
   "gui.sophisticated_wolves.edit_dog_name.title" : "Дайте своему питомцу имя:",
-  "gui.food.title" : "Выберите тип еды, которую могут есть собаки",
+  "gui.sophisticated_wolves.wolf_food_configs.title" : "Выберите тип еды, которую могут есть собаки",
   "gui.food.done_button" : "Готово",
 
   "entity.Villager.sophisticated_wolves:pets_seller" : "Продавец питомцев"
