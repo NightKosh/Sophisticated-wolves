@@ -48,5 +48,5 @@
   "gui.sophisticated_wolves.wolf_food_configs.title" : "选择狗的食物类型",
   "gui.food.done_button" : "完成",
 
-  "entity.Villager.sophisticated_wolves:pets_seller" : "宠物商人"
+  "entity.minecraft.villager.sophisticated_wolves.pets_seller" : "宠物商人"
 }

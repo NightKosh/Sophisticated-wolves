@@ -48,5 +48,5 @@
   "gui.sophisticated_wolves.wolf_food_configs.title" : "Elige los tipos de alimento que los lobos comen",
   "gui.food.done_button" : "Listo",
 
-  "entity.Villager.sophisticated_wolves:pets_seller" : "Vendedor de Mascotas"
+  "entity.minecraft.villager.sophisticated_wolves.pets_seller" : "Vendedor de Mascotas"
 }

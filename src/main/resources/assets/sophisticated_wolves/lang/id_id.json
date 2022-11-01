@@ -48,5 +48,5 @@
   "gui.sophisticated_wolves.wolf_food_configs.title" : "Pilih jenis makanan anjing yang dimakan",
   "gui.food.done_button" : "Selesai",
 
-  "entity.Villager.sophisticated_wolves:pets_seller" : "Penjual Hewan"
+  "entity.minecraft.villager.sophisticated_wolves.pets_seller" : "Penjual Hewan"
 }

@@ -48,5 +48,5 @@
   "gui.sophisticated_wolves.wolf_food_configs.title" : "Selezione quali tipi di cibo mangia il cane",
   "gui.food.done_button" : "Fatto",
 
-  "entity.Villager.sophisticated_wolves:pets_seller" : "Venditore di animali domestici"
+  "entity.minecraft.villager.sophisticated_wolves.pets_seller" : "Venditore di animali domestici"
 }

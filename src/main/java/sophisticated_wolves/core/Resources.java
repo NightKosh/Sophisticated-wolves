@@ -30,9 +30,6 @@ public class Resources {
     public static final ResourceLocation FOREST_WOLF_TAME = new ResourceLocation(ENTITY_LOCATION + "forest/wolf_tame.png");
     public static final ResourceLocation FOREST_WOLF_ANGRY = new ResourceLocation(ENTITY_LOCATION + "forest/wolf_angry.png");
 
-    public static final String PETS_SELLER = ENTITY_LOCATION + "villager/pets_seller.png";
-    public static final String PETS_SELLER_ZOMBIE = ENTITY_LOCATION + "villager/pets_seller_zombie.png";
-
     // Gui
     public static final ResourceLocation DOG_BOWL_GUI = new ResourceLocation(GUI_LOCATION + "dog_bowl_gui.png");
     public static final ResourceLocation FOOD_GUI = new ResourceLocation(GUI_LOCATION + "food_background.png");

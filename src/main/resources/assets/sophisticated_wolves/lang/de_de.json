@@ -48,5 +48,5 @@
   "gui.sophisticated_wolves.wolf_food_configs.title" : "Wähle die Arten von Lebensmitteln, die Hunde essen",
   "gui.food.done_button" : "Fertig",
 
-  "entity.Villager.sophisticated_wolves:pets_seller" : "Haustierverkäufer"
+  "entity.minecraft.villager.sophisticated_wolves.pets_seller" : "Haustierverkäufer"
 }
