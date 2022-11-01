@@ -1,23 +1,20 @@
 package sophisticated_wolves.item.item_block;
 
+import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.item.Item;
+import sophisticated_wolves.core.SWBlocks;
+import sophisticated_wolves.core.SWTabs;
+
 /**
  * Sophisticated Wolves
  *
  * @author NightKosh
  * @license Lesser GNU Public License v3 (http://www.gnu.org/licenses/lgpl.html)
  */
-//TODO
-public class ItemBlockKennel {//extends ItemBlock {
+public class ItemBlockKennel extends BlockItem {
 
-//    public ItemBlockKennel(Block block) {
-//        super(block);
-//        this.setHasSubtypes(true);
-//        this.setRegistryName(SWBlocks.KENNEL.getRegistryName());
-//    }
-//
-//    @Override
-//    public int getMetadata(int damageValue) {
-//        return damageValue;
-//    }
+    public ItemBlockKennel() {
+        super(SWBlocks.getKennel(), new Item.Properties().tab(SWTabs.TAB));
+    }
 
 }

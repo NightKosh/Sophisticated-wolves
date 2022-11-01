@@ -1,19 +1,19 @@
 {
     "variants": {
         "facing=east": {
-            "model": "sophisticated_wolves:kennel",
+            "model": "sophisticated_wolves:block/kennel",
              "y" : 90
         },
         "facing=west": {
-            "model": "sophisticated_wolves:kennel",
+            "model": "sophisticated_wolves:block/kennel",
              "y" : 270
         },
         "facing=south": {
-            "model": "sophisticated_wolves:kennel",
+            "model": "sophisticated_wolves:block/kennel",
             "y" : 180
         },
         "facing=north": {
-            "model": "sophisticated_wolves:kennel",
+            "model": "sophisticated_wolves:block/kennel",
             "y" : 0
         }
     }

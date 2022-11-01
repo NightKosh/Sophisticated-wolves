@@ -1,6 +1,5 @@
 package sophisticated_wolves.core;
 
-import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -9,7 +8,9 @@ import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 import sophisticated_wolves.api.ModInfo;
 import sophisticated_wolves.block.BlockDogBowl;
+import sophisticated_wolves.block.BlockKennel;
 import sophisticated_wolves.item.item_block.ItemBlockDogBowl;
+import sophisticated_wolves.item.item_block.ItemBlockKennel;
 
 import java.util.function.Supplier;
 
@@ -25,8 +26,7 @@ public class SWBlocks {
             DeferredRegister.create(ForgeRegistries.BLOCKS, ModInfo.ID);
 
     private static final RegistryObject<Block> DOG_BOWL = registerBlock("dog_bowl", BlockDogBowl::new, ItemBlockDogBowl::new);
-
-//    public static final Block KENNEL = new BlockKennel();
+    private static final RegistryObject<Block> KENNEL = registerBlock("kennel", BlockKennel::new, ItemBlockKennel::new);
 
     private static <T extends Block> RegistryObject<T> registerBlock(
             String name, Supplier<T> block, Supplier<Item> itemBlock) {
@@ -40,6 +40,10 @@ public class SWBlocks {
 
     public static Block getDogBowl() {
         return DOG_BOWL.get();
+    }
+
+    public static Block getKennel() {
+        return KENNEL.get();
     }
 
 }
