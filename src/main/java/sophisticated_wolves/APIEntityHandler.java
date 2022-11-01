@@ -1,9 +1,11 @@
 package sophisticated_wolves;
 
-import net.minecraft.world.World;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.animal.Wolf;
+import net.minecraft.world.level.Level;
 import sophisticated_wolves.api.AEntitySophisticatedWolf;
 import sophisticated_wolves.api.IEntityHandler;
-import sophisticated_wolves.entity.EntitySophisticatedWolf;
+import sophisticated_wolves.entity.SophisticatedWolf;
 
 /**
  * Sophisticated Wolves
@@ -13,7 +15,8 @@ import sophisticated_wolves.entity.EntitySophisticatedWolf;
  */
 public class APIEntityHandler implements IEntityHandler {
 
-    public AEntitySophisticatedWolf getNewSophisticatedWolf(World world) {
-        return new EntitySophisticatedWolf(world);
+    public AEntitySophisticatedWolf getNewSophisticatedWolf(EntityType<? extends Wolf> entityType, Level level) {
+        return new SophisticatedWolf(entityType, level);
     }
+
 }
