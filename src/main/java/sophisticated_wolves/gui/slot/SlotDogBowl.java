@@ -1,9 +1,11 @@
 package sophisticated_wolves.gui.slot;
 
-import net.minecraft.inventory.Slot;
-import net.minecraft.item.ItemStack;
+import net.minecraft.world.SimpleContainer;
+import net.minecraft.world.inventory.Slot;
+import net.minecraft.world.item.ItemStack;
 import sophisticated_wolves.FoodHelper;
-import sophisticated_wolves.tile_entity.TileEntityDogBowl;
+import sophisticated_wolves.block.BlockDogBowl;
+import sophisticated_wolves.block_entity.BlockEntityDogBowl;
 
 /**
  * Sophisticated Wolves
@@ -13,54 +15,43 @@ import sophisticated_wolves.tile_entity.TileEntityDogBowl;
  */
 public class SlotDogBowl extends Slot {
 
-    private TileEntityDogBowl te;
+    private BlockEntityDogBowl bodBowl;
 
-    public SlotDogBowl(TileEntityDogBowl te, int slotNum, int xPos, int yPos) {
-        super(null, slotNum, xPos, yPos);
-        this.te = te;
+    public SlotDogBowl(BlockEntityDogBowl bowl, int slotNum, int xPos, int yPos) {
+        super(new SimpleContainer(1), slotNum, xPos, yPos);
+        this.bodBowl = bowl;
     }
 
     @Override
-    public void putStack(ItemStack stack) {
-        if (isItemValid(stack)) {
-            int amountOfFood = getFoodAmount(stack);
-            te.addFood(amountOfFood);
+    public void set(ItemStack stack) {
+        if (mayPlace(stack)) {
+            bodBowl.addFood(getFoodAmount(stack));
         }
     }
 
     @Override
-    public ItemStack getStack() {
+    public ItemStack getItem() {
         return ItemStack.EMPTY;
     }
 
     @Override
-    public boolean getHasStack() {
+    public boolean hasItem() {
         return false;
     }
 
     @Override
-    public void onSlotChange(ItemStack stack1, ItemStack stack2) {
+    public boolean mayPlace(ItemStack stack) {
+        return bodBowl.getFoodAmount() < BlockDogBowl.EnumDogBowl.FULL.getAmountOfFood() &&
+                (FoodHelper.isFoodItem(stack) || FoodHelper.isBone(stack));
     }
 
     @Override
-    public void onSlotChanged() {
-    }
-
-    @Override
-    public boolean isItemValid(ItemStack stack) {
-        return te.getFoodAmount() < 100 && (FoodHelper.isFoodItem(stack) || FoodHelper.isBone(stack));
-    }
-
-    @Override
-    public int getSlotStackLimit() {
+    public int getMaxStackSize() {
         return 1;
     }
 
-    public int getFoodAmount(ItemStack stack) {
-        if (isItemValid(stack)) {
-            return FoodHelper.getHealPoints(stack);
-        } else {
-            return 0;
-        }
+    private int getFoodAmount(ItemStack stack) {
+        return FoodHelper.getHealPoints(stack);
     }
+
 }
