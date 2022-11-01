@@ -1,4 +1,4 @@
-package sophisticated_wolves.core;
+package sophisticated_wolves.event;
 
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.EntityRenderersEvent;
@@ -6,6 +6,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import sophisticated_wolves.api.ModInfo;
 import sophisticated_wolves.client.renderer.SophisticatedWolfRenderer;
+import sophisticated_wolves.core.SWEntities;
 
 /**
  * Sophisticated Wolves
