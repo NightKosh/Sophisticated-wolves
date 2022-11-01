@@ -84,13 +84,13 @@ public class SophisticatedWolf extends AEntitySophisticatedWolf {
     protected void registerGoals() {
         this.goalSelector.addGoal(1, new FloatGoal(this));
         //TODO not working when built, has no access to WolfPanicGoal
-//        this.goalSelector.addGoal(1, new Wolf.WolfPanicGoal(1.5D));
+        this.goalSelector.addGoal(1, new Wolf.WolfPanicGoal(1.5D));
         this.goalSelector.addGoal(2, new AvoidCreeperGoal(this, 8, 6, 3, 1, 1.4)); //new behavior
         this.goalSelector.addGoal(5, new SitWhenOrderedToGoal(this));
         this.goalSelector.addGoal(7, new ShakeGoal(this)); //new behavior
         this.goalSelector.addGoal(8, new AttackCancelGoal(this)); //new behavior
         //TODO not working when built, has no access to WolfAvoidEntityGoal
-//        this.goalSelector.addGoal(10, new Wolf.WolfAvoidEntityGoal<>(this, Llama.class, 24, 1.5, 1.5));
+        this.goalSelector.addGoal(10, new Wolf.WolfAvoidEntityGoal<>(this, Llama.class, 24, 1.5, 1.5));
         this.goalSelector.addGoal(15, new LeapAtTargetGoal(this, 0.4F));
         this.goalSelector.addGoal(20, new MeleeAttackGoal(this, 1, true));
         this.goalSelector.addGoal(22, new MoveCancelGoal(this, 6)); //new behavior
