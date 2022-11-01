@@ -4,6 +4,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
@@ -13,8 +14,11 @@ import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.BaseEntityBlock;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.RenderShape;
 import net.minecraft.world.level.block.SoundType;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
@@ -23,7 +27,9 @@ import net.minecraft.world.level.material.Material;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import net.minecraftforge.network.NetworkHooks;
 import org.jetbrains.annotations.Nullable;
+import sophisticated_wolves.block_entity.BlockEntityDogBowl;
 
 import java.util.List;
 
@@ -33,20 +39,17 @@ import java.util.List;
  * @author NightKosh
  * @license Lesser GNU Public License v3 (http://www.gnu.org/licenses/lgpl.html)
  */
-//TODO
-public class BlockDogBowl extends Block {//BaseEntityBlock {
+public class BlockDogBowl extends BaseEntityBlock {
 
-    public static final IntegerProperty FOOD = IntegerProperty.create("food", 0, 100);
     public static final IntegerProperty FOOD_LEVEL = IntegerProperty.create("food_level", 0, 4);
     private static final VoxelShape SHAPE = Block.box(4, 0, 4, 12, 2, 12);
 
-    //TODO remove ??
     public enum EnumDogBowl {
         EMPTY(0),
         FILLED_25_P(25),
         FILLED_50_P(50),
         FILLED_75_P(75),
-        FILLED_100_P(100);
+        FULL(100);
 
         public static final int BONES_PER_LEVEL = 25;
 
@@ -65,7 +68,7 @@ public class BlockDogBowl extends Block {//BaseEntityBlock {
 
         public static EnumDogBowl getTypeByFood(int amountOfFood) {
             if (amountOfFood > EnumDogBowl.FILLED_75_P.getAmountOfFood()) {
-                return EnumDogBowl.FILLED_100_P;
+                return EnumDogBowl.FULL;
             } else if (amountOfFood > EnumDogBowl.FILLED_50_P.getAmountOfFood()) {
                 return EnumDogBowl.FILLED_75_P;
             } else if (amountOfFood > EnumDogBowl.FILLED_25_P.getAmountOfFood()) {
@@ -90,20 +93,22 @@ public class BlockDogBowl extends Block {//BaseEntityBlock {
                 .strength(0.7F));
 
         this.registerDefaultState(this.stateDefinition.any()
-                .setValue(FOOD, EnumDogBowl.EMPTY.getAmountOfFood())
                 .setValue(FOOD_LEVEL, EnumDogBowl.EMPTY.ordinal()));
     }
 
     @Override
     public void fillItemCategory(CreativeModeTab tab, NonNullList<ItemStack> list) {
-        for (var bowl : EnumDogBowl.values()) {
-            var tag = new CompoundTag();
-            tag.putInt("FoodLevel", bowl.ordinal());
-            tag.putInt("FoodAmount", bowl.getAmountOfFood());
-            var stack = new ItemStack(this, 1);
-            stack.setTag(tag);
-            list.add(stack);
-        }
+        list.add(getItemsForTab(EnumDogBowl.EMPTY));
+        list.add(getItemsForTab(EnumDogBowl.FULL));
+    }
+
+    private ItemStack getItemsForTab(EnumDogBowl bowl) {
+        var tag = new CompoundTag();
+        tag.putInt("FoodLevel", bowl.ordinal());
+        tag.putInt("FoodAmount", bowl.getAmountOfFood());
+        var stack = new ItemStack(this, 1);
+        stack.setTag(tag);
+        return stack;
     }
 
     @Override
@@ -118,27 +123,23 @@ public class BlockDogBowl extends Block {//BaseEntityBlock {
         }
     }
 
-//    @Nullable
-//    @Override
-//    public BlockEntity newBlockEntity(BlockPos blockPos, BlockState state) {
-//        //TODO
-//        return null;//new BlockEntityDogBowl(blockPos, state);
-//    }
+    @Nullable
+    @Override
+    public BlockEntity newBlockEntity(BlockPos blockPos, BlockState state) {
+        return new BlockEntityDogBowl(blockPos, state);
+    }
 
     @Override
     public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player,
                                  InteractionHand hand, BlockHitResult hitResult) {
-//        var dogBowl = (BlockEntityDogBowl) level.getBlockEntity(pos);
+        var dogBowl = (BlockEntityDogBowl) level.getBlockEntity(pos);
         if (level.isClientSide()) {
             return InteractionResult.SUCCESS;
-        } else if (!player.isShiftKeyDown()) {
-//        } else if (dogBowl != null && !player.isShiftKeyDown()) {
-            //TODO
-//            player.openMenu(state.getMenuProvider(level, pos));
-//            player.openGui(SophisticatedWolvesMod.instance, SWGui.DOG_BOWL_ID, level, pos.getX(), pos.getY(), pos.getZ());
+        } else if (dogBowl != null && !player.isShiftKeyDown()) {
+            NetworkHooks.openScreen(((ServerPlayer) player), dogBowl, pos);
             return InteractionResult.CONSUME;
         }
-        return InteractionResult.FAIL;
+        return InteractionResult.PASS;
     }
 
     @Override
@@ -148,8 +149,12 @@ public class BlockDogBowl extends Block {//BaseEntityBlock {
     }
 
     @Override
+    public RenderShape getRenderShape(BlockState state) {
+        return RenderShape.MODEL;
+    }
+
+    @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> stateBuilder) {
-        stateBuilder.add(FOOD);
         stateBuilder.add(FOOD_LEVEL);
     }
 
@@ -161,9 +166,6 @@ public class BlockDogBowl extends Block {//BaseEntityBlock {
             var tag = item.getTag();
             if (tag.contains("FoodLevel")) {
                 state = state.setValue(FOOD_LEVEL, tag.getInt("FoodLevel"));
-            }
-            if (tag.contains("FoodAmount")) {
-                state = state.setValue(FOOD, tag.getInt("FoodAmount"));
             }
         }
         return state;

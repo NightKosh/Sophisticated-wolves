@@ -34,7 +34,11 @@ public class DogBowlContainerMenu extends AbstractContainerMenu {
     protected BlockEntityDogBowl dogBowl;
 
     public DogBowlContainerMenu(int containerId, Inventory inv, FriendlyByteBuf extraData) {
-        this(containerId, inv, inv.player.level.getBlockEntity(extraData.readBlockPos()), new SimpleContainerData(2));
+        this(containerId, inv, inv.player.level.getBlockEntity(extraData.readBlockPos()));
+    }
+
+    public DogBowlContainerMenu(int containerId, Inventory inv, BlockEntity blockEntity) {
+        this(containerId, inv, blockEntity, new SimpleContainerData(1));
     }
 
     public DogBowlContainerMenu(int containerId, Inventory inv, BlockEntity blockEntity, ContainerData data) {
