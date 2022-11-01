@@ -70,16 +70,6 @@ public class WolfFoodConfigScreen extends Screen {
         Lighting.setupForFlatItems();
         this.renderBackground(poseStack);
 
-        this.drawCenteredString(poseStack, this.font, this.title, this.width / 2, 60, 0xffffff);
-
-        Lighting.setupFor3DItems();
-        super.render(poseStack, i, j, f);
-    }
-
-    @Override
-    public void renderBackground(PoseStack poseStack) {
-        super.renderBackground(poseStack);
-
         RenderSystem.setShader(GameRenderer::getPositionTexShader);
         RenderSystem.setShaderColor(1, 1, 1, 1);
         RenderSystem.setShaderTexture(0, Resources.FOOD_GUI);
@@ -87,6 +77,11 @@ public class WolfFoodConfigScreen extends Screen {
         int xPos = (this.width - this.xSize) / 2;
         int yPos = (this.height - this.ySize) / 2;
         this.blit(poseStack, xPos, yPos, 0, 0, 256, 256);
+
+        this.drawCenteredString(poseStack, this.font, this.title, this.width / 2, 60, 0xffffff);
+
+        Lighting.setupFor3DItems();
+        super.render(poseStack, i, j, f);
     }
 
     @Override

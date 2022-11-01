@@ -13,7 +13,7 @@ showAsResourcePack=false
 
 [[mods]]
   modId="sophisticated_wolves"
-  version="3.13.8"
+  version="4.0.0b"
   displayName="Sophisticated Wolves Mod"
   displayURL="http://sophisticated-wolves.nightkosh.com/"
   logoFile="logo.png"
