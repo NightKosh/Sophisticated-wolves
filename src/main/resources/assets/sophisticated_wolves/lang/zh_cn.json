@@ -1,6 +1,8 @@
 {
   "itemGroup.tab_sophisticated_wolves" : "精致的狼",
 
+  "entity.sophisticated_wolves.sophisticated_wolf" : "精致的狼",
+
   "block.sophisticated_wolves.dog_bowl" : "狗盆",
   "block.sophisticated_wolves.dog_bowl.amount_of_food" : "Amount of food:",
   "block.sophisticated_wolves.kennel" : "狗窝",
@@ -11,42 +13,39 @@
   "item.sophisticated_wolves.pet_carrier" : "宠物托运箱",
   "item.sophisticated_wolves.dog_egg" : "Sophisticated Wolf Spawn Egg",
 
-  "entity.sophisticated_wolves.sophisticated_wolf" : "精致的狼",
+  "sophisticated_wolves.wolf_type.vanilla" : "灰色",
+  "sophisticated_wolves.wolf_type.forest" : "丛林",
+  "sophisticated_wolves.wolf_type.black" : "黑色",
+  "sophisticated_wolves.wolf_type.brown" : "棕色",
 
-  "wolf_type.vanilla" : "灰色",
-  "wolf_type.forest" : "丛林",
-  "wolf_type.black" : "黑色",
-  "wolf_type.brown" : "棕色",
+  "sophisticated_wolves.cat_type.ocelot" : "山猫",
+  "sophisticated_wolves.cat_type.black" : "黑色",
+  "sophisticated_wolves.cat_type.red" : "红色",
+  "sophisticated_wolves.cat_type.siamese" : "暹罗",
 
-  "cat_type.ocelot" : "山猫",
-  "cat_type.black" : "黑色",
-  "cat_type.red" : "红色",
-  "cat_type.siamese" : "暹罗",
+  "sophisticated_wolves.rabbit_type.0" : "棕色",
+  "sophisticated_wolves.rabbit_type.1" : "白色",
+  "sophisticated_wolves.rabbit_type.2" : "黑色",
+  "sophisticated_wolves.rabbit_type.3" : "黑白",
+  "sophisticated_wolves.rabbit_type.4" : "金色",
+  "sophisticated_wolves.rabbit_type.5" : "椒盐",
+  "sophisticated_wolves.rabbit_type.99" : "杀手",
 
-  "rabbit_type.0" : "棕色",
-  "rabbit_type.1" : "白色",
-  "rabbit_type.2" : "黑色",
-  "rabbit_type.3" : "黑白",
-  "rabbit_type.4" : "金色",
-  "rabbit_type.5" : "椒盐",
-  "rabbit_type.99" : "杀手",
+  "sophisticated_wolves.parrot_type.0" : "红色",
+  "sophisticated_wolves.parrot_type.1" : "蓝色",
+  "sophisticated_wolves.parrot_type.2" : "绿色",
+  "sophisticated_wolves.parrot_type.3" : "青色",
+  "sophisticated_wolves.parrot_type.4" : "银色",
 
-  "parrot_type.0" : "红色",
-  "parrot_type.1" : "蓝色",
-  "parrot_type.2" : "绿色",
-  "parrot_type.3" : "青色",
-  "parrot_type.4" : "银色",
-
-  "carrier.pet_type" : "宠物类型",
-  "carrier.dog_type" : "狗品种",
-  "carrier.cat_type" : "猫品种",
-  "carrier.rabbit_type" : "兔子品种",
-  "carrier.parrot_type" : "鹦鹉品种",
-  "carrier.pet_name" : "名称",
+  "sophisticated_wolves.carrier.pet_type" : "宠物类型",
+  "sophisticated_wolves.carrier.dog_type" : "狗品种",
+  "sophisticated_wolves.carrier.cat_type" : "猫品种",
+  "sophisticated_wolves.carrier.rabbit_type" : "兔子品种",
+  "sophisticated_wolves.carrier.parrot_type" : "鹦鹉品种",
+  "sophisticated_wolves.carrier.pet_name" : "名称",
 
   "gui.sophisticated_wolves.edit_dog_name.title" : "为您的宠物取名:",
   "gui.sophisticated_wolves.wolf_food_configs.title" : "选择狗的食物类型",
-  "gui.food.done_button" : "完成",
 
   "entity.minecraft.villager.sophisticated_wolves.pets_seller" : "宠物商人"
 }

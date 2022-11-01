@@ -1,6 +1,8 @@
 {
   "itemGroup.tab_sophisticated_wolves" : "Sophisticated Wolves",
 
+  "entity.sophisticated_wolves.sophisticated_wolf" : "Sophisticated Wolf",
+
   "block.sophisticated_wolves.dog_bowl" : "Dog Bowl",
   "block.sophisticated_wolves.dog_bowl.amount_of_food" : "Amount of food:",
   "block.sophisticated_wolves.kennel" : "Kennel",
@@ -11,42 +13,39 @@
   "item.sophisticated_wolves.pet_carrier" : "Pet Carrier",
   "item.sophisticated_wolves.dog_egg" : "Sophisticated Wolf Spawn Egg",
 
-  "entity.sophisticated_wolves.sophisticated_wolf" : "Sophisticated Wolf",
+  "sophisticated_wolves.wolf_type.vanilla" : "Gray",
+  "sophisticated_wolves.wolf_type.forest" : "Forest",
+  "sophisticated_wolves.wolf_type.black" : "Black",
+  "sophisticated_wolves.wolf_type.brown" : "Brown",
 
-  "wolf_type.vanilla" : "Gray",
-  "wolf_type.forest" : "Forest",
-  "wolf_type.black" : "Black",
-  "wolf_type.brown" : "Brown",
+  "sophisticated_wolves.cat_type.ocelot" : "Ocelot",
+  "sophisticated_wolves.cat_type.black" : "Black",
+  "sophisticated_wolves.cat_type.red" : "Red",
+  "sophisticated_wolves.cat_type.siamese" : "Siamese",
 
-  "cat_type.ocelot" : "Ocelot",
-  "cat_type.black" : "Black",
-  "cat_type.red" : "Red",
-  "cat_type.siamese" : "Siamese",
+  "sophisticated_wolves.rabbit_type.0" : "Brown",
+  "sophisticated_wolves.rabbit_type.1" : "White",
+  "sophisticated_wolves.rabbit_type.2" : "Black",
+  "sophisticated_wolves.rabbit_type.3" : "Black & White",
+  "sophisticated_wolves.rabbit_type.4" : "Gold",
+  "sophisticated_wolves.rabbit_type.5" : "Salt & Pepper",
+  "sophisticated_wolves.rabbit_type.99" : "The Killer Bunny",
 
-  "rabbit_type.0" : "Brown",
-  "rabbit_type.1" : "White",
-  "rabbit_type.2" : "Black",
-  "rabbit_type.3" : "Black & White",
-  "rabbit_type.4" : "Gold",
-  "rabbit_type.5" : "Salt & Pepper",
-  "rabbit_type.99" : "The Killer Bunny",
+  "sophisticated_wolves.parrot_type.0" : "Red",
+  "sophisticated_wolves.parrot_type.1" : "Blue",
+  "sophisticated_wolves.parrot_type.2" : "Green",
+  "sophisticated_wolves.parrot_type.3" : "Cyan",
+  "sophisticated_wolves.parrot_type.4" : "Silver",
 
-  "parrot_type.0" : "Red",
-  "parrot_type.1" : "Blue",
-  "parrot_type.2" : "Green",
-  "parrot_type.3" : "Cyan",
-  "parrot_type.4" : "Silver",
-
-  "carrier.pet_type" : "Pet type",
-  "carrier.dog_type" : "Dog type",
-  "carrier.cat_type" : "Cat type",
-  "carrier.rabbit_type" : "Rabbit type",
-  "carrier.parrot_type" : "Parrot type",
-  "carrier.pet_name" : "Name",
+  "sophisticated_wolves.carrier.pet_type" : "Pet type",
+  "sophisticated_wolves.carrier.dog_type" : "Dog type",
+  "sophisticated_wolves.carrier.cat_type" : "Cat type",
+  "sophisticated_wolves.carrier.rabbit_type" : "Rabbit type",
+  "sophisticated_wolves.carrier.parrot_type" : "Parrot type",
+  "sophisticated_wolves.carrier.pet_name" : "Name",
 
   "gui.sophisticated_wolves.edit_dog_name.title" : "Give your pet a name:",
   "gui.sophisticated_wolves.wolf_food_configs.title" : "Select which types of food dogs eat",
-  "gui.food.done_button" : "Done",
 
   "entity.minecraft.villager.sophisticated_wolves.pets_seller" : "Pets Seller"
 }

@@ -147,12 +147,12 @@ public class ItemPetCarrier extends Item {
             if (tag != null && tag.contains("ClassName")) {
                 var petCarrier = PetCarrierHelper.PETS_MAP.get(tag.getString("ClassName"));
                 if (petCarrier != null) {
-                    tooltips.add(Component.translatable("carrier.pet_type")
+                    tooltips.add(Component.translatable("sophisticated_wolves.carrier.pet_type")
                             .append(" - ")
                             .append(Component.translatable(petCarrier.getPetNameLocalizationKey())));
 
                     if (tag.contains("CustomName")) {
-                        tooltips.add(Component.translatable("carrier.pet_name")
+                        tooltips.add(Component.translatable("sophisticated_wolves.carrier.pet_name")
                                 .append(" - ")
                                 .append(Component.literal(tag.getString("CustomName"))));
                     }

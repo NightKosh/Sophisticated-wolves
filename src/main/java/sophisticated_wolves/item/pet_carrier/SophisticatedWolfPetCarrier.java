@@ -41,12 +41,10 @@ public class SophisticatedWolfPetCarrier extends PetCarrier {
     public List<Component> getInfo(CompoundTag infoTag) {
         if (infoTag.contains("WolfType")) {
             var list = new ArrayList<Component>(1);
-            list.add(Component.translatable("carrier.dog_type")
+            list.add(Component.translatable("sophisticated_wolves.carrier.dog_type")
                     .append(" - ")
                     .append(Component.translatable(
-                            "wolf_type." + EnumWolfSpecies.getSpeciesByNum(infoTag.getInt("WolfType"))
-                                    .toString()
-                                    .toLowerCase())));
+                            EnumWolfSpecies.getSpeciesByNum(infoTag.getInt("WolfType")).getSpeciesStr())));
             return list;
         }
         return null;

@@ -54,10 +54,10 @@ public class CatPetCarrier extends PetCarrier {
     public List<Component> getInfo(CompoundTag infoTag) {
         if (infoTag.contains("CatType")) {
             var list = new ArrayList<Component>(1);
-            list.add(Component.translatable("carrier.cat_type")
+            list.add(Component.translatable("sophisticated_wolves.carrier.cat_type")
                     .append(" - ")
                     .append(Component.translatable(
-                            "cat_type." + EnumCatType.getSpeciesByNum(infoTag.getInt("CatType"))
+                            "sophisticated_wolves.cat_type." + EnumCatType.getSpeciesByNum(infoTag.getInt("CatType"))
                                     .toString().toLowerCase())));
             return list;
         }

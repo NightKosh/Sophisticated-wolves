@@ -40,9 +40,9 @@ public class ParrotPetCarrier extends PetCarrier {
     public List<Component> getInfo(CompoundTag infoTag) {
         if (infoTag.contains("Variant")) {
             var list = new ArrayList<Component>(1);
-            list.add(Component.translatable("carrier.parrot_type")
+            list.add(Component.translatable("sophisticated_wolves.carrier.parrot_type")
                     .append(" - ")
-                    .append(Component.translatable("parrot_type." + infoTag.getInt("Variant"))));
+                    .append(Component.translatable("sophisticated_wolves.parrot_type." + infoTag.getInt("Variant"))));
             return list;
         }
         return null;

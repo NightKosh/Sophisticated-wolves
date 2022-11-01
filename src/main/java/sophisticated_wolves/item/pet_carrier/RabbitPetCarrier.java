@@ -39,9 +39,9 @@ public class RabbitPetCarrier extends PetCarrier {
     public List<Component> getInfo(CompoundTag infoTag) {
         if (infoTag.contains("RabbitType")) {
             var list = new ArrayList<Component>(1);
-            list.add(Component.translatable("carrier.rabbit_type")
+            list.add(Component.translatable("sophisticated_wolves.carrier.rabbit_type")
                     .append(" - ")
-                    .append(Component.translatable("rabbit_type." + infoTag.getInt("RabbitType"))));
+                    .append(Component.translatable("sophisticated_wolves.rabbit_type." + infoTag.getInt("RabbitType"))));
             return list;
         }
         return null;

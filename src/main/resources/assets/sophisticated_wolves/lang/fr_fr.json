@@ -1,6 +1,8 @@
 {
   "itemGroup.tab_sophisticated_wolves" : "Sophisticated Wolves",
 
+  "entity.sophisticated_wolves.sophisticated_wolf" : "Loup sophistiqué",
+
   "block.sophisticated_wolves.dog_bowl" : "Gamelle",
   "block.sophisticated_wolves.dog_bowl.amount_of_food" : "Amount of food:",
   "block.sophisticated_wolves.kennel" : "Niche",
@@ -11,42 +13,39 @@
   "item.sophisticated_wolves.pet_carrier" : "Cage",
   "item.sophisticated_wolves.dog_egg" : "Sophisticated Wolf Spawn Egg",
 
-  "entity.sophisticated_wolves.sophisticated_wolf" : "Loup sophistiqué",
+  "sophisticated_wolves.wolf_type.vanilla" : "Gris",
+  "sophisticated_wolves.wolf_type.forest" : "Forêt",
+  "sophisticated_wolves.wolf_type.black" : "Noir",
+  "sophisticated_wolves.wolf_type.brown" : "Marron",
 
-  "wolf_type.vanilla" : "Gris",
-  "wolf_type.forest" : "Forêt",
-  "wolf_type.black" : "Noir",
-  "wolf_type.brown" : "Marron",
+  "sophisticated_wolves.cat_type.ocelot" : "Ocelot",
+  "sophisticated_wolves.cat_type.black" : "Noire",
+  "sophisticated_wolves.cat_type.red" : "Rouge",
+  "sophisticated_wolves.cat_type.siamese" : "Siamois",
 
-  "cat_type.ocelot" : "Ocelot",
-  "cat_type.black" : "Noire",
-  "cat_type.red" : "Rouge",
-  "cat_type.siamese" : "Siamois",
+  "sophisticated_wolves.rabbit_type.0" : "Marron",
+  "sophisticated_wolves.rabbit_type.1" : "Blanc",
+  "sophisticated_wolves.rabbit_type.2" : "Noir",
+  "sophisticated_wolves.rabbit_type.3" : "Noir & blanc",
+  "sophisticated_wolves.rabbit_type.4" : "Doré",
+  "sophisticated_wolves.rabbit_type.5" : "Sel & poivre",
+  "sophisticated_wolves.rabbit_type.99" : "Le lapin tueur",
 
-  "rabbit_type.0" : "Marron",
-  "rabbit_type.1" : "Blanc",
-  "rabbit_type.2" : "Noir",
-  "rabbit_type.3" : "Noir & blanc",
-  "rabbit_type.4" : "Doré",
-  "rabbit_type.5" : "Sel & poivre",
-  "rabbit_type.99" : "Le lapin tueur",
+  "sophisticated_wolves.parrot_type.0" : "Rouge",
+  "sophisticated_wolves.parrot_type.1" : "Bleu",
+  "sophisticated_wolves.parrot_type.2" : "Vert",
+  "sophisticated_wolves.parrot_type.3" : "Cyan",
+  "sophisticated_wolves.parrot_type.4" : "Argenté",
 
-  "parrot_type.0" : "Rouge",
-  "parrot_type.1" : "Bleu",
-  "parrot_type.2" : "Vert",
-  "parrot_type.3" : "Cyan",
-  "parrot_type.4" : "Argenté",
-
-  "carrier.pet_type" : "Type d'animal de compagnie",
-  "carrier.dog_type" : "Type de chien",
-  "carrier.cat_type" : "Type de chat",
-  "carrier.rabbit_type" : "Type de lapin",
-  "carrier.parrot_type" : "Type de perroquet",
-  "carrier.pet_name" : "Nom",
+  "sophisticated_wolves.carrier.pet_type" : "Type d'animal de compagnie",
+  "sophisticated_wolves.carrier.dog_type" : "Type de chien",
+  "sophisticated_wolves.carrier.cat_type" : "Type de chat",
+  "sophisticated_wolves.carrier.rabbit_type" : "Type de lapin",
+  "sophisticated_wolves.carrier.parrot_type" : "Type de perroquet",
+  "sophisticated_wolves.carrier.pet_name" : "Nom",
 
   "gui.sophisticated_wolves.edit_dog_name.title" : "Donnez un nom à votre animal de compagnie:",
   "gui.sophisticated_wolves.wolf_food_configs.title" : "Sélectionnez quels types de nourriture mangent les chiens",
-  "gui.food.done_button" : "Terminé",
 
   "entity.minecraft.villager.sophisticated_wolves.pets_seller" : "Vendeur d'animaux de compagnie"
 }
