@@ -1,11 +1,9 @@
 package sophisticated_wolves;
 
-import net.minecraft.init.Items;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemFood;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.FurnaceRecipes;
-import sophisticated_wolves.entity.EntitySophisticatedWolf;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import sophisticated_wolves.entity.SophisticatedWolf;
 
 /**
  * Sophisticated Wolves
@@ -16,63 +14,61 @@ import sophisticated_wolves.entity.EntitySophisticatedWolf;
 public class FoodHelper {
 
     public static boolean isFoodItem(ItemStack stack) {
-        return stack.getItem() instanceof ItemFood;
+        return stack.getFoodProperties(null) != null;
     }
 
     public static boolean isWolfFood(ItemStack stack) {
-        return isBone(stack) || ((ItemFood) stack.getItem()).isWolfsFavoriteMeat() ||
-                stack.getItem().equals(Items.COOKED_FISH) || stack.getItem().equals(Items.FISH) || isBone(stack);
+        return isBone(stack) ||
+                stack.getFoodProperties(null) != null && stack.getFoodProperties(null).isMeat() ||
+                stack.getItem().equals(Items.COOKED_COD) ||
+                stack.getItem().equals(Items.COOKED_SALMON) ||
+                stack.getItem().equals(Items.COD) ||
+                stack.getItem().equals(Items.SALMON) ||
+                stack.getItem().equals(Items.PUFFERFISH) ||
+                stack.getItem().equals(Items.TROPICAL_FISH);
     }
 
-    public static boolean isWolfFood(EntitySophisticatedWolf wolf, ItemStack stack) {
+    public static boolean isWolfFood(SophisticatedWolf wolf, ItemStack stack) {
         if (wolf.isAnyFood()) {
             return isWolfFood(stack);
         } else {
             return wolf.isRottenMeatAndBones() && (isBone(stack) || isFoodType(stack, Items.ROTTEN_FLESH)) ||
-                    wolf.isRawFish() && isFoodType(stack, Items.FISH) && (stack.getItemDamage() == 0 || stack.getItemDamage() == 1) ||
-                    wolf.isSpecialFish() && isFoodType(stack, Items.FISH) && (stack.getItemDamage() == 2 || stack.getItemDamage() == 3) ||
-                    wolf.isCookedFish() && isFoodType(stack, Items.COOKED_FISH) ||
-                    wolf.isRawMeat() && (isFoodType(stack, Items.CHICKEN) || isFoodType(stack, Items.BEEF) ||
-                            isFoodType(stack, Items.PORKCHOP) || isFoodType(stack, Items.MUTTON) || isFoodType(stack, Items.RABBIT)) ||
-                    wolf.isCookedMeat() && (isFoodType(stack, Items.COOKED_CHICKEN) || isFoodType(stack, Items.COOKED_BEEF) ||
-                            isFoodType(stack, Items.COOKED_PORKCHOP) || isFoodType(stack, Items.COOKED_MUTTON) || isFoodType(stack, Items.COOKED_RABBIT));
+                    wolf.isRawMeat() && (
+                            isFoodType(stack, Items.CHICKEN) || isFoodType(stack, Items.BEEF) ||
+                            isFoodType(stack, Items.PORKCHOP) || isFoodType(stack, Items.MUTTON) ||
+                            isFoodType(stack, Items.RABBIT)) ||
+                    wolf.isCookedMeat() && (
+                            isFoodType(stack, Items.COOKED_CHICKEN) || isFoodType(stack, Items.COOKED_BEEF) ||
+                            isFoodType(stack, Items.COOKED_PORKCHOP) || isFoodType(stack, Items.COOKED_MUTTON) ||
+                            isFoodType(stack, Items.COOKED_RABBIT)) ||
+                    wolf.isRawFish() && (
+                            isFoodType(stack, Items.COD) || isFoodType(stack, Items.SALMON)) ||
+                    wolf.isCookedFish() && (
+                            isFoodType(stack, Items.COOKED_COD) || isFoodType(stack, Items.COOKED_SALMON)) ||
+                    wolf.isSpecialFish() && (
+                            isFoodType(stack, Items.PUFFERFISH) || isFoodType(stack, Items.TROPICAL_FISH));
         }
     }
 
     public static boolean isBone(ItemStack stack) {
-        return isFoodType(stack, Items.BONE);
+        return Items.BONE.equals(stack.getItem());
     }
 
     protected static boolean isFoodType(ItemStack stack, Item item) {
-        return stack.getItem().equals(item);
-    }
-
-    protected static boolean isFoodType(ItemStack stack, String name) {
-        return stack.getItem().getUnlocalizedName().equals("item." + name);
+        return item.equals(stack.getItem());
     }
 
     public static int getHealPoints(ItemStack stack) {
         if (FoodHelper.isBone(stack)) {
             return 1;
         } else if (isFoodItem(stack)) {
-            ItemFood foodItem = (ItemFood) stack.getItem();
-
-            //checks static FurnaceRecipes for cooked version of held food
-            ItemStack cookedStack = FurnaceRecipes.instance().getSmeltingResult(stack);
-            if (cookedStack != null && cookedStack.getItem() instanceof ItemFood) {
-                ItemFood foodCooked = (ItemFood) cookedStack.getItem();
-                if (foodCooked.getHealAmount(cookedStack) > foodItem.getHealAmount(stack)) {
-                    foodItem = (ItemFood) cookedStack.getItem(); //sets ID to cooked version of food if it exists
-                }
-            }
-
             if (isWolfFood(stack)) {
-                return foodItem.getHealAmount(stack);
+                return stack.getFoodProperties(null).getNutrition();
             } else {
                 return 0;
             }
-        } else {
-            return 0;
         }
+        return 0;
     }
+
 }
