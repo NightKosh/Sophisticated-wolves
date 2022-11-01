@@ -79,6 +79,7 @@ public class DogBowlScreen extends AbstractContainerScreen<DogBowlContainerMenu>
     public void render(PoseStack pPoseStack, int mouseX, int mouseY, float delta) {
         renderBackground(pPoseStack);
         super.render(pPoseStack, mouseX, mouseY, delta);
+        renderTooltip(pPoseStack, mouseX, mouseY);
     }
 
 }
