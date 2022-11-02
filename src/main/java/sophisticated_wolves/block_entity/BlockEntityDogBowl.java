@@ -62,13 +62,11 @@ public class BlockEntityDogBowl extends BlockEntity implements MenuProvider {
     }
 
     private void amountOfFoodChanged() {
-        var bowlType = BlockDogBowl.EnumDogBowl.getTypeByFood(foodAmount);
-
-        if (this.getBlockState().getValue(BlockDogBowl.FOOD_LEVEL) != bowlType.ordinal()) {
-            this.getLevel().setBlockAndUpdate(
-                    this.getBlockPos(),
-                    this.getBlockState().setValue(BlockDogBowl.FOOD_LEVEL, bowlType.ordinal()));
-        }
+        this.getLevel().setBlockAndUpdate(
+                this.getBlockPos(),
+                this.getBlockState().setValue(
+                        BlockDogBowl.FOOD_LEVEL,
+                        BlockDogBowl.EnumDogBowl.getTypeByFood(foodAmount).ordinal()));
     }
 
     @Override
