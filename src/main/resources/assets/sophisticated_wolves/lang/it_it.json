@@ -19,9 +19,18 @@
   "sophisticated_wolves.wolf_type.brown" : "Marrone",
 
   "sophisticated_wolves.cat_type.ocelot" : "Ocelot",
-  "sophisticated_wolves.cat_type.black" : "Nero",
+
+  "sophisticated_wolves.cat_type.tabby" : "Tabby",
+  "sophisticated_wolves.cat_type.black" : "Tuxedo",
   "sophisticated_wolves.cat_type.red" : "Rosso",
   "sophisticated_wolves.cat_type.siamese" : "Siamese",
+  "sophisticated_wolves.cat_type.british_shorthair" : "British Shorthair",
+  "sophisticated_wolves.cat_type.calico" : "Calico",
+  "sophisticated_wolves.cat_type.persian" : "Persian",
+  "sophisticated_wolves.cat_type.ragdoll" : "Ragdoll",
+  "sophisticated_wolves.cat_type.white" : "White",
+  "sophisticated_wolves.cat_type.jellie" : "Jellie",
+  "sophisticated_wolves.cat_type.all_black" : "Nero",
 
   "sophisticated_wolves.rabbit_type.0" : "Marrone",
   "sophisticated_wolves.rabbit_type.1" : "Bianco",

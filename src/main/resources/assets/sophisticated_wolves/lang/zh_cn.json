@@ -19,9 +19,18 @@
   "sophisticated_wolves.wolf_type.brown" : "棕色",
 
   "sophisticated_wolves.cat_type.ocelot" : "山猫",
-  "sophisticated_wolves.cat_type.black" : "黑色",
+
+  "sophisticated_wolves.cat_type.tabby" : "Tabby",
+  "sophisticated_wolves.cat_type.black" : "Tuxedo",
   "sophisticated_wolves.cat_type.red" : "红色",
   "sophisticated_wolves.cat_type.siamese" : "暹罗",
+  "sophisticated_wolves.cat_type.british_shorthair" : "British Shorthair",
+  "sophisticated_wolves.cat_type.calico" : "Calico",
+  "sophisticated_wolves.cat_type.persian" : "Persian",
+  "sophisticated_wolves.cat_type.ragdoll" : "Ragdoll",
+  "sophisticated_wolves.cat_type.white" : "White",
+  "sophisticated_wolves.cat_type.jellie" : "Jellie",
+  "sophisticated_wolves.cat_type.all_black" : "黑色",
 
   "sophisticated_wolves.rabbit_type.0" : "棕色",
   "sophisticated_wolves.rabbit_type.1" : "白色",

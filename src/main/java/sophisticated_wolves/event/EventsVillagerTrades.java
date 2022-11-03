@@ -2,6 +2,7 @@ package sophisticated_wolves.event;
 
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.util.RandomSource;
+import net.minecraft.world.entity.animal.Cat;
 import net.minecraft.world.entity.animal.Chicken;
 import net.minecraft.world.entity.animal.Parrot;
 import net.minecraft.world.entity.animal.Rabbit;
@@ -74,11 +75,11 @@ public class EventsVillagerTrades {
                     new ItemStack(Items.EMERALD, rand.nextInt(30, 40)),
                     getCarrierForTrade(SophisticatedWolf.class, rand),
                     10, 8, 0.02F));
-            //TODO
-//            trades.get(4).add((trader, rand) -> new MerchantOffer(
-//                    new ItemStack(Items.EMERALD, rand.nextInt(30, 40)),
-//                    getCarrierForTrade(Cat.class, rand),
-//                    10, 8, 0.02F));
+
+            trades.get(4).add((trader, rand) -> new MerchantOffer(
+                    new ItemStack(Items.EMERALD, rand.nextInt(30, 40)),
+                    getCarrierForTrade(Cat.class, rand),
+                    10, 8, 0.02F));
             //TODO Ocelot
         }
     }
