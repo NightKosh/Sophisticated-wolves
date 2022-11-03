@@ -2,6 +2,7 @@ package sophisticated_wolves.entity;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.Component;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
@@ -57,7 +58,7 @@ import javax.annotation.Nullable;
 public class SophisticatedWolf extends AEntitySophisticatedWolf {
 
     public static final int DEFAULT_WILD_WOLF_HEALTH = 8;
-    public static final int DEFAULT_TAMED_WOLF_HEALTH = 20;
+    public static final int DEFAULT_TAMED_WOLF_HEALTH = 30;
 
     private static final EntityDataAccessor<Integer> WOLF_SPECIES =
             SynchedEntityData.defineId(SophisticatedWolf.class, EntityDataSerializers.INT);
@@ -79,6 +80,7 @@ public class SophisticatedWolf extends AEntitySophisticatedWolf {
     public SophisticatedWolf(EntityType<? extends Wolf> entityType, Level level) {
         super(entityType, level);
     }
+
 
     @Override
     protected void registerGoals() {
@@ -117,39 +119,19 @@ public class SophisticatedWolf extends AEntitySophisticatedWolf {
         this.targetSelector.addGoal(8, new ResetUniversalAngerTargetGoal<>(this, true));
     }
 
-//TODO
-//    @Override
-//    protected void entityInit() {
-//        super.entityInit();
-//        this.getEntityData().register(WOLF_SPECIES, 0);
-//    }
-
     public static AttributeSupplier createAttributeSupplier() {
         return Mob.createMobAttributes()
                 .add(Attributes.MOVEMENT_SPEED, 0.4)
-                //TODO IllegalStateException: Cannot get config value before config is loaded.
-                //.add(Attributes.MAX_HEALTH, SWConfiguration.wolvesHealthWild.get())
                 .add(Attributes.MAX_HEALTH, SophisticatedWolf.DEFAULT_WILD_WOLF_HEALTH)
-                .add(Attributes.ATTACK_DAMAGE, 2)
+                .add(Attributes.ATTACK_DAMAGE, 3)
                 .build();
     }
 
     @Override
     protected void defineSynchedData() {
         super.defineSynchedData();
-        this.entityData.define(WOLF_SPECIES, 0);
+        this.getEntityData().define(WOLF_SPECIES, 0);
     }
-
-//TODO
-//    @Override
-//    protected void applyEntityAttributes() {
-//        super.applyEntityAttributes();
-//        this.getAttribute(Attributes.MOVEMENT_SPEED).setBaseValue(0.4);
-//        this.getAttribute(Attributes.MAX_HEALTH).setBaseValue(this.isTame() ?
-//                SWConfiguration.wolvesHealthTamed :
-//                SWConfiguration.wolvesHealthWild);
-//    }
-
 
     @Nullable
     public SpawnGroupData finalizeSpawn(
@@ -358,7 +340,7 @@ public class SophisticatedWolf extends AEntitySophisticatedWolf {
         } else if (stack.getItem() == Items.BONE && !this.isAngry()) {
             var result = super.mobInteract(player, hand);
             if (this.isTame() && !this.getLevel().isClientSide()) {
-                this.setHealth(SWConfiguration.WOLVES_HEALTH_TAMED.get());
+//                this.setHealth(SWConfiguration.WOLVES_HEALTH_TAMED.get());
             }
 
             return result;
@@ -384,10 +366,14 @@ public class SophisticatedWolf extends AEntitySophisticatedWolf {
     @Override
     public void setTame(boolean tamed) {
         super.setTame(tamed);
-
-        this.getAttribute(Attributes.MAX_HEALTH).setBaseValue(tamed ?
-                SWConfiguration.WOLVES_HEALTH_TAMED.get() :
-                SWConfiguration.WOLVES_HEALTH_WILD.get());
+        //Used only to override default max health at spawn in case it was changed in configs
+        if (tamed) {
+            this.getAttribute(Attributes.MAX_HEALTH).setBaseValue(SWConfiguration.WOLVES_HEALTH_TAMED.get());
+            this.setHealth(SWConfiguration.WOLVES_HEALTH_TAMED.get());
+        } else {
+            this.getAttribute(Attributes.MAX_HEALTH).setBaseValue(SWConfiguration.WOLVES_HEALTH_WILD.get());
+            this.setHealth(SWConfiguration.WOLVES_HEALTH_WILD.get());
+        }
     }
 
     @Override
@@ -400,7 +386,6 @@ public class SophisticatedWolf extends AEntitySophisticatedWolf {
             wolf.setOwnerUUID(ownerId);
             wolf.setTame(true);
         }
-        wolf.setHealth(SWConfiguration.WOLVES_HEALTH_TAMED.get()); //setting puppy health
         return wolf;
     }
 
