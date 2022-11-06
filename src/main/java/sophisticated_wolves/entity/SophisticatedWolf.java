@@ -1,6 +1,7 @@
 package sophisticated_wolves.entity;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.syncher.EntityDataAccessor;
@@ -9,11 +10,15 @@ import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.util.Mth;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.effect.MobEffect;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.AgeableMob;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.MobSpawnType;
@@ -34,14 +39,18 @@ import net.minecraft.world.entity.monster.Creeper;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.alchemy.Potion;
+import net.minecraft.world.item.alchemy.PotionUtils;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
+import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.Tags;
 import sophisticated_wolves.FoodHelper;
 import sophisticated_wolves.core.SWConfiguration;
 import sophisticated_wolves.api.AEntitySophisticatedWolf;
 import sophisticated_wolves.api.EnumWolfSpecies;
 import sophisticated_wolves.core.SWEntities;
+import sophisticated_wolves.core.SWItems;
 import sophisticated_wolves.entity.ai.*;
 import sophisticated_wolves.gui.WolfFoodConfigScreen;
 import sophisticated_wolves.item.ItemDogTag;
@@ -62,8 +71,7 @@ public class SophisticatedWolf extends AEntitySophisticatedWolf {
 
     private static final EntityDataAccessor<Integer> WOLF_SPECIES =
             SynchedEntityData.defineId(SophisticatedWolf.class, EntityDataSerializers.INT);
-    private static final int POTION_POISON_ID = 19;
-    private static final int POTION_WITHER_ID = 20;
+
     protected boolean rottenMeatAndBones;
     protected boolean rawMeat;
     protected boolean rawFish;
@@ -230,89 +238,87 @@ public class SophisticatedWolf extends AEntitySophisticatedWolf {
         }
     }
 
-//TODO
-//    @Override
-//    public void onLivingUpdate() {
-//        super.onLivingUpdate();
-//
-//        //Stops tamed wolves from being angry at the player
-//        if (this.isTame()) {
-//            this.stopBeingAngry();
-//        }
-//    }
+    @Override
+    public void tick() {
+        //TODO rewrite ??
+        //Stops tamed wolves from being angry at the player
+        if (this.isTame()) {
+            this.stopBeingAngry();
+        }
+        //Checks if wolf is burning and not currently standing in fire or if wolf is poison
+        if (!this.isWet() &&
+                (//TODO (this.isOnFire() && !this.getLevel().isFlammableWithin(this.getBoundingBox().contract(0.001, 0.001, 0.001))) ||
+                        (this.hasEffect(MobEffects.POISON) || this.hasEffect(MobEffects.WITHER)))) {
+            this.isShaking = true;
+            this.shakeAnim = 0;
+            this.shakeAnimO = 0;
+            this.isWet = true;
+        }
 
-//TODO
-//    @Override
-//    public void onUpdate() {
-//        //Checks if wolf is burning and not currently standing in fire or if wolf is poison
-//        if (!this.isWet() &&
-//                ((this.isOnFire() && !this.getLevel().isFlammableWithin(this.getBoundingBox().contract(0.001, 0.001, 0.001))) ||
-//                        (this.isPotionActive(Potion.REGISTRY.getObjectById(POTION_POISON_ID)) ||
-//                                this.isPotionActive(Potion.REGISTRY.getObjectById(POTION_WITHER_ID))))) {
-//            this.isShaking = true;
-//            this.timeWolfIsShaking = 0;
-//            this.prevTimeWolfIsShaking = 0;
-//            this.isWet = true;
-//        }
-//
-//        if (!this.isWet()) {
-//            if (this.timeWolfIsShaking == 0) {
-//                //checks if burning/poisoned/wet and sets variables
-//                if (this.isOnFire()) {
-//                    this.playSound(SoundEvents.WOLF_SHAKE, this.getSoundVolume(),
-//                            (this.getRandom().nextFloat() - this.getRandom().nextFloat()) * 0.2F + 1);
-//                } else if (this.isPotionActive(Potion.REGISTRY.getObjectById(POTION_POISON_ID)) || this.isPotionActive(Potion.REGISTRY.getObjectById(POTION_WITHER_ID))) {
-//                    this.puking = true;
-//                } else {
-//                    this.playSound(SoundEvents.WOLF_SHAKE, this.getSoundVolume(),
-//                            (this.getRandom().nextFloat() - this.getRandom().nextFloat()) * 0.2F + 1);
-//                }
-//            }
-//
-//            if (this.prevTimeWolfIsShaking >= 1.95) {
-//                //extinguishing added
-//                if (this.isOnFire()) {
-//                    this.clearFire();
-//                    this.playSound(SoundEvents.FIRE_EXTINGUISH, 0.7F,
-//                            1.6F + (this.getRandom().nextFloat() - this.getRandom().nextFloat()) * 0.4F);
-//                }
-//                if (this.puking) {
-//                    this.clearActivePotions();
-//                    this.puking = false;
-//                }
-//            }
-//            if (this.timeWolfIsShaking > 0.35) {
-//                if (this.isOnFire()) {
-//                    this.spawnTamingParticles(false); //generates smoke particles while shaking
-//                }
-//                if (!this.puking) {
-//                    Vec3 movement = this.getDeltaMovement();
-//                    float var1 = (float) this.getBoundingBox().minY;
-//                    int var2 = (int) (Mth.sin((this.timeWolfIsShaking - 0.4F) * (float) Math.PI) * 7);
-//
-//                    for (int var3 = 0; var3 < var2; ++var3) {
-//                        float var4 = (this.getRandom().nextFloat() * 2 - 1) * this.getBbWidth() * 0.5F;
-//                        float var5 = (this.getRandom().nextFloat() * 2 - 1) * this.getBbWidth() * 0.5F;
-//                        this.getLevel().addParticle(ParticleTypes.SPLASH,
-//                                this.getX() + var4, var1 + 0.8, this.getZ() + var5,
-//                                movement.x(), movement.y(), movement.z());
-//                    }
-//                }
-//            }
-//        }
-//        if (this.isDrowning) {
-//            if (this.drownCount > 0) {
-//                this.drownCount--;
-//            } else {
-//                this.isDrowning = false;
-//            }
-//        }
-//        super.onUpdate();
-//    }
+        if (!this.isWet()) {
+            if (this.shakeAnim == 0) {
+                //checks if burning/poisoned/wet and sets variables
+                if (this.isOnFire()) {
+                    this.playSound(SoundEvents.WOLF_SHAKE, this.getSoundVolume(),
+                            //TODO wtf???
+                            (this.getRandom().nextFloat() - this.getRandom().nextFloat()) * 0.2F + 1);
+                } else if (this.hasEffect(MobEffects.POISON) || this.hasEffect(MobEffects.WITHER)) {
+                    this.puking = true;
+                } else {
+                    this.playSound(SoundEvents.WOLF_SHAKE, this.getSoundVolume(),
+                            //TODO wtf???
+                            (this.getRandom().nextFloat() - this.getRandom().nextFloat()) * 0.2F + 1);
+                }
+            }
+
+            if (this.shakeAnimO >= 1.95) {
+                //extinguishing added
+                if (this.isOnFire()) {
+                    this.clearFire();
+                    this.playSound(SoundEvents.FIRE_EXTINGUISH, this.getSoundVolume(),
+                            //TODO wtf???
+                            1.6F + (this.getRandom().nextFloat() - this.getRandom().nextFloat()) * 0.4F);
+                }
+                if (this.puking) {
+                    this.removeEffect(MobEffects.POISON);
+                    this.removeEffect(MobEffects.WITHER);
+                    this.puking = false;
+                }
+            }
+            if (this.shakeAnim > 0.35) {
+                if (this.isOnFire()) {
+                    this.spawnTamingParticles(false); //generates smoke particles while shaking
+                }
+                if (!this.puking) {
+                    var moveVec = this.getDeltaMovement();
+                    var y = this.getBoundingBox().minY + 0.8;
+                    var halfWidth = this.getBbWidth() * 0.5F;
+                    int var2 = (int) (Mth.sin((this.shakeAnim - 0.4F) * (float) Math.PI) * 7);
+
+                    for (int i = 0; i < var2; i++) {
+                        float dx = (this.getRandom().nextFloat() * 2 - 1) * halfWidth;
+                        float dz = (this.getRandom().nextFloat() * 2 - 1) * halfWidth;
+                        this.getLevel().addParticle(
+                                ParticleTypes.SPLASH,
+                                this.getX() + dx, y, this.getZ() + dz,
+                                moveVec.x(), moveVec.y(), moveVec.z());
+                    }
+                }
+            }
+        }
+        if (this.isDrowning) {
+            if (this.drownCount > 0) {
+                this.drownCount--;
+            } else {
+                this.isDrowning = false;
+            }
+        }
+        super.tick();
+    }
 
     @Override
     public InteractionResult mobInteract(Player player, InteractionHand hand) {
-        ItemStack stack = player.getItemInHand(hand);
+        var stack = player.getItemInHand(hand);
 
         if (this.isTame()) {
             if (FoodHelper.isFoodItem(stack) && this.getHealth() < SWConfiguration.WOLVES_HEALTH_TAMED.get()) {
@@ -324,13 +330,9 @@ public class SophisticatedWolf extends AEntitySophisticatedWolf {
                     }
 
                     this.heal(hp);
-                    //TODO
-                    //this.aiSit.setSitting(this.isInSittingPose());setOrderedToSit(true)
                     return InteractionResult.SUCCESS;
                 }
             } else if (stack.getItem() instanceof ItemDogTag || stack.getItem() instanceof ItemPetCarrier) {
-                //TODO
-                //this.aiSit.setSitting(this.isInSittingPose());
                 return InteractionResult.FAIL;
             } else if (FoodHelper.isBone(stack)) {
                 Minecraft.getInstance().setScreen(new WolfFoodConfigScreen(this));
@@ -340,7 +342,7 @@ public class SophisticatedWolf extends AEntitySophisticatedWolf {
         } else if (stack.getItem() == Items.BONE && !this.isAngry()) {
             var result = super.mobInteract(player, hand);
             if (this.isTame() && !this.getLevel().isClientSide()) {
-//                this.setHealth(SWConfiguration.WOLVES_HEALTH_TAMED.get());
+                this.setHealth(SWConfiguration.WOLVES_HEALTH_TAMED.get());
             }
 
             return result;
@@ -405,25 +407,21 @@ public class SophisticatedWolf extends AEntitySophisticatedWolf {
 //        return !this.isTame() && SWConfiguration.respawningWolves && this.ticksExisted > 5000;
 //    }
 
-    //TODO
     //Custom functions below here
-    public boolean isFavoriteFood(ItemStack itemstack) {
-//        if (itemstack == null) {
-            return false;
-//        }
-//        if (itemstack.getItem() instanceof ItemFood itemFood) {
-//            return this.getHealth() < SWConfiguration.wolvesHealthTamed && (itemFood.isWolfsFavoriteMeat() ||
-//                    itemstack.getItem().equals(Items.COD) ||
-//                    itemstack.getItem().equals(Items.SALMON) ||
-//                    itemstack.getItem().equals(Items.COOKED_COD) ||
-//                    itemstack.getItem().equals(Items.COOKED_SALMON));
-//        } else {
-//            return itemstack.getItem().equals(SWItems.DOG_TREAT) && getGrowingAge() == 0;
-//        }
+    public boolean isInterestingItem(ItemStack stack) {
+        if (stack != null && !stack.isEmpty()) {
+            if (this.getHealth() < SWConfiguration.WOLVES_HEALTH_TAMED.get() && FoodHelper.isWolfFood(this, stack)) {
+                 return true;
+            } else {
+                return stack.getItem().equals(SWItems.getDogTreat()) && this.getAge() == 0;
+            }
+        }
+
+        return false;
     }
 
     //checks for creepers nearby
-    public boolean creeperAlert() {
+    private boolean creeperAlert() {
         var list = this.level.getEntitiesOfClass(
                 Creeper.class, this.getBoundingBox().expandTowards(16, 4, 16));
         if (!list.isEmpty()) {
@@ -498,13 +496,13 @@ public class SophisticatedWolf extends AEntitySophisticatedWolf {
         }
     }
 
-    //TODO
-//    @Override
-//    public void applyEntityCollision(Entity entity) {
-//        if (!(SWConfiguration.wolvesWalksThroughEachOther && entity instanceof SophisticatedWolf)) {
-//            super.applyEntityCollision(entity);
-//        }
-//    }
+    @Override
+    public boolean canCollideWith(Entity entity) {
+        if (SWConfiguration.WOLVES_WALKS_THROUGH_EACH_OTHER.get() && entity instanceof SophisticatedWolf) {
+            return false;
+        }
+        return super.canCollideWith(entity);
+    }
 
     public boolean isDrowning() {
         return isDrowning;
@@ -522,16 +520,10 @@ public class SophisticatedWolf extends AEntitySophisticatedWolf {
         return 5;
     }
 
-    //TODO
-//    @Override
-//    public boolean isWet() {
-//        return super.isWet() || this.getLevel().handleMaterialAcceleration(
-//                this.getBoundingBox()
-//                        .expandTowards(0, -0.25, 0)
-//                        .contract(0.001, 0.001, 0.001),
-//                Material.WATER,
-//                this);
-//    }
+    @Override
+    public boolean isWet() {
+        return super.isWet() || this.isInWater();
+    }
 
     @Override
     protected float getWaterSlowDown() {

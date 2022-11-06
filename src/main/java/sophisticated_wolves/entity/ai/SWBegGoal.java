@@ -97,7 +97,7 @@ public class SWBegGoal extends Goal {
             if (!this.wolf.isTame() && Items.BONE.equals(itemstack.getItem())) {
                 return true;
             } else {
-                return this.wolf.isTame() && this.wolf.isFavoriteFood(itemstack);
+                return this.wolf.isTame() && this.wolf.isInterestingItem(itemstack);
             }
         }
 
