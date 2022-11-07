@@ -7,6 +7,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.ItemStack;
@@ -32,6 +33,7 @@ import org.jetbrains.annotations.Nullable;
 import sophisticated_wolves.block_entity.BlockEntityDogBowl;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Sophisticated Wolves
@@ -159,16 +161,24 @@ public class BlockDogBowl extends BaseEntityBlock {
     }
 
     @Override
-    public BlockState getStateForPlacement(BlockPlaceContext context) {
-        var item = context.getItemInHand();
-        var state = this.defaultBlockState();
-        if (item.hasTag()) {
-            var tag = item.getTag();
-            if (tag.contains("FoodLevel")) {
-                state = state.setValue(FOOD_LEVEL, tag.getInt("FoodLevel"));
+    public void setPlacedBy(Level level, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack stack) {
+        super.setPlacedBy(level, pos, state, placer, stack);
+
+        var tileEntity = (BlockEntityDogBowl) level.getBlockEntity(pos);
+        if (tileEntity != null) {
+            Integer foodAmount = null;
+
+            if (stack != null && stack.hasTag()) {
+                var tag = stack.getTag();
+                if (tag != null && tag.contains("FoodAmount")) {
+                    foodAmount = tag.getInt("FoodAmount");
+                }
             }
+
+            tileEntity.setFoodAmount(foodAmount == null ?
+                    EnumDogBowl.getById(state.getValue(FOOD_LEVEL)).getAmountOfFood() :
+                    foodAmount);
         }
-        return state;
     }
 
 }
