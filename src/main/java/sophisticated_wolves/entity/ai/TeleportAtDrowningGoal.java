@@ -19,6 +19,9 @@ public class TeleportAtDrowningGoal extends Goal {
     protected Level level;
     protected PathNavigation petPathfinder;
 
+    private boolean isDrowning = false;
+    private int drownCount = 0;
+
     public TeleportAtDrowningGoal(SophisticatedWolf animal) {
         this.wolf = animal;
         this.level = animal.getLevel();
@@ -27,15 +30,12 @@ public class TeleportAtDrowningGoal extends Goal {
 
     @Override
     public boolean canUse() {
-        return this.wolf.isDrowning() &&
-                this.wolf.isInWater() &&
-                this.wolf.isTame() &&
-                this.wolf.getOwner() != null;
+        return canContinueToUse();
     }
 
     @Override
     public boolean canContinueToUse() {
-        return this.wolf.isDrowning() &&
+        return this.isDrowning &&
                 this.wolf.isInWater() &&
                 this.wolf.isTame() &&
                 this.wolf.getOwner() != null;
@@ -47,7 +47,7 @@ public class TeleportAtDrowningGoal extends Goal {
 
     @Override
     public void stop() {
-        this.wolf.setDrowning(false);
+        this.setDrowning(false);
     }
 
     @Override
@@ -68,6 +68,11 @@ public class TeleportAtDrowningGoal extends Goal {
                 }
             }
         }
+    }
+
+    public void setDrowning(boolean isDrowning) {
+        this.isDrowning = isDrowning;
+        this.drownCount = isDrowning ? 30 : 0;
     }
 
 }

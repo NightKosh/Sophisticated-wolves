@@ -75,6 +75,7 @@ public class SophisticatedWolf extends AEntitySophisticatedWolf {
             SynchedEntityData.defineId(SophisticatedWolf.class, EntityDataSerializers.INT);
 
     protected ShakeIfBurnOrPoisonGoal shakeGoal;
+    protected TeleportAtDrowningGoal drowngGoal;
 
     protected boolean rottenMeatAndBones;
     protected boolean rawMeat;
@@ -84,18 +85,14 @@ public class SophisticatedWolf extends AEntitySophisticatedWolf {
     protected boolean cookedFish;
     protected boolean anyFood;
 
-    //New Sophisticated Wolves variables
-    private boolean isDrowning = false;
-    private int drownCount = 0;
-
     public SophisticatedWolf(EntityType<? extends Wolf> entityType, Level level) {
         super(entityType, level);
     }
 
-
     @Override
     protected void registerGoals() {
         shakeGoal = new ShakeIfBurnOrPoisonGoal(this);
+        drowngGoal = new TeleportAtDrowningGoal(this);
 
         this.goalSelector.addGoal(1, new FloatGoal(this));
         this.goalSelector.addGoal(1, new Wolf.WolfPanicGoal(1.5D));
@@ -109,7 +106,7 @@ public class SophisticatedWolf extends AEntitySophisticatedWolf {
         this.goalSelector.addGoal(22, new MoveCancelGoal(this, 6)); //new behavior
         this.goalSelector.addGoal(25, new SWFollowOwnerGoal(this, 1, 6, 2)); //new behavior. changed 10 to 6
         this.goalSelector.addGoal(27, new AvoidFireGoal(this, 1, 1.4)); //new behavior
-        this.goalSelector.addGoal(28, new TeleportAtDrowningGoal(this)); //new behavior
+        this.goalSelector.addGoal(28, drowngGoal); //new behavior
         this.goalSelector.addGoal(29, new BreedGoal(this, 1));
         this.goalSelector.addGoal(30, new WaterAvoidingRandomStrollGoal(this, 1));
         this.goalSelector.addGoal(31, new FeedFromBowlGoal(this)); //new behavior
@@ -280,13 +277,6 @@ public class SophisticatedWolf extends AEntitySophisticatedWolf {
                     this.isShaking = false;
                     this.shakeAnimO = 0;
                     this.shakeAnim = 0;
-                }
-            }
-            if (this.isDrowning) {
-                if (this.drownCount > 0) {
-                    this.drownCount--;
-                } else {
-                    this.isDrowning = false;
                 }
             }
         }
@@ -465,8 +455,8 @@ public class SophisticatedWolf extends AEntitySophisticatedWolf {
                 (SWConfiguration.IMMUNE_TO_CACTI.get() && damageSource.equals(DamageSource.CACTUS))) {
             return false;
         } else {
-            if (damageSource.equals(DamageSource.DROWN)) {
-                this.setDrowning(true);
+            if (damageSource.equals(DamageSource.DROWN) && this.drowngGoal != null) {
+                this.drowngGoal.setDrowning(true);
             }
             return super.hurt(damageSource, amount);
         }
@@ -478,17 +468,6 @@ public class SophisticatedWolf extends AEntitySophisticatedWolf {
             return false;
         }
         return super.canCollideWith(entity);
-    }
-
-    public boolean isDrowning() {
-        return isDrowning;
-    }
-
-    public void setDrowning(boolean isDrowning) {
-        this.isDrowning = isDrowning;
-        if (isDrowning) {
-            this.drownCount = 30;
-        }
     }
 
     @Override
@@ -504,10 +483,6 @@ public class SophisticatedWolf extends AEntitySophisticatedWolf {
     @Override
     protected float getWaterSlowDown() {
         return 1;
-    }
-
-    public boolean isShaking() {
-        return this.isShaking;
     }
 
     public boolean isRottenMeatAndBones() {
