@@ -6,7 +6,7 @@ import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
-import sophisticated_wolves.FoodHelper;
+import sophisticated_wolves.util.FoodUtils;
 import sophisticated_wolves.core.SWConfiguration;
 import sophisticated_wolves.entity.SophisticatedWolf;
 
@@ -43,8 +43,8 @@ public class FeedGoal extends Goal {
                             this.pet.getX() + 30, this.pet.getY() + 30, this.pet.getZ() + 30));
             for (ItemEntity foodEntity : foodList) {
                 ItemStack stack = foodEntity.getItem();
-                if ((FoodHelper.isFoodItem(stack) || FoodHelper.isBone(stack)) &&
-                        FoodHelper.isWolfFood(pet, stack)) {
+                if ((FoodUtils.isFoodItem(stack) || FoodUtils.isBone(stack)) &&
+                        FoodUtils.isWolfFood(pet, stack)) {
                     this.foodEntity = foodEntity;
                     return true;
                 }
@@ -72,7 +72,7 @@ public class FeedGoal extends Goal {
                 this.pet.getLookControl().setLookAt(
                         this.foodEntity.getX(), this.foodEntity.getY(), this.foodEntity.getZ(),
                         0.25F, 0.25F);
-                this.pet.heal(FoodHelper.getHealPoints(this.foodEntity.getItem()));
+                this.pet.heal(FoodUtils.getHealPoints(this.foodEntity.getItem()));
                 this.foodEntity.getItem().shrink(1);
                 if (this.foodEntity.getItem().isEmpty() || this.pet.getHealth() >= SWConfiguration.WOLVES_HEALTH_TAMED.get()) {
                     if (this.foodEntity.getItem().isEmpty()) {

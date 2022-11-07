@@ -47,7 +47,7 @@ public class ShakeIfBurnOrPoisonGoal extends Goal {
      */
     @Override
     public boolean canContinueToUse() {
-        if (this.wolf.isWet()) {//not wet & not in water
+        if (this.wolf.isWet() || this.wolf.isInWater()) {
             return false;
         }
         if (this.wolf.isOnFire() && !LevelUtils.containsAnyInFire(

@@ -1,4 +1,4 @@
-package sophisticated_wolves;
+package sophisticated_wolves.util;
 
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -11,7 +11,7 @@ import sophisticated_wolves.entity.SophisticatedWolf;
  * @author NightKosh
  * @license Lesser GNU Public License v3 (http://www.gnu.org/licenses/lgpl.html)
  */
-public class FoodHelper {
+public class FoodUtils {
 
     public static boolean isFoodItem(ItemStack stack) {
         return stack.getFoodProperties(null) != null;
@@ -59,7 +59,7 @@ public class FoodHelper {
     }
 
     public static int getHealPoints(ItemStack stack) {
-        if (FoodHelper.isBone(stack)) {
+        if (FoodUtils.isBone(stack)) {
             return 1;
         } else if (isFoodItem(stack)) {
             if (isWolfFood(stack)) {

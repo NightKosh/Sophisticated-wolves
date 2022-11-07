@@ -46,7 +46,7 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraftforge.common.Tags;
-import sophisticated_wolves.FoodHelper;
+import sophisticated_wolves.util.FoodUtils;
 import sophisticated_wolves.api.AEntitySophisticatedWolf;
 import sophisticated_wolves.api.EnumWolfSpecies;
 import sophisticated_wolves.core.SWConfiguration;
@@ -288,8 +288,8 @@ public class SophisticatedWolf extends AEntitySophisticatedWolf {
         var stack = player.getItemInHand(hand);
 
         if (this.isTame()) {
-            if (FoodHelper.isFoodItem(stack) && this.getHealth() < SWConfiguration.WOLVES_HEALTH_TAMED.get()) {
-                int hp = FoodHelper.getHealPoints(stack);
+            if (FoodUtils.isFoodItem(stack) && this.getHealth() < SWConfiguration.WOLVES_HEALTH_TAMED.get()) {
+                int hp = FoodUtils.getHealPoints(stack);
 
                 if (hp > 0) {
                     if (!player.getAbilities().instabuild) {
@@ -301,7 +301,7 @@ public class SophisticatedWolf extends AEntitySophisticatedWolf {
                 }
             } else if (stack.getItem() instanceof ItemDogTag || stack.getItem() instanceof ItemPetCarrier) {
                 return InteractionResult.FAIL;
-            } else if (FoodHelper.isBone(stack)) {
+            } else if (FoodUtils.isBone(stack)) {
                 Minecraft.getInstance().setScreen(new WolfFoodConfigScreen(this));
                 stack.shrink(1);
                 return InteractionResult.SUCCESS;
@@ -377,7 +377,7 @@ public class SophisticatedWolf extends AEntitySophisticatedWolf {
     //Custom functions below here
     public boolean isInterestingItem(ItemStack stack) {
         if (stack != null && !stack.isEmpty()) {
-            if (this.getHealth() < SWConfiguration.WOLVES_HEALTH_TAMED.get() && FoodHelper.isWolfFood(this, stack)) {
+            if (this.getHealth() < SWConfiguration.WOLVES_HEALTH_TAMED.get() && FoodUtils.isWolfFood(this, stack)) {
                 return true;
             } else {
                 return stack.getItem().equals(SWItems.getDogTreat()) && this.getAge() == 0;
@@ -473,11 +473,6 @@ public class SophisticatedWolf extends AEntitySophisticatedWolf {
     @Override
     protected int getFireImmuneTicks() {
         return 5;
-    }
-
-    @Override
-    public boolean isWet() {
-        return super.isWet() || this.isInWater();
     }
 
     @Override

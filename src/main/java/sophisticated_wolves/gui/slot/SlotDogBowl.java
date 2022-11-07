@@ -3,7 +3,7 @@ package sophisticated_wolves.gui.slot;
 import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
-import sophisticated_wolves.FoodHelper;
+import sophisticated_wolves.util.FoodUtils;
 import sophisticated_wolves.block.BlockDogBowl;
 import sophisticated_wolves.block_entity.BlockEntityDogBowl;
 
@@ -42,7 +42,7 @@ public class SlotDogBowl extends Slot {
     @Override
     public boolean mayPlace(ItemStack stack) {
         return bodBowl.getFoodAmount() < BlockDogBowl.EnumDogBowl.FULL.getAmountOfFood() &&
-                (FoodHelper.isFoodItem(stack) || FoodHelper.isBone(stack));
+                (FoodUtils.isFoodItem(stack) || FoodUtils.isBone(stack));
     }
 
     @Override
@@ -51,7 +51,7 @@ public class SlotDogBowl extends Slot {
     }
 
     private int getFoodAmount(ItemStack stack) {
-        return FoodHelper.getHealPoints(stack);
+        return FoodUtils.getHealPoints(stack);
     }
 
 }
