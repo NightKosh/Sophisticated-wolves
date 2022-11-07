@@ -1,8 +1,6 @@
 package sophisticated_wolves.entity.ai;
 
-import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.sounds.SoundEvents;
-import net.minecraft.util.Mth;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.entity.ai.navigation.PathNavigation;
@@ -92,7 +90,7 @@ public class ShakeGoal extends Goal {
      * Updates the task
      */
     @Override
-    //TODO fix particles and shake animation
+    //TODO shake animation
     public void tick() {
         if (this.wolf.shakeAnim == 0) {
             if (this.isBurning) {
@@ -103,27 +101,16 @@ public class ShakeGoal extends Goal {
         }
         if (this.wolf.shakeAnim > 0.35) {
             if (this.isBurning) {
-                var moveVec = this.wolf.getDeltaMovement();
-
-                for (int i = 0; i < 7; i++) {
-                    this.level.addParticle(
-                            ParticleTypes.SMOKE,
-                            this.wolf.getRandomX(1),
-                            this.wolf.getRandomY() + 0.5,
-                            this.wolf.getRandomZ(1),
-                            moveVec.x(), moveVec.y(), moveVec.z());
-                }
+                this.level.broadcastEntityEvent(this.wolf, this.wolf.EXTINGUISH_EVENT_ID);
             }
         }
         if (this.wolf.shakeAnimO >= 1.95) {
             if (this.isBurning) {
                 this.wolf.clearFire();
                 this.wolf.playSound(SoundEvents.FIRE_EXTINGUISH, this.wolf.getSoundVolume(), 1.6F);
-                this.isBurning = false;
             } else if (this.isPoisoned) {
                 this.wolf.removeEffect(MobEffects.POISON);
                 this.wolf.removeEffect(MobEffects.WITHER);
-                this.isPoisoned = false;
             }
         }
 

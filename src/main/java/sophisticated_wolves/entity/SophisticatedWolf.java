@@ -10,12 +10,10 @@ import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
-import net.minecraft.util.Mth;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.AgeableMob;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
@@ -58,7 +56,6 @@ import sophisticated_wolves.entity.ai.*;
 import sophisticated_wolves.gui.WolfFoodConfigScreen;
 import sophisticated_wolves.item.ItemDogTag;
 import sophisticated_wolves.item.pet_carrier.ItemPetCarrier;
-import sophisticated_wolves.util.LevelUtils;
 
 import javax.annotation.Nullable;
 
@@ -72,6 +69,7 @@ public class SophisticatedWolf extends AEntitySophisticatedWolf {
 
     public static final int DEFAULT_WILD_WOLF_HEALTH = 8;
     public static final int DEFAULT_TAMED_WOLF_HEALTH = 30;
+    public static final byte EXTINGUISH_EVENT_ID = 99;
 
     private static final EntityDataAccessor<Integer> WOLF_SPECIES =
             SynchedEntityData.defineId(SophisticatedWolf.class, EntityDataSerializers.INT);
@@ -243,6 +241,22 @@ public class SophisticatedWolf extends AEntitySophisticatedWolf {
             return (0.55F - (SWConfiguration.WOLVES_HEALTH_TAMED.get() - this.getHealth()) * 0.02F) * (float) Math.PI;
         } else {
             return (float) Math.PI / 5;
+        }
+    }
+
+    @Override
+    public void handleEntityEvent(byte b) {
+        if (b == EXTINGUISH_EVENT_ID) {
+            var moveVec = this.getDeltaMovement();
+
+            for (int i = 0; i < 7; i++) {
+                this.level.addParticle(
+                        ParticleTypes.SMOKE,
+                        this.getRandomX(1), this.getRandomY() + 0.5, this.getRandomZ(1),
+                        moveVec.x(), moveVec.y(), moveVec.z());
+            }
+        } else {
+            super.handleEntityEvent(b);
         }
     }
 
