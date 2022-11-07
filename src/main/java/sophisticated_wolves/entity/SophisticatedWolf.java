@@ -400,12 +400,6 @@ public class SophisticatedWolf extends AEntitySophisticatedWolf {
         }
     }
 
-    //TODO
-//    @Override
-//    public boolean getCanSpawnHere() {
-//        return super.getCanSpawnHere() && this.getLevel().provider.getDimension() == 0;
-//    }
-
     @Override
     public EnumWolfSpecies getSpeciesByBiome() {
         var biome = this.getLevel().getBiome(this.getOnPos());
@@ -437,14 +431,6 @@ public class SophisticatedWolf extends AEntitySophisticatedWolf {
     @Override
     public void updateSpecies(EnumWolfSpecies species) {
         this.getEntityData().set(WOLF_SPECIES, species.ordinal());
-    }
-
-    @Override
-    public void die(DamageSource damageSource) {
-        if (isTame() && this.getOwner() != null) {
-            this.getOwner().sendSystemMessage(this.getCombatTracker().getDeathMessage());
-        }
-        super.die(damageSource);
     }
 
     @Override
