@@ -74,6 +74,8 @@ public class SophisticatedWolf extends AEntitySophisticatedWolf {
     private static final EntityDataAccessor<Integer> WOLF_SPECIES =
             SynchedEntityData.defineId(SophisticatedWolf.class, EntityDataSerializers.INT);
 
+    protected ShakeIfBurnOrPoisonGoal shakeGoal;
+
     protected boolean rottenMeatAndBones;
     protected boolean rawMeat;
     protected boolean rawFish;
@@ -93,11 +95,13 @@ public class SophisticatedWolf extends AEntitySophisticatedWolf {
 
     @Override
     protected void registerGoals() {
+        shakeGoal = new ShakeIfBurnOrPoisonGoal(this);
+
         this.goalSelector.addGoal(1, new FloatGoal(this));
         this.goalSelector.addGoal(1, new Wolf.WolfPanicGoal(1.5D));
         this.goalSelector.addGoal(2, new AvoidCreeperGoal(this, 8, 6, 3, 1, 1.4)); //new behavior
         this.goalSelector.addGoal(5, new SitWhenOrderedToGoal(this));
-        this.goalSelector.addGoal(7, new ShakeGoal(this)); //new behavior
+        this.goalSelector.addGoal(7, shakeGoal); //new behavior
         this.goalSelector.addGoal(8, new AttackCancelGoal(this)); //new behavior
         this.goalSelector.addGoal(10, new Wolf.WolfAvoidEntityGoal<>(this, Llama.class, 24, 1.5, 1.5));
         this.goalSelector.addGoal(15, new LeapAtTargetGoal(this, 0.4F));
@@ -262,15 +266,28 @@ public class SophisticatedWolf extends AEntitySophisticatedWolf {
 
     @Override
     public void tick() {
-        //Stops tamed wolves from being angry at the player
-        if (this.isTame()) {
-            this.stopBeingAngry();
-        }
-        if (this.isDrowning) {
-            if (this.drownCount > 0) {
-                this.drownCount--;
-            } else {
-                this.isDrowning = false;
+        if (this.isAlive()) {
+            //Stops tamed wolves from being angry at the player
+            if (this.isTame()) {
+                this.stopBeingAngry();
+            }
+
+            if (shakeGoal != null && (shakeGoal.isBurning() || shakeGoal.isPoisoned())) {
+                // update shaking for clientSide
+                this.shakeAnimO = this.shakeAnim;
+                this.shakeAnim += 0.05F;
+                if (this.shakeAnimO >= 2) {
+                    this.isShaking = false;
+                    this.shakeAnimO = 0;
+                    this.shakeAnim = 0;
+                }
+            }
+            if (this.isDrowning) {
+                if (this.drownCount > 0) {
+                    this.drownCount--;
+                } else {
+                    this.isDrowning = false;
+                }
             }
         }
         super.tick();
@@ -449,8 +466,7 @@ public class SophisticatedWolf extends AEntitySophisticatedWolf {
             return false;
         } else {
             if (damageSource.equals(DamageSource.DROWN)) {
-                this.isDrowning = true;
-                this.drownCount = 30;
+                this.setDrowning(true);
             }
             return super.hurt(damageSource, amount);
         }

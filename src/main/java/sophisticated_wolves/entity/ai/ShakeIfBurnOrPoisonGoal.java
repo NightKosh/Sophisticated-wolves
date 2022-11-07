@@ -1,6 +1,8 @@
 package sophisticated_wolves.entity.ai;
 
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.util.Mth;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.entity.ai.navigation.PathNavigation;
@@ -14,7 +16,7 @@ import sophisticated_wolves.util.LevelUtils;
  * @author metroidfood
  * @license Lesser GNU Public License v3 (http://www.gnu.org/licenses/lgpl.html)
  */
-public class ShakeGoal extends Goal {
+public class ShakeIfBurnOrPoisonGoal extends Goal {
 
     private final SophisticatedWolf wolf;
     private final Level level;
@@ -22,7 +24,7 @@ public class ShakeGoal extends Goal {
     private boolean isPoisoned;
     private boolean isBurning;
 
-    public ShakeGoal(SophisticatedWolf wolf) {
+    public ShakeIfBurnOrPoisonGoal(SophisticatedWolf wolf) {
         this.wolf = wolf;
         this.level = wolf.getLevel();
         this.petPathfinder = this.wolf.getNavigation();
@@ -67,9 +69,8 @@ public class ShakeGoal extends Goal {
     public void start() {
         this.petPathfinder.stop();
 
-        this.wolf.isShaking = true;
-        this.wolf.shakeAnim = 0;
-        this.wolf.shakeAnimO = 0;
+        //start shaking
+        this.level.broadcastEntityEvent(this.wolf, (byte) 8);
     }
 
     /**
@@ -90,13 +91,10 @@ public class ShakeGoal extends Goal {
      * Updates the task
      */
     @Override
-    //TODO shake animation
     public void tick() {
         if (this.wolf.shakeAnim == 0) {
             if (this.isBurning) {
                 this.wolf.playSound(SoundEvents.WOLF_SHAKE, this.wolf.getSoundVolume(), 1);
-            } else if (this.isPoisoned) {
-                this.wolf.playSound(SoundEvents.FROG_LAY_SPAWN, this.wolf.getSoundVolume(), 1);
             }
         }
         if (this.wolf.shakeAnim > 0.35) {
@@ -111,9 +109,17 @@ public class ShakeGoal extends Goal {
             } else if (this.isPoisoned) {
                 this.wolf.removeEffect(MobEffects.POISON);
                 this.wolf.removeEffect(MobEffects.WITHER);
+                this.wolf.playSound(SoundEvents.LLAMA_SPIT, this.wolf.getSoundVolume(), 1);
             }
         }
+    }
 
+    public boolean isPoisoned() {
+        return isPoisoned;
+    }
+
+    public boolean isBurning() {
+        return isBurning;
     }
 
 }
