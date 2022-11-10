@@ -302,7 +302,9 @@ public class SophisticatedWolf extends AEntitySophisticatedWolf {
             } else if (stack.getItem() instanceof ItemDogTag || stack.getItem() instanceof ItemPetCarrier) {
                 return InteractionResult.FAIL;
             } else if (FoodUtils.isBone(stack)) {
-                Minecraft.getInstance().setScreen(new WolfFoodConfigScreen(this));
+                if (this.getLevel().isClientSide()) {
+                    Minecraft.getInstance().setScreen(new WolfFoodConfigScreen(this));
+                }
                 stack.shrink(1);
                 return InteractionResult.SUCCESS;
             }
