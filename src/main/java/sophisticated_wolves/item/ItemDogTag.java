@@ -2,6 +2,7 @@ package sophisticated_wolves.item;
 
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.TamableAnimal;
 import net.minecraft.world.entity.player.Player;
@@ -27,14 +28,18 @@ public class ItemDogTag extends Item {
 
     @Override
     public InteractionResult interactLivingEntity(ItemStack stack, Player player, LivingEntity entity, InteractionHand hand) {
-        if (SWConfiguration.NAME_TAG_FOR_ANY_PETS.get()) {
-            if (entity instanceof TamableAnimal animal) {
-                return setName(animal, stack, player);
-            }
-        } else if (entity instanceof SophisticatedWolf wolf) {
+        if (entity instanceof SophisticatedWolf wolf) {
             return setName(wolf, stack, player);
         }
         return super.interactLivingEntity(stack, player, entity, hand);
+    }
+
+    public static void useItemOnOtherPets(Entity entity, Player player, ItemStack stack) {
+        if (SWConfiguration.NAME_TAG_FOR_ANY_PETS.get() && !(entity instanceof SophisticatedWolf)) {
+            if (entity instanceof TamableAnimal animal) {
+                setName(animal, stack, player);
+            }
+        }
     }
 
     private static InteractionResult setName(TamableAnimal pet, ItemStack stack, Player player) {

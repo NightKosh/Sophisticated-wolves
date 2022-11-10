@@ -22,6 +22,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.gameevent.GameEvent;
 import sophisticated_wolves.api.pet_carrier.PetCarrier;
 import sophisticated_wolves.core.SWTabs;
+import sophisticated_wolves.entity.SophisticatedWolf;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -45,16 +46,28 @@ public class ItemPetCarrier extends Item {
     public InteractionResult interactLivingEntity(ItemStack stack, Player player, LivingEntity entity, InteractionHand hand) {
         if (!entity.getLevel().isClientSide() &&
                 stack != null &&
-                !(stack.hasTag() && stack.getTag().contains("ClassName"))) {
-            if (entity instanceof TamableAnimal pet) {
-                if (pet.isTame() && pet.getOwnerUUID() != null && pet.getOwnerUUID().equals(player.getUUID())) {
-                    return getPetInfo(stack, player, entity, hand);
-                }
-            } else if (PetCarrierHelper.PETS_MAP.containsKey(entity.getClass().getSimpleName())) {
-                return getPetInfo(stack, player, entity, hand);
-            }
+                !(stack.hasTag() && stack.getTag().contains("ClassName")) &&
+                entity instanceof SophisticatedWolf wolf &&
+                wolf.isTame() &&
+                wolf.getOwnerUUID() != null && wolf.getOwnerUUID().equals(player.getUUID())) {
+            return getPetInfo(stack, player, entity, hand);
         }
         return super.interactLivingEntity(stack, player, entity, hand);
+    }
+
+    public static void useItemOnOtherPets(Entity e, Player player, ItemStack stack, InteractionHand hand) {
+        if (!e.getLevel().isClientSide() &&
+                stack != null &&
+                !(stack.hasTag() && stack.getTag().contains("ClassName")) &&
+                e instanceof LivingEntity entity) {
+            if (entity instanceof TamableAnimal pet && !(pet instanceof SophisticatedWolf)) {
+                if (pet.isTame() && pet.getOwnerUUID() != null && pet.getOwnerUUID().equals(player.getUUID())) {
+                    getPetInfo(stack, player, entity, hand);
+                }
+            } else if (PetCarrierHelper.PETS_MAP.containsKey(entity.getClass().getSimpleName())) {
+                getPetInfo(stack, player, entity, hand);
+            }
+        }
     }
 
     private static InteractionResult getPetInfo(ItemStack stack, Player player, LivingEntity entity, InteractionHand hand) {
