@@ -3,6 +3,8 @@ package sophisticated_wolves.gui;
 import com.mojang.blaze3d.platform.Lighting;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
+
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.renderer.GameRenderer;
@@ -37,6 +39,10 @@ public class WolfFoodConfigScreen extends Screen {
     public WolfFoodConfigScreen(SophisticatedWolf wolf) {
         super(Component.empty());
         this.wolf = wolf;
+    }
+
+    public static void open(SophisticatedWolf wolf) {
+        Minecraft.getInstance().setScreen(new WolfFoodConfigScreen(wolf));
     }
 
     @Override

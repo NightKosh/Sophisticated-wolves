@@ -1,6 +1,5 @@
 package sophisticated_wolves.entity;
 
-import net.minecraft.client.Minecraft;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
@@ -303,7 +302,7 @@ public class SophisticatedWolf extends AEntitySophisticatedWolf {
                 return InteractionResult.FAIL;
             } else if (FoodUtils.isBone(stack)) {
                 if (this.getLevel().isClientSide()) {
-                    Minecraft.getInstance().setScreen(new WolfFoodConfigScreen(this));
+                    WolfFoodConfigScreen.open(this);
                 }
                 stack.shrink(1);
                 return InteractionResult.SUCCESS;

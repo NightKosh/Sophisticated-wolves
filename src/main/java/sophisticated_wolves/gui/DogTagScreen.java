@@ -2,6 +2,8 @@ package sophisticated_wolves.gui;
 
 import com.mojang.blaze3d.platform.Lighting;
 import com.mojang.blaze3d.vertex.PoseStack;
+
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.EditBox;
 import net.minecraft.client.gui.screens.Screen;
@@ -27,6 +29,10 @@ public class DogTagScreen extends Screen {
     public DogTagScreen(TamableAnimal animal) {
         super(Component.empty());
         this.animal = animal;
+    }
+
+    public static void open(TamableAnimal dog) {
+        Minecraft.getInstance().setScreen(new DogTagScreen(dog));
     }
 
     @Override
