@@ -1,6 +1,5 @@
 package sophisticated_wolves.item;
 
-import net.minecraft.client.Minecraft;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.LivingEntity;
@@ -41,7 +40,7 @@ public class ItemDogTag extends Item {
     private static InteractionResult setName(TamableAnimal pet, ItemStack stack, Player player) {
         if (pet.isTame() && pet.getOwnerUUID() != null && pet.getOwnerUUID().equals(player.getUUID())) {
             if (player.getLevel().isClientSide()) {
-                Minecraft.getInstance().setScreen(new DogTagScreen(pet));
+                DogTagScreen.open(pet);
             } else {
                 stack.shrink(1);
             }
