@@ -111,7 +111,7 @@ public class SophisticatedWolf extends AEntitySophisticatedWolf {
         this.goalSelector.addGoal(27, new AvoidFireGoal(this, 1, 1.4)); //new behavior
         this.goalSelector.addGoal(28, drowngGoal); //new behavior
         this.goalSelector.addGoal(29, new BreedGoal(this, 1));
-        this.goalSelector.addGoal(30, new WaterAvoidingRandomStrollGoal(this, 1));
+        this.goalSelector.addGoal(30, new SWRandomStrollGoal(this, 1));
         this.goalSelector.addGoal(31, new FeedFromBowlGoal(this)); //new behavior
         this.goalSelector.addGoal(32, new FeedGoal(this)); //new behavior
         this.goalSelector.addGoal(35, new SWBegGoal(this, 8)); //changed behavior
