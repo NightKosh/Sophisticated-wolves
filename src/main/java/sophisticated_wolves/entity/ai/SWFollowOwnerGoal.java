@@ -6,6 +6,8 @@ import net.minecraft.world.entity.TamableAnimal;
 import net.minecraft.world.entity.ai.goal.FollowOwnerGoal;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.material.Material;
+import sophisticated_wolves.entity.SophisticatedWolf;
+import sophisticated_wolves.util.DogUtil;
 
 /**
  * Sophisticated Wolves
@@ -15,11 +17,11 @@ import net.minecraft.world.level.material.Material;
  */
 public class SWFollowOwnerGoal extends FollowOwnerGoal {
 
-    private final TamableAnimal pet;
+    private final SophisticatedWolf pet;
     private final double speedModifier;
     private int tick;
 
-    public SWFollowOwnerGoal(TamableAnimal entity, double speedModifier, float startDistance, float stopDistance) {
+    public SWFollowOwnerGoal(SophisticatedWolf entity, double speedModifier, float startDistance, float stopDistance) {
         super(entity, speedModifier, startDistance, stopDistance, false);
 
         this.pet = entity;
@@ -60,29 +62,14 @@ public class SWFollowOwnerGoal extends FollowOwnerGoal {
      */
     @Override
     public void tick() {
-        var owner = this.pet.getOwner();
-        if (owner != null) {
-            this.pet.getLookControl().setLookAt(owner, 10, this.pet.getMaxHeadXRot());
-            this.tick--;
-            if (!this.pet.isInSittingPose() && this.tick <= 0) {
-                this.tick = 10;
-                if (!this.pet.getNavigation().moveTo(owner, this.speedModifier) &&
-                        !this.pet.isLeashed() &&
-                        this.pet.distanceToSqr(owner) >= 144) {
-                    int xPos = Mth.floor(owner.getX());
-                    int zPos = Mth.floor(owner.getZ());
-                    int yPos = Mth.floor(owner.getBoundingBox().minY);
-
-                    for (int dX = -2; dX <= 2; dX++) {
-                        for (int dZ = -2; dZ <= 2; dZ++) {
-                            if (canTeleport(pet.getLevel(), xPos + dX, yPos, zPos + dZ)) {
-                                this.pet.moveTo(xPos + dX + 0.5F, yPos, zPos + dZ + 0.5F,
-                                        this.pet.getYRot(), this.pet.getXRot());
-                                this.pet.getNavigation().stop();
-                                return;
-                            }
-                        }
-                    }
+        this.pet.getLookControl().setLookAt(this.pet.getOwner(), 10.0F, this.pet.getMaxHeadXRot());
+        if (--this.tick <= 0) {
+            this.tick = 10;
+            if (!this.pet.isLeashed() && !this.pet.isPassenger()) {
+                if (this.pet.distanceToSqr(this.pet.getOwner()) >= 144.0D) {
+                    DogUtil.guessAndTryToTeleportToOwner(pet, 4);
+                } else {
+                    this.pet.getNavigation().moveTo(this.pet.getOwner(), this.speedModifier);
                 }
             }
         }
