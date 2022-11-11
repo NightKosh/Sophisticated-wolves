@@ -6,9 +6,11 @@ import sophisticated_wolves.entity.SophisticatedWolf;
 /**
  * Sophisticated Wolves
  *
+ * 
  * @author NightKosh
  * @license Lesser GNU Public License v3 (http://www.gnu.org/licenses/lgpl.html)
  */
+
 public class SWConfiguration {
 
     public static final ForgeConfigSpec SPEC;
@@ -27,6 +29,8 @@ public class SWConfiguration {
     public static ForgeConfigSpec.ConfigValue<Boolean> ATTACK_ANIMALS;
     public static ForgeConfigSpec.ConfigValue<Boolean> ATTACK_SKELETONS;
 
+    public static ForgeConfigSpec.ConfigValue<Boolean> ALWAYS_SHOW_WOLF_NAME;
+
     //TODO remove ???
 //    public static ForgeConfigSpec.ConfigValue<Boolean> ENABLE_PETS_SELLER;
 
@@ -35,7 +39,8 @@ public class SWConfiguration {
 
         CUSTOM_WOLF_TEXTURES = BUILDER.comment("Should sophisticated wolves use custom textures(or be like vanilla wolves)?")
                 .define("Use Custom Wolf Textures", true);
-        //TODO remove ???
+        //TODO i still think some people kinda want this ... should remain as an option that people could always
+        //disable. Or.... DoggyTalents could be an addon for this, with dog bed usage. 
 //        RESPAWNING_WOLVES = BUILDER.comment("Should sophisticated wolves respawn(and despawn for non tamed)?")
 //                .define("Respawning Wolves", true);
         CUSTOM_BREEDING = BUILDER.comment("Should sophisticated wolves breed in its own way?")
@@ -55,6 +60,9 @@ public class SWConfiguration {
                 .define("Attack Animals", false);
         ATTACK_SKELETONS = BUILDER.comment("Should sophisticated wolves hunt on skeletons?")
                 .define("Attack Skeletons", false);
+
+        ALWAYS_SHOW_WOLF_NAME = BUILDER.comment("Always show the wolf's name.")
+                .define( "Always Show Wolves' Name", true);
 
         //TODO ???
 //        ENABLE_PETS_SELLER = BUILDER.comment("Add new villager - pets seller")
