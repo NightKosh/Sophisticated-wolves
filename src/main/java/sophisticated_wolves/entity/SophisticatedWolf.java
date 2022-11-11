@@ -132,7 +132,7 @@ public class SophisticatedWolf extends AEntitySophisticatedWolf {
         return Mob.createMobAttributes()
                 .add(Attributes.MOVEMENT_SPEED, 0.4)
                 .add(Attributes.MAX_HEALTH, SophisticatedWolf.DEFAULT_WILD_WOLF_HEALTH)
-                .add(Attributes.ATTACK_DAMAGE, 3)
+                .add(Attributes.ATTACK_DAMAGE, 2)
                 .build();
     }
 
@@ -339,6 +339,8 @@ public class SophisticatedWolf extends AEntitySophisticatedWolf {
             this.getAttribute(Attributes.MAX_HEALTH).setBaseValue(SWConfiguration.WOLVES_HEALTH_WILD.get());
             this.setHealth(SWConfiguration.WOLVES_HEALTH_WILD.get());
         }
+
+        this.getAttribute(Attributes.ATTACK_DAMAGE).setBaseValue(5);
     }
 
     @Override
@@ -356,12 +358,10 @@ public class SophisticatedWolf extends AEntitySophisticatedWolf {
 
     @Override
     public boolean canMate(Animal animal) {
-        if (animal == this || !this.isTame() || !(animal instanceof SophisticatedWolf)) {
-            return false;
-        } else {
-            SophisticatedWolf wolf = (SophisticatedWolf) animal;
+        if (animal != this && this.isTame() && animal instanceof SophisticatedWolf wolf) {
             return wolf.isTame() && (!wolf.isInSittingPose() && this.isInLove() && wolf.isInLove());
         }
+        return false;
     }
 
 //TODO
