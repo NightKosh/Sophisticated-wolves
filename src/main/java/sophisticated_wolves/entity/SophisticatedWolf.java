@@ -263,11 +263,6 @@ public class SophisticatedWolf extends AEntitySophisticatedWolf {
     @Override
     public void tick() {
         if (this.isAlive()) {
-            //Stops tamed wolves from being angry at the player
-            if (this.isTame()) {
-                this.stopBeingAngry();
-            }
-
             if (shakeGoal != null && (shakeGoal.isBurning() || shakeGoal.isPoisoned())) {
                 // update shaking for clientSide
                 this.shakeAnimO = this.shakeAnim;
