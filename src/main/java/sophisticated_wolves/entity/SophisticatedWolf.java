@@ -530,4 +530,20 @@ public class SophisticatedWolf extends AEntitySophisticatedWolf {
         return (SWConfiguration.ALWAYS_SHOW_WOLF_NAME.get() && this.hasCustomName()) || super.shouldShowName();
     }
 
+    /**
+     * Because the implemented A* pathfinding alg doesn't straightfully call out drops from a damagable distance 
+     * above to be a no no, instead they check based on this function here on how many blocks the wolf can 
+     * accept to drop, and the default implementation depends on the health, 
+     * but currently as my experience, it is not good...
+     * The wolf will jump even if after that he have 1 hp left... :(
+     * I think you want this as Sophisticated Wolves aim to make dogs...
+     * ...oops... i may have ptsd while working for DoggyTalents :)), i 
+     * mean wolves know how to care for themselves And not drop.... like that.
+     * I tested this a lot of time in DoggyTalents and it is good... 
+     */
+    @Override
+    public int getMaxFallDistance() {
+        return 3;
+    }
+
 }
