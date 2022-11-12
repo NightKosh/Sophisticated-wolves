@@ -15,8 +15,6 @@ public class SWConfiguration {
     public static final ForgeConfigSpec.Builder BUILDER = new ForgeConfigSpec.Builder();
 
     public static ForgeConfigSpec.ConfigValue<Boolean> CUSTOM_WOLF_TEXTURES;
-    //TODO remove ???
-    public static ForgeConfigSpec.ConfigValue<Boolean> RESPAWNING_WOLVES;
     public static ForgeConfigSpec.ConfigValue<Boolean> CUSTOM_BREEDING;
     public static ForgeConfigSpec.ConfigValue<Boolean> NAME_TAG_FOR_ANY_PETS;
     public static ForgeConfigSpec.ConfigValue<Boolean> IMMUNE_TO_CACTI;
@@ -27,6 +25,8 @@ public class SWConfiguration {
     public static ForgeConfigSpec.ConfigValue<Boolean> ATTACK_ANIMALS;
     public static ForgeConfigSpec.ConfigValue<Boolean> ATTACK_SKELETONS;
 
+    public static ForgeConfigSpec.ConfigValue<Boolean> ALWAYS_SHOW_WOLF_NAME;
+
     //TODO remove ???
 //    public static ForgeConfigSpec.ConfigValue<Boolean> ENABLE_PETS_SELLER;
 
@@ -35,9 +35,6 @@ public class SWConfiguration {
 
         CUSTOM_WOLF_TEXTURES = BUILDER.comment("Should sophisticated wolves use custom textures(or be like vanilla wolves)?")
                 .define("Use Custom Wolf Textures", true);
-        //TODO remove ???
-//        RESPAWNING_WOLVES = BUILDER.comment("Should sophisticated wolves respawn(and despawn for non tamed)?")
-//                .define("Respawning Wolves", true);
         CUSTOM_BREEDING = BUILDER.comment("Should sophisticated wolves breed in its own way?")
                 .define("Custom Breeding", true);
         NAME_TAG_FOR_ANY_PETS = BUILDER.comment("Should name tags be used for any kind of pet?")
@@ -55,6 +52,9 @@ public class SWConfiguration {
                 .define("Attack Animals", false);
         ATTACK_SKELETONS = BUILDER.comment("Should sophisticated wolves hunt on skeletons?")
                 .define("Attack Skeletons", false);
+
+        ALWAYS_SHOW_WOLF_NAME = BUILDER.comment("Always show the wolf's name.")
+                .define( "Always Show Wolves' Name", true);
 
         //TODO ???
 //        ENABLE_PETS_SELLER = BUILDER.comment("Add new villager - pets seller")

@@ -525,4 +525,9 @@ public class SophisticatedWolf extends AEntitySophisticatedWolf {
         this.anyFood = rottenMeatAndBones && rawMeat && rawFish && specialFish && cookedMeat && cookedFish;
     }
 
+    @Override
+    public boolean shouldShowName() {
+        return (SWConfiguration.ALWAYS_SHOW_WOLF_NAME.get() && this.hasCustomName()) || super.shouldShowName();
+    }
+
 }
