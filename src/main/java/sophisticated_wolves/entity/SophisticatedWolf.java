@@ -400,18 +400,14 @@ public class SophisticatedWolf extends AEntitySophisticatedWolf {
     public EnumWolfSpecies getSpeciesByBiome() {
         var biome = this.getLevel().getBiome(this.getOnPos());
 
-        if (biome.containsTag(Tags.Biomes.IS_SNOWY) || biome.containsTag(Tags.Biomes.IS_CONIFEROUS)) {
-            if (this.getRandom().nextInt(7) == 0) {
-                return EnumWolfSpecies.BLACK;
-            } else {
-                return EnumWolfSpecies.VANILLA;
-            }
+        if (biome.containsTag(Tags.Biomes.IS_SNOWY)) {
+            return EnumWolfSpecies.VANILLA;
+        } else if (biome.containsTag(Tags.Biomes.IS_CONIFEROUS)) {//TAIGA
+            return EnumWolfSpecies.BLACK;
+        } else if (biome.containsTag(Tags.Biomes.IS_SPOOKY)) {//DARK_FOREST
+            return EnumWolfSpecies.BROWN;
         } else {
-            if (this.getRandom().nextInt(7) == 0) {
-                return EnumWolfSpecies.BROWN;
-            } else {
-                return EnumWolfSpecies.FOREST;
-            }
+            return EnumWolfSpecies.FOREST;
         }
     }
 
