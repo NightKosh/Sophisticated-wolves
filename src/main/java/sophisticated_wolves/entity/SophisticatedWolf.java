@@ -2,7 +2,6 @@ package sophisticated_wolves.entity;
 
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.chat.Component;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
@@ -282,6 +281,15 @@ public class SophisticatedWolf extends AEntitySophisticatedWolf {
         var stack = player.getItemInHand(hand);
 
         if (this.isTame()) {
+            // breed wolves with dog treats
+            if (stack.is(SWItems.getDogTreat()) &&
+                    !this.getLevel().isClientSide() &&
+                    this.getAge() == 0) {
+                this.usePlayerItem(player, hand, stack);
+                this.setInLove(player);
+                return InteractionResult.SUCCESS;
+            }
+
             if (FoodUtils.isFoodItem(stack) && this.getHealth() < SWConfiguration.WOLVES_HEALTH_TAMED.get()) {
                 int hp = FoodUtils.getHealPoints(stack);
 
@@ -302,7 +310,7 @@ public class SophisticatedWolf extends AEntitySophisticatedWolf {
                 stack.shrink(1);
                 return InteractionResult.SUCCESS;
             }
-        } else if (stack.getItem() == Items.BONE && !this.isAngry()) {
+        } else if (stack.is(Items.BONE) && !this.isAngry()) {
             var result = super.mobInteract(player, hand);
             if (this.isTame() && !this.getLevel().isClientSide()) {
                 this.setHealth(SWConfiguration.WOLVES_HEALTH_TAMED.get());
@@ -314,19 +322,14 @@ public class SophisticatedWolf extends AEntitySophisticatedWolf {
         return super.mobInteract(player, hand);
     }
 
-//TODO
-//    @Override
-//    public boolean isBreedingItem(ItemStack stack) {
-//        if (stack == null) {
-//            return false;
-//        }
-//
-//        if (SWConfiguration.customBreeding) {
-//            return stack.getItem().equals(SWItems.DOG_TREAT);
-//        } else {
-//            return super.isBreedingItem(stack);
-//        }
-//    }
+    @Override
+    public boolean canFallInLove() {
+        // prevent mob breeding in vanilla way if custom breeding enabled
+        if (SWConfiguration.CUSTOM_BREEDING.get()) {
+            return false;
+        }
+        return super.canFallInLove();
+    }
 
     @Override
     public void setTame(boolean tamed) {
@@ -363,12 +366,6 @@ public class SophisticatedWolf extends AEntitySophisticatedWolf {
         }
         return false;
     }
-
-//TODO
-//    @Override
-//    protected boolean canDespawn() {
-//        return !this.isTame() && SWConfiguration.respawningWolves && this.ticksExisted > 5000;
-//    }
 
     //Custom functions below here
     public boolean isInterestingItem(ItemStack stack) {
