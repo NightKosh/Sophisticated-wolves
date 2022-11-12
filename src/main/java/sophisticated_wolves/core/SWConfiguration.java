@@ -6,19 +6,15 @@ import sophisticated_wolves.entity.SophisticatedWolf;
 /**
  * Sophisticated Wolves
  *
- * 
  * @author NightKosh
  * @license Lesser GNU Public License v3 (http://www.gnu.org/licenses/lgpl.html)
  */
-
 public class SWConfiguration {
 
     public static final ForgeConfigSpec SPEC;
     public static final ForgeConfigSpec.Builder BUILDER = new ForgeConfigSpec.Builder();
 
     public static ForgeConfigSpec.ConfigValue<Boolean> CUSTOM_WOLF_TEXTURES;
-    //TODO remove ???
-    public static ForgeConfigSpec.ConfigValue<Boolean> RESPAWNING_WOLVES;
     public static ForgeConfigSpec.ConfigValue<Boolean> CUSTOM_BREEDING;
     public static ForgeConfigSpec.ConfigValue<Boolean> NAME_TAG_FOR_ANY_PETS;
     public static ForgeConfigSpec.ConfigValue<Boolean> IMMUNE_TO_CACTI;
@@ -39,10 +35,6 @@ public class SWConfiguration {
 
         CUSTOM_WOLF_TEXTURES = BUILDER.comment("Should sophisticated wolves use custom textures(or be like vanilla wolves)?")
                 .define("Use Custom Wolf Textures", true);
-        //TODO i still think some people kinda want this ... should remain as an option that people could always
-        //disable. Or.... DoggyTalents could be an addon for this, with dog bed usage. 
-//        RESPAWNING_WOLVES = BUILDER.comment("Should sophisticated wolves respawn(and despawn for non tamed)?")
-//                .define("Respawning Wolves", true);
         CUSTOM_BREEDING = BUILDER.comment("Should sophisticated wolves breed in its own way?")
                 .define("Custom Breeding", true);
         NAME_TAG_FOR_ANY_PETS = BUILDER.comment("Should name tags be used for any kind of pet?")
