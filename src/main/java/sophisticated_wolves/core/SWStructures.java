@@ -1,4 +1,4 @@
-package sophisticated_wolves;
+package sophisticated_wolves.core;
 
 import com.mojang.datafixers.util.Pair;
 import net.minecraft.core.Registry;
