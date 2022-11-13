@@ -13,10 +13,6 @@ public class Compatibility {
     public static boolean IS_WOLF_ARMOR_INSTALLED;
 
     public static void checkMods() {
-        IS_WOLF_ARMOR_INSTALLED = Loader.isModLoaded("wolfarmor");
-
-
-
 //        if (Loader.isModLoaded("Thaumcraft")) {
 //            try {
 ////            ThaumcraftApi.registerEntityTag(SW_NAME, new AspectList().add(Aspect.BEAST, 3).add(Aspect.EARTH, 3).add(Aspect.MIND, 3));
