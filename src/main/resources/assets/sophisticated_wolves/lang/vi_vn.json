@@ -1,0 +1,61 @@
+{
+    "itemGroup.tab_sophisticated_wolves" : "Chó Sói Thông Thái",
+  
+    "entity.sophisticated_wolves.sophisticated_wolf" : "Chó Sói Thông Thái",
+  
+    "block.sophisticated_wolves.dog_bowl" : "Tô đồ ăn",
+    "block.sophisticated_wolves.dog_bowl.amount_of_food" : "Lượng đồ ăn:",
+    "block.sophisticated_wolves.kennel" : "Cũi",
+  
+    "item.sophisticated_wolves.dog_tag" : "Đặt tên cún",
+    "item.sophisticated_wolves.dog_treat" : "Bánh thưởng",
+    "item.sophisticated_wolves.whistle" : "Còi",
+    "item.sophisticated_wolves.pet_carrier" : "Đựng thú cưng",
+    "item.sophisticated_wolves.dog_egg" : "Sinh ra Chó Sói Thông Thái",
+  
+    "sophisticated_wolves.wolf_type.vanilla" : "Xám",
+    "sophisticated_wolves.wolf_type.forest" : "Rừng",
+    "sophisticated_wolves.wolf_type.black" : "Đen",
+    "sophisticated_wolves.wolf_type.brown" : "Nâu",
+  
+    "sophisticated_wolves.cat_type.ocelot" : "Ocelot ## TODO",
+  
+    "sophisticated_wolves.cat_type.tabby" : "Tabby ## TODO",
+    "sophisticated_wolves.cat_type.black" : "Tuxedo ## TODO",
+    "sophisticated_wolves.cat_type.red" : "Red ## TODO",
+    "sophisticated_wolves.cat_type.siamese" : "Siamese ## TODO",
+    "sophisticated_wolves.cat_type.british_shorthair" : "British Shorthair ## TODO",
+    "sophisticated_wolves.cat_type.calico" : "Calico ## TODO",
+    "sophisticated_wolves.cat_type.persian" : "Persian ## TODO",
+    "sophisticated_wolves.cat_type.ragdoll" : "Ragdoll ## TODO",
+    "sophisticated_wolves.cat_type.white" : "White ## TODO",
+    "sophisticated_wolves.cat_type.jellie" : "Jellie ## TODO",
+    "sophisticated_wolves.cat_type.all_black" : "Black ## TODO",
+  
+    "sophisticated_wolves.rabbit_type.0" : "Brown ## TODO",
+    "sophisticated_wolves.rabbit_type.1" : "White ## TODO",
+    "sophisticated_wolves.rabbit_type.2" : "Black ## TODO",
+    "sophisticated_wolves.rabbit_type.3" : "Black & White ## TODO",
+    "sophisticated_wolves.rabbit_type.4" : "Gold ## TODO",
+    "sophisticated_wolves.rabbit_type.5" : "Salt & Pepper ## TODO",
+    "sophisticated_wolves.rabbit_type.99" : "The Killer Bunny ## TODO",
+  
+    "sophisticated_wolves.parrot_type.0" : "Red ## TODO",
+    "sophisticated_wolves.parrot_type.1" : "Blue ## TODO",
+    "sophisticated_wolves.parrot_type.2" : "Green ## TODO",
+    "sophisticated_wolves.parrot_type.3" : "Cyan ## TODO",
+    "sophisticated_wolves.parrot_type.4" : "Silver ## TODO",
+  
+    "sophisticated_wolves.carrier.pet_type" : "Loại thú cưng",
+    "sophisticated_wolves.carrier.dog_type" : "Loại cún",
+    "sophisticated_wolves.carrier.cat_type" : "Cat type ## TODO",
+    "sophisticated_wolves.carrier.rabbit_type" : "Rabbit type ## TODO",
+    "sophisticated_wolves.carrier.parrot_type" : "Parrot type ## TODO",
+    "sophisticated_wolves.carrier.pet_name" : "Tên",
+  
+    "gui.sophisticated_wolves.edit_dog_name.title" : "Đặt tên thú cưng bạn:",
+    "gui.sophisticated_wolves.wolf_food_configs.title" : "Chọn loại thức ăn, bạn muốn Chó Sói bạn ăn",
+  
+    "entity.minecraft.villager.sophisticated_wolves.pets_seller" : "Thương nhân buôn Thú Cưng"
+}
+  
