@@ -47,7 +47,7 @@ public class ItemDogTreat extends Item {
                     sWolf.setWolfSpeciesByBiome();
 
                     if (Compatibility.IS_WOLF_ARMOR_INSTALLED) {
-                        //TODO
+                        //TODO remove?
                         //CompatibilityWolfArmor.copyWolfItems(wolf, sWolf);
                     }
 

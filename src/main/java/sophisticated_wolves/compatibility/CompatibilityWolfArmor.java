@@ -15,7 +15,7 @@ import sophisticated_wolves.entity.SophisticatedWolf;
  * @license Lesser GNU Public License v3 (http://www.gnu.org/licenses/lgpl.html)
  */
 public class CompatibilityWolfArmor {
-//TODO
+//TODO remove?
 //    public static CompoundTag storeWolfItems(Wolf wolf, CompoundTag nbt) {
 //        IWolfArmorCapability wolfCapability = wolf.getCapability(Capabilities.CAPABILITY_WOLF_ARMOR, null);
 //        if (wolfCapability != null) {

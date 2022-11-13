@@ -1,6 +1,5 @@
 package sophisticated_wolves.entity.ai;
 
-import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.TamableAnimal;
 import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.entity.ai.navigation.PathNavigation;
@@ -19,7 +18,7 @@ public class MoveCancelGoal extends Goal {
     private final float dist;
 
     private Player player;
-
+//TODO it looks like it not working as it supposed. need more tests.
     public MoveCancelGoal(TamableAnimal entity, float par2) {
         this.pet = entity;
         this.petPathfinder = entity.getNavigation();
@@ -35,7 +34,7 @@ public class MoveCancelGoal extends Goal {
             return false;
         }
 
-        LivingEntity owner = this.pet.getOwner();
+        var owner = this.pet.getOwner();
         if (owner == null ||
                 this.pet.isInSittingPose() ||
                 !this.pet.isOnGround() ||
@@ -47,9 +46,7 @@ public class MoveCancelGoal extends Goal {
 
         if (owner instanceof Player player) {
             this.player = player;
-            //TODO
-            return true;
-//            return this.player.isSwingInProgress || this.player.isHandActive();
+            return this.player.swinging;
         }
         return false;
     }
@@ -60,8 +57,7 @@ public class MoveCancelGoal extends Goal {
     @Override
     public boolean canContinueToUse() {
         return (this.pet.getTarget() == null) &&
-                //TODO
-//                (this.player.isSwingInProgress || this.player.isHandActive()) &&
+                (this.player.swinging) &&
                 !this.pet.isInSittingPose() &&
                 !this.pet.isInLove();
     }

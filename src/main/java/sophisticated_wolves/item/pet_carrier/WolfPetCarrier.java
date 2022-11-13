@@ -33,8 +33,8 @@ public class WolfPetCarrier extends PetCarrier {
     public CompoundTag getAdditionalData(LivingEntity pet) {
         var tag = new CompoundTag();
         if (Compatibility.IS_WOLF_ARMOR_INSTALLED) {
-            //TODO
-//            CompatibilityWolfArmor.storeWolfItems((Wolf) pet, tag);
+            //TODO remove?
+            //CompatibilityWolfArmor.storeWolfItems((Wolf) pet, tag);
         }
         return tag;
     }
@@ -42,8 +42,8 @@ public class WolfPetCarrier extends PetCarrier {
     @Override
     public void setAdditionalData(Entity pet, CompoundTag tag) {
         if (Compatibility.IS_WOLF_ARMOR_INSTALLED) {
-            //TODO
-//            CompatibilityWolfArmor.getWolfItems((Wolf) pet, tag);
+            //TODO remove?
+            //CompatibilityWolfArmor.getWolfItems((Wolf) pet, tag);
         }
     }
 

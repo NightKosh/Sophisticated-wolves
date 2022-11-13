@@ -67,7 +67,7 @@ public class SophisticatedWolvesMod {
         SWMessages.register();
     }
 
-//TODO
+//TODO remove?
 //    @Mod.EventHandler
 //    public void postInit(FMLPostInitializationEvent event) {
 //        PetCarrierHelper.INSTANCE.addPetCarriers();

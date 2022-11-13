@@ -27,9 +27,6 @@ public class SWConfiguration {
 
     public static ForgeConfigSpec.ConfigValue<Boolean> ALWAYS_SHOW_WOLF_NAME;
 
-    //TODO remove ???
-//    public static ForgeConfigSpec.ConfigValue<Boolean> ENABLE_PETS_SELLER;
-
     static {
         BUILDER.push("Configs for Sophisticated Wolves Mod");
 
@@ -55,10 +52,6 @@ public class SWConfiguration {
 
         ALWAYS_SHOW_WOLF_NAME = BUILDER.comment("Always show the wolf's name.")
                 .define( "Always Show Wolves' Name", true);
-
-        //TODO ???
-//        ENABLE_PETS_SELLER = BUILDER.comment("Add new villager - pets seller")
-//                .define("Enable Pets Seller", true);
 
         BUILDER.pop();
         SPEC = BUILDER.build();
