@@ -4,7 +4,7 @@
   "entity.sophisticated_wolves.sophisticated_wolf" : "Hoch entwickelter Wolf",
 
   "block.sophisticated_wolves.dog_bowl" : "Hundenapf",
-  "block.sophisticated_wolves.dog_bowl.amount_of_food" : "Amount of food:",
+  "block.sophisticated_wolves.dog_bowl.amount_of_food" : "Amount of food: ",
   "block.sophisticated_wolves.kennel" : "Hundehütte",
 
   "item.sophisticated_wolves.dog_tag" : "Hundemarke",
@@ -56,5 +56,5 @@
   "gui.sophisticated_wolves.edit_dog_name.title" : "Gib deinem Haustier einen Namen:",
   "gui.sophisticated_wolves.wolf_food_configs.title" : "Wähle die Arten von Lebensmitteln, die Hunde essen",
 
-  "entity.minecraft.villager.sophisticated_wolves.pets_seller" : "Haustierverkäufer"
+  "entity.minecraft.villager.sophisticated_wolves.zoologist" : "Zoologist ## TODO"
 }

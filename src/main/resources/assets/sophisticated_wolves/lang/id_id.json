@@ -4,7 +4,7 @@
   "entity.sophisticated_wolves.sophisticated_wolf" : "Serigala Canggih",
 
   "block.sophisticated_wolves.dog_bowl" : "Mangkuk Anjing",
-  "block.sophisticated_wolves.dog_bowl.amount_of_food" : "Amount of food:",
+  "block.sophisticated_wolves.dog_bowl.amount_of_food" : "Amount of food: ",
   "block.sophisticated_wolves.kennel" : "Kandang Anjing",
 
   "item.sophisticated_wolves.dog_tag" : "Tag Anjing",
@@ -56,5 +56,5 @@
   "gui.sophisticated_wolves.edit_dog_name.title" : "Berikan nama binatang peliharaan Anda:",
   "gui.sophisticated_wolves.wolf_food_configs.title" : "Pilih jenis makanan anjing yang dimakan",
 
-  "entity.minecraft.villager.sophisticated_wolves.pets_seller" : "Penjual Hewan"
+  "entity.minecraft.villager.sophisticated_wolves.zoologist" : "Zoologist ## TODO"
 }

@@ -4,7 +4,7 @@
   "entity.sophisticated_wolves.sophisticated_wolf" : "Lobo",
 
   "block.sophisticated_wolves.dog_bowl" : "Cuenco para perros",
-  "block.sophisticated_wolves.dog_bowl.amount_of_food" : "Amount of food:",
+  "block.sophisticated_wolves.dog_bowl.amount_of_food" : "Amount of food: ",
   "block.sophisticated_wolves.kennel" : "Casa para perros",
 
   "item.sophisticated_wolves.dog_tag" : "Placa de identificación",
@@ -56,5 +56,5 @@
   "gui.sophisticated_wolves.edit_dog_name.title" : "Dale a tu mascota un nombre:",
   "gui.sophisticated_wolves.wolf_food_configs.title" : "Elige los tipos de alimento que los lobos comen",
 
-  "entity.minecraft.villager.sophisticated_wolves.pets_seller" : "Vendedor de Mascotas"
+  "entity.minecraft.villager.sophisticated_wolves.zoologist" : "Zoologist ## TODO"
 }

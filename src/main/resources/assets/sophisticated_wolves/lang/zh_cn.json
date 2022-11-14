@@ -4,7 +4,7 @@
   "entity.sophisticated_wolves.sophisticated_wolf" : "精致的狼",
 
   "block.sophisticated_wolves.dog_bowl" : "狗盆",
-  "block.sophisticated_wolves.dog_bowl.amount_of_food" : "Amount of food:",
+  "block.sophisticated_wolves.dog_bowl.amount_of_food" : "Amount of food: ",
   "block.sophisticated_wolves.kennel" : "狗窝",
 
   "item.sophisticated_wolves.dog_tag" : "狗牌",
@@ -56,5 +56,5 @@
   "gui.sophisticated_wolves.edit_dog_name.title" : "为您的宠物取名:",
   "gui.sophisticated_wolves.wolf_food_configs.title" : "选择狗的食物类型",
 
-  "entity.minecraft.villager.sophisticated_wolves.pets_seller" : "宠物商人"
+  "entity.minecraft.villager.sophisticated_wolves.zoologist" : "Zoologist"
 }

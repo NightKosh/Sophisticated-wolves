@@ -56,5 +56,5 @@
   "gui.sophisticated_wolves.edit_dog_name.title" : "Dale a tu mascota un nombre:",
   "gui.sophisticated_wolves.wolf_food_configs.title" : "Elige los tipos de alimento que los lobos comen",
 
-  "entity.minecraft.villager.sophisticated_wolves.pets_seller" : "Vendedor de Mascotas"
+  "entity.minecraft.villager.sophisticated_wolves.zoologist" : "Zoologist ## TODO"
 }

@@ -34,9 +34,9 @@ public class SWVillagers {
                     1, 1));
 
     public static final RegistryObject<VillagerProfession> PET_SELLER = VILLAGER_PROFESSIONS_REGISTER.register(
-            "pets_seller",
+            "zoologist",
             () -> new VillagerProfession(
-                    "pet_seller",
+                    "zoologist",
                     x -> x.get() == KENNEL_BLOCK_POI.get(),
                     x -> x.get() == DOG_BOWL_POI.get(),
                     ImmutableSet.of(),

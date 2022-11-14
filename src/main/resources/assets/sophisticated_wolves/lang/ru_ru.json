@@ -4,7 +4,7 @@
   "entity.sophisticated_wolves.sophisticated_wolf" : "Умный волк",
 
   "block.sophisticated_wolves.dog_bowl" : "Собачья миска",
-  "block.sophisticated_wolves.dog_bowl.amount_of_food" : "Количество еды:",
+  "block.sophisticated_wolves.dog_bowl.amount_of_food" : "Количество еды: ",
   "block.sophisticated_wolves.kennel" : "Будка",
 
   "item.sophisticated_wolves.dog_tag" : "Собачья бирка",
@@ -57,5 +57,5 @@
   "gui.sophisticated_wolves.edit_dog_name.title" : "Дайте своему питомцу имя:",
   "gui.sophisticated_wolves.wolf_food_configs.title" : "Выберите тип еды, которую могут есть собаки",
 
-  "entity.minecraft.villager.sophisticated_wolves.pets_seller" : "Продавец питомцев"
+  "entity.minecraft.villager.sophisticated_wolves.zoologist" : "Зоолог"
 }

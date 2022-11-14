@@ -4,7 +4,7 @@
   "entity.sophisticated_wolves.sophisticated_wolf" : "Lupo Sofisticato",
 
   "block.sophisticated_wolves.dog_bowl" : "Ciotola per cani",
-  "block.sophisticated_wolves.dog_bowl.amount_of_food" : "Amount of food:",
+  "block.sophisticated_wolves.dog_bowl.amount_of_food" : "Amount of food: ",
   "block.sophisticated_wolves.kennel" : "Cuccia",
 
   "item.sophisticated_wolves.dog_tag" : "Medaglietta",
@@ -56,5 +56,5 @@
   "gui.sophisticated_wolves.edit_dog_name.title" : "Dai un nome al tuo animale domestico:",
   "gui.sophisticated_wolves.wolf_food_configs.title" : "Selezione quali tipi di cibo mangia il cane",
 
-  "entity.minecraft.villager.sophisticated_wolves.pets_seller" : "Venditore di animali domestici"
+  "entity.minecraft.villager.sophisticated_wolves.zoologist" : "Zoologist ## TODO"
 }
