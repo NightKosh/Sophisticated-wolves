@@ -16,7 +16,7 @@ import java.util.List;
  * @author NightKosh
  * @license Lesser GNU Public License v3 (http://www.gnu.org/licenses/lgpl.html)
  */
-public class RabbitPetCarrier extends PetCarrier {
+public class RabbitPetCarrier extends PetCarrier<Rabbit> {
 
     public static final int[] RABBITS_SPECIES = {0, 1, 2, 3, 4, 5, 99};
 
@@ -38,19 +38,17 @@ public class RabbitPetCarrier extends PetCarrier {
     @Override
     public List<Component> getInfo(CompoundTag infoTag) {
         if (infoTag.contains("RabbitType")) {
-            var list = new ArrayList<Component>(1);
-            list.add(Component.translatable("sophisticated_wolves.carrier.rabbit_type")
+            return List.of(Component.translatable("sophisticated_wolves.carrier.rabbit_type")
                     .append(" - ")
                     .append(Component.translatable("sophisticated_wolves.rabbit_type." + infoTag.getInt("RabbitType"))));
-            return list;
         }
         return null;
     }
 
     @Override
-    public CompoundTag getInfo(LivingEntity pet) {
+    public CompoundTag getInfo(Rabbit rabbit) {
         var tag = new CompoundTag();
-        tag.putInt("RabbitType", ((Rabbit) pet).getRabbitType());
+        tag.putInt("RabbitType", rabbit.getRabbitType());
 
         return tag;
     }

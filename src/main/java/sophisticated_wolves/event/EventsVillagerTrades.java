@@ -1,6 +1,5 @@
 package sophisticated_wolves.event;
 
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.animal.Cat;
 import net.minecraft.world.entity.animal.Chicken;
@@ -79,7 +78,7 @@ public class EventsVillagerTrades {
         if (petCarrier != null) {
             var tags = petCarrier.getDefaultPetCarriers();
             if (tags != null) {
-                for (CompoundTag tag : tags) {
+                for (var tag : tags) {
                     stack.setTag(tag);
                     list.add(stack);
                 }

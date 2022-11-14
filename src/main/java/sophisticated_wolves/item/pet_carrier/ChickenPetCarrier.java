@@ -1,12 +1,8 @@
 package sophisticated_wolves.item.pet_carrier;
 
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.animal.Chicken;
 import sophisticated_wolves.api.pet_carrier.PetCarrier;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Sophisticated Wolves
@@ -14,7 +10,7 @@ import java.util.List;
  * @author NightKosh
  * @license Lesser GNU Public License v3 (http://www.gnu.org/licenses/lgpl.html)
  */
-public class ChickenPetCarrier extends PetCarrier {
+public class ChickenPetCarrier extends PetCarrier<Chicken> {
 
     @Override
     public Class getPetClass() {
@@ -29,14 +25,6 @@ public class ChickenPetCarrier extends PetCarrier {
     @Override
     public EntityType getEntityType() {
         return EntityType.CHICKEN;
-    }
-
-    @Override
-    public List<CompoundTag> getDefaultPetCarriers() {
-        var list = new ArrayList<CompoundTag>();
-        list.add(getDefaultPetCarrier(null, null));
-
-        return list;
     }
 
 }

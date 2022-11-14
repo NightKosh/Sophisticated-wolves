@@ -2,9 +2,8 @@ package sophisticated_wolves.item.pet_carrier;
 
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
 import sophisticated_wolves.api.EnumWolfSpecies;
 import sophisticated_wolves.api.pet_carrier.PetCarrier;
 import sophisticated_wolves.compatibility.Compatibility;
@@ -20,7 +19,7 @@ import java.util.List;
  * @author NightKosh
  * @license Lesser GNU Public License v3 (http://www.gnu.org/licenses/lgpl.html)
  */
-public class SophisticatedWolfPetCarrier extends PetCarrier {
+public class SophisticatedWolfPetCarrier extends PetCarrier<SophisticatedWolf> {
 
     @Override
     public Class getPetClass() {
@@ -40,40 +39,44 @@ public class SophisticatedWolfPetCarrier extends PetCarrier {
     @Override
     public List<Component> getInfo(CompoundTag infoTag) {
         if (infoTag.contains("WolfType")) {
-            var list = new ArrayList<Component>(1);
-            list.add(Component.translatable("sophisticated_wolves.carrier.dog_type")
+            return List.of(Component.translatable("sophisticated_wolves.carrier.dog_type")
                     .append(" - ")
                     .append(Component.translatable(
                             EnumWolfSpecies.getSpeciesByNum(infoTag.getInt("WolfType")).getSpeciesStr())));
-            return list;
         }
         return null;
     }
 
     @Override
-    public CompoundTag getInfo(LivingEntity pet) {
+    public CompoundTag getInfo(SophisticatedWolf wolf) {
         var tag = new CompoundTag();
-        tag.putInt("WolfType", ((SophisticatedWolf) pet).getSpecies().ordinal());
+        tag.putInt("WolfType", wolf.getSpecies().ordinal());
 
         return tag;
     }
 
     @Override
-    public CompoundTag getAdditionalData(LivingEntity pet) {
+    public CompoundTag getAdditionalData(SophisticatedWolf wolf) {
         var tag = new CompoundTag();
         if (Compatibility.IS_WOLF_ARMOR_INSTALLED) {
             //TODO remove?
-            //CompatibilityWolfArmor.storeWolfItems((Wolf) pet, tag);
+            //CompatibilityWolfArmor.storeWolfItems(wolf, tag);
         }
         return tag;
     }
 
     @Override
-    public void setAdditionalData(Entity pet, CompoundTag tag) {
+    public void setAdditionalData(SophisticatedWolf wolf, CompoundTag tag) {
         if (Compatibility.IS_WOLF_ARMOR_INSTALLED) {
             //TODO remove?
-            //CompatibilityWolfArmor.getWolfItems((Wolf) pet, tag);
+            //CompatibilityWolfArmor.getWolfItems(wolf, tag);
         }
+    }
+
+    @Override
+    public void doAtSpawn(SophisticatedWolf wolf, Player player) {
+        wolf.setOwnerUUID(player.getUUID());
+        wolf.setTame(true);
     }
 
     @Override

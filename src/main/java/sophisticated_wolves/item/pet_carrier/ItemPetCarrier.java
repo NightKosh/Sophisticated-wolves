@@ -20,13 +20,11 @@ import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.gameevent.GameEvent;
-import sophisticated_wolves.api.pet_carrier.PetCarrier;
 import sophisticated_wolves.core.SWTabs;
 import sophisticated_wolves.entity.SophisticatedWolf;
 
 import javax.annotation.Nullable;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Sophisticated Wolves
@@ -131,11 +129,7 @@ public class ItemPetCarrier extends Item {
                             if (tag.contains("CustomName")) {
                                 entity.setCustomName(Component.literal(tag.getString("CustomName")));
                             }
-
-                            if (entity instanceof TamableAnimal animal) {
-                                animal.setOwnerUUID(player.getUUID());
-                                animal.setTame(true);
-                            }
+                            petCarrier.doAtSpawn(entity, player);
 
                             if (!player.isCreative()) {
                                 stack.setTag(new CompoundTag());
@@ -188,10 +182,10 @@ public class ItemPetCarrier extends Item {
         if (this.allowedIn(tab)) {
             items.add(new ItemStack(this, 1));
 
-            for (Map.Entry<String, PetCarrier> entry : PetCarrierHelper.PETS_MAP.entrySet()) {
+            for (var entry : PetCarrierHelper.PETS_MAP.entrySet()) {
                 var petCarrier = entry.getValue();
                 if (petCarrier != null) {
-                    for (CompoundTag tag : petCarrier.getDefaultPetCarriers()) {
+                    for (var tag : petCarrier.getDefaultPetCarriers()) {
                         var stack = new ItemStack(this, 1);
                         stack.setTag(tag);
                         items.add(stack);

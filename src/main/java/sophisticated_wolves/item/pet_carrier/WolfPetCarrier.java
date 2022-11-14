@@ -1,15 +1,11 @@
 package sophisticated_wolves.item.pet_carrier;
 
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.animal.Wolf;
+import net.minecraft.world.entity.player.Player;
 import sophisticated_wolves.api.pet_carrier.PetCarrier;
 import sophisticated_wolves.compatibility.Compatibility;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Sophisticated Wolves
@@ -17,7 +13,7 @@ import java.util.List;
  * @author NightKosh
  * @license Lesser GNU Public License v3 (http://www.gnu.org/licenses/lgpl.html)
  */
-public class WolfPetCarrier extends PetCarrier {
+public class WolfPetCarrier extends PetCarrier<Wolf> {
 
     @Override
     public Class getPetClass() {
@@ -30,34 +26,32 @@ public class WolfPetCarrier extends PetCarrier {
     }
 
     @Override
-    public CompoundTag getAdditionalData(LivingEntity pet) {
+    public CompoundTag getAdditionalData(Wolf wolf) {
         var tag = new CompoundTag();
         if (Compatibility.IS_WOLF_ARMOR_INSTALLED) {
             //TODO remove?
-            //CompatibilityWolfArmor.storeWolfItems((Wolf) pet, tag);
+            //CompatibilityWolfArmor.storeWolfItems(wolf, tag);
         }
         return tag;
     }
 
     @Override
-    public void setAdditionalData(Entity pet, CompoundTag tag) {
+    public void setAdditionalData(Wolf wolf, CompoundTag tag) {
         if (Compatibility.IS_WOLF_ARMOR_INSTALLED) {
             //TODO remove?
-            //CompatibilityWolfArmor.getWolfItems((Wolf) pet, tag);
+            //CompatibilityWolfArmor.getWolfItems(wolf, tag);
         }
+    }
+
+    @Override
+    public void doAtSpawn(Wolf wolf, Player player) {
+        wolf.setOwnerUUID(player.getUUID());
+        wolf.setTame(true);
     }
 
     @Override
     public EntityType getEntityType() {
         return EntityType.WOLF;
-    }
-
-    @Override
-    public List<CompoundTag> getDefaultPetCarriers() {
-        var list = new ArrayList<CompoundTag>();
-        list.add(getDefaultPetCarrier(null, null));
-
-        return list;
     }
 
 }

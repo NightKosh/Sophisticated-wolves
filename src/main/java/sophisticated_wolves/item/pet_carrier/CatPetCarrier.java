@@ -4,9 +4,9 @@ import net.minecraft.core.Registry;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.animal.Cat;
 import net.minecraft.world.entity.animal.CatVariant;
+import net.minecraft.world.entity.player.Player;
 import sophisticated_wolves.api.pet_carrier.PetCarrier;
 
 import java.util.ArrayList;
@@ -18,7 +18,7 @@ import java.util.List;
  * @author NightKosh
  * @license Lesser GNU Public License v3 (http://www.gnu.org/licenses/lgpl.html)
  */
-public class CatPetCarrier extends PetCarrier {
+public class CatPetCarrier extends PetCarrier<Cat> {
 
     public enum EnumCatType {
         TABBY(CatVariant.TABBY),
@@ -33,7 +33,7 @@ public class CatPetCarrier extends PetCarrier {
         JELLIE(CatVariant.JELLIE),
         ALL_BLACK(CatVariant.ALL_BLACK);
 
-        private CatVariant catVariant;
+        private final CatVariant catVariant;
 
         EnumCatType(CatVariant catVariant) {
             this.catVariant = catVariant;
@@ -80,23 +80,27 @@ public class CatPetCarrier extends PetCarrier {
     @Override
     public List<Component> getInfo(CompoundTag infoTag) {
         if (infoTag.contains("CatType")) {
-            var list = new ArrayList<Component>(1);
-            list.add(Component.translatable("sophisticated_wolves.carrier.cat_type")
+            return List.of(Component.translatable("sophisticated_wolves.carrier.cat_type")
                     .append(" - ")
                     .append(Component.translatable(
                             "sophisticated_wolves.cat_type." + EnumCatType.getByNum(infoTag.getInt("CatType"))
                                     .toString().toLowerCase())));
-            return list;
         }
         return null;
     }
 
     @Override
-    public CompoundTag getInfo(LivingEntity pet) {
+    public CompoundTag getInfo(Cat cat) {
         var tag = new CompoundTag();
-        tag.putInt("CatType", EnumCatType.getByCatType(((Cat) pet).getCatVariant()).ordinal());
+        tag.putInt("CatType", EnumCatType.getByCatType(cat.getCatVariant()).ordinal());
 
         return tag;
+    }
+
+    @Override
+    public void doAtSpawn(Cat cat, Player player) {
+        cat.setOwnerUUID(player.getUUID());
+        cat.setTame(true);
     }
 
     @Override

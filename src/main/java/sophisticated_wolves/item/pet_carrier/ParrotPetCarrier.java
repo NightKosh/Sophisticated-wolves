@@ -3,7 +3,6 @@ package sophisticated_wolves.item.pet_carrier;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.animal.Parrot;
 import sophisticated_wolves.api.pet_carrier.PetCarrier;
 
@@ -16,7 +15,7 @@ import java.util.List;
  * @author NightKosh
  * @license Lesser GNU Public License v3 (http://www.gnu.org/licenses/lgpl.html)
  */
-public class ParrotPetCarrier extends PetCarrier {
+public class ParrotPetCarrier extends PetCarrier<Parrot> {
 
     public static final int[] PARROTS_SPECIES = {0, 1, 2, 3, 4};
     //0 = red, 1 = blue, 2 = green, 3 = cyan, 4 = silver.
@@ -39,19 +38,17 @@ public class ParrotPetCarrier extends PetCarrier {
     @Override
     public List<Component> getInfo(CompoundTag infoTag) {
         if (infoTag.contains("Variant")) {
-            var list = new ArrayList<Component>(1);
-            list.add(Component.translatable("sophisticated_wolves.carrier.parrot_type")
+            return List.of(Component.translatable("sophisticated_wolves.carrier.parrot_type")
                     .append(" - ")
                     .append(Component.translatable("sophisticated_wolves.parrot_type." + infoTag.getInt("Variant"))));
-            return list;
         }
         return null;
     }
 
     @Override
-    public CompoundTag getInfo(LivingEntity pet) {
+    public CompoundTag getInfo(Parrot parrot) {
         var tag = new CompoundTag();
-        tag.putInt("Variant", ((Parrot) pet).getVariant());
+        tag.putInt("Variant", parrot.getVariant());
 
         return tag;
     }
