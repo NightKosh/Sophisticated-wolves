@@ -33,7 +33,7 @@ public class SWVillagers {
             () -> new PoiType(ImmutableSet.copyOf(SWBlocks.getDogBowl().getStateDefinition().getPossibleStates()),
                     1, 1));
 
-    public static final RegistryObject<VillagerProfession> PET_SELLER = VILLAGER_PROFESSIONS_REGISTER.register(
+    public static final RegistryObject<VillagerProfession> ZOOLOGIST = VILLAGER_PROFESSIONS_REGISTER.register(
             "zoologist",
             () -> new VillagerProfession(
                     "zoologist",
