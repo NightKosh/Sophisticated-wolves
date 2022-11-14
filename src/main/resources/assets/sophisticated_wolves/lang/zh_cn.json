@@ -18,8 +18,6 @@
   "sophisticated_wolves.wolf_type.black" : "黑色",
   "sophisticated_wolves.wolf_type.brown" : "棕色",
 
-  "sophisticated_wolves.cat_type.ocelot" : "山猫",
-
   "sophisticated_wolves.cat_type.tabby" : "Tabby",
   "sophisticated_wolves.cat_type.black" : "Tuxedo",
   "sophisticated_wolves.cat_type.red" : "红色",
@@ -46,9 +44,13 @@
   "sophisticated_wolves.parrot_type.3" : "青色",
   "sophisticated_wolves.parrot_type.4" : "银色",
 
+  "sophisticated_wolves.fox_type.red" : "Red",
+  "sophisticated_wolves.fox_type.snow" : "Arctic Fox",
+
   "sophisticated_wolves.carrier.pet_type" : "宠物类型",
   "sophisticated_wolves.carrier.dog_type" : "狗品种",
   "sophisticated_wolves.carrier.cat_type" : "猫品种",
+  "sophisticated_wolves.carrier.fox_type" : "Fox type",
   "sophisticated_wolves.carrier.rabbit_type" : "兔子品种",
   "sophisticated_wolves.carrier.parrot_type" : "鹦鹉品种",
   "sophisticated_wolves.carrier.pet_name" : "名称",

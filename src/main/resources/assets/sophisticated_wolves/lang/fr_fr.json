@@ -18,8 +18,6 @@
   "sophisticated_wolves.wolf_type.black" : "Noir",
   "sophisticated_wolves.wolf_type.brown" : "Marron",
 
-  "sophisticated_wolves.cat_type.ocelot" : "Ocelot",
-
   "sophisticated_wolves.cat_type.tabby" : "Tabby",
   "sophisticated_wolves.cat_type.black" : "Tuxedo",
   "sophisticated_wolves.cat_type.red" : "Rouge",
@@ -46,9 +44,13 @@
   "sophisticated_wolves.parrot_type.3" : "Cyan",
   "sophisticated_wolves.parrot_type.4" : "Argenté",
 
+  "sophisticated_wolves.fox_type.red" : "Red ## TODO",
+  "sophisticated_wolves.fox_type.snow" : "Arctic Fox ## TODO",
+
   "sophisticated_wolves.carrier.pet_type" : "Type d'animal de compagnie",
   "sophisticated_wolves.carrier.dog_type" : "Type de chien",
   "sophisticated_wolves.carrier.cat_type" : "Type de chat",
+  "sophisticated_wolves.carrier.fox_type" : "Fox type ## TODO",
   "sophisticated_wolves.carrier.rabbit_type" : "Type de lapin",
   "sophisticated_wolves.carrier.parrot_type" : "Type de perroquet",
   "sophisticated_wolves.carrier.pet_name" : "Nom",

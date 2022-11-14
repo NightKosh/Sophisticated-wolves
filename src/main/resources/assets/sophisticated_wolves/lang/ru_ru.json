@@ -18,9 +18,6 @@
   "sophisticated_wolves.wolf_type.black" : "Чёрный",
   "sophisticated_wolves.wolf_type.brown" : "Коричневый",
 
-  "sophisticated_wolves.cat_type.ocelot" : "Оцелот",
-
-
   "sophisticated_wolves.cat_type.tabby" : "Табби",
   "sophisticated_wolves.cat_type.black" : "Чёрно-белая",
   "sophisticated_wolves.cat_type.red" : "Рыжая",
@@ -47,9 +44,13 @@
   "sophisticated_wolves.parrot_type.3" : "Голубой",
   "sophisticated_wolves.parrot_type.4" : "Серебряный",
 
+  "sophisticated_wolves.fox_type.red" : "Рыжая",
+  "sophisticated_wolves.fox_type.snow" : "Песец",
+
   "sophisticated_wolves.carrier.pet_type" : "Тип питомца",
   "sophisticated_wolves.carrier.dog_type" : "Тип собаки",
   "sophisticated_wolves.carrier.cat_type" : "Тип кошки",
+  "sophisticated_wolves.carrier.fox_type" : "Тип лисы",
   "sophisticated_wolves.carrier.rabbit_type" : "Тип кролика",
   "sophisticated_wolves.carrier.parrot_type" : "Тип попугая",
   "sophisticated_wolves.carrier.pet_name" : "Имя",

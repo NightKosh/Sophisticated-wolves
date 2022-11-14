@@ -18,8 +18,6 @@
   "sophisticated_wolves.wolf_type.black" : "Hitam",
   "sophisticated_wolves.wolf_type.brown" : "Coklat",
 
-  "sophisticated_wolves.cat_type.ocelot" : "Ocelot",
-
   "sophisticated_wolves.cat_type.tabby" : "Tabby",
   "sophisticated_wolves.cat_type.black" : "Tuxedo",
   "sophisticated_wolves.cat_type.red" : "Merah",
@@ -46,9 +44,13 @@
   "sophisticated_wolves.parrot_type.3" : "Cyan",
   "sophisticated_wolves.parrot_type.4" : "Perak",
 
+  "sophisticated_wolves.fox_type.red" : "Red ## TODO",
+  "sophisticated_wolves.fox_type.snow" : "Arctic Fox ## TODO",
+
   "sophisticated_wolves.carrier.pet_type" : "Jenis hewan peliharaan",
   "sophisticated_wolves.carrier.dog_type" : "Jenis anjing",
   "sophisticated_wolves.carrier.cat_type" : "Jenis kucing",
+  "sophisticated_wolves.carrier.fox_type" : "Fox type ## TODO",
   "sophisticated_wolves.carrier.rabbit_type" : "Jenis kelinci",
   "sophisticated_wolves.carrier.parrot_type" : "Jenis burung beo",
   "sophisticated_wolves.carrier.pet_name" : "Nama",

@@ -18,8 +18,6 @@
     "sophisticated_wolves.wolf_type.black" : "Đen",
     "sophisticated_wolves.wolf_type.brown" : "Nâu",
   
-    "sophisticated_wolves.cat_type.ocelot" : "Ocelot ## TODO",
-  
     "sophisticated_wolves.cat_type.tabby" : "Tabby ## TODO",
     "sophisticated_wolves.cat_type.black" : "Tuxedo ## TODO",
     "sophisticated_wolves.cat_type.red" : "Red ## TODO",
@@ -45,10 +43,14 @@
     "sophisticated_wolves.parrot_type.2" : "Green ## TODO",
     "sophisticated_wolves.parrot_type.3" : "Cyan ## TODO",
     "sophisticated_wolves.parrot_type.4" : "Silver ## TODO",
+
+    "sophisticated_wolves.fox_type.red" : "Red ## TODO",
+    "sophisticated_wolves.fox_type.snow" : "Arctic Fox ## TODO",
   
     "sophisticated_wolves.carrier.pet_type" : "Loại thú cưng",
     "sophisticated_wolves.carrier.dog_type" : "Loại cún",
     "sophisticated_wolves.carrier.cat_type" : "Cat type ## TODO",
+    "sophisticated_wolves.carrier.fox_type" : "Fox type ## TODO",
     "sophisticated_wolves.carrier.rabbit_type" : "Rabbit type ## TODO",
     "sophisticated_wolves.carrier.parrot_type" : "Parrot type ## TODO",
     "sophisticated_wolves.carrier.pet_name" : "Tên",
