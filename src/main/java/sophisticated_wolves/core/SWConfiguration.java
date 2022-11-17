@@ -19,6 +19,7 @@ public class SWConfiguration {
     public static ForgeConfigSpec.ConfigValue<Boolean> NAME_TAG_FOR_ANY_PETS;
     public static ForgeConfigSpec.ConfigValue<Boolean> IMMUNE_TO_CACTI;
     public static ForgeConfigSpec.ConfigValue<Boolean> WOLVES_WALKS_THROUGH_EACH_OTHER;
+    public static ForgeConfigSpec.ConfigValue<Boolean> WOLVES_WALKS_THROUGH_OWNER;
     public static ForgeConfigSpec.ConfigValue<Integer> WOLVES_HEALTH_WILD;
     public static ForgeConfigSpec.ConfigValue<Integer> WOLVES_HEALTH_TAMED;
 
@@ -40,6 +41,8 @@ public class SWConfiguration {
                 .define("Immune To Cacti", true);
         WOLVES_WALKS_THROUGH_EACH_OTHER = BUILDER.comment("Should sophisticated wolves walks through each other?")
                 .define("Wolves Walks Through Each Other", true);
+        WOLVES_WALKS_THROUGH_OWNER = BUILDER.comment("Should sophisticated wolves walks through owner?")
+                .define("Wolves Walks Through Owner", true);
         WOLVES_HEALTH_WILD = BUILDER.comment("Amount of health wild sophisticated wolves have.")
                 .defineInRange("Wild Wolves Health", SophisticatedWolf.DEFAULT_WILD_WOLF_HEALTH, 1, Integer.MAX_VALUE);
         WOLVES_HEALTH_TAMED = BUILDER.comment("Amount of health tamed sophisticated wolves have.")
