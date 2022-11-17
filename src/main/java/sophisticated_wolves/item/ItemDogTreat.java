@@ -44,7 +44,7 @@ public class ItemDogTreat extends Item {
                     sWolf.setTame(true);
                     sWolf.setOwnerUUID(wolf.getOwnerUUID());
                     sWolf.setHealth(wolf.getHealth());
-                    sWolf.setWolfSpeciesByBiome();
+                    sWolf.setWolfSpeciesByBiome(level);
 
                     if (Compatibility.IS_WOLF_ARMOR_INSTALLED) {
                         //TODO remove?

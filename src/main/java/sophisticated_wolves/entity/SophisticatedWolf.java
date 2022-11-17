@@ -157,7 +157,7 @@ public class SophisticatedWolf extends AEntitySophisticatedWolf {
     public SpawnGroupData finalizeSpawn(
             ServerLevelAccessor accessor, DifficultyInstance difficulty,
             MobSpawnType mobSpawnType, @Nullable SpawnGroupData spawnGroupData, @Nullable CompoundTag tag) {
-        this.setWolfSpeciesByBiome();
+        this.setWolfSpeciesByBiome(accessor.getLevel());
         return super.finalizeSpawn(accessor, difficulty, mobSpawnType, spawnGroupData, tag);
     }
 
@@ -406,8 +406,8 @@ public class SophisticatedWolf extends AEntitySophisticatedWolf {
     }
 
     @Override
-    public EnumWolfSpecies getSpeciesByBiome() {
-        var biome = this.getLevel().getBiome(this.getOnPos());
+    public EnumWolfSpecies getSpeciesByBiome(Level level) {
+        var biome = level.getBiome(this.blockPosition());
 
         if (biome.containsTag(Tags.Biomes.IS_SNOWY)) {
             return EnumWolfSpecies.VANILLA;
@@ -420,8 +420,8 @@ public class SophisticatedWolf extends AEntitySophisticatedWolf {
         }
     }
 
-    public void setWolfSpeciesByBiome() {
-        this.updateSpecies(this.getSpeciesByBiome());
+    public void setWolfSpeciesByBiome(Level level) {
+        this.updateSpecies(this.getSpeciesByBiome(level));
     }
 
     @Override
