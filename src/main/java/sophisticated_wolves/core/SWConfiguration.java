@@ -22,6 +22,7 @@ public class SWConfiguration {
     public static ForgeConfigSpec.ConfigValue<Boolean> WOLVES_WALKS_THROUGH_OWNER;
     public static ForgeConfigSpec.ConfigValue<Integer> WOLVES_HEALTH_WILD;
     public static ForgeConfigSpec.ConfigValue<Integer> WOLVES_HEALTH_TAMED;
+    public static ForgeConfigSpec.ConfigValue<Integer> WOLVES_DAMAGE_TAMED;
 
     public static ForgeConfigSpec.ConfigValue<Boolean> ATTACK_ANIMALS;
     public static ForgeConfigSpec.ConfigValue<Boolean> ATTACK_SKELETONS;
@@ -47,6 +48,8 @@ public class SWConfiguration {
                 .defineInRange("Wild Wolves Health", SophisticatedWolf.DEFAULT_WILD_WOLF_HEALTH, 1, Integer.MAX_VALUE);
         WOLVES_HEALTH_TAMED = BUILDER.comment("Amount of health tamed sophisticated wolves have.")
                 .defineInRange("Tamed Wolves Health", SophisticatedWolf.DEFAULT_TAMED_WOLF_HEALTH, 1, Integer.MAX_VALUE);
+        WOLVES_DAMAGE_TAMED = BUILDER.comment("Attack damage of tamed sophisticated wolves.")
+                .defineInRange("Tamed Wolves Damage", SophisticatedWolf.DEFAULT_TAMED_WOLF_DAMAGE, 1, Integer.MAX_VALUE);
 
         ATTACK_ANIMALS = BUILDER.comment("Should non tamed sophisticated wolves attack other animals?")
                 .define("Attack Animals", false);

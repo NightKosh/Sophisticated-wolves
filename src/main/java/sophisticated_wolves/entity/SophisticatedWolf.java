@@ -71,6 +71,7 @@ public class SophisticatedWolf extends AEntitySophisticatedWolf {
 
     public static final int DEFAULT_WILD_WOLF_HEALTH = 8;
     public static final int DEFAULT_TAMED_WOLF_HEALTH = 30;
+    public static final int DEFAULT_TAMED_WOLF_DAMAGE = 5;
     public static final byte EXTINGUISH_EVENT_ID = 99;
 
     private static final EntityDataAccessor<Integer> WOLF_SPECIES =
@@ -354,7 +355,7 @@ public class SophisticatedWolf extends AEntitySophisticatedWolf {
             this.setHealth(SWConfiguration.WOLVES_HEALTH_WILD.get());
         }
 
-        this.getAttribute(Attributes.ATTACK_DAMAGE).setBaseValue(5);
+        this.getAttribute(Attributes.ATTACK_DAMAGE).setBaseValue(SWConfiguration.WOLVES_DAMAGE_TAMED.get());
     }
 
     @Override
