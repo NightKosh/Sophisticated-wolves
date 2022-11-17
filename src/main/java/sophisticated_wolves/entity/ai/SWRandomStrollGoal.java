@@ -1,13 +1,8 @@
 package sophisticated_wolves.entity.ai;
 
-import net.minecraft.network.chat.Component;
 import net.minecraft.util.Mth;
-import net.minecraft.world.entity.PathfinderMob;
 import net.minecraft.world.entity.ai.goal.WaterAvoidingRandomStrollGoal;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.DiggerItem;
-import net.minecraft.world.item.PickaxeItem;
-import net.minecraft.world.item.ShovelItem;
 import sophisticated_wolves.entity.SophisticatedWolf;
 import sophisticated_wolves.util.DogUtil;
 
@@ -28,7 +23,7 @@ public class SWRandomStrollGoal extends WaterAvoidingRandomStrollGoal {
         }
         return super.canUse();
     }
-    
+
     //  I can see people is going to need this cause i once got my TorchDog into lava
     //Because this reason here.., and it is also kinda annoying to see dogs going in 
     //front of owner when mining.
@@ -41,14 +36,12 @@ public class SWRandomStrollGoal extends WaterAvoidingRandomStrollGoal {
     @Override
     public void tick() {
         super.tick();
-        
-        
 
         if (this.dog.tickCount < this.tickCountStopMiningCautious) {
             if (this.pathObstructOwnerMining()) {
                 this.stop();
             }
-        } 
+        }
     }
 
     //TODO Mining genius : the dog will follow owner while putting torch down 
@@ -58,11 +51,12 @@ public class SWRandomStrollGoal extends WaterAvoidingRandomStrollGoal {
     //Check if owner is swinging with a digger item in hand.
     private boolean ownerMayBeMining() {
         var owner = this.dog.getOwner();
-        if (owner == null) return false;
-        return
-            owner.swinging 
-            && owner.getMainHandItem().getItem() instanceof DiggerItem;
-            
+        if (owner == null) {
+            return false;
+        } else {
+            return owner.swinging &&
+                    owner.getMainHandItem().getItem() instanceof DiggerItem;
+        }
     }
 
     /**
@@ -70,27 +64,22 @@ public class SWRandomStrollGoal extends WaterAvoidingRandomStrollGoal {
      * an obstructing path is defined in {@link DogUtil#posWillCollideWithOwnerMovingForward}
      */
     private boolean pathObstructOwnerMining() {
+        var navigation = this.dog.getNavigation();
+        var path = navigation.getPath();
+        if (path != null) {
+            //Iterate through the next 5 blocks of the path and check if obstruct owner.
+            int nodeIndex = path.getNextNodeIndex();
+            int endIndex = Mth.clamp(nodeIndex + 5, nodeIndex, path.getNodeCount() - 1);
+            for (int i = nodeIndex; i < endIndex; i++) {
+                boolean flag = DogUtil.posWillCollideWithOwnerMovingForward(dog, path.getNodePos(i));
 
-        var n = this.dog.getNavigation(); 
-        var p = n.getPath();
-        if (p == null) return false;
-        
-        //Iterate through the next 5 blocks of the path and check if obstruct owner.
-        int i0 = p.getNextNodeIndex();
-        int i_end = Mth.clamp(i0+5, i0, p.getNodeCount()-1);
-        for (int i = i0; i < i_end; ++i) {
-
-            boolean flag = 
-                DogUtil.posWillCollideWithOwnerMovingForward(dog, p.getNodePos(i));
-
-            if (flag) {
-                return true;
-            } 
-
+                if (flag) {
+                    return true;
+                }
+            }
         }
 
         return false;
     }
 
-    
 }
