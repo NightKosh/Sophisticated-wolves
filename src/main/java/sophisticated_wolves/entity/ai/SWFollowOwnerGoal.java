@@ -1,7 +1,6 @@
 package sophisticated_wolves.entity.ai;
 
 import net.minecraft.core.BlockPos;
-import net.minecraft.util.Mth;
 import net.minecraft.world.entity.TamableAnimal;
 import net.minecraft.world.entity.ai.goal.FollowOwnerGoal;
 import net.minecraft.world.level.Level;
@@ -17,7 +16,7 @@ public class SWFollowOwnerGoal extends FollowOwnerGoal {
 
     private final TamableAnimal pet;
     private final double speedModifier;
-    private int tick;
+    private int timeToRecalcPath;
 
     public SWFollowOwnerGoal(TamableAnimal entity, double speedModifier, float startDistance, float stopDistance) {
         super(entity, speedModifier, startDistance, stopDistance, false);
@@ -52,7 +51,7 @@ public class SWFollowOwnerGoal extends FollowOwnerGoal {
      */
     public void start() {
         super.start();
-        this.tick = 0;
+        this.timeToRecalcPath = 0;
     }
 
     /**
@@ -63,15 +62,13 @@ public class SWFollowOwnerGoal extends FollowOwnerGoal {
         var owner = this.pet.getOwner();
         if (owner != null) {
             this.pet.getLookControl().setLookAt(owner, 10, this.pet.getMaxHeadXRot());
-            this.tick--;
-            if (!this.pet.isInSittingPose() && this.tick <= 0) {
-                this.tick = 10;
-                if (!this.pet.getNavigation().moveTo(owner, this.speedModifier) &&
-                        !this.pet.isLeashed() &&
-                        this.pet.distanceToSqr(owner) >= 144) {
-                    int xPos = Mth.floor(owner.getX());
-                    int zPos = Mth.floor(owner.getZ());
-                    int yPos = Mth.floor(owner.getBoundingBox().minY);
+            this.timeToRecalcPath--;
+            if (this.timeToRecalcPath <= 0 && !this.pet.isInSittingPose() && !this.pet.isLeashed() && !this.pet.isPassenger()) {
+                this.timeToRecalcPath = this.adjustedTickDelay(10);
+                if (this.pet.distanceToSqr(owner) >= 144) {
+                    int xPos = owner.blockPosition().getX();
+                    int zPos = owner.blockPosition().getZ();
+                    int yPos = owner.blockPosition().getY();
 
                     for (int dX = -2; dX <= 2; dX++) {
                         for (int dZ = -2; dZ <= 2; dZ++) {
@@ -83,6 +80,8 @@ public class SWFollowOwnerGoal extends FollowOwnerGoal {
                             }
                         }
                     }
+                } else {
+                    this.pet.getNavigation().moveTo(owner, this.speedModifier);
                 }
             }
         }
@@ -97,9 +96,9 @@ public class SWFollowOwnerGoal extends FollowOwnerGoal {
     private static boolean isTeleportSafe(Level level, int x, int y, int z) {
         var blockState = level.getBlockState(new BlockPos(x, y, z));
         var material = blockState.getMaterial();
-        //TODO
-        //if ((blockState.getBlock().isNormalCube(blockState) ||
-        return (material.equals(Material.ICE) ||
+
+        return (material.isSolid() ||
+                material.equals(Material.ICE) ||
                 material.equals(Material.LEAVES) ||
                 material.equals(Material.GLASS) ||
                 material.equals(Material.WATER) && level.getBlockState(new BlockPos(x, y, z).above())
@@ -111,9 +110,8 @@ public class SWFollowOwnerGoal extends FollowOwnerGoal {
     private static boolean isAirSafe(Level level, int x, int y, int z) {
         var blockState = level.getBlockState(new BlockPos(x, y, z));
         var material = blockState.getMaterial();
-        //TODO
-        //if (!blockState.getBlock().isNormalCube(blockState) &&
-        return !material.equals(Material.WATER) &&
+        return !material.isSolid() &&
+                !material.equals(Material.WATER) &&
                 !material.equals(Material.LAVA) &&
                 !material.equals(Material.FIRE) &&
                 !material.equals(Material.LEAVES) &&
