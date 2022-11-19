@@ -58,7 +58,8 @@ public class FeedGoal extends Goal {
      */
     @Override
     public boolean canContinueToUse() {
-        return this.pet.getHealth() < SWConfiguration.WOLVES_HEALTH_TAMED.get() && this.foodEntity != null;
+        return this.pet.getHealth() < SWConfiguration.WOLVES_HEALTH_TAMED.get() &&
+                this.foodEntity != null && this.foodEntity.isAlive();
     }
 
     /**
@@ -78,8 +79,7 @@ public class FeedGoal extends Goal {
                     if (this.foodEntity.getItem().isEmpty()) {
                         this.foodEntity.remove(Entity.RemovalReason.DISCARDED);
                     }
-                    this.foodEntity = null;
-                    this.pet.getNavigation().stop();
+                    this.stop();
                 }
             }
         }
