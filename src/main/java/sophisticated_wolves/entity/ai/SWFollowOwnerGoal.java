@@ -54,7 +54,7 @@ public class SWFollowOwnerGoal extends FollowOwnerGoal {
     }
 
     /**
-     * Updates the task TODO : fix dog cannot teleport
+     * Updates the task
      */
     @Override
     public void tick() {
