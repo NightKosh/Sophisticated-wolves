@@ -106,7 +106,7 @@ public class SophisticatedWolf extends AEntitySophisticatedWolf {
         this.goalSelector.addGoal(10, new Wolf.WolfAvoidEntityGoal<>(this, Llama.class, 24, 1.5, 1.5));
         this.goalSelector.addGoal(15, new LeapAtTargetGoal(this, 0.4F));
         this.goalSelector.addGoal(20, new MeleeAttackGoal(this, 1, true));
-        this.goalSelector.addGoal(22, new MoveCancelGoal(this, 6)); //new behavior
+        this.goalSelector.addGoal(22, new MoveCancelAtMiningGoal(this, 6)); //new behavior
         this.goalSelector.addGoal(25, new SWFollowOwnerGoal(this, 1, 6, 2)); //new behavior. changed 10 to 6
         this.goalSelector.addGoal(27, new AvoidFireGoal(this, 1, 1.4)); //new behavior
         this.goalSelector.addGoal(28, drowngGoal); //new behavior
