@@ -20,8 +20,6 @@ import sophisticated_wolves.core.SWVillagers;
 import sophisticated_wolves.entity.SophisticatedWolf;
 import sophisticated_wolves.item.pet_carrier.PetCarrierHelper;
 
-import java.util.ArrayList;
-
 /**
  * Sophisticated Wolves
  *
@@ -67,24 +65,20 @@ public class EventsVillagerTrades {
         return new MerchantOffer(
                 new ItemStack(Items.EMERALD, random.nextInt(minPrice, maxPrice)),
                 getCarrierForTrade(petClass, random),
-                10, 30, 0.02F);
+                3, 30, 0.02F);
     }
 
     private static ItemStack getCarrierForTrade(Class petClass, RandomSource random) {
         var stack = new ItemStack(SWItems.getPetCarrier());
 
-        var list = new ArrayList<ItemStack>();
         var petCarrier = PetCarrierHelper.getPetCarrier(petClass);
         if (petCarrier != null) {
             var tags = petCarrier.getDefaultPetCarriers();
             if (tags != null) {
-                for (var tag : tags) {
-                    stack.setTag(tag);
-                    list.add(stack);
-                }
+                stack.setTag(tags.get(random.nextInt(tags.size())));
             }
         }
-        return list.get(random.nextInt(list.size()));
+        return stack;
     }
 
 }
