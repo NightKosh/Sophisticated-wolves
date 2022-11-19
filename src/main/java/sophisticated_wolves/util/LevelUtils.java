@@ -5,6 +5,7 @@ import net.minecraft.util.Mth;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.material.Material;
 import net.minecraft.world.phys.AABB;
 
 /**
@@ -36,6 +37,32 @@ public class LevelUtils {
         }
 
         return false;
+    }
+
+    public static boolean isGroundSafe(Level level, int x, int y, int z) {
+        var blockState = level.getBlockState(new BlockPos(x, y, z));
+        var material = blockState.getMaterial();
+
+        return (material.isSolid() ||
+                material.equals(Material.ICE) ||
+                material.equals(Material.LEAVES) ||
+                material.equals(Material.GLASS) ||
+                material.equals(Material.WATER) && level.getBlockState(new BlockPos(x, y, z).above())
+                        .getMaterial().equals(Material.AIR)) &&
+                !material.equals(Material.CACTUS)
+                && !material.equals(Material.PLANT);
+    }
+
+    public static boolean isAirSafe(Level level, int x, int y, int z) {
+        var blockState = level.getBlockState(new BlockPos(x, y, z));
+        var material = blockState.getMaterial();
+        return !material.isSolid() &&
+                !material.equals(Material.WATER) &&
+                !material.equals(Material.LAVA) &&
+                !material.equals(Material.FIRE) &&
+                !material.equals(Material.LEAVES) &&
+                !material.equals(Material.GLASS) &&
+                !material.equals(Material.ICE);
     }
 
 }

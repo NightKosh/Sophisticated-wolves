@@ -1,10 +1,9 @@
 package sophisticated_wolves.entity.ai;
 
-import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.TamableAnimal;
 import net.minecraft.world.entity.ai.goal.FollowOwnerGoal;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.material.Material;
+import sophisticated_wolves.util.LevelUtils;
 
 /**
  * Sophisticated Wolves
@@ -88,35 +87,9 @@ public class SWFollowOwnerGoal extends FollowOwnerGoal {
     }
 
     public static boolean canTeleport(Level level, int x, int y, int z) {
-        return isTeleportSafe(level, x, y - 1, z) &&
-                isAirSafe(level, x, y, z) &&
-                isAirSafe(level, x, y + 1, z);
-    }
-
-    private static boolean isTeleportSafe(Level level, int x, int y, int z) {
-        var blockState = level.getBlockState(new BlockPos(x, y, z));
-        var material = blockState.getMaterial();
-
-        return (material.isSolid() ||
-                material.equals(Material.ICE) ||
-                material.equals(Material.LEAVES) ||
-                material.equals(Material.GLASS) ||
-                material.equals(Material.WATER) && level.getBlockState(new BlockPos(x, y, z).above())
-                        .getMaterial().equals(Material.AIR)) &&
-                !material.equals(Material.CACTUS)
-                && !material.equals(Material.PLANT);
-    }
-
-    private static boolean isAirSafe(Level level, int x, int y, int z) {
-        var blockState = level.getBlockState(new BlockPos(x, y, z));
-        var material = blockState.getMaterial();
-        return !material.isSolid() &&
-                !material.equals(Material.WATER) &&
-                !material.equals(Material.LAVA) &&
-                !material.equals(Material.FIRE) &&
-                !material.equals(Material.LEAVES) &&
-                !material.equals(Material.GLASS) &&
-                !material.equals(Material.ICE);
+        return LevelUtils.isGroundSafe(level, x, y - 1, z) &&
+                LevelUtils.isAirSafe(level, x, y, z) &&
+                LevelUtils.isAirSafe(level, x, y + 1, z);
     }
 
 }
