@@ -47,13 +47,9 @@
   "sophisticated_wolves.fox_type.red" : "Red",
   "sophisticated_wolves.fox_type.snow" : "Arctic Fox",
 
-  "sophisticated_wolves.carrier.pet_type" : "寵物類型",
-  "sophisticated_wolves.carrier.dog_type" : "狗品種",
-  "sophisticated_wolves.carrier.cat_type" : "貓品種",
-  "sophisticated_wolves.carrier.fox_type" : "Fox type",
-  "sophisticated_wolves.carrier.rabbit_type" : "兔子品種",
-  "sophisticated_wolves.carrier.parrot_type" : "鸚鵡品種",
-  "sophisticated_wolves.carrier.pet_name" : "名稱",
+  "sophisticated_wolves.carrier.pet" : "Pet",
+  "sophisticated_wolves.carrier.type" : "Type",
+  "sophisticated_wolves.carrier.name" : "名稱",
 
   "gui.sophisticated_wolves.edit_dog_name.title" : "給你的寵物取名：",
   "gui.sophisticated_wolves.wolf_food_configs.title" : "選擇狗要吃哪類食物",

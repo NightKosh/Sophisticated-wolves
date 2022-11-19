@@ -47,13 +47,9 @@
   "sophisticated_wolves.fox_type.red" : "Red ## TODO",
   "sophisticated_wolves.fox_type.snow" : "Arctic Fox ## TODO",
 
-  "sophisticated_wolves.carrier.pet_type" : "Jenis hewan peliharaan",
-  "sophisticated_wolves.carrier.dog_type" : "Jenis anjing",
-  "sophisticated_wolves.carrier.cat_type" : "Jenis kucing",
-  "sophisticated_wolves.carrier.fox_type" : "Fox type ## TODO",
-  "sophisticated_wolves.carrier.rabbit_type" : "Jenis kelinci",
-  "sophisticated_wolves.carrier.parrot_type" : "Jenis burung beo",
-  "sophisticated_wolves.carrier.pet_name" : "Nama",
+  "sophisticated_wolves.carrier.pet" : "Pet ## TODO",
+  "sophisticated_wolves.carrier.type" : "Type ## TODO",
+  "sophisticated_wolves.carrier.name" : "Nama",
 
   "gui.sophisticated_wolves.edit_dog_name.title" : "Berikan nama binatang peliharaan Anda:",
   "gui.sophisticated_wolves.wolf_food_configs.title" : "Pilih jenis makanan anjing yang dimakan",

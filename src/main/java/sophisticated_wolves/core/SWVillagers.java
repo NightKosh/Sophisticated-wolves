@@ -9,6 +9,7 @@ import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 import sophisticated_wolves.api.ModInfo;
+import sophisticated_wolves.api.SophisticatedWolvesAPI;
 
 /**
  * Sophisticated Wolves
@@ -34,9 +35,9 @@ public class SWVillagers {
                     1, 1));
 
     public static final RegistryObject<VillagerProfession> ZOOLOGIST = VILLAGER_PROFESSIONS_REGISTER.register(
-            "zoologist",
+            SophisticatedWolvesAPI.VILLAGER_ID,
             () -> new VillagerProfession(
-                    "zoologist",
+                    SophisticatedWolvesAPI.VILLAGER_ID,
                     x -> x.get() == KENNEL_BLOCK_POI.get(),
                     x -> x.get() == DOG_BOWL_POI.get(),
                     ImmutableSet.of(),

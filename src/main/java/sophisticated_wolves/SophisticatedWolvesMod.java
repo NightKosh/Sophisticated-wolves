@@ -9,7 +9,6 @@ import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import sophisticated_wolves.api.ModInfo;
-import sophisticated_wolves.api.SophisticatedWolvesAPI;
 import sophisticated_wolves.core.SWBlockEntities;
 import sophisticated_wolves.core.SWBlocks;
 import sophisticated_wolves.core.SWConfiguration;
@@ -36,12 +35,8 @@ public class SophisticatedWolvesMod {
 
     public SophisticatedWolvesMod() {
         instance = this;
-        //TODO ??
-        SophisticatedWolvesAPI.entityHandler = new APIEntityHandler();
-        SophisticatedWolvesAPI.petCarrierHandler = PetCarrierHelper.INSTANCE;
 
         ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, SWConfiguration.SPEC, ModInfo.ID + ".toml");
-
 
         var eventBus = FMLJavaModLoadingContext.get().getModEventBus();
 
@@ -51,8 +46,6 @@ public class SophisticatedWolvesMod {
         SWMenu.register(eventBus);
 
         SWSound.register(eventBus);
-        //TODO do at post init ????
-        PetCarrierHelper.INSTANCE.addPetCarriers();
 
         SWEntities.register(eventBus);
 
@@ -61,6 +54,8 @@ public class SophisticatedWolvesMod {
         eventBus.addListener(this::setup);
 
         MinecraftForge.EVENT_BUS.register(this);
+
+        PetCarrierHelper.addPetCarriers();
     }
 
     private void setup(final FMLCommonSetupEvent event) {
@@ -70,7 +65,6 @@ public class SophisticatedWolvesMod {
 //TODO remove?
 //    @Mod.EventHandler
 //    public void postInit(FMLPostInitializationEvent event) {
-//        PetCarrierHelper.INSTANCE.addPetCarriers();
 //
 //        Compatibility.checkMods();
 //    }

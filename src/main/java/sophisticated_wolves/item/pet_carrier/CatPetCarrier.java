@@ -80,7 +80,7 @@ public class CatPetCarrier extends PetCarrier<Cat> {
     @Override
     public List<Component> getInfo(CompoundTag infoTag) {
         if (infoTag.contains("CatType")) {
-            return List.of(Component.translatable("sophisticated_wolves.carrier.cat_type")
+            return List.of(Component.translatable("sophisticated_wolves.carrier.type")
                     .append(" - ")
                     .append(Component.translatable(
                             "sophisticated_wolves.cat_type." + EnumCatType.getByNum(infoTag.getInt("CatType"))

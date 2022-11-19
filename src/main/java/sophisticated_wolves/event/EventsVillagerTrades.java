@@ -57,7 +57,7 @@ public class EventsVillagerTrades {
             trades.get(4).add((trader, rand) -> getCarrierOffer(Parrot.class, 25, 30, rand));
             trades.get(4).add((trader, rand) -> getCarrierOffer(Cat.class, 30, 40, rand));
 
-            trades.get(5).add((trader, rand) -> getCarrierOffer(SophisticatedWolf.class, 30, 40, rand));
+            trades.get(5).add((trader, rand) -> getCarrierOffer(SophisticatedWolf.class, 35, 45, rand));
             trades.get(5).add((trader, rand) -> getCarrierOffer(Ocelot.class, 45, 55, rand));
             trades.get(5).add((trader, rand) -> getCarrierOffer(Fox.class, 45, 55, rand));
         }
@@ -74,7 +74,7 @@ public class EventsVillagerTrades {
         var stack = new ItemStack(SWItems.getPetCarrier());
 
         var list = new ArrayList<ItemStack>();
-        var petCarrier = PetCarrierHelper.PETS_MAP.get(petClass.getSimpleName());
+        var petCarrier = PetCarrierHelper.getPetCarrier(petClass);
         if (petCarrier != null) {
             var tags = petCarrier.getDefaultPetCarriers();
             if (tags != null) {

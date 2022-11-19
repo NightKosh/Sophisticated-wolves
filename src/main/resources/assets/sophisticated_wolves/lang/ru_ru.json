@@ -47,13 +47,9 @@
   "sophisticated_wolves.fox_type.red" : "Рыжая",
   "sophisticated_wolves.fox_type.snow" : "Песец",
 
-  "sophisticated_wolves.carrier.pet_type" : "Тип питомца",
-  "sophisticated_wolves.carrier.dog_type" : "Тип собаки",
-  "sophisticated_wolves.carrier.cat_type" : "Тип кошки",
-  "sophisticated_wolves.carrier.fox_type" : "Тип лисы",
-  "sophisticated_wolves.carrier.rabbit_type" : "Тип кролика",
-  "sophisticated_wolves.carrier.parrot_type" : "Тип попугая",
-  "sophisticated_wolves.carrier.pet_name" : "Имя",
+  "sophisticated_wolves.carrier.pet" : "Питомец",
+  "sophisticated_wolves.carrier.type" : "Тип",
+  "sophisticated_wolves.carrier.name" : "Имя",
 
   "gui.sophisticated_wolves.edit_dog_name.title" : "Дайте своему питомцу имя:",
   "gui.sophisticated_wolves.wolf_food_configs.title" : "Выберите тип еды, которую могут есть собаки",

@@ -47,13 +47,9 @@
   "sophisticated_wolves.fox_type.red" : "Red ## TODO",
   "sophisticated_wolves.fox_type.snow" : "Arctic Fox ## TODO",
 
-  "sophisticated_wolves.carrier.pet_type" : "Tipo de mascota",
-  "sophisticated_wolves.carrier.dog_type" : "Tipo de perro",
-  "sophisticated_wolves.carrier.cat_type" : "Tipo de gato",
-  "sophisticated_wolves.carrier.fox_type" : "Fox type ## TODO",
-  "sophisticated_wolves.carrier.rabbit_type" : "Tipo de conejo",
-  "sophisticated_wolves.carrier.parrot_type" : "Tipo de loro",
-  "sophisticated_wolves.carrier.pet_name" : "Nombre",
+  "sophisticated_wolves.carrier.pet" : "Pet ## TODO",
+  "sophisticated_wolves.carrier.type" : "Type ## TODO",
+  "sophisticated_wolves.carrier.name" : "Nombre",
 
   "gui.sophisticated_wolves.edit_dog_name.title" : "Dale a tu mascota un nombre:",
   "gui.sophisticated_wolves.wolf_food_configs.title" : "Elige los tipos de alimento que los lobos comen",

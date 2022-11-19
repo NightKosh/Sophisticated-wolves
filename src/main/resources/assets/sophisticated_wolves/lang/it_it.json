@@ -47,13 +47,9 @@
   "sophisticated_wolves.fox_type.red" : "Red ## TODO",
   "sophisticated_wolves.fox_type.snow" : "Arctic Fox ## TODO",
 
-  "sophisticated_wolves.carrier.pet_type" : "Tipo di animale domestico",
-  "sophisticated_wolves.carrier.dog_type" : "Tipo di cane",
-  "sophisticated_wolves.carrier.cat_type" : "Tipo di gatto",
-  "sophisticated_wolves.carrier.fox_type" : "Fox type ## TODO",
-  "sophisticated_wolves.carrier.rabbit_type" : "Tipo di coniglio",
-  "sophisticated_wolves.carrier.parrot_type" : "Tipo di pappagallo",
-  "sophisticated_wolves.carrier.pet_name" : "Nome",
+  "sophisticated_wolves.carrier.pet" : "Pet ## TODO",
+  "sophisticated_wolves.carrier.type" : "Type ## TODO",
+  "sophisticated_wolves.carrier.name" : "Nome",
 
   "gui.sophisticated_wolves.edit_dog_name.title" : "Dai un nome al tuo animale domestico:",
   "gui.sophisticated_wolves.wolf_food_configs.title" : "Selezione quali tipi di cibo mangia il cane",

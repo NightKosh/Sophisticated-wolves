@@ -46,14 +46,10 @@
 
     "sophisticated_wolves.fox_type.red" : "Red ## TODO",
     "sophisticated_wolves.fox_type.snow" : "Arctic Fox ## TODO",
-  
-    "sophisticated_wolves.carrier.pet_type" : "Loại thú cưng",
-    "sophisticated_wolves.carrier.dog_type" : "Loại cún",
-    "sophisticated_wolves.carrier.cat_type" : "Cat type ## TODO",
-    "sophisticated_wolves.carrier.fox_type" : "Fox type ## TODO",
-    "sophisticated_wolves.carrier.rabbit_type" : "Rabbit type ## TODO",
-    "sophisticated_wolves.carrier.parrot_type" : "Parrot type ## TODO",
-    "sophisticated_wolves.carrier.pet_name" : "Tên",
+
+    "sophisticated_wolves.carrier.pet" : "Pet ## TODO",
+    "sophisticated_wolves.carrier.type" : "Type ## TODO",
+    "sophisticated_wolves.carrier.name" : "Tên",
   
     "gui.sophisticated_wolves.edit_dog_name.title" : "Đặt tên thú cưng bạn:",
     "gui.sophisticated_wolves.wolf_food_configs.title" : "Chọn loại thức ăn, bạn muốn Chó Sói bạn ăn",

@@ -38,7 +38,7 @@ public class ParrotPetCarrier extends PetCarrier<Parrot> {
     @Override
     public List<Component> getInfo(CompoundTag infoTag) {
         if (infoTag.contains("Variant")) {
-            return List.of(Component.translatable("sophisticated_wolves.carrier.parrot_type")
+            return List.of(Component.translatable("sophisticated_wolves.carrier.type")
                     .append(" - ")
                     .append(Component.translatable("sophisticated_wolves.parrot_type." + infoTag.getInt("Variant"))));
         }

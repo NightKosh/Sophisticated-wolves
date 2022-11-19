@@ -62,7 +62,7 @@ public class ItemPetCarrier extends Item {
                 if (pet.isTame() && pet.getOwnerUUID() != null && pet.getOwnerUUID().equals(player.getUUID())) {
                     getPetInfo(stack, player, entity, hand);
                 }
-            } else if (PetCarrierHelper.PETS_MAP.containsKey(entity.getClass().getSimpleName())) {
+            } else if (PetCarrierHelper.hasPetCarrier(entity.getClass())) {
                 getPetInfo(stack, player, entity, hand);
             }
         }
@@ -75,7 +75,7 @@ public class ItemPetCarrier extends Item {
         var tag = new CompoundTag();
         tag.putString("ClassName", entity.getClass().getSimpleName());
 
-        var petCarrier = PetCarrierHelper.PETS_MAP.get(entity.getClass().getSimpleName());
+        var petCarrier = PetCarrierHelper.getPetCarrier(entity.getClass().getSimpleName());
         if (petCarrier != null) {
             var infoTag = petCarrier.getInfo(entity);
             if (infoTag != null) {
@@ -112,7 +112,7 @@ public class ItemPetCarrier extends Item {
             if (stack != null && stack.hasTag()) {
                 var tag = stack.getTag();
                 if (tag.contains("ClassName")) {
-                    var petCarrier = PetCarrierHelper.PETS_MAP.get(tag.getString("ClassName"));
+                    var petCarrier = PetCarrierHelper.getPetCarrier(tag.getString("ClassName"));
                     if (petCarrier != null) {
                         var pos = context.getClickedPos();
                         var player = context.getPlayer();
@@ -152,14 +152,14 @@ public class ItemPetCarrier extends Item {
         if (stack != null && stack.hasTag()) {
             var tag = stack.getTag();
             if (tag != null && tag.contains("ClassName")) {
-                var petCarrier = PetCarrierHelper.PETS_MAP.get(tag.getString("ClassName"));
+                var petCarrier = PetCarrierHelper.getPetCarrier(tag.getString("ClassName"));
                 if (petCarrier != null) {
-                    tooltips.add(Component.translatable("sophisticated_wolves.carrier.pet_type")
+                    tooltips.add(Component.translatable("sophisticated_wolves.carrier.pet")
                             .append(" - ")
                             .append(Component.translatable(petCarrier.getPetNameLocalizationKey())));
 
                     if (tag.contains("CustomName")) {
-                        tooltips.add(Component.translatable("sophisticated_wolves.carrier.pet_name")
+                        tooltips.add(Component.translatable("sophisticated_wolves.carrier.name")
                                 .append(" - ")
                                 .append(Component.literal(tag.getString("CustomName"))));
                     }
@@ -182,7 +182,7 @@ public class ItemPetCarrier extends Item {
         if (this.allowedIn(tab)) {
             items.add(new ItemStack(this, 1));
 
-            for (var entry : PetCarrierHelper.PETS_MAP.entrySet()) {
+            for (var entry : PetCarrierHelper.getPetCarriers()) {
                 var petCarrier = entry.getValue();
                 if (petCarrier != null) {
                     for (var tag : petCarrier.getDefaultPetCarriers()) {

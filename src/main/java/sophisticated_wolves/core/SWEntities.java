@@ -8,6 +8,7 @@ import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 import sophisticated_wolves.api.ModInfo;
+import sophisticated_wolves.api.SophisticatedWolvesAPI;
 import sophisticated_wolves.entity.SophisticatedWolf;
 
 /**
@@ -24,10 +25,10 @@ public class SWEntities {
             DeferredRegister.create(ForgeRegistries.ENTITY_TYPES, ModInfo.ID);
 
     public static final RegistryObject<EntityType<SophisticatedWolf>> SOPHISTICATED_WOLF =
-            ENTITY_TYPES_REGISTER.register("sophisticated_wolf",
+            ENTITY_TYPES_REGISTER.register(SophisticatedWolvesAPI.SOPHISTICATED_WOLF_ID,
                     () -> EntityType.Builder.of(SophisticatedWolf::new, MobCategory.CREATURE)
                             .sized(0.8f, 0.6f)
-                            .build(new ResourceLocation(ModInfo.ID, "sophisticated_wolf").toString()));
+                            .build(new ResourceLocation(ModInfo.ID, SophisticatedWolvesAPI.SOPHISTICATED_WOLF_ID).toString()));
 
 
     public static void register(IEventBus eventBus) {
