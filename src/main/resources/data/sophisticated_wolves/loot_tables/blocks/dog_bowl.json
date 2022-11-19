@@ -1,0 +1,44 @@
+{
+  "type": "minecraft:block",
+  "pools": [
+    {
+      "bonus_rolls": 0.0,
+      "entries": [
+        {
+          "type": "minecraft:alternatives",
+          "children": [
+            {
+              "type": "minecraft:item",
+              "functions": [
+                {
+                  "function": "minecraft:copy_nbt",
+                  "ops": [
+                    {
+                      "op": "replace",
+                      "source": "FoodAmount",
+                      "target": "FoodAmount"
+                    }
+                  ],
+                  "source": "block_entity"
+                },
+                {
+                  "block": "sophisticated_wolves:dog_bowl",
+                  "function": "minecraft:copy_state",
+                  "properties": [
+                    "food_level"
+                  ]
+                }
+              ],
+              "name": "sophisticated_wolves:dog_bowl"
+            },
+            {
+              "type": "minecraft:item",
+              "name": "sophisticated_wolves:dog_bowl"
+            }
+          ]
+        }
+      ],
+      "rolls": 1.0
+    }
+  ]
+}

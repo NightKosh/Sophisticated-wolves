@@ -1,17 +1,11 @@
 package sophisticated_wolves.item.pet_carrier;
 
-import net.minecraft.entity.EntityLiving;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.passive.EntityWolf;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.world.World;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.animal.Wolf;
+import net.minecraft.world.entity.player.Player;
 import sophisticated_wolves.api.pet_carrier.PetCarrier;
 import sophisticated_wolves.compatibility.Compatibility;
-import sophisticated_wolves.compatibility.CompatibilityWolfArmor;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Sophisticated Wolves
@@ -19,44 +13,45 @@ import java.util.List;
  * @author NightKosh
  * @license Lesser GNU Public License v3 (http://www.gnu.org/licenses/lgpl.html)
  */
-public class WolfPetCarrier extends PetCarrier {
+public class WolfPetCarrier extends PetCarrier<Wolf> {
 
     @Override
     public Class getPetClass() {
-        return EntityWolf.class;
+        return Wolf.class;
     }
 
     @Override
-    public String getPetId() {
-        return "Wolf";
+    public String getPetNameLocalizationKey() {
+        return "entity.minecraft.wolf";
     }
 
     @Override
-    public NBTTagCompound getAdditionalData(EntityLivingBase pet) {
-        NBTTagCompound nbt = new NBTTagCompound();
+    public CompoundTag getAdditionalData(Wolf wolf) {
+        var tag = new CompoundTag();
         if (Compatibility.IS_WOLF_ARMOR_INSTALLED) {
-            CompatibilityWolfArmor.storeWolfItems((EntityWolf) pet, nbt);
+            //TODO remove?
+            //CompatibilityWolfArmor.storeWolfItems(wolf, tag);
         }
-        return nbt;
+        return tag;
     }
 
     @Override
-    public void setAdditionalData(EntityLiving pet, NBTTagCompound nbt) {
+    public void setAdditionalData(Wolf wolf, CompoundTag tag) {
         if (Compatibility.IS_WOLF_ARMOR_INSTALLED) {
-            CompatibilityWolfArmor.getWolfItems((EntityWolf) pet, nbt);
+            //TODO remove?
+            //CompatibilityWolfArmor.getWolfItems(wolf, tag);
         }
     }
 
     @Override
-    public EntityLiving spawnPet(World world, EntityPlayer player) {
-        return new EntityWolf(world);
+    public void doAtSpawn(Wolf wolf, Player player) {
+        wolf.setOwnerUUID(player.getUUID());
+        wolf.setTame(true);
     }
 
     @Override
-    public List<NBTTagCompound> getDefaultPetCarriers() {
-        List<NBTTagCompound> list = new ArrayList<>();
-        list.add(getDefaultPetCarrier(null, null));
-
-        return list;
+    public EntityType getEntityType() {
+        return EntityType.WOLF;
     }
+
 }

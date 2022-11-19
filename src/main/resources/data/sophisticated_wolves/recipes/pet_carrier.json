@@ -1,0 +1,24 @@
+{
+  "type" : "minecraft:crafting_shaped",
+  "pattern" : [
+    "IS",
+    "BW"
+  ],
+  "key" : {
+    "I" : {
+      "item" : "minecraft:iron_ingot"
+    },
+    "S" : {
+      "item" : "minecraft:smooth_stone_slab"
+    },
+    "B" : {
+      "item" : "minecraft:iron_bars"
+    },
+    "W" : {
+      "tag" : "minecraft:wool"
+    }
+  },
+  "result" : {
+    "item" : "sophisticated_wolves:pet_carrier"
+  }
+}

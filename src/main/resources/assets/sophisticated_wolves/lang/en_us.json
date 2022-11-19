@@ -1,0 +1,58 @@
+{
+  "itemGroup.tab_sophisticated_wolves" : "Sophisticated Wolves",
+
+  "entity.sophisticated_wolves.sophisticated_wolf" : "Sophisticated Wolf",
+
+  "block.sophisticated_wolves.dog_bowl" : "Dog Bowl",
+  "block.sophisticated_wolves.dog_bowl.amount_of_food" : "Amount of food: ",
+  "block.sophisticated_wolves.kennel" : "Kennel",
+
+  "item.sophisticated_wolves.dog_tag" : "Dog Tag",
+  "item.sophisticated_wolves.dog_treat" : "Dog Treat",
+  "item.sophisticated_wolves.whistle" : "Whistle",
+  "item.sophisticated_wolves.pet_carrier" : "Pet Carrier",
+  "item.sophisticated_wolves.dog_egg" : "Sophisticated Wolf Spawn Egg",
+
+  "sophisticated_wolves.wolf_type.vanilla" : "Gray",
+  "sophisticated_wolves.wolf_type.forest" : "Forest",
+  "sophisticated_wolves.wolf_type.black" : "Black",
+  "sophisticated_wolves.wolf_type.brown" : "Brown",
+
+  "sophisticated_wolves.cat_type.tabby" : "Tabby",
+  "sophisticated_wolves.cat_type.black" : "Tuxedo",
+  "sophisticated_wolves.cat_type.red" : "Red",
+  "sophisticated_wolves.cat_type.siamese" : "Siamese",
+  "sophisticated_wolves.cat_type.british_shorthair" : "British Shorthair",
+  "sophisticated_wolves.cat_type.calico" : "Calico",
+  "sophisticated_wolves.cat_type.persian" : "Persian",
+  "sophisticated_wolves.cat_type.ragdoll" : "Ragdoll",
+  "sophisticated_wolves.cat_type.white" : "White",
+  "sophisticated_wolves.cat_type.jellie" : "Jellie",
+  "sophisticated_wolves.cat_type.all_black" : "Black",
+
+  "sophisticated_wolves.rabbit_type.0" : "Brown",
+  "sophisticated_wolves.rabbit_type.1" : "White",
+  "sophisticated_wolves.rabbit_type.2" : "Black",
+  "sophisticated_wolves.rabbit_type.3" : "Black & White",
+  "sophisticated_wolves.rabbit_type.4" : "Gold",
+  "sophisticated_wolves.rabbit_type.5" : "Salt & Pepper",
+  "sophisticated_wolves.rabbit_type.99" : "The Killer Bunny",
+
+  "sophisticated_wolves.parrot_type.0" : "Red",
+  "sophisticated_wolves.parrot_type.1" : "Blue",
+  "sophisticated_wolves.parrot_type.2" : "Green",
+  "sophisticated_wolves.parrot_type.3" : "Cyan",
+  "sophisticated_wolves.parrot_type.4" : "Silver",
+
+  "sophisticated_wolves.fox_type.red" : "Red",
+  "sophisticated_wolves.fox_type.snow" : "Arctic Fox",
+
+  "sophisticated_wolves.carrier.pet" : "Pet",
+  "sophisticated_wolves.carrier.type" : "Type",
+  "sophisticated_wolves.carrier.name" : "Name",
+
+  "gui.sophisticated_wolves.edit_dog_name.title" : "Give your pet a name:",
+  "gui.sophisticated_wolves.wolf_food_configs.title" : "Select which types of food dogs eat",
+
+  "entity.minecraft.villager.sophisticated_wolves.zoologist" : "Zoologist"
+}

@@ -1,26 +1,35 @@
-*.class
-*.db
-*.iml
+# eclipse
+bin
+*.launch
+.settings
+.metadata
+.classpath
+.project
+
+# idea
+out
 *.ipr
 *.iws
+*.iml
+.idea
+
+# vscode
+.vscode
+
+# gradle
+build
+.gradle
 gradlew
 gradlew.bat
-.idea
-.gradle
+gradle/
+
+# other
 eclipse
-gradle
-build
 run
 
-# Mobile Tools for Java (J2ME)
-.mtj.tmp/
-
-# Package Files #
-*.jar
-*.war
-*.ear
-
-# virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
-hs_err_pid*
-
-/api/wolfarmor/*
+# Files from Forge MDK
+changelog.txt
+CREDITS.txt
+LICENSE.txt
+README.txt
+forge*changelog.txt

@@ -1,0 +1,58 @@
+{
+  "itemGroup.tab_sophisticated_wolves" : "Sophisticated Wolves",
+
+  "entity.sophisticated_wolves.sophisticated_wolf" : "Умный волк",
+
+  "block.sophisticated_wolves.dog_bowl" : "Собачья миска",
+  "block.sophisticated_wolves.dog_bowl.amount_of_food" : "Количество еды: ",
+  "block.sophisticated_wolves.kennel" : "Будка",
+
+  "item.sophisticated_wolves.dog_tag" : "Собачья бирка",
+  "item.sophisticated_wolves.dog_treat" : "Собачье лакомство",
+  "item.sophisticated_wolves.whistle" : "Свисток",
+  "item.sophisticated_wolves.pet_carrier" : "Переноска",
+  "item.sophisticated_wolves.dog_egg" : "Яйцо призыва умного волка",
+
+  "sophisticated_wolves.wolf_type.vanilla" : "Серый",
+  "sophisticated_wolves.wolf_type.forest" : "Лесной",
+  "sophisticated_wolves.wolf_type.black" : "Чёрный",
+  "sophisticated_wolves.wolf_type.brown" : "Коричневый",
+
+  "sophisticated_wolves.cat_type.tabby" : "Табби",
+  "sophisticated_wolves.cat_type.black" : "Чёрно-белая",
+  "sophisticated_wolves.cat_type.red" : "Рыжая",
+  "sophisticated_wolves.cat_type.siamese" : "Сиамская",
+  "sophisticated_wolves.cat_type.british_shorthair" : "Британская короткошёрстная",
+  "sophisticated_wolves.cat_type.calico" : "Трёхцветная",
+  "sophisticated_wolves.cat_type.persian" : "Персидская",
+  "sophisticated_wolves.cat_type.ragdoll" : "Рэгдолл",
+  "sophisticated_wolves.cat_type.white" : "Белая",
+  "sophisticated_wolves.cat_type.jellie" : "Джелли",
+  "sophisticated_wolves.cat_type.all_black" : "Чёрная",
+
+  "sophisticated_wolves.rabbit_type.0" : "Коричневый",
+  "sophisticated_wolves.rabbit_type.1" : "Белый",
+  "sophisticated_wolves.rabbit_type.2" : "Чёрный",
+  "sophisticated_wolves.rabbit_type.3" : "Чёрно-Белый",
+  "sophisticated_wolves.rabbit_type.4" : "Золотой",
+  "sophisticated_wolves.rabbit_type.5" : "Соль и Перец",
+  "sophisticated_wolves.rabbit_type.99" : "Кролик Убийца",
+
+  "sophisticated_wolves.parrot_type.0" : "Красный",
+  "sophisticated_wolves.parrot_type.1" : "Синий",
+  "sophisticated_wolves.parrot_type.2" : "Зелёный",
+  "sophisticated_wolves.parrot_type.3" : "Голубой",
+  "sophisticated_wolves.parrot_type.4" : "Серебряный",
+
+  "sophisticated_wolves.fox_type.red" : "Рыжая",
+  "sophisticated_wolves.fox_type.snow" : "Песец",
+
+  "sophisticated_wolves.carrier.pet" : "Питомец",
+  "sophisticated_wolves.carrier.type" : "Тип",
+  "sophisticated_wolves.carrier.name" : "Имя",
+
+  "gui.sophisticated_wolves.edit_dog_name.title" : "Дайте своему питомцу имя:",
+  "gui.sophisticated_wolves.wolf_food_configs.title" : "Выберите тип еды, которую могут есть собаки",
+
+  "entity.minecraft.villager.sophisticated_wolves.zoologist" : "Зоолог"
+}

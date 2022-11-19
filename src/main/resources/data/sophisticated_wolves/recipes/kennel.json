@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "BBB",
+    "PWP",
+    "P#P"
+  ],
+  "key": {
+    "B": {
+      "item": "minecraft:brick"
+    },
+    "P": {
+      "tag": "minecraft:planks"
+    },
+    "W": {
+      "tag": "minecraft:wool"
+    },
+    "#": {
+      "item": "sophisticated_wolves:dog_bowl"
+    }
+  },
+  "result" : {
+    "item" : "sophisticated_wolves:kennel"
+  }
+}

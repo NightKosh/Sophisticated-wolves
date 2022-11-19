@@ -1,12 +1,10 @@
 package sophisticated_wolves.item.pet_carrier;
 
-import net.minecraft.entity.EntityLiving;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.passive.EntityRabbit;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.world.World;
-import sophisticated_wolves.SophisticatedWolvesMod;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.Component;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.animal.Rabbit;
 import sophisticated_wolves.api.pet_carrier.PetCarrier;
 
 import java.util.ArrayList;
@@ -18,58 +16,57 @@ import java.util.List;
  * @author NightKosh
  * @license Lesser GNU Public License v3 (http://www.gnu.org/licenses/lgpl.html)
  */
-public class RabbitPetCarrier extends PetCarrier {
+public class RabbitPetCarrier extends PetCarrier<Rabbit> {
+
     public static final int[] RABBITS_SPECIES = {0, 1, 2, 3, 4, 5, 99};
 
     @Override
     public Class getPetClass() {
-        return EntityRabbit.class;
+        return Rabbit.class;
     }
 
     @Override
-    public String getPetId() {
-        return "Rabbit";
+    public String getPetNameLocalizationKey() {
+        return "entity.minecraft.rabbit";
     }
 
     @Override
-    public EntityLiving spawnPet(World world, EntityPlayer player) {
-        return new EntityRabbit(world);
+    public EntityType getEntityType() {
+        return EntityType.RABBIT;
     }
 
     @Override
-    public List<String> getInfo(NBTTagCompound infoNbt) {
-        if (infoNbt.hasKey("RabbitType")) {
-            List<String> list = new ArrayList<>(1);
-            StringBuilder str = new StringBuilder(SophisticatedWolvesMod.proxy.getLocalizedString("carrier.rabbit_type"))
-                    .append(" - ").append(SophisticatedWolvesMod.proxy.getLocalizedString("rabbit_type." + infoNbt.getInteger("RabbitType"))
-                            .toString().toLowerCase());
-            list.add(str.toString());
-            return list;
+    public List<Component> getInfo(CompoundTag infoTag) {
+        if (infoTag.contains("RabbitType")) {
+            return List.of(Component.translatable("sophisticated_wolves.carrier.type")
+                    .append(" - ")
+                    .append(Component.translatable("sophisticated_wolves.rabbit_type." + infoTag.getInt("RabbitType"))));
         }
         return null;
     }
 
     @Override
-    public NBTTagCompound getInfo(EntityLivingBase pet) {
-        NBTTagCompound nbt = new NBTTagCompound();
-        nbt.setInteger("RabbitType", ((EntityRabbit) pet).getRabbitType());
+    public CompoundTag getInfo(Rabbit rabbit) {
+        var tag = new CompoundTag();
+        tag.putInt("RabbitType", rabbit.getRabbitType());
 
-        return nbt;
+        return tag;
     }
 
     @Override
-    public List<NBTTagCompound> getDefaultPetCarriers() {
-        List<NBTTagCompound> list = new ArrayList<>();
+    public List<CompoundTag> getDefaultPetCarriers() {
+        var list = new ArrayList<CompoundTag>();
         for (int species : RABBITS_SPECIES) {
-            NBTTagCompound infoNbt = new NBTTagCompound();
-            infoNbt.setInteger("RabbitType", species);
+            var infoTag = new CompoundTag();
+            infoTag.putInt("RabbitType", species);
 
-            NBTTagCompound entityNbt = new NBTTagCompound();
-            entityNbt.setInteger("RabbitType", species);
+            var entityTag = new CompoundTag();
+            entityTag.putInt("RabbitType", species);
 
-            list.add(getDefaultPetCarrier(infoNbt, entityNbt));
+            list.add(getDefaultPetCarrier(infoTag, entityTag));
         }
 
         return list;
     }
+
 }

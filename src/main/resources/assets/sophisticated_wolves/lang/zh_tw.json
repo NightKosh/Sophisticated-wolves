@@ -1,0 +1,58 @@
+{
+  "itemGroup.tab_sophisticated_wolves" : "Sophisticated Wolves",
+
+  "entity.sophisticated_wolves.sophisticated_wolf" : "精緻的狼",
+
+  "block.sophisticated_wolves.dog_bowl" : "狗碗",
+  "block.sophisticated_wolves.dog_bowl.amount_of_food" : "Amount of food: ",
+  "block.sophisticated_wolves.kennel" : "狗窩",
+
+  "item.sophisticated_wolves.dog_tag" : "狗牌",
+  "item.sophisticated_wolves.dog_treat" : "狗飼料",
+  "item.sophisticated_wolves.whistle" : "哨子",
+  "item.sophisticated_wolves.pet_carrier" : "寵物運輸籠",
+  "item.sophisticated_wolves.dog_egg" : "Sophisticated Wolf Spawn Egg",
+
+  "sophisticated_wolves.wolf_type.vanilla" : "灰",
+  "sophisticated_wolves.wolf_type.forest" : "綠",
+  "sophisticated_wolves.wolf_type.black" : "黑",
+  "sophisticated_wolves.wolf_type.brown" : "棕",
+
+  "sophisticated_wolves.cat_type.tabby" : "Tabby",
+  "sophisticated_wolves.cat_type.black" : "Tuxedo",
+  "sophisticated_wolves.cat_type.red" : "紅",
+  "sophisticated_wolves.cat_type.siamese" : "暹羅",
+  "sophisticated_wolves.cat_type.british_shorthair" : "British Shorthair",
+  "sophisticated_wolves.cat_type.calico" : "Calico",
+  "sophisticated_wolves.cat_type.persian" : "Persian",
+  "sophisticated_wolves.cat_type.ragdoll" : "Ragdoll",
+  "sophisticated_wolves.cat_type.white" : "White",
+  "sophisticated_wolves.cat_type.jellie" : "Jellie",
+  "sophisticated_wolves.cat_type.all_black" : "黑",
+
+  "sophisticated_wolves.rabbit_type.0" : "棕",
+  "sophisticated_wolves.rabbit_type.1" : "白",
+  "sophisticated_wolves.rabbit_type.2" : "黑",
+  "sophisticated_wolves.rabbit_type.3" : "黑白",
+  "sophisticated_wolves.rabbit_type.4" : "金",
+  "sophisticated_wolves.rabbit_type.5" : "椒鹽",
+  "sophisticated_wolves.rabbit_type.99" : "殺手",
+
+  "sophisticated_wolves.parrot_type.0" : "紅",
+  "sophisticated_wolves.parrot_type.1" : "藍",
+  "sophisticated_wolves.parrot_type.2" : "綠",
+  "sophisticated_wolves.parrot_type.3" : "青",
+  "sophisticated_wolves.parrot_type.4" : "銀",
+
+  "sophisticated_wolves.fox_type.red" : "Red",
+  "sophisticated_wolves.fox_type.snow" : "Arctic Fox",
+
+  "sophisticated_wolves.carrier.pet" : "Pet",
+  "sophisticated_wolves.carrier.type" : "Type",
+  "sophisticated_wolves.carrier.name" : "名稱",
+
+  "gui.sophisticated_wolves.edit_dog_name.title" : "給你的寵物取名：",
+  "gui.sophisticated_wolves.wolf_food_configs.title" : "選擇狗要吃哪類食物",
+
+  "entity.minecraft.villager.sophisticated_wolves.zoologist" : "Zoologist"
+}

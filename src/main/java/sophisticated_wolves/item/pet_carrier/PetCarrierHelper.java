@@ -1,12 +1,6 @@
 package sophisticated_wolves.item.pet_carrier;
 
-import net.minecraft.entity.passive.*;
-import sophisticated_wolves.api.pet_carrier.IPetCarrierHandler;
-import sophisticated_wolves.api.pet_carrier.PetCarrier;
-import sophisticated_wolves.entity.EntitySophisticatedWolf;
-
-import java.util.LinkedHashMap;
-import java.util.Map;
+import sophisticated_wolves.api.pet_carrier.PetCarrierHandler;
 
 /**
  * Sophisticated Wolves
@@ -14,25 +8,20 @@ import java.util.Map;
  * @author NightKosh
  * @license Lesser GNU Public License v3 (http://www.gnu.org/licenses/lgpl.html)
  */
-public class PetCarrierHelper implements IPetCarrierHandler {
+public final class PetCarrierHelper extends PetCarrierHandler {
 
-    public static final PetCarrierHelper INSTANCE = new PetCarrierHelper();
-
-    public static final Map<String, PetCarrier> PETS_MAP = new LinkedHashMap<>();
-
-    private PetCarrierHelper() {}
-
-    @Override
-    public void addPet(Class petClass, PetCarrier petCarrier) {
-        PETS_MAP.put(petClass.getSimpleName(), petCarrier);
+    private PetCarrierHelper() {
     }
 
-    public void addPetCarriers() {
-        addPet(EntityWolf.class, new WolfPetCarrier());
-        addPet(EntitySophisticatedWolf.class, new SophisticatedWolfPetCarrier());
-        addPet(EntityOcelot.class, new CatPetCarrier());
-        addPet(EntityChicken.class, new ChickenPetCarrier());
-        addPet(EntityRabbit.class, new RabbitPetCarrier());
-        addPet(EntityParrot.class, new ParrotPetCarrier());
+    public static void addPetCarriers() {
+        addPet(new WolfPetCarrier());
+        addPet(new SophisticatedWolfPetCarrier());
+        addPet(new CatPetCarrier());
+        addPet(new ChickenPetCarrier());
+        addPet(new RabbitPetCarrier());
+        addPet(new ParrotPetCarrier());
+        addPet(new OcelotPetCarrier());
+        addPet(new FoxPetCarrier());
     }
+
 }

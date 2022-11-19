@@ -1,18 +1,18 @@
 package sophisticated_wolves.item;
 
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.passive.EntityWolf;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.EnumHand;
-import net.minecraft.util.math.BlockPos;
-import sophisticated_wolves.SWTabs;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.MobSpawnType;
+import net.minecraft.world.entity.animal.Wolf;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.gameevent.GameEvent;
 import sophisticated_wolves.api.ISophisticatedWolf;
-import sophisticated_wolves.api.ModInfo;
 import sophisticated_wolves.compatibility.Compatibility;
-import sophisticated_wolves.compatibility.CompatibilityWolfArmor;
-import sophisticated_wolves.entity.EntitySophisticatedWolf;
+import sophisticated_wolves.core.SWEntities;
+import sophisticated_wolves.core.SWTabs;
+import sophisticated_wolves.entity.SophisticatedWolf;
 
 /**
  * Sophisticated Wolves
@@ -23,45 +23,42 @@ import sophisticated_wolves.entity.EntitySophisticatedWolf;
 public class ItemDogTreat extends Item {
 
     public ItemDogTreat() {
-        super();
-        this.setRegistryName(ModInfo.ID, "SWDogTreat");
-        this.setUnlocalizedName("dogtreat");
-        this.setCreativeTab(SWTabs.tab);
+        super(new Item.Properties()
+                .tab(SWTabs.TAB));
     }
 
-    /**
-     * Returns true if the item can be used on the given entity, e.g. shears on sheep.
-     */
-    @Override
-    public boolean itemInteractionForEntity(ItemStack stack, EntityPlayer player, EntityLivingBase entity, EnumHand hand) {
-        if (!player.world.isRemote && entity instanceof EntityWolf && !(entity instanceof ISophisticatedWolf)) {
-            EntityWolf wolf = (EntityWolf) entity;
-            if (wolf.isTamed()) {
-                EntitySophisticatedWolf sWolf = new EntitySophisticatedWolf(player.world);
+    public static void useItemOnWolf(Entity e, Player player, ItemStack stack) {
+        if (!player.getLevel().isClientSide() &&
+                e instanceof Wolf wolf &&
+                !(e instanceof ISophisticatedWolf)) {
+            if (wolf.isTame()) {
+                var level = player.getLevel();
+                var sWolf = (SophisticatedWolf) SWEntities.getSophisticatedWolfType().spawn(
+                        (ServerLevel) level, stack, player,
+                        wolf.blockPosition(), MobSpawnType.SPAWN_EGG,
+                        true, true);
+                if (sWolf != null) {
+                    sWolf.copyPosition(wolf);
+                    sWolf.setCustomName(wolf.getCustomName());
+                    sWolf.setCollarColor(wolf.getCollarColor());
+                    sWolf.setTame(true);
+                    sWolf.setOwnerUUID(wolf.getOwnerUUID());
+                    sWolf.setHealth(wolf.getHealth());
+                    sWolf.setWolfSpeciesByBiome(level);
 
-                sWolf.copyLocationAndAnglesFrom(wolf);
-                sWolf.setCustomNameTag(wolf.getCustomNameTag());
-                sWolf.setCollarColor(wolf.getCollarColor());
-                sWolf.setTamed(true);
-                sWolf.setOwnerId(wolf.getOwnerId());
-                sWolf.setCustomNameTag(wolf.getCustomNameTag());
-                sWolf.setHealth(wolf.getHealth());
-                sWolf.setWolfSpeciesByBiome();
+                    if (Compatibility.IS_WOLF_ARMOR_INSTALLED) {
+                        //TODO remove?
+                        //CompatibilityWolfArmor.copyWolfItems(wolf, sWolf);
+                    }
 
-                if (Compatibility.IS_WOLF_ARMOR_INSTALLED) {
-                    CompatibilityWolfArmor.copyWolfItems(wolf, sWolf);
+                    wolf.remove(Entity.RemovalReason.DISCARDED);
+
+                    level.gameEvent(player, GameEvent.ENTITY_PLACE, wolf.blockPosition());
+
+                    stack.shrink(1);
                 }
-
-                wolf.setDead();
-
-                player.world.spawnEntity(sWolf);
-                player.world.playSound((player), new BlockPos(sWolf.posX, sWolf.posY, sWolf.posZ), null, null, 1016, 0);
-                stack.shrink(1);
-                return true;
             }
-            return false;
-        } else {
-            return super.itemInteractionForEntity(stack, player, entity, hand);
         }
     }
+
 }

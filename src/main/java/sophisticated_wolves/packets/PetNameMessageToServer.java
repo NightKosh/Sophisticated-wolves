@@ -1,14 +1,12 @@
 package sophisticated_wolves.packets;
 
-import io.netty.buffer.ByteBuf;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.passive.EntityTameable;
-import net.minecraft.world.World;
-import net.minecraftforge.common.DimensionManager;
-import net.minecraftforge.fml.common.network.ByteBufUtils;
-import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
-import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
-import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.chat.Component;
+import net.minecraft.world.entity.TamableAnimal;
+import net.minecraftforge.network.NetworkEvent;
+
+import java.util.UUID;
+import java.util.function.Supplier;
 
 /**
  * Sophisticated Wolves
@@ -16,48 +14,40 @@ import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
  * @author NightKosh
  * @license Lesser GNU Public License v3 (http://www.gnu.org/licenses/lgpl.html)
  */
-public class PetNameMessageToServer implements IMessage, IMessageHandler<PetNameMessageToServer, IMessage> {
+public class PetNameMessageToServer {
 
-    private int playerID;
-    private int dimensionID;
-    private String text;
+    private final UUID animalId;
+    private final String text;
 
-    public PetNameMessageToServer() {
-
-    }
-
-    public PetNameMessageToServer(EntityTameable entity, String text) {
-        this.playerID = entity.getEntityId();
-        this.dimensionID = entity.world.provider.getDimension();
+    public PetNameMessageToServer(TamableAnimal animal, String text) {
+        this.animalId = animal.getUUID();
         this.text = text;
     }
 
-    @Override
-    public void fromBytes(ByteBuf buf) {
-        this.playerID = buf.readInt();
-        this.dimensionID = buf.readInt();
-        this.text = ByteBufUtils.readUTF8String(buf);
+    public PetNameMessageToServer(FriendlyByteBuf buf) {
+        this.animalId = UUID.fromString(buf.readUtf());
+        this.text = buf.readUtf();
     }
 
-    @Override
-    public void toBytes(ByteBuf buf) {
-        buf.writeInt(playerID);
-        buf.writeInt(dimensionID);
-        ByteBufUtils.writeUTF8String(buf, text);
-
+    public void toBytes(FriendlyByteBuf buf) {
+        buf.writeUtf(animalId.toString());
+        buf.writeUtf(text);
     }
 
-    @Override
-    public IMessage onMessage(PetNameMessageToServer message, MessageContext ctx) {
-        if (ctx.side.isServer()) {
-            World world = DimensionManager.getWorld(message.dimensionID);
-            if (world != null) {
-                Entity entity = world.getEntityByID(message.playerID);
-                if (entity != null && entity instanceof EntityTameable) {
-                    entity.setCustomNameTag(message.text);
+    public boolean handle(Supplier<NetworkEvent.Context> supplier) {
+        var context = supplier.get();
+        context.enqueueWork(() -> {
+            var player = context.getSender();
+            var level = player.getLevel();
+
+            if (level != null) {
+                var animal = level.getEntity(animalId);
+                if (animal != null && animal instanceof TamableAnimal) {
+                    animal.setCustomName(Component.literal(text));
                 }
             }
-        }
-        return null;
+        });
+        return true;
     }
+
 }

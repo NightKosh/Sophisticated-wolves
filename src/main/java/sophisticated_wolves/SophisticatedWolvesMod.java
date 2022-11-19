@@ -1,19 +1,24 @@
 package sophisticated_wolves;
 
+import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.common.SidedProxy;
-import net.minecraftforge.fml.common.event.FMLInitializationEvent;
-import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
-import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
-import net.minecraftforge.fml.common.network.NetworkRegistry;
+import net.minecraftforge.fml.config.ModConfig;
+import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
+import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import sophisticated_wolves.api.ModInfo;
-import sophisticated_wolves.api.SophisticatedWolvesAPI;
-import sophisticated_wolves.compatibility.Compatibility;
+import sophisticated_wolves.core.SWBlockEntities;
+import sophisticated_wolves.core.SWBlocks;
+import sophisticated_wolves.core.SWConfiguration;
+import sophisticated_wolves.core.SWEntities;
+import sophisticated_wolves.core.SWItems;
+import sophisticated_wolves.core.SWMenu;
+import sophisticated_wolves.core.SWMessages;
+import sophisticated_wolves.core.SWSound;
+import sophisticated_wolves.core.SWVillagers;
 import sophisticated_wolves.item.pet_carrier.PetCarrierHelper;
-import sophisticated_wolves.proxy.CommonProxy;
-import sophisticated_wolves.village.VillagersHandler;
 
 /**
  * Sophisticated Wolves
@@ -21,55 +26,47 @@ import sophisticated_wolves.village.VillagersHandler;
  * @author NightKosh
  * @license Lesser GNU Public License v3 (http://www.gnu.org/licenses/lgpl.html)
  */
-@Mod(modid = ModInfo.ID, name = ModInfo.NAME, version = ModInfo.VERSION)
+@Mod(ModInfo.ID)
 public class SophisticatedWolvesMod {
 
-    @Mod.Instance("SophisticatedWolves")
     public static SophisticatedWolvesMod instance;
-    @SidedProxy(clientSide = "sophisticated_wolves.proxy.ClientProxy", serverSide = "sophisticated_wolves.proxy.CommonProxy")
-    public static CommonProxy proxy;
 
     public static Logger logger = LogManager.getLogger(ModInfo.ID);
 
-
     public SophisticatedWolvesMod() {
         instance = this;
-        SophisticatedWolvesAPI.entityHandler = new APIEntityHandler();
-        SophisticatedWolvesAPI.petCarrierHandler = PetCarrierHelper.INSTANCE;
-        SophisticatedWolvesAPI.villagerHandler = VillagersHandler.INSTANCE;
+
+        ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, SWConfiguration.SPEC, ModInfo.ID + ".toml");
+
+        var eventBus = FMLJavaModLoadingContext.get().getModEventBus();
+
+        SWItems.register(eventBus);
+        SWBlocks.register(eventBus);
+        SWBlockEntities.register(eventBus);
+        SWMenu.register(eventBus);
+
+        SWSound.register(eventBus);
+
+        SWEntities.register(eventBus);
+
+        SWVillagers.register(eventBus);
+
+        eventBus.addListener(this::setup);
+
+        MinecraftForge.EVENT_BUS.register(this);
+
+        PetCarrierHelper.addPetCarriers();
     }
 
-    @Mod.EventHandler
-    public void preInit(FMLPreInitializationEvent event) {
-        SWConfiguration.getInstance(event.getSuggestedConfigurationFile());
-
-        MessageHandler.init();
-
-        SWTabs.registration();
-
-        SWTileEntity.registration();
-
-        SWStructures.preInit();
-
-        SWEntity.registration();
+    private void setup(final FMLCommonSetupEvent event) {
+        SWMessages.register();
     }
 
-    @Mod.EventHandler
-    public void load(FMLInitializationEvent event) {
-        Recipes.recipesRegistration();
+//TODO remove?
+//    @Mod.EventHandler
+//    public void postInit(FMLPostInitializationEvent event) {
+//
+//        Compatibility.checkMods();
+//    }
 
-        NetworkRegistry.INSTANCE.registerGuiHandler(this, new SWGui());
-
-        proxy.registerRenderers();
-
-        VillagersHandler.registerVillagers();
-        SWStructures.registration();
-    }
-
-    @Mod.EventHandler
-    public void postInit(FMLPostInitializationEvent event) {
-        PetCarrierHelper.INSTANCE.addPetCarriers();
-
-        Compatibility.checkMods();
-    }
 }

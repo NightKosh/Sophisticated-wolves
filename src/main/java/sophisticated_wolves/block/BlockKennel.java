@@ -1,25 +1,19 @@
 package sophisticated_wolves.block;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.SoundType;
-import net.minecraft.block.material.Material;
-import net.minecraft.block.properties.IProperty;
-import net.minecraft.block.properties.PropertyDirection;
-import net.minecraft.block.state.BlockStateContainer;
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.EnumBlockRenderType;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.world.IBlockAccess;
-import net.minecraft.world.World;
-import sophisticated_wolves.SWTabs;
-import sophisticated_wolves.api.ModInfo;
-
-import javax.annotation.Nullable;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.HorizontalDirectionalBlock;
+import net.minecraft.world.level.block.SoundType;
+import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.state.properties.DirectionProperty;
+import net.minecraft.world.level.material.Material;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.VoxelShape;
 
 /**
  * Sophisticated Wolves
@@ -29,76 +23,39 @@ import javax.annotation.Nullable;
  */
 public class BlockKennel extends Block {
 
-    public static final PropertyDirection FACING = PropertyDirection.create("facing", EnumFacing.Plane.HORIZONTAL);
+    private static final VoxelShape SHAPE = Block.box(1, 0, 1, 15, 14, 15);
+
+    public static final DirectionProperty FACING = HorizontalDirectionalBlock.FACING;
 
     public BlockKennel() {
-        super(Material.WOOD);
-        this.setRegistryName(ModInfo.ID, "swkennel");
-        this.setUnlocalizedName("kennel");
-        this.setCreativeTab(SWTabs.tab);
-        this.setSoundType(SoundType.WOOD);
-        this.setHardness(0.7F);
+        super(BlockBehaviour.Properties.of(Material.WOOD)
+                .sound(SoundType.WOOD)
+                .noCollission()
+                .strength(0.7F));
+
+        this.registerDefaultState(this.stateDefinition.any()
+                .setValue(FACING, Direction.NORTH));
     }
 
     @Override
-    public boolean isOpaqueCube(IBlockState state) {
-        return false;
+    public VoxelShape getShape(BlockState blockState, BlockGetter blockGetter,
+                               BlockPos blockPos, CollisionContext collisionContext) {
+        return SHAPE;
     }
 
     @Override
-    public boolean isFullCube(IBlockState state) {
-        return false;
-    }
-
-
-    private static final AxisAlignedBB BB = new AxisAlignedBB(0.1, 0, 0.1, 0.9, 0.8, 0.9);
-
-    @Override
-    public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
-        return BB;
-    }
-
-    @Nullable
-    @Override
-    public AxisAlignedBB getCollisionBoundingBox(IBlockState blockState, IBlockAccess worldIn, BlockPos pos) {
-        return BB;
+    public VoxelShape getCollisionShape(BlockState blockState, BlockGetter blockGetter,
+                                        BlockPos blockPos, CollisionContext collisionContext) {
+        return SHAPE;
     }
 
     @Override
-    public EnumBlockRenderType getRenderType(IBlockState state) {
-        return EnumBlockRenderType.MODEL;
+    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> stateBuilder) {
+        stateBuilder.add(FACING);
     }
 
-    @Override
-    public int damageDropped(IBlockState state) {
-        return 0;
+    public BlockState getStateForPlacement(BlockPlaceContext context) {
+        return this.defaultBlockState().setValue(FACING, context.getHorizontalDirection().getOpposite());
     }
 
-    @Override
-    public void onBlockPlacedBy(World world, BlockPos pos, IBlockState state, EntityLivingBase player, ItemStack itemStack) {
-        EnumFacing enumfacing = EnumFacing.getHorizontal(MathHelper.floor((double) (player.rotationYaw * 4 / 360F) + 0.5) & 3).getOpposite();
-
-        world.setBlockState(pos, state.withProperty(FACING, enumfacing), 2);
-    }
-
-    @Override
-    public IBlockState getStateFromMeta(int meta) {
-        EnumFacing enumfacing = EnumFacing.getFront(meta);
-
-        if (enumfacing.getAxis() == EnumFacing.Axis.Y) {
-            enumfacing = EnumFacing.NORTH;
-        }
-
-        return this.getDefaultState().withProperty(FACING, enumfacing);
-    }
-
-    @Override
-    public int getMetaFromState(IBlockState state) {
-        return (state.getValue(FACING)).getIndex();
-    }
-
-    @Override
-    protected BlockStateContainer createBlockState() {
-        return new BlockStateContainer(this, new IProperty[]{FACING});
-    }
 }

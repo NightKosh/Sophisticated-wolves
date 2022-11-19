@@ -1,0 +1,58 @@
+{
+  "itemGroup.tab_sophisticated_wolves" : "Serigala yang Canggih",
+
+  "entity.sophisticated_wolves.sophisticated_wolf" : "Serigala Canggih",
+
+  "block.sophisticated_wolves.dog_bowl" : "Mangkuk Anjing",
+  "block.sophisticated_wolves.dog_bowl.amount_of_food" : "Amount of food: ",
+  "block.sophisticated_wolves.kennel" : "Kandang Anjing",
+
+  "item.sophisticated_wolves.dog_tag" : "Tag Anjing",
+  "item.sophisticated_wolves.dog_treat" : "Makanan anjing",
+  "item.sophisticated_wolves.whistle" : "Peluit",
+  "item.sophisticated_wolves.pet_carrier" : "Pembawa Hewan Peliharaan",
+  "item.sophisticated_wolves.dog_egg" : "Sophisticated Wolf Spawn Egg",
+
+  "sophisticated_wolves.wolf_type.vanilla" : "Abu-abu",
+  "sophisticated_wolves.wolf_type.forest" : "Hutan",
+  "sophisticated_wolves.wolf_type.black" : "Hitam",
+  "sophisticated_wolves.wolf_type.brown" : "Coklat",
+
+  "sophisticated_wolves.cat_type.tabby" : "Tabby",
+  "sophisticated_wolves.cat_type.black" : "Tuxedo",
+  "sophisticated_wolves.cat_type.red" : "Merah",
+  "sophisticated_wolves.cat_type.siamese" : "Siam",
+  "sophisticated_wolves.cat_type.british_shorthair" : "British Shorthair",
+  "sophisticated_wolves.cat_type.calico" : "Calico",
+  "sophisticated_wolves.cat_type.persian" : "Persian",
+  "sophisticated_wolves.cat_type.ragdoll" : "Ragdoll",
+  "sophisticated_wolves.cat_type.white" : "White",
+  "sophisticated_wolves.cat_type.jellie" : "Jellie",
+  "sophisticated_wolves.cat_type.all_black" : "Hitam",
+
+  "sophisticated_wolves.rabbit_type.0" : "Coklat",
+  "sophisticated_wolves.rabbit_type.1" : "Putih",
+  "sophisticated_wolves.rabbit_type.2" : "Hitam",
+  "sophisticated_wolves.rabbit_type.3" : "Hitam & Putih",
+  "sophisticated_wolves.rabbit_type.4" : "Emas",
+  "sophisticated_wolves.rabbit_type.5" : "Garam Lada",
+  "sophisticated_wolves.rabbit_type.99" : "Kelinci Pembunuh",
+
+  "sophisticated_wolves.parrot_type.0" : "Merah",
+  "sophisticated_wolves.parrot_type.1" : "Biru",
+  "sophisticated_wolves.parrot_type.2" : "Hijau",
+  "sophisticated_wolves.parrot_type.3" : "Cyan",
+  "sophisticated_wolves.parrot_type.4" : "Perak",
+
+  "sophisticated_wolves.fox_type.red" : "Red ## TODO",
+  "sophisticated_wolves.fox_type.snow" : "Arctic Fox ## TODO",
+
+  "sophisticated_wolves.carrier.pet" : "Pet ## TODO",
+  "sophisticated_wolves.carrier.type" : "Type ## TODO",
+  "sophisticated_wolves.carrier.name" : "Nama",
+
+  "gui.sophisticated_wolves.edit_dog_name.title" : "Berikan nama binatang peliharaan Anda:",
+  "gui.sophisticated_wolves.wolf_food_configs.title" : "Pilih jenis makanan anjing yang dimakan",
+
+  "entity.minecraft.villager.sophisticated_wolves.zoologist" : "Zoologist ## TODO"
+}
