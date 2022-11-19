@@ -39,7 +39,8 @@ public class FeedFromBowlGoal extends Goal {
             var x = this.pet.getX();
             var y = this.pet.getY();
             var z = this.pet.getZ();
-            if (getBowlTe(this.pet.getOnPos()) ||
+            //TODO store bowls as list and look in this list first
+            return getBowlTe(this.pet.blockPosition()) ||
                     getBowlTe(new BlockPos(x + 16, y, z)) ||
                     getBowlTe(new BlockPos(x - 16, y, z)) ||
                     getBowlTe(new BlockPos(x, y, z + 16)) ||
@@ -47,11 +48,8 @@ public class FeedFromBowlGoal extends Goal {
                     getBowlTe(new BlockPos(x + 16, y, z + 16)) ||
                     getBowlTe(new BlockPos(x + 16, y, z - 16)) ||
                     getBowlTe(new BlockPos(x - 16, y, z + 16)) ||
-                    getBowlTe(new BlockPos(x- 16, y, z - 16))) {
-                return true;
-            }
+                    getBowlTe(new BlockPos(x - 16, y, z - 16));
         }
-        return false;
     }
 
     private boolean getBowlTe(BlockPos pos) {
