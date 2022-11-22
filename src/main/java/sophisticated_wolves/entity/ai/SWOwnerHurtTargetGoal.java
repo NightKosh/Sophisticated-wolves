@@ -12,8 +12,8 @@ import net.minecraft.world.entity.ai.goal.target.OwnerHurtTargetGoal;
  */
 public class SWOwnerHurtTargetGoal extends OwnerHurtTargetGoal {
 
-    protected TamableAnimal animal;
-    protected LivingEntity target;
+    private final TamableAnimal animal;
+    private LivingEntity owner;
 
     public SWOwnerHurtTargetGoal(TamableAnimal animal) {
         super(animal);
@@ -25,17 +25,16 @@ public class SWOwnerHurtTargetGoal extends OwnerHurtTargetGoal {
      */
     @Override
     public boolean canUse() {
-        if (super.canUse()) {
-            //gets recently hit variable from entityliving that determines if a mob will drop exp
+        if (super.canUse()) {//true -> this.animal.getOwner() != null
             //only attacks if target was hit recently
             //only attacks if target was attacked by owner
-            var owner = (LivingEntity) this.animal.getOwner();
-            if (owner != null) {
-                this.target = owner.getLastHurtMob();
-                return target == null ||
-                        (target.getLastHurtByMobTimestamp() > 40 &&
-                                (this.target.getLastHurtByMob() == null || this.target.getLastHurtByMob().equals(owner)));
+            if (this.owner == null) {
+                this.owner = this.animal.getOwner();
             }
+            var target = this.owner.getLastHurtMob();
+            return target == null ||
+                    (target.getLastHurtByMobTimestamp() > 40 &&
+                            (target.getLastHurtByMob() == null || target.getLastHurtByMob().equals(this.owner)));
         }
         return false;
     }

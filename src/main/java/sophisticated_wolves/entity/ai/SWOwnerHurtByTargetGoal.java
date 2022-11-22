@@ -1,5 +1,6 @@
 package sophisticated_wolves.entity.ai;
 
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.TamableAnimal;
 import net.minecraft.world.entity.ai.goal.target.OwnerHurtByTargetGoal;
 
@@ -11,12 +12,13 @@ import net.minecraft.world.entity.ai.goal.target.OwnerHurtByTargetGoal;
  */
 public class SWOwnerHurtByTargetGoal extends OwnerHurtByTargetGoal {
 
-    protected TamableAnimal theDefendingTameable;
-    protected int revengeTime;
+    private final TamableAnimal animal;
+    private LivingEntity owner;
 
     public SWOwnerHurtByTargetGoal(TamableAnimal entity) {
         super(entity);
-        this.theDefendingTameable = entity;
+        this.owner = entity.getOwner();
+        this.animal = entity;
     }
 
     /**
@@ -24,8 +26,13 @@ public class SWOwnerHurtByTargetGoal extends OwnerHurtByTargetGoal {
      */
     @Override
     public boolean canUse() {
-        var owner = this.theDefendingTameable.getOwner();
-        return super.canUse() && owner != null && this.theDefendingTameable.distanceToSqr(owner) < 144;
+        if (super.canUse()) {//true -> this.animal.getOwner() != null
+            if (this.owner == null) {
+                this.owner = this.animal.getOwner();
+            }
+            return this.animal.distanceToSqr(this.owner) < 144;
+        }
+        return false;
     }
 
     /**
@@ -33,13 +40,8 @@ public class SWOwnerHurtByTargetGoal extends OwnerHurtByTargetGoal {
      */
     @Override
     public void start() {
-        this.theDefendingTameable.setInSittingPose(false);
+        this.animal.setInSittingPose(false);
         super.start();
-
-        var owner = this.theDefendingTameable.getOwner();
-        if (owner != null) {
-            this.revengeTime = owner.getLastHurtByMobTimestamp();
-        }
     }
 
 }

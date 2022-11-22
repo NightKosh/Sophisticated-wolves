@@ -22,7 +22,7 @@ public class FeedFromBowlGoal extends Goal {
     private final TamableAnimal pet;
     private final Level level;
 
-    protected BlockEntityDogBowl dogBowl;
+    private BlockEntityDogBowl dogBowl;
 
     public FeedFromBowlGoal(TamableAnimal animal) {
         this.pet = animal;
@@ -87,15 +87,7 @@ public class FeedFromBowlGoal extends Goal {
                 this.pet.getLookControl().setLookAt(x, y, z, 0.25F, 0.25F);
                 this.pet.heal(1);
 
-                var owner = this.pet.getOwner();
-                if (owner != null && owner instanceof Player player) {
-                    if (!player.getAbilities().instabuild) {
-                        this.dogBowl.addFood(-1);
-                    }
-                } else {
-                    this.dogBowl.addFood(-1);
-                }
-
+                this.dogBowl.addFood(-1);
                 if (this.dogBowl.getFoodAmount() <= 0 ||
                         this.pet.getHealth() >= SWConfiguration.WOLVES_HEALTH_TAMED.get()) {
                     this.dogBowl = null;
