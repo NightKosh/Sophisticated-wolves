@@ -2,6 +2,7 @@ package sophisticated_wolves.entity.ai;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.util.Mth;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.entity.ai.navigation.PathNavigation;
 import net.minecraft.world.level.Level;
@@ -15,17 +16,18 @@ import sophisticated_wolves.entity.SophisticatedWolf;
  */
 public class TeleportAtDrowningGoal extends Goal {
 
-    protected SophisticatedWolf wolf;
-    protected Level level;
-    protected PathNavigation petPathfinder;
+    private final SophisticatedWolf wolf;
+    private final Level level;
+    private final PathNavigation navigation;
+    private LivingEntity owner;
 
     private boolean isDrowning = false;
-    private int drownCount = 0;
 
-    public TeleportAtDrowningGoal(SophisticatedWolf animal) {
-        this.wolf = animal;
-        this.level = animal.getLevel();
-        this.petPathfinder = animal.getNavigation();
+    public TeleportAtDrowningGoal(SophisticatedWolf wolf) {
+        this.wolf = wolf;
+        this.owner = wolf.getOwner();
+        this.level = wolf.getLevel();
+        this.navigation = wolf.getNavigation();
     }
 
     @Override
@@ -35,10 +37,16 @@ public class TeleportAtDrowningGoal extends Goal {
 
     @Override
     public boolean canContinueToUse() {
-        return this.isDrowning &&
+        if (this.isDrowning &&
                 this.wolf.isInWater() &&
-                this.wolf.isTame() &&
-                this.wolf.getOwner() != null;
+                this.wolf.isTame()) {
+            if (this.owner == null) {
+                this.owner = this.wolf.getOwner();
+            }
+
+            return this.owner != null;
+        }
+        return false;
     }
 
     @Override
@@ -52,9 +60,9 @@ public class TeleportAtDrowningGoal extends Goal {
 
     @Override
     public void tick() {
-        int xPos = Mth.floor(this.wolf.getOwner().getX()) - 2;
-        int yPos = Mth.floor(this.wolf.getOwner().getBoundingBox().minY);
-        int zPos = Mth.floor(this.wolf.getOwner().getZ()) - 2;
+        int xPos = Mth.floor(this.owner.getX()) - 2;
+        int yPos = Mth.floor(this.owner.getBoundingBox().minY);
+        int zPos = Mth.floor(this.owner.getZ()) - 2;
 
         for (int x = -2; x <= 2; ++x) {
             for (int z = -2; z <= 2; ++z) {
@@ -63,7 +71,7 @@ public class TeleportAtDrowningGoal extends Goal {
                 if (state.isAir()) {
                     this.wolf.moveTo(xPos + x + 0.5, yPos, zPos + z + 0.5,
                             this.wolf.getYRot(), this.wolf.getXRot());
-                    this.petPathfinder.stop();
+                    this.navigation.stop();
                     return;
                 }
             }
@@ -72,7 +80,6 @@ public class TeleportAtDrowningGoal extends Goal {
 
     public void setDrowning(boolean isDrowning) {
         this.isDrowning = isDrowning;
-        this.drownCount = isDrowning ? 30 : 0;
     }
 
 }

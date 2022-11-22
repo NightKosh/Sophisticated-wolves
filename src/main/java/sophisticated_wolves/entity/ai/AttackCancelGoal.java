@@ -17,8 +17,6 @@ public class AttackCancelGoal extends Goal {
     private final PathNavigation petPathfinder;
 
     private LivingEntity owner;
-
-    //SophWolves variables
     private int sneakCounter;
 
     public AttackCancelGoal(TamableAnimal animal) {

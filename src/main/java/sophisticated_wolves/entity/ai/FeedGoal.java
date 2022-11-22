@@ -42,7 +42,7 @@ public class FeedGoal extends Goal {
                     new AABB(this.pet.getX() - 30, this.pet.getY() - 30, this.pet.getZ() - 30,
                             this.pet.getX() + 30, this.pet.getY() + 30, this.pet.getZ() + 30));
             for (ItemEntity foodEntity : foodList) {
-                ItemStack stack = foodEntity.getItem();
+                var stack = foodEntity.getItem();
                 if ((FoodUtils.isFoodItem(stack) || FoodUtils.isBone(stack)) &&
                         FoodUtils.isWolfFood(pet, stack)) {
                     this.foodEntity = foodEntity;

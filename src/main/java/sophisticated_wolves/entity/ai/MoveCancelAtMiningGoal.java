@@ -4,6 +4,7 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.TamableAnimal;
 import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.entity.ai.navigation.PathNavigation;
+import net.minecraft.world.item.DiggerItem;
 
 /**
  * Sophisticated Wolves
@@ -39,14 +40,13 @@ public class MoveCancelAtMiningGoal extends Goal {
             return false;
         }
 
-        var owner = this.owner == null ?
-                this.pet.getOwner() :
-                this.owner;
-        this.owner = owner;
-        if (owner == null || this.pet.distanceTo(owner) > this.dist) {
+        if (this.owner == null) {
+            this.owner = this.pet.getOwner();
+        }
+        if (this.owner == null || this.pet.distanceTo(this.owner) > this.dist) {
             return false;
         }
-        return owner.swinging;
+        return this.owner.swinging && this.owner.getMainHandItem().getItem() instanceof DiggerItem;
     }
 
     /**
@@ -54,7 +54,11 @@ public class MoveCancelAtMiningGoal extends Goal {
      */
     @Override
     public boolean canContinueToUse() {
-        return this.owner.swinging;
+        return !this.pet.isInSittingPose() &&
+                !this.pet.isInLove() &&
+                this.pet.getTarget() == null &&
+                this.owner.swinging &&
+                this.owner.getMainHandItem().getItem() instanceof DiggerItem;
     }
 
     /**
