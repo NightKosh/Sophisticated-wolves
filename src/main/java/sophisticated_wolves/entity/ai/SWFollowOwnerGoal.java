@@ -3,6 +3,7 @@ package sophisticated_wolves.entity.ai;
 import net.minecraft.world.entity.TamableAnimal;
 import net.minecraft.world.entity.ai.goal.FollowOwnerGoal;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.pathfinder.BlockPathTypes;
 import sophisticated_wolves.util.LevelUtils;
 
 /**
@@ -50,20 +51,32 @@ public class SWFollowOwnerGoal extends FollowOwnerGoal {
         this.owner = owner;
     }
 
+    /**
+     * Updates the task
+     */
     @Override
-    public void teleportToOwner() {
-        int xPos = this.owner.blockPosition().getX();
-        int zPos = this.owner.blockPosition().getZ();
-        int yPos = this.owner.blockPosition().getY();
+    public void tick() {
+        this.pet.getLookControl().setLookAt(this.owner, 10, this.pet.getMaxHeadXRot());
+        this.timeToRecalcPath--;
+        if (this.timeToRecalcPath <= 0) {
+            this.timeToRecalcPath = this.adjustedTickDelay(10);
+            if (this.pet.distanceToSqr(this.owner) >= 144) {
+                int xPos = this.owner.blockPosition().getX();
+                int zPos = this.owner.blockPosition().getZ();
+                int yPos = this.owner.blockPosition().getY();
 
-        for (int dX = -2; dX <= 2; dX++) {
-            for (int dZ = -2; dZ <= 2; dZ++) {
-                if (canTeleport(pet.getLevel(), xPos + dX, yPos, zPos + dZ)) {
-                    this.pet.moveTo(xPos + dX + 0.5F, yPos, zPos + dZ + 0.5F,
-                            this.pet.getYRot(), this.pet.getXRot());
-                    this.pet.getNavigation().stop();
-                    return;
+                for (int dX = -2; dX <= 2; dX++) {
+                    for (int dZ = -2; dZ <= 2; dZ++) {
+                        if (canTeleport(pet.getLevel(), xPos + dX, yPos, zPos + dZ)) {
+                            this.pet.moveTo(xPos + dX + 0.5F, yPos, zPos + dZ + 0.5F,
+                                    this.pet.getYRot(), this.pet.getXRot());
+                            this.pet.getNavigation().stop();
+                            return;
+                        }
+                    }
                 }
+            } else {
+                this.pet.getNavigation().moveTo(this.owner, this.speedModifier);
             }
         }
     }
