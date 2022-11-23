@@ -4,7 +4,6 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.util.Mth;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Material;
 import net.minecraft.world.phys.AABB;
 
@@ -29,7 +28,9 @@ public class LevelUtils {
             for(int y = minY; y < maxY; ++y) {
                 for(int z = minZ; z < maxZ; ++z) {
                     var block = level.getBlockState(mutableBlockPos.set(x, y, z)).getBlock();
-                    if (block == Blocks.FIRE || block == Blocks.SOUL_FIRE || block == Blocks.LAVA) {
+                    if (block == Blocks.FIRE || block == Blocks.SOUL_FIRE ||
+                            block == Blocks.CAMPFIRE || block == Blocks.SOUL_CAMPFIRE ||
+                            block == Blocks.LAVA) {
                         return true;
                     }
                 }
@@ -39,18 +40,25 @@ public class LevelUtils {
         return false;
     }
 
+    public static boolean isPositionSafe(Level level, int x, int y, int z) {
+        return LevelUtils.isGroundSafe(level, x, y - 1, z) &&
+                LevelUtils.isAirSafe(level, x, y, z) &&
+                LevelUtils.isAirSafe(level, x, y + 1, z);
+    }
+
     public static boolean isGroundSafe(Level level, int x, int y, int z) {
         var blockState = level.getBlockState(new BlockPos(x, y, z));
         var material = blockState.getMaterial();
+        var block = blockState.getBlock();
 
         return (material.isSolid() ||
-                material.equals(Material.ICE) ||
-                material.equals(Material.LEAVES) ||
-                material.equals(Material.GLASS) ||
                 material.equals(Material.WATER) && level.getBlockState(new BlockPos(x, y, z).above())
                         .getMaterial().equals(Material.AIR)) &&
-                !material.equals(Material.CACTUS)
-                && !material.equals(Material.PLANT);
+                block != Blocks.MAGMA_BLOCK &&
+                block != Blocks.CAMPFIRE &&
+                block != Blocks.SOUL_CAMPFIRE &&
+                !material.equals(Material.CACTUS) &&
+                !material.equals(Material.PLANT);
     }
 
     public static boolean isAirSafe(Level level, int x, int y, int z) {

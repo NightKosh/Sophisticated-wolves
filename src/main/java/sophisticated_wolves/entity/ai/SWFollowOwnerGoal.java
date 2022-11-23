@@ -2,8 +2,6 @@ package sophisticated_wolves.entity.ai;
 
 import net.minecraft.world.entity.TamableAnimal;
 import net.minecraft.world.entity.ai.goal.FollowOwnerGoal;
-import net.minecraft.world.level.Level;
-import net.minecraft.world.level.pathfinder.BlockPathTypes;
 import sophisticated_wolves.entity.SophisticatedWolf;
 import sophisticated_wolves.util.LevelUtils;
 
@@ -88,7 +86,7 @@ public class SWFollowOwnerGoal extends FollowOwnerGoal {
 
         for (int dX = -2; dX <= 2; dX++) {
             for (int dZ = -2; dZ <= 2; dZ++) {
-                if (canTeleport(pet.getLevel(), xPos + dX, yPos, zPos + dZ)) {
+                if (LevelUtils.isPositionSafe(pet.getLevel(), xPos + dX, yPos, zPos + dZ)) {
                     this.pet.moveTo(xPos + dX + 0.5F, yPos, zPos + dZ + 0.5F,
                             this.pet.getYRot(), this.pet.getXRot());
                     this.pet.getNavigation().stop();
@@ -96,12 +94,6 @@ public class SWFollowOwnerGoal extends FollowOwnerGoal {
                 }
             }
         }
-    }
-
-    public static boolean canTeleport(Level level, int x, int y, int z) {
-        return LevelUtils.isGroundSafe(level, x, y - 1, z) &&
-                LevelUtils.isAirSafe(level, x, y, z) &&
-                LevelUtils.isAirSafe(level, x, y + 1, z);
     }
 
 }
