@@ -12,7 +12,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
 import sophisticated_wolves.core.SWSound;
 import sophisticated_wolves.core.SWTabs;
-import sophisticated_wolves.entity.ai.SWFollowOwnerGoal;
+import sophisticated_wolves.util.LevelUtils;
 
 /**
  * Sophisticated Wolves
@@ -51,7 +51,7 @@ public class ItemWhistle extends Item {
                         for (int i = 0; i < 50; i++) {
                             int xRand = player.getLevel().getRandom().nextInt(5) + xPos - 2;
                             int zRand = player.getLevel().getRandom().nextInt(5) + zPos - 2;
-                            if (SWFollowOwnerGoal.canTeleport(level, xRand, yPos, zRand)) {
+                            if (LevelUtils.isPositionSafe(level, xRand, yPos, zRand)) {
                                 wolf.setInSittingPose(false);
                                 wolf.moveTo(xRand + 0.5, yPos, zRand + 0.5, wolf.getYRot(), wolf.getXRot());
                                 wolf.getNavigation().stop();
