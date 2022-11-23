@@ -14,14 +14,11 @@ import sophisticated_wolves.util.LevelUtils;
 public class SWFollowOwnerGoal extends FollowOwnerGoal {
 
     private final TamableAnimal pet;
-    private final double speedModifier;
-    private int timeToRecalcPath;
 
     public SWFollowOwnerGoal(TamableAnimal entity, double speedModifier, float startDistance, float stopDistance) {
         super(entity, speedModifier, startDistance, stopDistance, false);
 
         this.pet = entity;
-        this.speedModifier = speedModifier;
     }
 
     /**
@@ -44,15 +41,6 @@ public class SWFollowOwnerGoal extends FollowOwnerGoal {
                 !this.pet.isPassenger() &&
                 super.canContinueToUse() &&
                 !this.owner.onClimbable();
-    }
-
-    /**
-     * Execute a one shot task or start executing a continuous task
-     */
-    @Override
-    public void start() {
-        super.start();
-        this.timeToRecalcPath = 0;
     }
 
     @Override
