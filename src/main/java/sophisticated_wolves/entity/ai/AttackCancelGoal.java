@@ -36,7 +36,7 @@ public class AttackCancelGoal extends Goal {
 
         var owner = this.pet.getOwner();
         if (owner == null ||
-                this.pet.isInSittingPose() ||
+                this.pet.isOrderedToSit() ||
                 !this.pet.isOnGround()) {
             return false;
         }
@@ -53,7 +53,7 @@ public class AttackCancelGoal extends Goal {
      */
     @Override
     public boolean canContinueToUse() {
-        return this.owner.isShiftKeyDown() && !this.pet.isInSittingPose();
+        return this.owner.isShiftKeyDown() && !this.pet.isOrderedToSit();
     }
 
     /**

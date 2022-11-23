@@ -33,7 +33,7 @@ public class MoveCancelAtMiningGoal extends Goal {
     @Override
     public boolean canUse() {
         if (!this.pet.isTame() ||
-                this.pet.isInSittingPose() ||
+                this.pet.isOrderedToSit() ||
                 !this.pet.isOnGround() ||
                 this.pet.isInLove() ||
                 this.pet.getTarget() != null) {
@@ -54,7 +54,7 @@ public class MoveCancelAtMiningGoal extends Goal {
      */
     @Override
     public boolean canContinueToUse() {
-        return !this.pet.isInSittingPose() &&
+        return !this.pet.isOrderedToSit() &&
                 !this.pet.isInLove() &&
                 this.pet.getTarget() == null &&
                 this.owner.swinging &&

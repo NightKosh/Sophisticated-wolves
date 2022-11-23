@@ -33,8 +33,8 @@ public class FeedGoal extends Goal {
      */
     @Override
     public boolean canUse() {
-        if (!this.pet.isTame() ||
-                this.pet.isInSittingPose() ||
+        if (this.pet.isTame() &&
+                !this.pet.isOrderedToSit() ||
                 this.pet.getHealth() >= SWConfiguration.WOLVES_HEALTH_TAMED.get()) {
             return false;
         } else {
