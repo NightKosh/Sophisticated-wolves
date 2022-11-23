@@ -25,6 +25,9 @@ public class AvoidFireGoal extends Goal {
     private double yPath;
     private double zPath;
 
+    //TODO is it event works?
+    // it should be reworked / removed
+
     public AvoidFireGoal(PathfinderMob mob, double minSpeed, double maxSpeed) {
         this.mob = mob;
         this.moveSpeed = this.mob.getMoveControl().getSpeedModifier();
