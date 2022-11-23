@@ -72,6 +72,7 @@ public class SophisticatedWolf extends AEntitySophisticatedWolf {
     public static final int DEFAULT_WILD_WOLF_HEALTH = 8;
     public static final int DEFAULT_TAMED_WOLF_HEALTH = 30;
     public static final int DEFAULT_TAMED_WOLF_DAMAGE = 5;
+    public static final int DISTANCE_TO_TELEPORT_TO_OWNER_SQR = 900;//30^2 blocks
     public static final byte EXTINGUISH_EVENT_ID = 99;
 
     private static final EntityDataAccessor<Integer> WOLF_SPECIES =
