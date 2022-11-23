@@ -226,7 +226,7 @@ public class SophisticatedWolf extends AEntitySophisticatedWolf {
             }
         } else {
             //sitting wolves will only bark 1/4 of the time
-            if (!this.isInSittingPose()) {
+            if (!this.isOrderedToSit()) {
                 return SoundEvents.WOLF_AMBIENT;
             } else {
                 if (this.getRandom().nextInt(3) == 0) {
@@ -374,7 +374,7 @@ public class SophisticatedWolf extends AEntitySophisticatedWolf {
     @Override
     public boolean canMate(Animal animal) {
         if (animal != this && this.isTame() && animal instanceof SophisticatedWolf wolf) {
-            return wolf.isTame() && (!wolf.isInSittingPose() && this.isInLove() && wolf.isInLove());
+            return wolf.isTame() && (!wolf.isOrderedToSit() && this.isInLove() && wolf.isInLove());
         }
         return false;
     }

@@ -47,7 +47,7 @@ public class ItemWhistle extends Item {
                 for (Wolf wolf : wolves) {
                     if (wolf.isTame() &&
                             wolf.isOwnedBy(player) &&
-                            (!wolf.isInSittingPose() || player.isShiftKeyDown())) {
+                            (!wolf.isOrderedToSit() || player.isShiftKeyDown())) {
                         for (int i = 0; i < 50; i++) {
                             int xRand = player.getLevel().getRandom().nextInt(5) + xPos - 2;
                             int zRand = player.getLevel().getRandom().nextInt(5) + zPos - 2;
