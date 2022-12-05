@@ -71,6 +71,7 @@ public class SophisticatedWolf extends AEntitySophisticatedWolf {
 
     public static final int DEFAULT_WILD_WOLF_HEALTH = 8;
     public static final int DEFAULT_TAMED_WOLF_HEALTH = 30;
+    public static final int DEFAULT_TAMED_WOLF_FLEE_HEALTH = 5;
     public static final int DEFAULT_TAMED_WOLF_DAMAGE = 5;
     public static final int DISTANCE_TO_TELEPORT_TO_OWNER_SQR = 900;//30^2 blocks
     public static final byte EXTINGUISH_EVENT_ID = 99;
@@ -78,6 +79,7 @@ public class SophisticatedWolf extends AEntitySophisticatedWolf {
     private static final EntityDataAccessor<Integer> WOLF_SPECIES =
             SynchedEntityData.defineId(SophisticatedWolf.class, EntityDataSerializers.INT);
 
+    protected FleeGoal fleeGoal;
     protected ShakeIfBurnOrPoisonGoal shakeGoal;
     protected TeleportAtDrowningGoal drowngGoal;
 
@@ -95,14 +97,16 @@ public class SophisticatedWolf extends AEntitySophisticatedWolf {
 
     @Override
     protected void registerGoals() {
-        shakeGoal = new ShakeIfBurnOrPoisonGoal(this);
-        drowngGoal = new TeleportAtDrowningGoal(this);
+        this.fleeGoal = new FleeGoal(this, 16, 10, 1, 1.4);
+        this.shakeGoal = new ShakeIfBurnOrPoisonGoal(this);
+        this.drowngGoal = new TeleportAtDrowningGoal(this);
 
         this.goalSelector.addGoal(1, new FloatGoal(this));
         this.goalSelector.addGoal(1, new Wolf.WolfPanicGoal(1.5D));
-        this.goalSelector.addGoal(2, new AvoidCreeperGoal(this, 8, 6, 3, 1, 1.4)); //new behavior
+        this.goalSelector.addGoal(2, this.fleeGoal); //new behavior
+        this.goalSelector.addGoal(3, new AvoidCreeperGoal(this, 8, 3, 1, 1.4)); //new behavior
         this.goalSelector.addGoal(5, new SitWhenOrderedToGoal(this));
-        this.goalSelector.addGoal(7, shakeGoal); //new behavior
+        this.goalSelector.addGoal(7, this.shakeGoal); //new behavior
         this.goalSelector.addGoal(8, new AttackCancelGoal(this)); //new behavior
         this.goalSelector.addGoal(10, new Wolf.WolfAvoidEntityGoal<>(this, Llama.class, 24, 1.5, 1.5));
         this.goalSelector.addGoal(15, new LeapAtTargetGoal(this, 0.4F));
@@ -110,7 +114,7 @@ public class SophisticatedWolf extends AEntitySophisticatedWolf {
         this.goalSelector.addGoal(22, new MoveCancelAtMiningGoal(this, 6)); //new behavior
         this.goalSelector.addGoal(25, new SWFollowOwnerGoal(this, 1, 10, 2)); //new behavior
         this.goalSelector.addGoal(27, new AvoidFireGoal(this, 1, 1.4)); //new behavior
-        this.goalSelector.addGoal(28, drowngGoal); //new behavior
+        this.goalSelector.addGoal(28, this.drowngGoal); //new behavior
         this.goalSelector.addGoal(29, new BreedGoal(this, 1));
         this.goalSelector.addGoal(30, new WaterAvoidingRandomStrollGoal(this, 1));
         this.goalSelector.addGoal(31, new FeedFromBowlGoal(this)); //new behavior
@@ -437,10 +441,9 @@ public class SophisticatedWolf extends AEntitySophisticatedWolf {
 
     @Override
     public boolean hurt(DamageSource damageSource, float amount) {
-        if ((damageSource.getEntity() != null &&
-                damageSource.getEntity().equals(this.getOwner()) &&
-                !damageSource.getEntity().isShiftKeyDown()) ||
-                (SWConfiguration.IMMUNE_TO_CACTI.get() && damageSource.equals(DamageSource.CACTUS))) {
+        if ((this.fleeGoal != null && this.fleeGoal.shouldFlee() && this.getRandom().nextInt(10) != 0) || // discard if flee
+                (damageSource.getEntity() != null && damageSource.getEntity().equals(this.getOwner()) && !damageSource.getEntity().isShiftKeyDown()) || //protect from owner
+                (SWConfiguration.IMMUNE_TO_CACTI.get() && damageSource.equals(DamageSource.CACTUS))) { // protect from cacti
             return false;
         } else {
             if (damageSource.equals(DamageSource.DROWN) && this.drowngGoal != null) {
