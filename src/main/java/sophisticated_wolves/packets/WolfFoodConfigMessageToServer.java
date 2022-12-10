@@ -25,12 +25,13 @@ public class WolfFoodConfigMessageToServer {
 
     public WolfFoodConfigMessageToServer(SophisticatedWolf wolf) {
         this.wolfId = wolf.getUUID();
-        this.rottenMeatAndBones = wolf.isRottenMeatAndBones();
-        this.rawMeat = wolf.isRawMeat();
-        this.rawFish = wolf.isRawFish();
-        this.specialFish = wolf.isSpecialFish();
-        this.cookedMeat = wolf.isCookedMeat();
-        this.cookedFish = wolf.isCookedFish();
+        var wolfFood = wolf.getWolfFood();
+        this.rottenMeatAndBones = wolfFood.rottenMeatAndBones();
+        this.rawMeat = wolfFood.rawMeat();
+        this.rawFish = wolfFood.rawFish();
+        this.specialFish = wolfFood.specialFish();
+        this.cookedMeat = wolfFood.cookedMeat();
+        this.cookedFish = wolfFood.cookedFish();
     }
 
     public WolfFoodConfigMessageToServer(FriendlyByteBuf buf) {

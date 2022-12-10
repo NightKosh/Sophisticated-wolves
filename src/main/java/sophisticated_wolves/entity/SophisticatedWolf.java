@@ -79,17 +79,11 @@ public class SophisticatedWolf extends AEntitySophisticatedWolf {
     private static final EntityDataAccessor<Integer> WOLF_SPECIES =
             SynchedEntityData.defineId(SophisticatedWolf.class, EntityDataSerializers.INT);
 
+    private WolfFood wolfFood = new WolfFood();
+
     protected FleeGoal fleeGoal;
     protected ShakeIfBurnOrPoisonGoal shakeGoal;
-    protected TeleportAtDrowningGoal drowngGoal;
-
-    protected boolean rottenMeatAndBones;
-    protected boolean rawMeat;
-    protected boolean rawFish;
-    protected boolean specialFish;
-    protected boolean cookedMeat;
-    protected boolean cookedFish;
-    protected boolean anyFood;
+    protected TeleportAtDrowningGoal drownGoal;
 
     public SophisticatedWolf(EntityType<? extends Wolf> entityType, Level level) {
         super(entityType, level);
@@ -99,10 +93,10 @@ public class SophisticatedWolf extends AEntitySophisticatedWolf {
     protected void registerGoals() {
         this.fleeGoal = new FleeGoal(this, 16, 10, 1, 1.4);
         this.shakeGoal = new ShakeIfBurnOrPoisonGoal(this);
-        this.drowngGoal = new TeleportAtDrowningGoal(this);
+        this.drownGoal = new TeleportAtDrowningGoal(this);
 
         this.goalSelector.addGoal(1, new FloatGoal(this));
-        this.goalSelector.addGoal(1, new Wolf.WolfPanicGoal(1.5D));
+        this.goalSelector.addGoal(1, new Wolf.WolfPanicGoal(1.5));
         this.goalSelector.addGoal(2, this.fleeGoal); //new behavior
         this.goalSelector.addGoal(3, new AvoidCreeperGoal(this, 8, 3, 1, 1.4)); //new behavior
         this.goalSelector.addGoal(5, new SitWhenOrderedToGoal(this));
@@ -114,7 +108,7 @@ public class SophisticatedWolf extends AEntitySophisticatedWolf {
         this.goalSelector.addGoal(22, new MoveCancelAtMiningGoal(this, 6)); //new behavior
         this.goalSelector.addGoal(25, new SWFollowOwnerGoal(this, 1, 10, 2)); //new behavior
         this.goalSelector.addGoal(27, new AvoidFireGoal(this, 1, 1.4)); //new behavior
-        this.goalSelector.addGoal(28, this.drowngGoal); //new behavior
+        this.goalSelector.addGoal(28, this.drownGoal); //new behavior
         this.goalSelector.addGoal(29, new BreedGoal(this, 1));
         this.goalSelector.addGoal(30, new WaterAvoidingRandomStrollGoal(this, 1));
         this.goalSelector.addGoal(31, new FeedFromBowlGoal(this)); //new behavior
@@ -169,47 +163,15 @@ public class SophisticatedWolf extends AEntitySophisticatedWolf {
     @Override
     public void addAdditionalSaveData(CompoundTag tag) {
         super.addAdditionalSaveData(tag);
-
+        this.wolfFood.saveData(tag);
         tag.putInt("Species", this.getSpecies().ordinal());
-
-        var allowedFoodTag = new CompoundTag();
-        allowedFoodTag.putBoolean("RottenMeatAndBones", this.rottenMeatAndBones);
-        allowedFoodTag.putBoolean("RawMeat", this.rawMeat);
-        allowedFoodTag.putBoolean("RawFish", this.rawFish);
-        allowedFoodTag.putBoolean("SpecialFish", this.specialFish);
-        allowedFoodTag.putBoolean("CookedMeat", this.cookedMeat);
-        allowedFoodTag.putBoolean("CookedFish", this.cookedFish);
-        tag.put("AllowedFood", allowedFoodTag);
     }
 
     @Override
     public void readAdditionalSaveData(CompoundTag tag) {
         super.readAdditionalSaveData(tag);
-
+        this.wolfFood = WolfFood.getFromTag(tag);
         this.updateSpecies(EnumWolfSpecies.getSpeciesByNum(tag.getInt("Species")));
-
-        if (tag.contains("AllowedFood")) {
-            var allowedFoodTag = tag.getCompound("AllowedFood");
-            if (allowedFoodTag.contains("RottenMeatAndBones")) {
-                this.rottenMeatAndBones = allowedFoodTag.getBoolean("RottenMeatAndBones");
-            }
-            if (allowedFoodTag.contains("RawMeat")) {
-                this.rawMeat = allowedFoodTag.getBoolean("RawMeat");
-            }
-            if (allowedFoodTag.contains("RawFish")) {
-                this.rawFish = allowedFoodTag.getBoolean("RawFish");
-            }
-            if (allowedFoodTag.contains("SpecialFish")) {
-                this.specialFish = allowedFoodTag.getBoolean("SpecialFish");
-            }
-            if (allowedFoodTag.contains("CookedMeat")) {
-                this.cookedMeat = allowedFoodTag.getBoolean("CookedMeat");
-            }
-            if (allowedFoodTag.contains("CookedFish")) {
-                this.cookedFish = allowedFoodTag.getBoolean("CookedFish");
-            }
-        }
-        updateFood();
     }
 
     @Override
@@ -446,8 +408,8 @@ public class SophisticatedWolf extends AEntitySophisticatedWolf {
                 (SWConfiguration.IMMUNE_TO_CACTI.get() && damageSource.equals(DamageSource.CACTUS))) { // protect from cacti
             return false;
         } else {
-            if (damageSource.equals(DamageSource.DROWN) && this.drowngGoal != null) {
-                this.drowngGoal.setDrowning(true);
+            if (damageSource.equals(DamageSource.DROWN) && this.drownGoal != null) {
+                this.drownGoal.setDrowning(true);
             }
             return super.hurt(damageSource, amount);
         }
@@ -475,76 +437,6 @@ public class SophisticatedWolf extends AEntitySophisticatedWolf {
         return 1;
     }
 
-    public boolean isRottenMeatAndBones() {
-        return rottenMeatAndBones;
-    }
-
-    public void setRottenMeatAndBones(boolean rottenMeatAndBones) {
-        this.rottenMeatAndBones = rottenMeatAndBones;
-    }
-
-    public boolean isRawMeat() {
-        return rawMeat;
-    }
-
-    public void setRawMeat(boolean rawMeat) {
-        this.rawMeat = rawMeat;
-    }
-
-    public boolean isRawFish() {
-        return rawFish;
-    }
-
-    public void setRawFish(boolean rawFish) {
-        this.rawFish = rawFish;
-    }
-
-    public boolean isSpecialFish() {
-        return specialFish;
-    }
-
-    public void setSpecialFish(boolean specialFish) {
-        this.specialFish = specialFish;
-    }
-
-    public boolean isCookedMeat() {
-        return cookedMeat;
-    }
-
-    public void setCookedMeat(boolean cookedMeat) {
-        this.cookedMeat = cookedMeat;
-    }
-
-    public boolean isCookedFish() {
-        return cookedFish;
-    }
-
-    public void setCookedFish(boolean cookedFish) {
-        this.cookedFish = cookedFish;
-    }
-
-    public boolean isAnyFood() {
-        return anyFood;
-    }
-
-    public void setAnyFood(boolean anyFood) {
-        this.anyFood = anyFood;
-    }
-
-    public void updateFood(boolean rottenMeatAndBones, boolean rawMeat, boolean rawFish, boolean specialFish, boolean cookedMeat, boolean cookedFish) {
-        this.setRottenMeatAndBones(rottenMeatAndBones);
-        this.setRawMeat(rawMeat);
-        this.setRawFish(rawFish);
-        this.setSpecialFish(specialFish);
-        this.setCookedMeat(cookedMeat);
-        this.setCookedFish(cookedFish);
-        updateFood();
-    }
-
-    public void updateFood() {
-        this.anyFood = rottenMeatAndBones && rawMeat && rawFish && specialFish && cookedMeat && cookedFish;
-    }
-
     @Override
     public boolean shouldShowName() {
         return (SWConfiguration.ALWAYS_SHOW_WOLF_NAME.get() && this.hasCustomName()) || super.shouldShowName();
@@ -564,6 +456,14 @@ public class SophisticatedWolf extends AEntitySophisticatedWolf {
     @Override
     public int getMaxFallDistance() {
         return 3;
+    }
+
+    public void updateFood(boolean rottenMeatAndBones, boolean rawMeat, boolean rawFish, boolean specialFish, boolean cookedMeat, boolean cookedFish) {
+        this.wolfFood = new WolfFood(rottenMeatAndBones, rawMeat, rawFish, specialFish, cookedMeat, cookedFish);
+    }
+
+    public WolfFood getWolfFood() {
+        return this.wolfFood;
     }
 
 }
