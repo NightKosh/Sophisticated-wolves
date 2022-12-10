@@ -52,12 +52,13 @@ public class WolfFoodConfigScreen extends Screen {
         int x = (this.width - this.xSize) / 2;
         int y = (this.height - this.ySize) / 2;
 
-        this.isRottenMeatAndBones = new GuiCheckbox(x + 14, y + 40, wolf.isRottenMeatAndBones());
-        this.isRawFish = new GuiCheckbox(x + 14, y + 60, wolf.isRawFish());
-        this.isCookedFish = new GuiCheckbox(x + 84, y + 60, wolf.isCookedFish());
-        this.isSpecialFish = new GuiCheckbox(x + 150, y + 60, wolf.isSpecialFish());
-        this.isRawMeat = new GuiCheckbox(x + 14, y + 81, wolf.isRawMeat());
-        this.isCookedMeat = new GuiCheckbox(x + 118, y + 81, wolf.isCookedMeat());
+        var wolfFood = wolf.getWolfFood();
+        this.isRottenMeatAndBones = new GuiCheckbox(x + 14, y + 40, wolfFood.rottenMeatAndBones());
+        this.isRawFish = new GuiCheckbox(x + 14, y + 60, wolfFood.rawFish());
+        this.isCookedFish = new GuiCheckbox(x + 84, y + 60, wolfFood.cookedFish());
+        this.isSpecialFish = new GuiCheckbox(x + 150, y + 60, wolfFood.specialFish());
+        this.isRawMeat = new GuiCheckbox(x + 14, y + 81, wolfFood.rawMeat());
+        this.isCookedMeat = new GuiCheckbox(x + 118, y + 81, wolfFood.cookedMeat());
 
         this.addRenderableWidget(
                 new Button(this.width / 2 - 50, y + 113, 100, 20,

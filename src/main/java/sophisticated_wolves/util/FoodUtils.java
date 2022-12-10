@@ -29,23 +29,24 @@ public class FoodUtils {
     }
 
     public static boolean isWolfFood(SophisticatedWolf wolf, ItemStack stack) {
-        if (wolf.isAnyFood()) {
+        var wolfFood = wolf.getWolfFood();
+        if (wolfFood.anyFood()) {
             return isWolfFood(stack);
         } else {
-            return wolf.isRottenMeatAndBones() && (isBone(stack) || isFoodType(stack, Items.ROTTEN_FLESH)) ||
-                    wolf.isRawMeat() && (
+            return wolfFood.rottenMeatAndBones() && (isBone(stack) || isFoodType(stack, Items.ROTTEN_FLESH)) ||
+                    wolfFood.rawMeat() && (
                             isFoodType(stack, Items.CHICKEN) || isFoodType(stack, Items.BEEF) ||
                             isFoodType(stack, Items.PORKCHOP) || isFoodType(stack, Items.MUTTON) ||
                             isFoodType(stack, Items.RABBIT)) ||
-                    wolf.isCookedMeat() && (
+                    wolfFood.cookedMeat() && (
                             isFoodType(stack, Items.COOKED_CHICKEN) || isFoodType(stack, Items.COOKED_BEEF) ||
                             isFoodType(stack, Items.COOKED_PORKCHOP) || isFoodType(stack, Items.COOKED_MUTTON) ||
                             isFoodType(stack, Items.COOKED_RABBIT)) ||
-                    wolf.isRawFish() && (
+                    wolfFood.rawFish() && (
                             isFoodType(stack, Items.COD) || isFoodType(stack, Items.SALMON)) ||
-                    wolf.isCookedFish() && (
+                    wolfFood.cookedFish() && (
                             isFoodType(stack, Items.COOKED_COD) || isFoodType(stack, Items.COOKED_SALMON)) ||
-                    wolf.isSpecialFish() && (
+                    wolfFood.specialFish() && (
                             isFoodType(stack, Items.PUFFERFISH) || isFoodType(stack, Items.TROPICAL_FISH));
         }
     }
