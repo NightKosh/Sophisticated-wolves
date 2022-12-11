@@ -79,6 +79,7 @@ public class SophisticatedWolf extends AEntitySophisticatedWolf {
     private static final EntityDataAccessor<Integer> WOLF_SPECIES =
             SynchedEntityData.defineId(SophisticatedWolf.class, EntityDataSerializers.INT);
 
+    private WolfTargets wolfTargets = new WolfTargets();
     private WolfFood wolfFood = new WolfFood();
 
     protected FleeGoal fleeGoal;
@@ -125,9 +126,7 @@ public class SophisticatedWolf extends AEntitySophisticatedWolf {
             this.targetSelector.addGoal(5, new NonTameRandomTargetGoal<>(this, Animal.class, false, PREY_SELECTOR));
             this.targetSelector.addGoal(6, new NonTameRandomTargetGoal<>(this, Turtle.class, false, Turtle.BABY_ON_LAND_SELECTOR));
         }
-        if (SWConfiguration.ATTACK_SKELETONS.get()) {
-            this.targetSelector.addGoal(7, new NearestAttackableTargetGoal<>(this, AbstractSkeleton.class, false));
-        }
+        this.targetSelector.addGoal(7, new SWNearestAttackableTargetGoal(this)); //new behavior
         this.targetSelector.addGoal(8, new ResetUniversalAngerTargetGoal<>(this, true));
     }
 
@@ -164,6 +163,7 @@ public class SophisticatedWolf extends AEntitySophisticatedWolf {
     public void addAdditionalSaveData(CompoundTag tag) {
         super.addAdditionalSaveData(tag);
         this.wolfFood.saveData(tag);
+        this.wolfTargets.saveData(tag);
         tag.putInt("Species", this.getSpecies().ordinal());
     }
 
@@ -171,6 +171,7 @@ public class SophisticatedWolf extends AEntitySophisticatedWolf {
     public void readAdditionalSaveData(CompoundTag tag) {
         super.readAdditionalSaveData(tag);
         this.wolfFood = WolfFood.getFromTag(tag);
+        this.wolfTargets = WolfTargets.getFromTag(tag);
         this.updateSpecies(EnumWolfSpecies.getSpeciesByNum(tag.getInt("Species")));
     }
 
@@ -458,12 +459,22 @@ public class SophisticatedWolf extends AEntitySophisticatedWolf {
         return 3;
     }
 
-    public void updateFood(boolean rottenMeatAndBones, boolean rawMeat, boolean rawFish, boolean specialFish, boolean cookedMeat, boolean cookedFish) {
+    public void updateFood(boolean rottenMeatAndBones, boolean rawMeat, boolean rawFish,
+                           boolean specialFish, boolean cookedMeat, boolean cookedFish) {
         this.wolfFood = new WolfFood(rottenMeatAndBones, rawMeat, rawFish, specialFish, cookedMeat, cookedFish);
+    }
+
+    public void updateTargets(boolean attackSkeletons, boolean attackZombies, boolean attackSpiders,
+                              boolean attackSlimes, boolean attackNether, boolean attackRaider) {
+        this.wolfTargets = new WolfTargets(attackSkeletons, attackZombies, attackSpiders, attackSlimes, attackNether, attackRaider);
     }
 
     public WolfFood getWolfFood() {
         return this.wolfFood;
+    }
+
+    public WolfTargets getWolfTargets() {
+        return this.wolfTargets;
     }
 
 }
