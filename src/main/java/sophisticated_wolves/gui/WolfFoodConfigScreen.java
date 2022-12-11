@@ -18,11 +18,9 @@ import sophisticated_wolves.packets.WolfFoodConfigMessageToServer;
 public class WolfFoodConfigScreen extends WolfConfigScreen {
 
     private static final int COLUMN_1 = 14;
-    private static final int COLUMN_2 = 84;
-    private static final int COLUMN_3 = 118;
-    private static final int COLUMN_4 = 150;
+    private static final int COLUMN_2 = 118;
     private static final int LINE_1 = 40;
-    private static final int LINE_2 = 60;
+    private static final int LINE_2 = 61;
     private static final int LINE_3 = 81;
 
     private GuiCheckbox isRottenMeatAndBones;
@@ -46,11 +44,11 @@ public class WolfFoodConfigScreen extends WolfConfigScreen {
 
         var wolfFood = wolf.getWolfFood();
         this.addRenderableWidget(this.isRottenMeatAndBones = new GuiCheckbox(x + COLUMN_1, y + LINE_1, wolfFood.rottenMeatAndBones()));
-        this.addRenderableWidget(this.isRawFish = new GuiCheckbox(x + COLUMN_1, y + LINE_2, wolfFood.rawFish()));
-        this.addRenderableWidget(this.isCookedFish = new GuiCheckbox(x + COLUMN_2, y + LINE_2, wolfFood.cookedFish()));
-        this.addRenderableWidget(this.isSpecialFish = new GuiCheckbox(x + COLUMN_4, y + LINE_2, wolfFood.specialFish()));
+        this.addRenderableWidget(this.isRawFish = new GuiCheckbox(x + COLUMN_2, y + LINE_1, wolfFood.rawFish()));
+        this.addRenderableWidget(this.isCookedFish = new GuiCheckbox(x + COLUMN_1, y + LINE_2, wolfFood.cookedFish()));
+        this.addRenderableWidget(this.isSpecialFish = new GuiCheckbox(x + COLUMN_2, y + LINE_2, wolfFood.specialFish()));
         this.addRenderableWidget(this.isRawMeat = new GuiCheckbox(x + COLUMN_1, y + LINE_3, wolfFood.rawMeat()));
-        this.addRenderableWidget(this.isCookedMeat = new GuiCheckbox(x + COLUMN_3, y + LINE_3, wolfFood.cookedMeat()));
+        this.addRenderableWidget(this.isCookedMeat = new GuiCheckbox(x + COLUMN_2, y + LINE_3, wolfFood.cookedMeat()));
     }
 
     @Override
