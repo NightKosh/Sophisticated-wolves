@@ -42,6 +42,8 @@ public class WolfFoodConfigScreen extends WolfConfigScreen {
 
     @Override
     protected void initCustomComponents(int x, int y) {
+        this.foodScreenButton.setTabActive(true);
+
         var wolfFood = wolf.getWolfFood();
         this.addRenderableWidget(this.isRottenMeatAndBones = new GuiCheckbox(x + COLUMN_1, y + LINE_1, wolfFood.rottenMeatAndBones()));
         this.addRenderableWidget(this.isRawFish = new GuiCheckbox(x + COLUMN_1, y + LINE_2, wolfFood.rawFish()));

@@ -35,6 +35,8 @@ public class WolfTargetsConfigScreen extends WolfConfigScreen {
 
     @Override
     protected void initCustomComponents(int x, int y) {
+        this.targetsScreenButton.setTabActive(true);
+
         var wolfTargets = wolf.getWolfTargets();
         this.addRenderableWidget(this.attackSlimes = new GuiCheckbox(x + COLUMN_1, y + LINE_1, wolfTargets.attackSlimes()));
         this.addRenderableWidget(this.attackSkeletons = new GuiCheckbox(x + COLUMN_2, y + LINE_1, wolfTargets.attackSkeletons()));
