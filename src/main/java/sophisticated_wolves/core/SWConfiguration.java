@@ -26,7 +26,6 @@ public class SWConfiguration {
     public static ForgeConfigSpec.ConfigValue<Integer> WOLVES_DAMAGE_TAMED;
 
     public static ForgeConfigSpec.ConfigValue<Boolean> ATTACK_ANIMALS;
-    public static ForgeConfigSpec.ConfigValue<Boolean> ATTACK_SKELETONS;
 
     public static ForgeConfigSpec.ConfigValue<Boolean> ALWAYS_SHOW_WOLF_NAME;
 
@@ -56,8 +55,6 @@ public class SWConfiguration {
 
         ATTACK_ANIMALS = BUILDER.comment("Should non tamed sophisticated wolves attack other animals?")
                 .define("Attack Animals", false);
-        ATTACK_SKELETONS = BUILDER.comment("Should sophisticated wolves hunt on skeletons?")
-                .define("Attack Skeletons", false);
 
         ALWAYS_SHOW_WOLF_NAME = BUILDER.comment("Always show the wolf's name.")
                 .define( "Always Show Wolves' Name", true);
