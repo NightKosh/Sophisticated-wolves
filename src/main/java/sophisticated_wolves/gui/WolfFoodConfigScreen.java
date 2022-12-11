@@ -1,15 +1,8 @@
 package sophisticated_wolves.gui;
 
-import com.mojang.blaze3d.platform.Lighting;
-import com.mojang.blaze3d.systems.RenderSystem;
-import com.mojang.blaze3d.vertex.PoseStack;
-
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.components.Button;
-import net.minecraft.client.gui.screens.Screen;
-import net.minecraft.client.renderer.GameRenderer;
-import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
 import sophisticated_wolves.core.Resources;
 import sophisticated_wolves.core.SWMessages;
 import sophisticated_wolves.entity.SophisticatedWolf;
@@ -22,10 +15,16 @@ import sophisticated_wolves.packets.WolfFoodConfigMessageToServer;
  * @author NightKosh
  * @license Lesser GNU Public License v3 (http://www.gnu.org/licenses/lgpl.html)
  */
-public class WolfFoodConfigScreen extends Screen {
+public class WolfFoodConfigScreen extends WolfConfigScreen {
 
-    private final Component title = Component.translatable("gui.sophisticated_wolves.wolf_food_configs.title");
-    private final SophisticatedWolf wolf;
+    private static final int COLUMN_1 = 14;
+    private static final int COLUMN_2 = 84;
+    private static final int COLUMN_3 = 118;
+    private static final int COLUMN_4 = 150;
+    private static final int LINE_1 = 40;
+    private static final int LINE_2 = 60;
+    private static final int LINE_3 = 81;
+
     private GuiCheckbox isRottenMeatAndBones;
     private GuiCheckbox isRawFish;
     private GuiCheckbox isCookedFish;
@@ -33,12 +32,8 @@ public class WolfFoodConfigScreen extends Screen {
     private GuiCheckbox isRawMeat;
     private GuiCheckbox isCookedMeat;
 
-    protected int xSize = 248;
-    protected int ySize = 149;
-
     public WolfFoodConfigScreen(SophisticatedWolf wolf) {
-        super(Component.empty());
-        this.wolf = wolf;
+        super(wolf, Component.translatable("gui.sophisticated_wolves.wolf_food_configs.title"));
     }
 
     public static void open(SophisticatedWolf wolf) {
@@ -46,62 +41,26 @@ public class WolfFoodConfigScreen extends Screen {
     }
 
     @Override
-    public void init() {
-        this.minecraft.keyboardHandler.setSendRepeatsToGui(true); //pauses the game when GUI is opened
-
-        int x = (this.width - this.xSize) / 2;
-        int y = (this.height - this.ySize) / 2;
-
+    protected void initCustomComponents(int x, int y) {
         var wolfFood = wolf.getWolfFood();
-        this.isRottenMeatAndBones = new GuiCheckbox(x + 14, y + 40, wolfFood.rottenMeatAndBones());
-        this.isRawFish = new GuiCheckbox(x + 14, y + 60, wolfFood.rawFish());
-        this.isCookedFish = new GuiCheckbox(x + 84, y + 60, wolfFood.cookedFish());
-        this.isSpecialFish = new GuiCheckbox(x + 150, y + 60, wolfFood.specialFish());
-        this.isRawMeat = new GuiCheckbox(x + 14, y + 81, wolfFood.rawMeat());
-        this.isCookedMeat = new GuiCheckbox(x + 118, y + 81, wolfFood.cookedMeat());
-
-        this.addRenderableWidget(
-                new Button(this.width / 2 - 50, y + 113, 100, 20,
-                        CommonComponents.GUI_DONE,
-                        (button) -> this.minecraft.setScreen(null)));
-        this.addRenderableWidget(this.isRottenMeatAndBones);
-        this.addRenderableWidget(this.isRawFish);
-        this.addRenderableWidget(this.isCookedFish);
-        this.addRenderableWidget(this.isSpecialFish);
-        this.addRenderableWidget(this.isRawMeat);
-        this.addRenderableWidget(this.isCookedMeat);
+        this.addRenderableWidget(this.isRottenMeatAndBones = new GuiCheckbox(x + COLUMN_1, y + LINE_1, wolfFood.rottenMeatAndBones()));
+        this.addRenderableWidget(this.isRawFish = new GuiCheckbox(x + COLUMN_1, y + LINE_2, wolfFood.rawFish()));
+        this.addRenderableWidget(this.isCookedFish = new GuiCheckbox(x + COLUMN_2, y + LINE_2, wolfFood.cookedFish()));
+        this.addRenderableWidget(this.isSpecialFish = new GuiCheckbox(x + COLUMN_4, y + LINE_2, wolfFood.specialFish()));
+        this.addRenderableWidget(this.isRawMeat = new GuiCheckbox(x + COLUMN_1, y + LINE_3, wolfFood.rawMeat()));
+        this.addRenderableWidget(this.isCookedMeat = new GuiCheckbox(x + COLUMN_3, y + LINE_3, wolfFood.cookedMeat()));
     }
 
     @Override
-    public void render(PoseStack poseStack, int i, int j, float f) {
-        Lighting.setupForFlatItems();
-        this.renderBackground(poseStack);
-
-        this.drawCenteredString(poseStack, this.font, this.title, this.width / 2, 60, 0xffffff);
-
-        Lighting.setupFor3DItems();
-        super.render(poseStack, i, j, f);
-    }
-
-    @Override
-    public void renderBackground(PoseStack poseStack) {
-        super.renderBackground(poseStack);
-
-        RenderSystem.setShader(GameRenderer::getPositionTexShader);
-        RenderSystem.setShaderColor(1, 1, 1, 1);
-        RenderSystem.setShaderTexture(0, Resources.FOOD_GUI);
-
-        int xPos = (this.width - this.xSize) / 2;
-        int yPos = (this.height - this.ySize) / 2;
-        this.blit(poseStack, xPos, yPos, 0, 0, 256, 256);
-    }
-
-    @Override
-    public void removed() {
-        this.minecraft.keyboardHandler.setSendRepeatsToGui(false);
+    protected void onScreenClosed() {
         wolf.updateFood(this.isRottenMeatAndBones.isEnabled(), this.isRawMeat.isEnabled(), this.isRawFish.isEnabled(),
                 this.isSpecialFish.isEnabled(), this.isCookedMeat.isEnabled(), this.isCookedFish.isEnabled());
         SWMessages.sendToServer(new WolfFoodConfigMessageToServer(this.wolf));
+    }
+
+    @Override
+    protected ResourceLocation getBackground() {
+        return Resources.FOOD_GUI;
     }
 
 }
