@@ -4,7 +4,7 @@ plugins {
     id 'net.minecraftforge.gradle' version '5.1.+'
 }
 
-version = '4.0.0'
+version = '4.1.0'
 group = 'sophisticated_wolves' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = 'Sophisticated_Wolves-1.19.2'
 
