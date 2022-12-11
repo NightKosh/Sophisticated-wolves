@@ -10,6 +10,7 @@ import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import sophisticated_wolves.entity.SophisticatedWolf;
+import sophisticated_wolves.gui.component.GuiTabButton;
 
 /**
  * Sophisticated Wolves
@@ -19,15 +20,15 @@ import sophisticated_wolves.entity.SophisticatedWolf;
  */
 public abstract class WolfConfigScreen extends Screen {
 
-    private static final int SCREEN_BUTTONS_Y = 25;
+    private static final int TAB_BUTTONS_Y = 29;
     private static final int X_SIZE = 248;
     private static final int Y_SIZE = 149;
 
     protected final SophisticatedWolf wolf;
 
-    protected Button foodScreenButton;
-    protected Button targetsScreenButton;
-    protected Button commandsScreenButton;
+    protected GuiTabButton foodScreenButton;
+    protected GuiTabButton targetsScreenButton;
+    protected GuiTabButton commandsScreenButton;
 
     public WolfConfigScreen(SophisticatedWolf wolf, Component component) {
         super(component);
@@ -41,13 +42,13 @@ public abstract class WolfConfigScreen extends Screen {
         int x = (this.width - X_SIZE) / 2;
         int y = (this.height - Y_SIZE) / 2;
 
-        this.addRenderableWidget(this.foodScreenButton = new Button(x - 40, y - SCREEN_BUTTONS_Y, 80, 20,
+        this.addRenderableWidget(this.foodScreenButton = new GuiTabButton(x + 3, y - TAB_BUTTONS_Y,
                 Component.translatable("gui.sophisticated_wolves.wolf_configs.food_button"),
                 (button) -> this.minecraft.setScreen(new WolfFoodConfigScreen(this.wolf))));
-        this.addRenderableWidget(this.targetsScreenButton = new Button(x + 50, y - SCREEN_BUTTONS_Y, 80, 20,
+        this.addRenderableWidget(this.targetsScreenButton = new GuiTabButton(x + 3 + GuiTabButton.X_SIZE, y - TAB_BUTTONS_Y,
                 Component.translatable("gui.sophisticated_wolves.wolf_configs.targets_button"),
                 (button) -> this.minecraft.setScreen(new WolfTargetsConfigScreen(this.wolf))));
-        this.addRenderableWidget(this.commandsScreenButton = new Button(x + 140, y - SCREEN_BUTTONS_Y, 80, 20,
+        this.addRenderableWidget(this.commandsScreenButton = new GuiTabButton(x + 3 + GuiTabButton.X_SIZE * 2, y - TAB_BUTTONS_Y,
                 Component.translatable("gui.sophisticated_wolves.wolf_configs.commands_button"),
                 (button) -> {}));
 
