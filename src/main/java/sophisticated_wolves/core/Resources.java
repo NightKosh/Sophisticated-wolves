@@ -33,6 +33,7 @@ public class Resources {
     // Gui
     public static final ResourceLocation DOG_BOWL_GUI = new ResourceLocation(GUI_LOCATION + "dog_bowl_gui.png");
     public static final ResourceLocation FOOD_GUI = new ResourceLocation(GUI_LOCATION + "food_background.png");
+    public static final ResourceLocation TARGET_GUI = new ResourceLocation(GUI_LOCATION + "target_background.png");
     public static final ResourceLocation CHECKBOX_GUI = new ResourceLocation(GUI_LOCATION + "checkbox.png");
 
 }
