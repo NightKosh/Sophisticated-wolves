@@ -50,7 +50,8 @@ public abstract class AFeedGoal<T extends Object> extends Goal {
      */
     @Override
     public boolean canContinueToUse() {
-        return this.timeToStopGoal <= 100 &&
+        return !this.pet.isOrderedToSit() &&
+                this.timeToStopGoal <= 100 &&
                 this.pet.getHealth() < SWConfiguration.WOLVES_HEALTH_TAMED.get() &&
                 this.feedObject != null && this.ifFeedObjectAlive() &&
                 //item should be closer than teleportation range

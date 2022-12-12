@@ -88,7 +88,7 @@ public class FeedFromBowlGoal extends AFeedGoal<BlockEntityDogBowl> {
 
     private boolean tryToGetBowl(Map<BlockPos, BlockEntity> beMap, boolean isExternalMap) {
         for (var beEntry : beMap.entrySet()) {
-            if (beEntry != null && beEntry.getValue() instanceof BlockEntityDogBowl bowl) {
+            if (beEntry != null && beEntry.getValue() instanceof BlockEntityDogBowl bowl && !bowl.isRemoved()) {
                 var x = beEntry.getKey().getX();
                 var y = beEntry.getKey().getY();
                 var z = beEntry.getKey().getZ();
@@ -102,6 +102,8 @@ public class FeedFromBowlGoal extends AFeedGoal<BlockEntityDogBowl> {
                     this.feedObject = bowl;
                     return true;
                 }
+            } else if (!isExternalMap) {
+                BOWLS.remove(beEntry.getKey());
             }
         }
         return false;
