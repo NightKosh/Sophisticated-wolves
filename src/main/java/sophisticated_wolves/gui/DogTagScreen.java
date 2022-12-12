@@ -39,18 +39,30 @@ public class DogTagScreen extends Screen {
     public void init() {
         this.minecraft.keyboardHandler.setSendRepeatsToGui(true); //pauses the game when GUI is opened
 
-        this.nameField = new EditBox(this.font,this.width / 2 - 50, 100, 100, 20,
+        int x = this.width / 2;
+        int y = this.height / 4;
+
+        this.nameField = new EditBox(this.font,x - 50, 100, 100, 20,
                         null, Component.empty());
         this.nameField.setMaxLength(32);
         this.nameField.setFocus(true);
+        this.nameField.setCanLoseFocus(false);
+        this.nameField.moveCursorToEnd();
         if (animal.hasCustomName()) {
             this.nameField.setValue(animal.getCustomName().getString());
         }
 
         this.addRenderableWidget(
-                new Button(this.width / 2 - 50, this.height / 4 + 120, 100, 20,
-                        CommonComponents.GUI_DONE,
+                new Button(x - 55, y + 120, 55, 20,
+                        CommonComponents.GUI_CANCEL,
                         (button) -> this.minecraft.setScreen(null)));
+        this.addRenderableWidget(
+                new Button(x + 5, y + 120, 55, 20,
+                        CommonComponents.GUI_DONE,
+                        (button) ->  {
+                            SWMessages.sendToServer(new PetNameMessageToServer(this.animal, this.nameField.getValue()));
+                            this.minecraft.setScreen(null);
+                        }));
         this.addRenderableWidget(nameField);
     }
 
@@ -66,15 +78,19 @@ public class DogTagScreen extends Screen {
     }
 
     @Override
+    public boolean keyPressed(int p_96552_, int p_96553_, int p_96554_) {
+        this.nameField.keyPressed(p_96552_, p_96553_, p_96554_);
+        return super.keyPressed(p_96552_, p_96553_, p_96554_);
+    }
+
+    @Override
     public boolean charTyped(char c, int i) {
-        this.nameField.charTyped(c, i);
-        return true;
+        return this.nameField.charTyped(c, i);
     }
 
     @Override
     public void removed() {
         this.minecraft.keyboardHandler.setSendRepeatsToGui(false);
-        SWMessages.sendToServer(new PetNameMessageToServer(this.animal, this.nameField.getValue()));
     }
 
 }
