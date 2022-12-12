@@ -4,6 +4,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
+import net.minecraft.network.syncher.EntityDataSerializer;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerLevel;
@@ -39,7 +40,6 @@ import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.animal.Turtle;
 import net.minecraft.world.entity.animal.Wolf;
 import net.minecraft.world.entity.animal.horse.Llama;
-import net.minecraft.world.entity.monster.AbstractSkeleton;
 import net.minecraft.world.entity.monster.Creeper;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -76,11 +76,24 @@ public class SophisticatedWolf extends AEntitySophisticatedWolf {
     public static final int DISTANCE_TO_TELEPORT_TO_OWNER_SQR = 900;//30^2 blocks
     public static final byte EXTINGUISH_EVENT_ID = 99;
 
+    public static final EntityDataSerializer<WolfFood> WOLF_FOOD_SERIALIZER = EntityDataSerializer.simple(
+            (byteBuf, wolfFood) -> wolfFood.saveData(byteBuf),
+            WolfFood::getFromByteBuf);
+    public static final EntityDataSerializer<WolfTargets> WOLF_TARGETS_SERIALIZER = EntityDataSerializer.simple(
+            (byteBuf, wolfTargets) -> wolfTargets.saveData(byteBuf),
+            WolfTargets::getFromByteBuf);
+
+    static {
+        EntityDataSerializers.registerSerializer(WOLF_FOOD_SERIALIZER);
+        EntityDataSerializers.registerSerializer(WOLF_TARGETS_SERIALIZER);
+    }
+
     private static final EntityDataAccessor<Integer> WOLF_SPECIES =
             SynchedEntityData.defineId(SophisticatedWolf.class, EntityDataSerializers.INT);
-
-    private WolfTargets wolfTargets = new WolfTargets();
-    private WolfFood wolfFood = new WolfFood();
+    private static final EntityDataAccessor<WolfFood> WOLF_FOOD =
+            SynchedEntityData.defineId(SophisticatedWolf.class, WOLF_FOOD_SERIALIZER);
+    private static final EntityDataAccessor<WolfTargets> WOLF_TARGETS =
+            SynchedEntityData.defineId(SophisticatedWolf.class, WOLF_TARGETS_SERIALIZER);
 
     protected FleeGoal fleeGoal;
     protected ShakeIfBurnOrPoisonGoal shakeGoal;
@@ -149,6 +162,8 @@ public class SophisticatedWolf extends AEntitySophisticatedWolf {
     protected void defineSynchedData() {
         super.defineSynchedData();
         this.getEntityData().define(WOLF_SPECIES, 0);
+        this.getEntityData().define(WOLF_FOOD, new WolfFood());
+        this.getEntityData().define(WOLF_TARGETS, new WolfTargets());
     }
 
     @Nullable
@@ -162,16 +177,16 @@ public class SophisticatedWolf extends AEntitySophisticatedWolf {
     @Override
     public void addAdditionalSaveData(CompoundTag tag) {
         super.addAdditionalSaveData(tag);
-        this.wolfFood.saveData(tag);
-        this.wolfTargets.saveData(tag);
+        this.getWolfFood().saveData(tag);
+        this.getWolfTargets().saveData(tag);
         tag.putInt("Species", this.getSpecies().ordinal());
     }
 
     @Override
     public void readAdditionalSaveData(CompoundTag tag) {
         super.readAdditionalSaveData(tag);
-        this.wolfFood = WolfFood.getFromTag(tag);
-        this.wolfTargets = WolfTargets.getFromTag(tag);
+        this.updateFood(WolfFood.getFromTag(tag));
+        this.updateTargets(WolfTargets.getFromTag(tag));
         this.updateSpecies(EnumWolfSpecies.getSpeciesByNum(tag.getInt("Species")));
     }
 
@@ -459,22 +474,30 @@ public class SophisticatedWolf extends AEntitySophisticatedWolf {
         return 3;
     }
 
+    public void updateFood(WolfFood food) {
+        this.getEntityData().set(WOLF_FOOD, food);
+    }
+
     public void updateFood(boolean rottenMeatAndBones, boolean rawMeat, boolean rawFish,
                            boolean specialFish, boolean cookedMeat, boolean cookedFish) {
-        this.wolfFood = new WolfFood(rottenMeatAndBones, rawMeat, rawFish, specialFish, cookedMeat, cookedFish);
+        this.updateFood(new WolfFood(rottenMeatAndBones, rawMeat, rawFish, specialFish, cookedMeat, cookedFish));
+    }
+
+    public void updateTargets(WolfTargets targets) {
+        this.getEntityData().set(WOLF_TARGETS, targets);
     }
 
     public void updateTargets(boolean attackSkeletons, boolean attackZombies, boolean attackSpiders,
                               boolean attackSlimes, boolean attackNether, boolean attackRaider) {
-        this.wolfTargets = new WolfTargets(attackSkeletons, attackZombies, attackSpiders, attackSlimes, attackNether, attackRaider);
+        this.updateTargets(new WolfTargets(attackSkeletons, attackZombies, attackSpiders, attackSlimes, attackNether, attackRaider));
     }
 
     public WolfFood getWolfFood() {
-        return this.wolfFood;
+        return this.getEntityData().get(WOLF_FOOD);
     }
 
     public WolfTargets getWolfTargets() {
-        return this.wolfTargets;
+        return this.getEntityData().get(WOLF_TARGETS);
     }
 
 }
