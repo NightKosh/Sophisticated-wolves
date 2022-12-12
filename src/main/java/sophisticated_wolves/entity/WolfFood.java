@@ -1,6 +1,13 @@
 package sophisticated_wolves.entity;
 
+import io.netty.buffer.ByteBuf;
+import io.netty.buffer.Unpooled;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.FriendlyByteBuf;
+
+import java.util.Optional;
+import java.util.function.BiConsumer;
+import java.util.function.Function;
 
 /**
  * Sophisticated Wolves
@@ -44,6 +51,25 @@ public record WolfFood(boolean rottenMeatAndBones, boolean rawMeat, boolean rawF
                     getFromTag(allowedFoodTag, "CookedFish"));
         }
         return new WolfFood();
+    }
+
+    public void saveData(FriendlyByteBuf buffer) {
+        buffer.writeBoolean(this.rottenMeatAndBones);
+        buffer.writeBoolean(this.rawMeat);
+        buffer.writeBoolean(this.rawFish);
+        buffer.writeBoolean(this.specialFish);
+        buffer.writeBoolean(this.cookedMeat);
+        buffer.writeBoolean(this.cookedFish);
+    }
+
+    public static WolfFood getFromByteBuf(FriendlyByteBuf buffer) {
+        return new WolfFood(
+                buffer.readBoolean(),
+                buffer.readBoolean(),
+                buffer.readBoolean(),
+                buffer.readBoolean(),
+                buffer.readBoolean(),
+                buffer.readBoolean());
     }
 
     private static boolean getFromTag(CompoundTag tag, String name) {

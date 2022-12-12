@@ -1,6 +1,7 @@
 package sophisticated_wolves.entity;
 
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.monster.AbstractSkeleton;
 import net.minecraft.world.entity.monster.Blaze;
@@ -67,6 +68,25 @@ public record WolfTargets(boolean attackSkeletons, boolean attackZombies, boolea
                     getFromTag(allowedFoodTag, "AttackRaider"));
         }
         return new WolfTargets();
+    }
+
+    public void saveData(FriendlyByteBuf buffer) {
+        buffer.writeBoolean(this.attackSkeletons);
+        buffer.writeBoolean(this.attackZombies);
+        buffer.writeBoolean(this.attackSpiders);
+        buffer.writeBoolean(this.attackSlimes);
+        buffer.writeBoolean(this.attackNether);
+        buffer.writeBoolean(this.attackRaider);
+    }
+
+    public static WolfTargets getFromByteBuf(FriendlyByteBuf buffer) {
+        return new WolfTargets(
+                buffer.readBoolean(),
+                buffer.readBoolean(),
+                buffer.readBoolean(),
+                buffer.readBoolean(),
+                buffer.readBoolean(),
+                buffer.readBoolean());
     }
 
     private static boolean getFromTag(CompoundTag tag, String name) {
