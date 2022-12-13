@@ -24,6 +24,12 @@ public abstract class WolfConfigScreen extends Screen {
     private static final int X_SIZE = 248;
     private static final int Y_SIZE = 149;
 
+    protected static final int COLUMN_1 = 14;
+    protected static final int COLUMN_2 = 118;
+    protected static final int LINE_1 = 40;
+    protected static final int LINE_2 = 61;
+    protected static final int LINE_3 = 81;
+
     protected final SophisticatedWolf wolf;
 
     protected GuiTabButton foodScreenButton;
@@ -50,7 +56,7 @@ public abstract class WolfConfigScreen extends Screen {
                 (button) -> this.minecraft.setScreen(new WolfTargetsConfigScreen(this.wolf))));
         this.addRenderableWidget(this.commandsScreenButton = new GuiTabButton(x + 3 + GuiTabButton.X_SIZE * 2, y - TAB_BUTTONS_Y,
                 Component.translatable("gui.sophisticated_wolves.wolf_configs.commands_button"),
-                (button) -> {}));
+                (button) -> this.minecraft.setScreen(new WolfCommandsConfigScreen(this.wolf))));
 
         this.addRenderableWidget(
                 new Button(this.width / 2 - 50, y + 113, 100, 20,

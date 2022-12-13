@@ -17,12 +17,6 @@ import sophisticated_wolves.packets.WolfFoodConfigMessageToServer;
  */
 public class WolfFoodConfigScreen extends WolfConfigScreen {
 
-    private static final int COLUMN_1 = 14;
-    private static final int COLUMN_2 = 118;
-    private static final int LINE_1 = 40;
-    private static final int LINE_2 = 61;
-    private static final int LINE_3 = 81;
-
     private GuiCheckbox isRottenMeatAndBones;
     private GuiCheckbox isRawFish;
     private GuiCheckbox isCookedFish;
