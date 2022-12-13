@@ -7,6 +7,7 @@ import net.minecraftforge.network.NetworkRegistry;
 import net.minecraftforge.network.PacketDistributor;
 import net.minecraftforge.network.simple.SimpleChannel;
 import sophisticated_wolves.api.ModInfo;
+import sophisticated_wolves.packets.WolfCommandsConfigMessageToServer;
 import sophisticated_wolves.packets.WolfFoodConfigMessageToServer;
 import sophisticated_wolves.packets.PetNameMessageToServer;
 import sophisticated_wolves.packets.WolfTargetsConfigMessageToServer;
@@ -53,6 +54,12 @@ public class SWMessages {
                 .decoder(WolfTargetsConfigMessageToServer::new)
                 .encoder(WolfTargetsConfigMessageToServer::toBytes)
                 .consumerMainThread(WolfTargetsConfigMessageToServer::handle)
+                .add();
+
+        net.messageBuilder(WolfCommandsConfigMessageToServer.class, id(), NetworkDirection.PLAY_TO_SERVER)
+                .decoder(WolfCommandsConfigMessageToServer::new)
+                .encoder(WolfCommandsConfigMessageToServer::toBytes)
+                .consumerMainThread(WolfCommandsConfigMessageToServer::handle)
                 .add();
     }
 

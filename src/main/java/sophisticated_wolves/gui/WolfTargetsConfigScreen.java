@@ -16,12 +16,6 @@ import sophisticated_wolves.packets.WolfTargetsConfigMessageToServer;
  */
 public class WolfTargetsConfigScreen extends WolfConfigScreen {
 
-    private static final int COLUMN_1 = 14;
-    private static final int COLUMN_2 = 118;
-    private static final int LINE_1 = 40;
-    private static final int LINE_2 = 60;
-    private static final int LINE_3 = 81;
-
     private GuiCheckbox attackSkeletons;
     private GuiCheckbox attackZombies;
     private GuiCheckbox attackSpiders;
