@@ -52,7 +52,14 @@
     "sophisticated_wolves.carrier.name" : "Tên",
   
     "gui.sophisticated_wolves.edit_dog_name.title" : "Đặt tên thú cưng bạn:",
+    "gui.sophisticated_wolves.wolf_configs.food_button" : "Food",
+    "gui.sophisticated_wolves.wolf_configs.targets_button" : "Targets",
+    "gui.sophisticated_wolves.wolf_configs.commands_button" : "Commands",
     "gui.sophisticated_wolves.wolf_food_configs.title" : "Chọn loại thức ăn, bạn muốn Chó Sói bạn ăn",
+    "gui.sophisticated_wolves.wolf_targets_configs.title" : "Select which monsters dog should auto attack",
+    "gui.sophisticated_wolves.wolf_commands_configs.title" : "Select dog behaviour",
+    "gui.sophisticated_wolves.wolf_commands_configs.follow_owner_button" : "Follow owner",
+    "gui.sophisticated_wolves.wolf_commands_configs.guard_zone_button" : "Guard zone",
 
     "entity.minecraft.villager.sophisticated_wolves.zoologist" : "Zoologist ## TODO"
 }

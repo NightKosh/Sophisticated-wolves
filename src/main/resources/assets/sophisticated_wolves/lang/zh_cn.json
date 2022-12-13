@@ -52,7 +52,14 @@
   "sophisticated_wolves.carrier.name" : "名称",
 
   "gui.sophisticated_wolves.edit_dog_name.title" : "为您的宠物取名:",
+  "gui.sophisticated_wolves.wolf_configs.food_button" : "Food",
+  "gui.sophisticated_wolves.wolf_configs.targets_button" : "Targets",
+  "gui.sophisticated_wolves.wolf_configs.commands_button" : "Commands",
   "gui.sophisticated_wolves.wolf_food_configs.title" : "选择狗的食物类型",
+  "gui.sophisticated_wolves.wolf_targets_configs.title" : "Select which monsters dog should auto attack",
+  "gui.sophisticated_wolves.wolf_commands_configs.title" : "Select dog behaviour",
+  "gui.sophisticated_wolves.wolf_commands_configs.follow_owner_button" : "Follow owner",
+  "gui.sophisticated_wolves.wolf_commands_configs.guard_zone_button" : "Guard zone",
 
   "entity.minecraft.villager.sophisticated_wolves.zoologist" : "Zoologist"
 }
