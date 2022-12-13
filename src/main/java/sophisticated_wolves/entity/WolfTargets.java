@@ -58,14 +58,14 @@ public record WolfTargets(boolean attackSkeletons, boolean attackZombies, boolea
 
     public static WolfTargets getFromTag(CompoundTag tag) {
         if (tag.contains("WolfTargets")) {
-            var allowedFoodTag = tag.getCompound("WolfTargets");
+            var wolfTargets = tag.getCompound("WolfTargets");
             return new WolfTargets(
-                    getFromTag(allowedFoodTag, "AttackSkeletons"),
-                    getFromTag(allowedFoodTag, "AttackZombies"),
-                    getFromTag(allowedFoodTag, "AttackSpiders"),
-                    getFromTag(allowedFoodTag, "AttackSlimes"),
-                    getFromTag(allowedFoodTag, "AttackNether"),
-                    getFromTag(allowedFoodTag, "AttackRaider"));
+                    getFromTag(wolfTargets, "AttackSkeletons"),
+                    getFromTag(wolfTargets, "AttackZombies"),
+                    getFromTag(wolfTargets, "AttackSpiders"),
+                    getFromTag(wolfTargets, "AttackSlimes"),
+                    getFromTag(wolfTargets, "AttackNether"),
+                    getFromTag(wolfTargets, "AttackRaider"));
         }
         return new WolfTargets();
     }

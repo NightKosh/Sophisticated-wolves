@@ -82,10 +82,14 @@ public class SophisticatedWolf extends AEntitySophisticatedWolf {
     public static final EntityDataSerializer<WolfTargets> WOLF_TARGETS_SERIALIZER = EntityDataSerializer.simple(
             (byteBuf, wolfTargets) -> wolfTargets.saveData(byteBuf),
             WolfTargets::getFromByteBuf);
+    public static final EntityDataSerializer<WolfCommands> WOLF_COMMANDS_SERIALIZER = EntityDataSerializer.simple(
+            (byteBuf, wolfCommands) -> wolfCommands.saveData(byteBuf),
+            WolfCommands::getFromByteBuf);
 
     static {
         EntityDataSerializers.registerSerializer(WOLF_FOOD_SERIALIZER);
         EntityDataSerializers.registerSerializer(WOLF_TARGETS_SERIALIZER);
+        EntityDataSerializers.registerSerializer(WOLF_COMMANDS_SERIALIZER);
     }
 
     private static final EntityDataAccessor<Integer> WOLF_SPECIES =
@@ -94,6 +98,8 @@ public class SophisticatedWolf extends AEntitySophisticatedWolf {
             SynchedEntityData.defineId(SophisticatedWolf.class, WOLF_FOOD_SERIALIZER);
     private static final EntityDataAccessor<WolfTargets> WOLF_TARGETS =
             SynchedEntityData.defineId(SophisticatedWolf.class, WOLF_TARGETS_SERIALIZER);
+    private static final EntityDataAccessor<WolfCommands> WOLF_COMMANDS =
+            SynchedEntityData.defineId(SophisticatedWolf.class, WOLF_COMMANDS_SERIALIZER);
 
     protected FleeGoal fleeGoal;
     protected ShakeIfBurnOrPoisonGoal shakeGoal;
@@ -164,6 +170,7 @@ public class SophisticatedWolf extends AEntitySophisticatedWolf {
         this.getEntityData().define(WOLF_SPECIES, 0);
         this.getEntityData().define(WOLF_FOOD, new WolfFood());
         this.getEntityData().define(WOLF_TARGETS, new WolfTargets());
+        this.getEntityData().define(WOLF_COMMANDS, new WolfCommands());
     }
 
     @Nullable
@@ -179,6 +186,7 @@ public class SophisticatedWolf extends AEntitySophisticatedWolf {
         super.addAdditionalSaveData(tag);
         this.getWolfFood().saveData(tag);
         this.getWolfTargets().saveData(tag);
+        this.getWolfCommands().saveData(tag);
         tag.putInt("Species", this.getSpecies().ordinal());
     }
 
@@ -187,6 +195,7 @@ public class SophisticatedWolf extends AEntitySophisticatedWolf {
         super.readAdditionalSaveData(tag);
         this.updateFood(WolfFood.getFromTag(tag));
         this.updateTargets(WolfTargets.getFromTag(tag));
+        this.updateCommands(WolfCommands.getFromTag(tag));
         this.updateSpecies(EnumWolfSpecies.getSpeciesByNum(tag.getInt("Species")));
     }
 
@@ -492,12 +501,24 @@ public class SophisticatedWolf extends AEntitySophisticatedWolf {
         this.updateTargets(new WolfTargets(attackSkeletons, attackZombies, attackSpiders, attackSlimes, attackNether, attackRaider));
     }
 
+    public void updateCommands(WolfCommands commands) {
+        this.getEntityData().set(WOLF_COMMANDS, commands);
+    }
+
+    public void updateCommands(boolean followOwner, boolean guardZone) {
+        this.updateCommands(new WolfCommands(followOwner, guardZone));
+    }
+
     public WolfFood getWolfFood() {
         return this.getEntityData().get(WOLF_FOOD);
     }
 
     public WolfTargets getWolfTargets() {
         return this.getEntityData().get(WOLF_TARGETS);
+    }
+
+    public WolfCommands getWolfCommands() {
+        return this.getEntityData().get(WOLF_COMMANDS);
     }
 
 }
