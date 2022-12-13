@@ -52,7 +52,14 @@
   "sophisticated_wolves.carrier.name" : "Имя",
 
   "gui.sophisticated_wolves.edit_dog_name.title" : "Дайте своему питомцу имя:",
-  "gui.sophisticated_wolves.wolf_food_configs.title" : "Выберите тип еды, которую могут есть собаки",
+  "gui.sophisticated_wolves.wolf_configs.food_button" : "Еда",
+  "gui.sophisticated_wolves.wolf_configs.targets_button" : "Цели",
+  "gui.sophisticated_wolves.wolf_configs.commands_button" : "Команды",
+  "gui.sophisticated_wolves.wolf_food_configs.title" : "Выберите тип еды, которую может есть питомец",
+  "gui.sophisticated_wolves.wolf_targets_configs.title" : "Выберите монстров для авто атаки питомцем",
+  "gui.sophisticated_wolves.wolf_commands_configs.title" : "Выберите поведение питомца",
+  "gui.sophisticated_wolves.wolf_commands_configs.follow_owner_button" : "Следовать за хозяином",
+  "gui.sophisticated_wolves.wolf_commands_configs.guard_zone_button" : "Охранять зону",
 
   "entity.minecraft.villager.sophisticated_wolves.zoologist" : "Зоолог"
 }
