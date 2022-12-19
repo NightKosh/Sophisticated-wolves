@@ -1,13 +1,8 @@
 package sophisticated_wolves.entity;
 
-import io.netty.buffer.ByteBuf;
-import io.netty.buffer.Unpooled;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
-
-import java.util.Optional;
-import java.util.function.BiConsumer;
-import java.util.function.Function;
+import sophisticated_wolves.util.CompoundTagUtils;
 
 /**
  * Sophisticated Wolves
@@ -43,12 +38,12 @@ public record WolfFood(boolean rottenMeatAndBones, boolean rawMeat, boolean rawF
         if (tag.contains("AllowedFood")) {
             var allowedFoodTag = tag.getCompound("AllowedFood");
             return new WolfFood(
-                    getFromTag(allowedFoodTag, "RottenMeatAndBones"),
-                    getFromTag(allowedFoodTag, "RawMeat"),
-                    getFromTag(allowedFoodTag, "RawFish"),
-                    getFromTag(allowedFoodTag, "SpecialFish"),
-                    getFromTag(allowedFoodTag, "CookedMeat"),
-                    getFromTag(allowedFoodTag, "CookedFish"));
+                    CompoundTagUtils.getFromTag(allowedFoodTag, "RottenMeatAndBones"),
+                    CompoundTagUtils.getFromTag(allowedFoodTag, "RawMeat"),
+                    CompoundTagUtils.getFromTag(allowedFoodTag, "RawFish"),
+                    CompoundTagUtils.getFromTag(allowedFoodTag, "SpecialFish"),
+                    CompoundTagUtils.getFromTag(allowedFoodTag, "CookedMeat"),
+                    CompoundTagUtils.getFromTag(allowedFoodTag, "CookedFish"));
         }
         return new WolfFood();
     }
@@ -70,10 +65,6 @@ public record WolfFood(boolean rottenMeatAndBones, boolean rawMeat, boolean rawF
                 buffer.readBoolean(),
                 buffer.readBoolean(),
                 buffer.readBoolean());
-    }
-
-    private static boolean getFromTag(CompoundTag tag, String name) {
-        return tag.contains(name) && tag.getBoolean(name);
     }
 
 }

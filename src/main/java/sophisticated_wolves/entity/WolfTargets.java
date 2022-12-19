@@ -15,6 +15,7 @@ import net.minecraft.world.entity.monster.Zombie;
 import net.minecraft.world.entity.monster.hoglin.Hoglin;
 import net.minecraft.world.entity.monster.piglin.PiglinBrute;
 import net.minecraft.world.entity.raid.Raider;
+import sophisticated_wolves.util.CompoundTagUtils;
 
 import java.util.List;
 
@@ -60,12 +61,12 @@ public record WolfTargets(boolean attackSkeletons, boolean attackZombies, boolea
         if (tag.contains("WolfTargets")) {
             var wolfTargets = tag.getCompound("WolfTargets");
             return new WolfTargets(
-                    getFromTag(wolfTargets, "AttackSkeletons"),
-                    getFromTag(wolfTargets, "AttackZombies"),
-                    getFromTag(wolfTargets, "AttackSpiders"),
-                    getFromTag(wolfTargets, "AttackSlimes"),
-                    getFromTag(wolfTargets, "AttackNether"),
-                    getFromTag(wolfTargets, "AttackRaider"));
+                    CompoundTagUtils.getFromTag(wolfTargets, "AttackSkeletons"),
+                    CompoundTagUtils.getFromTag(wolfTargets, "AttackZombies"),
+                    CompoundTagUtils.getFromTag(wolfTargets, "AttackSpiders"),
+                    CompoundTagUtils.getFromTag(wolfTargets, "AttackSlimes"),
+                    CompoundTagUtils.getFromTag(wolfTargets, "AttackNether"),
+                    CompoundTagUtils.getFromTag(wolfTargets, "AttackRaider"));
         }
         return new WolfTargets();
     }
@@ -87,10 +88,6 @@ public record WolfTargets(boolean attackSkeletons, boolean attackZombies, boolea
                 buffer.readBoolean(),
                 buffer.readBoolean(),
                 buffer.readBoolean());
-    }
-
-    private static boolean getFromTag(CompoundTag tag, String name) {
-        return tag.contains(name) && tag.getBoolean(name);
     }
 
 }
