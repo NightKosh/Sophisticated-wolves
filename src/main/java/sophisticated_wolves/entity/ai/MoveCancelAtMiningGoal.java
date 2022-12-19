@@ -5,6 +5,7 @@ import net.minecraft.world.entity.TamableAnimal;
 import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.entity.ai.navigation.PathNavigation;
 import net.minecraft.world.item.DiggerItem;
+import sophisticated_wolves.entity.SophisticatedWolf;
 
 /**
  * Sophisticated Wolves
@@ -14,13 +15,13 @@ import net.minecraft.world.item.DiggerItem;
  */
 public class MoveCancelAtMiningGoal extends Goal {
 
-    private final TamableAnimal pet;
+    private final SophisticatedWolf pet;
     private final PathNavigation pathNavigation;
     private final float dist;
 
     private LivingEntity owner;
 
-    public MoveCancelAtMiningGoal(TamableAnimal entity, float distance) {
+    public MoveCancelAtMiningGoal(SophisticatedWolf entity, float distance) {
         this.pet = entity;
         this.owner = entity.getOwner();
         this.pathNavigation = entity.getNavigation();
@@ -46,7 +47,8 @@ public class MoveCancelAtMiningGoal extends Goal {
         if (this.owner == null || this.pet.distanceTo(this.owner) > this.dist) {
             return false;
         }
-        return this.owner.swinging && this.owner.getMainHandItem().getItem() instanceof DiggerItem;
+        return this.owner.swinging && this.owner.getMainHandItem().getItem() instanceof DiggerItem &&
+                this.pet.getWolfCommands().followOwner();
     }
 
     /**
