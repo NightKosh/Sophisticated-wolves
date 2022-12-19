@@ -38,7 +38,9 @@ public abstract class AFeedGoal<T extends Object> extends Goal {
             if (this.owner == null) {
                 this.owner = this.pet.getOwner();
             }
-            return this.findFeedObject();
+            if (this.owner != null) {
+                return this.findFeedObject();
+            }
         }
         return false;
     }
@@ -54,8 +56,9 @@ public abstract class AFeedGoal<T extends Object> extends Goal {
                 this.timeToStopGoal <= 100 &&
                 this.pet.getHealth() < SWConfiguration.WOLVES_HEALTH_TAMED.get() &&
                 this.feedObject != null && this.ifFeedObjectAlive() &&
-                //item should be closer than teleportation range
-                this.getDistanceSqrToFeedObject(this.owner) < SophisticatedWolf.DISTANCE_TO_TELEPORT_TO_OWNER_SQR;
+                //wolf should be in guard mode or item should be closer than teleportation range
+                (this.pet.getWolfCommands().guardZone() ||
+                        this.getDistanceSqrToFeedObject(this.owner) < SophisticatedWolf.DISTANCE_TO_TELEPORT_TO_OWNER_SQR);
     }
 
     protected abstract boolean ifFeedObjectAlive();

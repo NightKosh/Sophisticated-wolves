@@ -28,8 +28,9 @@ public class FeedGoal extends AFeedGoal<ItemEntity> {
             var stack = foodEntity.getItem();
             if ((FoodUtils.isFoodItem(stack) || FoodUtils.isBone(stack)) &&
                     FoodUtils.isWolfFood(pet, stack) &&
-                    //item should be closer than teleportation range
-                    this.owner != null && this.owner.distanceToSqr(foodEntity) < SophisticatedWolf.DISTANCE_TO_TELEPORT_TO_OWNER_SQR) {
+                    //wolf should be in guard mode or item should be closer than teleportation range
+                    (this.pet.getWolfCommands().guardZone() ||
+                        this.owner.distanceToSqr(foodEntity) < SophisticatedWolf.DISTANCE_TO_TELEPORT_TO_OWNER_SQR)) {
                 this.feedObject = foodEntity;
                 return true;
             }

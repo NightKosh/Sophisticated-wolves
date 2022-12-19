@@ -93,9 +93,9 @@ public class FeedFromBowlGoal extends AFeedGoal<BlockEntityDogBowl> {
                 var y = beEntry.getKey().getY();
                 var z = beEntry.getKey().getZ();
                 if (bowl.getFoodAmount() > 0 &&
-                        //bowl should be closer than teleportation range
-                        this.owner != null &&
-                        this.owner.distanceToSqr(x, y, z) < SophisticatedWolf.DISTANCE_TO_TELEPORT_TO_OWNER_SQR) {
+                        //wolf should be in guard mode or bowl should be closer than teleportation range
+                        (this.pet.getWolfCommands().guardZone() ||
+                            this.owner.distanceToSqr(x, y, z) < SophisticatedWolf.DISTANCE_TO_TELEPORT_TO_OWNER_SQR)) {
                     if (isExternalMap) {
                         BOWLS.put(bowl.getBlockPos(), bowl);
                     }
