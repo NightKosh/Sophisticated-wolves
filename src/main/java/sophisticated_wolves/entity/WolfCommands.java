@@ -3,6 +3,7 @@ package sophisticated_wolves.entity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
+import sophisticated_wolves.util.CompoundTagUtils;
 
 /**
  * Sophisticated Wolves
@@ -24,9 +25,9 @@ public record WolfCommands(boolean followOwner, boolean guardZone, Integer guard
         var commands = new CompoundTag();
         commands.putBoolean("FollowOwner", this.followOwner);
         commands.putBoolean("GuardZone", this.guardZone);
-        putInt(commands, "GuardX", this.guardX);
-        putInt(commands, "GuardY", this.guardY);
-        putInt(commands, "GuardZ", this.guardZ);
+        CompoundTagUtils.putInt(commands, "GuardX", this.guardX);
+        CompoundTagUtils.putInt(commands, "GuardY", this.guardY);
+        CompoundTagUtils.putInt(commands, "GuardZ", this.guardZ);
         tag.put("WolfCommands", commands);
     }
 
@@ -34,11 +35,11 @@ public record WolfCommands(boolean followOwner, boolean guardZone, Integer guard
         if (tag.contains("WolfCommands")) {
             var commands = tag.getCompound("WolfCommands");
             return new WolfCommands(
-                    getFromTag(commands, "FollowOwner"),
-                    getFromTag(commands, "GuardZone"),
-                    getFromIntTag(commands, "GuardX"),
-                    getFromIntTag(commands, "GuardY"),
-                    getFromIntTag(commands, "GuardZ"));
+                    CompoundTagUtils.getFromTag(commands, "FollowOwner"),
+                    CompoundTagUtils.getFromTag(commands, "GuardZone"),
+                    CompoundTagUtils.getFromIntTag(commands, "GuardX"),
+                    CompoundTagUtils.getFromIntTag(commands, "GuardY"),
+                    CompoundTagUtils.getFromIntTag(commands, "GuardZ"));
         }
         return new WolfCommands();
     }
@@ -55,20 +56,6 @@ public record WolfCommands(boolean followOwner, boolean guardZone, Integer guard
                 buffer.readInt(),
                 buffer.readInt(),
                 buffer.readInt());
-    }
-
-    private static boolean getFromTag(CompoundTag tag, String name) {
-        return tag.contains(name) && tag.getBoolean(name);
-    }
-
-    private static Integer getFromIntTag(CompoundTag tag, String name) {
-        return tag.contains(name) ? tag.getInt(name) : null;
-    }
-
-    private static void putInt(CompoundTag tag, String name, Integer value) {
-        if (value != null) {
-            tag.putInt(name, value);
-        }
     }
 
 }
