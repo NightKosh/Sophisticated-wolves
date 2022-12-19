@@ -13,11 +13,11 @@ import sophisticated_wolves.util.LevelUtils;
  */
 public class SWFollowOwnerGoal extends FollowOwnerGoal {
 
-    private final TamableAnimal pet;
+    private final SophisticatedWolf pet;
     private final double speedModifier;
     private int timeToRecalcPath;
 
-    public SWFollowOwnerGoal(TamableAnimal entity, double speedModifier, float startDistance, float stopDistance) {
+    public SWFollowOwnerGoal(SophisticatedWolf entity, double speedModifier, float startDistance, float stopDistance) {
         super(entity, speedModifier, startDistance, stopDistance, false);
 
         this.pet = entity;
@@ -32,7 +32,8 @@ public class SWFollowOwnerGoal extends FollowOwnerGoal {
         return !this.pet.isLeashed() &&
                 !this.pet.isPassenger() &&
                 super.canUse() && //true -> owner != null
-                !this.owner.onClimbable();
+                !this.owner.onClimbable() &&
+                this.pet.getWolfCommands().followOwner();
     }
 
     /**
@@ -43,7 +44,8 @@ public class SWFollowOwnerGoal extends FollowOwnerGoal {
         return !this.pet.isLeashed() &&
                 !this.pet.isPassenger() &&
                 super.canContinueToUse() &&
-                !this.owner.onClimbable();
+                !this.owner.onClimbable() &&
+                this.pet.getWolfCommands().followOwner();
     }
 
     /**
