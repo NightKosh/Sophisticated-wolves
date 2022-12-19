@@ -506,7 +506,7 @@ public class SophisticatedWolf extends AEntitySophisticatedWolf {
     }
 
     public void updateCommands(boolean followOwner, boolean guardZone) {
-        this.updateCommands(new WolfCommands(followOwner, guardZone));
+        this.updateCommands(new WolfCommands(followOwner, guardZone, this.blockPosition()));
     }
 
     public WolfFood getWolfFood() {
