@@ -55,7 +55,7 @@ import sophisticated_wolves.core.SWConfiguration;
 import sophisticated_wolves.core.SWEntities;
 import sophisticated_wolves.core.SWItems;
 import sophisticated_wolves.entity.ai.*;
-import sophisticated_wolves.gui.WolfFoodConfigScreen;
+import sophisticated_wolves.gui.screen.WolfFoodConfigScreen;
 import sophisticated_wolves.item.ItemDogTag;
 import sophisticated_wolves.item.pet_carrier.ItemPetCarrier;
 
