@@ -1,4 +1,4 @@
-package sophisticated_wolves.gui;
+package sophisticated_wolves.gui.screen;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.chat.Component;

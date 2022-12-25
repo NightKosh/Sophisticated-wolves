@@ -1,6 +1,5 @@
 package sophisticated_wolves.entity.ai;
 
-import net.minecraft.world.entity.TamableAnimal;
 import net.minecraft.world.entity.ai.goal.FollowOwnerGoal;
 import sophisticated_wolves.entity.SophisticatedWolf;
 import sophisticated_wolves.util.LevelUtils;

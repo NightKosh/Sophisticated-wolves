@@ -1,4 +1,4 @@
-package sophisticated_wolves.gui;
+package sophisticated_wolves.gui.screen;
 
 import com.mojang.blaze3d.platform.Lighting;
 import com.mojang.blaze3d.systems.RenderSystem;

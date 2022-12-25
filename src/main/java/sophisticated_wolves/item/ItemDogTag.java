@@ -11,7 +11,7 @@ import net.minecraft.world.item.ItemStack;
 import sophisticated_wolves.core.SWConfiguration;
 import sophisticated_wolves.core.SWTabs;
 import sophisticated_wolves.entity.SophisticatedWolf;
-import sophisticated_wolves.gui.DogTagScreen;
+import sophisticated_wolves.gui.screen.DogTagScreen;
 
 /**
  * Sophisticated Wolves
