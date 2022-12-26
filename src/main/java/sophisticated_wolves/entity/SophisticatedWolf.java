@@ -105,10 +105,11 @@ public class SophisticatedWolf extends AEntitySophisticatedWolf {
     protected FleeGoal fleeGoal;
     protected ShakeIfBurnOrPoisonGoal shakeGoal;
     protected TeleportAtDrowningGoal drownGoal;
+    protected TeleportAtBurningGoal burnGoal;
 
     public SophisticatedWolf(EntityType<? extends Wolf> entityType, Level level) {
         super(entityType, level);
-        this.setPathfindingMalus(BlockPathTypes.DANGER_FIRE, 160);
+        this.setPathfindingMalus(BlockPathTypes.DANGER_FIRE, 30);
     }
 
     @Override
@@ -116,6 +117,7 @@ public class SophisticatedWolf extends AEntitySophisticatedWolf {
         this.fleeGoal = new FleeGoal(this, 16, 10, 1, 1.4);
         this.shakeGoal = new ShakeIfBurnOrPoisonGoal(this);
         this.drownGoal = new TeleportAtDrowningGoal(this);
+        this.burnGoal = new TeleportAtBurningGoal(this);
 
         this.goalSelector.addGoal(1, new FloatGoal(this));
         this.goalSelector.addGoal(1, new Wolf.WolfPanicGoal(1.5));
@@ -130,7 +132,7 @@ public class SophisticatedWolf extends AEntitySophisticatedWolf {
         this.goalSelector.addGoal(22, new MoveCancelAtMiningGoal(this, 6)); //new behavior
         this.goalSelector.addGoal(25, new SWFollowOwnerGoal(this, 1, 10, 2)); //new behavior
         this.goalSelector.addGoal(26, new StayNearGuardZone(this, 1)); //new behavior
-        this.goalSelector.addGoal(27, new AvoidFireGoal(this, 1, 1.4)); //new behavior
+        this.goalSelector.addGoal(27, this.burnGoal); //new behavior
         this.goalSelector.addGoal(28, this.drownGoal); //new behavior
         this.goalSelector.addGoal(29, new BreedGoal(this, 1));
         this.goalSelector.addGoal(30, new WaterAvoidingRandomStrollGoal(this, 1));
@@ -437,7 +439,11 @@ public class SophisticatedWolf extends AEntitySophisticatedWolf {
             return false;
         } else {
             if (damageSource.equals(DamageSource.DROWN) && this.drownGoal != null) {
-                this.drownGoal.setDrowning(true);
+                this.drownGoal.setActive(true);
+            }
+            if ((damageSource.equals(DamageSource.IN_FIRE) || damageSource.equals(DamageSource.LAVA)) &&
+                    this.burnGoal != null) {
+                this.burnGoal.setActive(true);
             }
             return super.hurt(damageSource, amount);
         }
