@@ -47,6 +47,7 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.ServerLevelAccessor;
+import net.minecraft.world.level.pathfinder.BlockPathTypes;
 import net.minecraftforge.common.Tags;
 import sophisticated_wolves.util.FoodUtils;
 import sophisticated_wolves.api.AEntitySophisticatedWolf;
@@ -107,6 +108,7 @@ public class SophisticatedWolf extends AEntitySophisticatedWolf {
 
     public SophisticatedWolf(EntityType<? extends Wolf> entityType, Level level) {
         super(entityType, level);
+        this.setPathfindingMalus(BlockPathTypes.DANGER_FIRE, 160);
     }
 
     @Override
@@ -461,6 +463,11 @@ public class SophisticatedWolf extends AEntitySophisticatedWolf {
     @Override
     protected float getWaterSlowDown() {
         return 1;
+    }
+
+    @Override
+    public boolean canCutCorner(BlockPathTypes pathTypes) {
+        return super.canCutCorner(pathTypes) && pathTypes != BlockPathTypes.LAVA;
     }
 
     @Override
