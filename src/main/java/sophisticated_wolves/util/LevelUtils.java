@@ -7,6 +7,7 @@ import net.minecraft.world.entity.Mob;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.material.Material;
+import net.minecraft.world.level.pathfinder.WalkNodeEvaluator;
 import net.minecraft.world.phys.AABB;
 
 /**
@@ -29,10 +30,7 @@ public class LevelUtils {
         for(int x = minX; x < maxX; ++x) {
             for(int y = minY; y < maxY; ++y) {
                 for(int z = minZ; z < maxZ; ++z) {
-                    var block = level.getBlockState(mutableBlockPos.set(x, y, z)).getBlock();
-                    if (block == Blocks.FIRE || block == Blocks.SOUL_FIRE ||
-                            block == Blocks.CAMPFIRE || block == Blocks.SOUL_CAMPFIRE ||
-                            block == Blocks.LAVA) {
+                    if (WalkNodeEvaluator.isBurningBlock(level.getBlockState(mutableBlockPos.set(x, y, z)))) {
                         return true;
                     }
                 }
