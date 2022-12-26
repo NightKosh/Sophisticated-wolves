@@ -73,26 +73,9 @@ public class SWFollowOwnerGoal extends FollowOwnerGoal {
         if (this.timeToRecalcPath <= 0) {
             this.timeToRecalcPath = this.adjustedTickDelay(10);
             if (this.pet.distanceToSqr(this.owner) >= SophisticatedWolf.DISTANCE_TO_TELEPORT_TO_OWNER_SQR) {
-                teleportToOwner();
+                LevelUtils.teleportTo(this.pet, this.owner);
             } else {
                 this.pet.getNavigation().moveTo(this.owner, this.speedModifier);
-            }
-        }
-    }
-
-    private void teleportToOwner() {
-        int xPos = this.owner.blockPosition().getX();
-        int zPos = this.owner.blockPosition().getZ();
-        int yPos = this.owner.blockPosition().getY();
-
-        for (int dX = -2; dX <= 2; dX++) {
-            for (int dZ = -2; dZ <= 2; dZ++) {
-                if (LevelUtils.isPositionSafe(pet.getLevel(), xPos + dX, yPos, zPos + dZ)) {
-                    this.pet.moveTo(xPos + dX + 0.5F, yPos, zPos + dZ + 0.5F,
-                            this.pet.getYRot(), this.pet.getXRot());
-                    this.pet.getNavigation().stop();
-                    return;
-                }
             }
         }
     }

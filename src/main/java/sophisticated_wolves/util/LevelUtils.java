@@ -2,6 +2,8 @@ package sophisticated_wolves.util;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.util.Mth;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.Mob;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.material.Material;
@@ -38,6 +40,23 @@ public class LevelUtils {
         }
 
         return false;
+    }
+
+    public static void teleportTo(Mob mob, LivingEntity entity) {
+        teleportTo(mob, entity.blockPosition().getX(), entity.blockPosition().getZ(), entity.blockPosition().getY());
+    }
+
+    public static void teleportTo(Mob mob, int xPos, int zPos, int yPos) {
+        for (int dX = -2; dX <= 2; dX++) {
+            for (int dZ = -2; dZ <= 2; dZ++) {
+                if (LevelUtils.isPositionSafe(mob.getLevel(), xPos + dX, yPos, zPos + dZ)) {
+                    mob.moveTo(xPos + dX + 0.5F, yPos, zPos + dZ + 0.5F,
+                            mob.getYRot(), mob.getXRot());
+                    mob.getNavigation().stop();
+                    return;
+                }
+            }
+        }
     }
 
     public static boolean isPositionSafe(Level level, int x, int y, int z) {
