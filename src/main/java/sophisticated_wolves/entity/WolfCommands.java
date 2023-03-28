@@ -47,6 +47,9 @@ public record WolfCommands(boolean followOwner, boolean guardZone, Integer guard
     public void saveData(FriendlyByteBuf buffer) {
         buffer.writeBoolean(this.followOwner);
         buffer.writeBoolean(this.guardZone);
+        buffer.writeInt(this.guardX == null ? 0 : this.guardX);
+        buffer.writeInt(this.guardY == null ? 0 : this.guardY);
+        buffer.writeInt(this.guardZ == null ? 0 : this.guardZ);
     }
 
     public static WolfCommands getFromByteBuf(FriendlyByteBuf buffer) {
