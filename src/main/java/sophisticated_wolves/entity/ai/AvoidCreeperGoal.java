@@ -59,11 +59,11 @@ public class AvoidCreeperGoal extends Goal {
         for (var creeper : creepers) {
 
             if (creeper.isIgnited()) {
-                if (this.wolf.distanceTo(this.monster) < MIN_DIST_TO_CHARGED_CREEPER && moveAway(creeper, 16, 7)) {
+                if (this.wolf.distanceTo(creeper) < MIN_DIST_TO_CHARGED_CREEPER && moveAway(creeper, 16, 7)) {
                     this.monster = creeper;
                     return true;
                 }
-            } else if (this.wolf.distanceTo(this.monster) < this.minDist2 && moveAway(creeper)) {
+            } else if (this.wolf.distanceTo(creeper) < this.minDist2 && moveAway(creeper)) {
                 this.monster = creeper;
                 return true;
             }
