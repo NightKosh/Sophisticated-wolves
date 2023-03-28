@@ -45,7 +45,7 @@ public class WolfFoodConfigMessageToServer {
     }
 
     public void toBytes(FriendlyByteBuf buf) {
-        buf.writeUtf(wolfId.toString());
+        buf.writeUtf(this.wolfId.toString());
         buf.writeBoolean(this.rottenMeatAndBones);
         buf.writeBoolean(this.rawMeat);
         buf.writeBoolean(this.rawFish);
@@ -61,7 +61,7 @@ public class WolfFoodConfigMessageToServer {
             var level = player.getLevel();
 
             if (level != null) {
-                var animal = level.getEntity(wolfId);
+                var animal = level.getEntity(this.wolfId);
                 if (animal != null && animal instanceof SophisticatedWolf wolf) {
                     wolf.updateFood(this.rottenMeatAndBones, this.rawMeat, this.rawFish,
                             this.specialFish, this.cookedMeat, this.cookedFish);
