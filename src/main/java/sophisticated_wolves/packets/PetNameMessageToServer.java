@@ -30,8 +30,8 @@ public class PetNameMessageToServer {
     }
 
     public void toBytes(FriendlyByteBuf buf) {
-        buf.writeUtf(animalId.toString());
-        buf.writeUtf(text);
+        buf.writeUtf(this.animalId.toString());
+        buf.writeUtf(this.text);
     }
 
     public boolean handle(Supplier<NetworkEvent.Context> supplier) {
@@ -41,9 +41,9 @@ public class PetNameMessageToServer {
             var level = player.getLevel();
 
             if (level != null) {
-                var animal = level.getEntity(animalId);
+                var animal = level.getEntity(this.animalId);
                 if (animal != null && animal instanceof TamableAnimal) {
-                    animal.setCustomName(Component.literal(text));
+                    animal.setCustomName(Component.literal(this.text));
                 }
             }
         });

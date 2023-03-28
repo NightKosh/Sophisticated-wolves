@@ -33,7 +33,7 @@ public class WolfCommandsConfigMessageToServer {
     }
 
     public void toBytes(FriendlyByteBuf buf) {
-        buf.writeUtf(wolfId.toString());
+        buf.writeUtf(this.wolfId.toString());
         buf.writeBoolean(this.followOwner);
         buf.writeBoolean(this.guardZone);
     }
@@ -45,7 +45,7 @@ public class WolfCommandsConfigMessageToServer {
             var level = player.getLevel();
 
             if (level != null) {
-                var animal = level.getEntity(wolfId);
+                var animal = level.getEntity(this.wolfId);
                 if (animal != null && animal instanceof SophisticatedWolf wolf) {
                     wolf.updateCommands(this.followOwner, this.guardZone);
                 }

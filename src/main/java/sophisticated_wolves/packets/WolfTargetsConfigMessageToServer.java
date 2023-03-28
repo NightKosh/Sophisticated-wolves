@@ -45,7 +45,7 @@ public class WolfTargetsConfigMessageToServer {
     }
 
     public void toBytes(FriendlyByteBuf buf) {
-        buf.writeUtf(wolfId.toString());
+        buf.writeUtf(this.wolfId.toString());
         buf.writeBoolean(this.attackSkeletons);
         buf.writeBoolean(this.attackZombies);
         buf.writeBoolean(this.attackSpiders);
@@ -61,7 +61,7 @@ public class WolfTargetsConfigMessageToServer {
             var level = player.getLevel();
 
             if (level != null) {
-                var animal = level.getEntity(wolfId);
+                var animal = level.getEntity(this.wolfId);
                 if (animal != null && animal instanceof SophisticatedWolf wolf) {
                     wolf.updateTargets(this.attackSkeletons, this.attackZombies, this.attackSpiders,
                             this.attackSlimes, this.attackNether, this.attackRaider);
