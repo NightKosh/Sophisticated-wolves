@@ -455,7 +455,7 @@ public class SophisticatedWolf extends AEntitySophisticatedWolf {
             return false;
         }
         if (SWConfiguration.WOLVES_WALKS_THROUGH_OWNER.get() && entity instanceof Player &&
-                this.isTame() && this.getOwner().equals(entity)) {
+                this.isTame() && entity.equals(this.getOwner())) {
             return false;
         }
         return super.canCollideWith(entity);
