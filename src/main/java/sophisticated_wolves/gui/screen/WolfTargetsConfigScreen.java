@@ -2,7 +2,7 @@ package sophisticated_wolves.gui.screen;
 
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
-import sophisticated_wolves.core.Resources;
+import sophisticated_wolves.core.SWResources;
 import sophisticated_wolves.core.SWMessages;
 import sophisticated_wolves.entity.SophisticatedWolf;
 import sophisticated_wolves.gui.component.GuiCheckbox;
@@ -49,7 +49,7 @@ public class WolfTargetsConfigScreen extends WolfConfigScreen {
 
     @Override
     protected ResourceLocation getBackground() {
-        return Resources.TARGET_GUI;
+        return SWResources.TARGET_GUI;
     }
 
 }

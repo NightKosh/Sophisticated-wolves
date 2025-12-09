@@ -8,7 +8,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Inventory;
 import sophisticated_wolves.block.BlockDogBowl;
 import sophisticated_wolves.block_entity.BlockEntityDogBowl;
-import sophisticated_wolves.core.Resources;
+import sophisticated_wolves.core.SWResources;
 import sophisticated_wolves.gui.menu.DogBowlContainerMenu;
 
 /**
@@ -38,7 +38,7 @@ public class DogBowlScreen extends AbstractContainerScreen<DogBowlContainerMenu>
     protected void renderBg(PoseStack poseStack, float partialTick, int mouseX, int mouseY) {
         RenderSystem.setShader(GameRenderer::getPositionTexShader);
         RenderSystem.setShaderColor(1, 1, 1, 1);
-        RenderSystem.setShaderTexture(0, Resources.DOG_BOWL_GUI);
+        RenderSystem.setShaderTexture(0, SWResources.DOG_BOWL_GUI);
 
         int x = (this.width - this.imageWidth) / 2;
         int y = (this.height - this.imageHeight) / 2;
