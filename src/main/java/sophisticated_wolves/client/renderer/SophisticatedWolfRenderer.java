@@ -7,7 +7,7 @@ import net.minecraft.client.renderer.entity.WolfRenderer;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.animal.Wolf;
-import sophisticated_wolves.core.Resources;
+import sophisticated_wolves.core.SWResources;
 import sophisticated_wolves.core.SWConfiguration;
 import sophisticated_wolves.entity.SophisticatedWolf;
 
@@ -39,25 +39,25 @@ public class SophisticatedWolfRenderer extends WolfRenderer {
             switch (((SophisticatedWolf) wolf).getSpecies()) {
                 case BROWN:
                     if (wolf.isTame()) {
-                        return Resources.BROWN_WOLF_TAME;
+                        return SWResources.BROWN_WOLF_TAME;
                     } else if (wolf.isAngry()) {
-                        return Resources.BROWN_WOLF_ANGRY;
+                        return SWResources.BROWN_WOLF_ANGRY;
                     }
-                    return Resources.BROWN_WOLF;
+                    return SWResources.BROWN_WOLF;
                 case BLACK:
                     if (wolf.isTame()) {
-                        return Resources.BLACK_WOLF_TAME;
+                        return SWResources.BLACK_WOLF_TAME;
                     } else if (wolf.isAngry()) {
-                        return Resources.BLACK_WOLF_ANGRY;
+                        return SWResources.BLACK_WOLF_ANGRY;
                     }
-                    return Resources.BLACK_WOLF;
+                    return SWResources.BLACK_WOLF;
                 case FOREST:
                     if (wolf.isTame()) {
-                        return Resources.FOREST_WOLF_TAME;
+                        return SWResources.FOREST_WOLF_TAME;
                     } else if (wolf.isAngry()) {
-                        return Resources.FOREST_WOLF_ANGRY;
+                        return SWResources.FOREST_WOLF_ANGRY;
                     }
-                    return Resources.FOREST_WOLF;
+                    return SWResources.FOREST_WOLF;
             }
         }
         return super.getTextureLocation(wolf);

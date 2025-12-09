@@ -1,6 +1,5 @@
 package sophisticated_wolves.core;
 
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -10,6 +9,8 @@ import net.minecraftforge.registries.RegistryObject;
 import sophisticated_wolves.api.ModInfo;
 import sophisticated_wolves.api.SophisticatedWolvesAPI;
 import sophisticated_wolves.entity.SophisticatedWolf;
+
+import static net.minecraft.resources.ResourceLocation.fromNamespaceAndPath;
 
 /**
  * Sophisticated Wolves
@@ -28,7 +29,7 @@ public class SWEntities {
             ENTITY_TYPES_REGISTER.register(SophisticatedWolvesAPI.SOPHISTICATED_WOLF_ID,
                     () -> EntityType.Builder.of(SophisticatedWolf::new, MobCategory.CREATURE)
                             .sized(0.8f, 0.6f)
-                            .build(new ResourceLocation(ModInfo.ID, SophisticatedWolvesAPI.SOPHISTICATED_WOLF_ID).toString()));
+                            .build(fromNamespaceAndPath(ModInfo.ID, SophisticatedWolvesAPI.SOPHISTICATED_WOLF_ID).toString()));
 
 
     public static void register(IEventBus eventBus) {

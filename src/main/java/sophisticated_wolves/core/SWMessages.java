@@ -1,16 +1,17 @@
 package sophisticated_wolves.core;
 
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraftforge.network.NetworkDirection;
 import net.minecraftforge.network.NetworkRegistry;
 import net.minecraftforge.network.PacketDistributor;
 import net.minecraftforge.network.simple.SimpleChannel;
 import sophisticated_wolves.api.ModInfo;
+import sophisticated_wolves.packets.PetNameMessageToServer;
 import sophisticated_wolves.packets.WolfCommandsConfigMessageToServer;
 import sophisticated_wolves.packets.WolfFoodConfigMessageToServer;
-import sophisticated_wolves.packets.PetNameMessageToServer;
 import sophisticated_wolves.packets.WolfTargetsConfigMessageToServer;
+
+import static net.minecraft.resources.ResourceLocation.fromNamespaceAndPath;
 
 /**
  * Sophisticated Wolves
@@ -30,7 +31,7 @@ public class SWMessages {
 
     public static void register() {
         var net = NetworkRegistry.ChannelBuilder
-                .named(new ResourceLocation(ModInfo.ID, "messages"))
+                .named(fromNamespaceAndPath(ModInfo.ID, "messages"))
                 .networkProtocolVersion(() -> "1.0")
                 .clientAcceptedVersions(s -> true)
                 .serverAcceptedVersions(s -> true)

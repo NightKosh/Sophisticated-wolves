@@ -11,7 +11,7 @@ import sophisticated_wolves.item.ItemDogTag;
 import sophisticated_wolves.item.ItemDogTreat;
 import sophisticated_wolves.item.ItemWhistle;
 import sophisticated_wolves.item.ItemWolfEgg;
-import sophisticated_wolves.item.pet_carrier.ItemPetCarrier;
+import sophisticated_wolves.item.ItemPetCarrier;
 
 /**
  * Sophisticated Wolves

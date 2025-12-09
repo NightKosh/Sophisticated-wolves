@@ -2,6 +2,7 @@ package sophisticated_wolves.core;
 
 import com.mojang.datafixers.util.Pair;
 import net.minecraft.core.Registry;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.levelgen.structure.pools.SinglePoolElement;
@@ -14,6 +15,8 @@ import sophisticated_wolves.api.ModInfo;
 
 import java.util.ArrayList;
 
+import static net.minecraft.resources.ResourceLocation.fromNamespaceAndPath;
+
 /**
  * Sophisticated Wolves
  *
@@ -23,8 +26,8 @@ import java.util.ArrayList;
 @Mod.EventBusSubscriber(modid = ModInfo.ID)
 public class SWStructures {
 
-    private static final ResourceKey<StructureProcessorList> EMPTY_PROCESSOR_LIST_KEY = ResourceKey.create(
-            Registry.PROCESSOR_LIST_REGISTRY, new ResourceLocation("minecraft", "empty"));
+    private static final ResourceKey<StructureProcessorList> EMPTY_PROCESSOR_LIST_KEY =
+            ResourceKey.create(Registries.PROCESSOR_LIST, fromNamespaceAndPath("minecraft", "empty"));
 
     private static void addBuildingToPool(
             Registry<StructureTemplatePool> templatePoolRegistry,
@@ -50,17 +53,17 @@ public class SWStructures {
 
     @SubscribeEvent
     public static void addNewVillageBuilding(final ServerAboutToStartEvent event) {
-        var templatePoolRegistry = event.getServer().registryAccess().registry(Registry.TEMPLATE_POOL_REGISTRY)
-                .orElseThrow();
-        var processorListRegistry = event.getServer().registryAccess().registry(Registry.PROCESSOR_LIST_REGISTRY)
-                .orElseThrow();
+        Registry<StructureTemplatePool> templatePoolRegistry =
+                event.getServer().registryAccess().registryOrThrow(Registries.TEMPLATE_POOL);
+        Registry<StructureProcessorList> processorListRegistry =
+                event.getServer().registryAccess().registryOrThrow(Registries.PROCESSOR_LIST);
 
         addBuildingToPool(templatePoolRegistry, processorListRegistry,
-                new ResourceLocation("minecraft:village/plains/houses"),
+                fromNamespaceAndPath("minecraft", "village/plains/houses"),
                 "sophisticated_wolves:village/plains_kennels", 1);
 
         addBuildingToPool(templatePoolRegistry, processorListRegistry,
-                new ResourceLocation("minecraft:village/taiga/houses"),
+                fromNamespaceAndPath("minecraft", "village/taiga/houses"),
                 "sophisticated_wolves:village/taiga_kennels", 1);
     }
 

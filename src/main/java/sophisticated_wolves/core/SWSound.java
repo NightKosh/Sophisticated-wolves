@@ -1,12 +1,13 @@
 package sophisticated_wolves.core;
 
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 import sophisticated_wolves.api.ModInfo;
+
+import static net.minecraft.resources.ResourceLocation.fromNamespaceAndPath;
 
 /**
  * Sophisticated Wolves
@@ -23,7 +24,7 @@ public class SWSound {
     private static final RegistryObject<SoundEvent> WHISTLE_LONG = registerSoundEvent("player.whistle.long");
 
     private static RegistryObject<SoundEvent> registerSoundEvent(String name) {
-        return SOUND_EVENTS_REGISTER.register(name, () -> new SoundEvent(new ResourceLocation(ModInfo.ID, name)));
+        return SOUND_EVENTS_REGISTER.register(name, () -> SoundEvent.createVariableRangeEvent(fromNamespaceAndPath(ModInfo.ID, name)));
     }
 
     public static void register(IEventBus eventBus) {
