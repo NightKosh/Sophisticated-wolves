@@ -1,6 +1,9 @@
 {
   "pack": {
-    "pack_format": 1,
-    "description": "Resources used for Sophisticated Wolves"
+    "description": {
+      "text": "Resources used for Sophisticated Wolves"
+    },
+    "forge:server_data_pack_format": 12,
+    "pack_format": 13
   }
 }
