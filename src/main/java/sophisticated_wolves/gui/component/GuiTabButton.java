@@ -37,12 +37,12 @@ public class GuiTabButton extends Button {
         RenderSystem.setShaderTexture(0, SWResources.TAB_BUTTON_GUI);
 
         if (this.isTabActive) {
-            blit(poseStack, this.getY(), this.getY(), 0, 30, this.width, Y_SIZE_ENABLED);
+            blit(poseStack, this.getX(), this.getY(), 0, 30, this.width, Y_SIZE_ENABLED);
         } else {
-            blit(poseStack, this.getY(), this.getY(), 0, 0, this.width, Y_SIZE);
+            blit(poseStack, this.getX(), this.getY(), 0, 0, this.width, Y_SIZE);
         }
         drawCenteredString(poseStack, Minecraft.getInstance().font, this.getMessage(),
-                this.getY() + this.width / 2, this.getY() + (this.height - 8) / 2,
+                this.getX() + this.width / 2, this.getY() + (this.height - 8) / 2,
                 this.getFGColor() | Mth.ceil(this.alpha * 255F) << 24);
     }
 
