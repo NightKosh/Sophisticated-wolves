@@ -21,6 +21,8 @@ import java.util.List;
  */
 public class SophisticatedWolfPetCarrier extends PetCarrier<SophisticatedWolf> {
 
+    private static final String WOLF_TYPE = "WolfType";
+
     @Override
     public Class getPetClass() {
         return SophisticatedWolf.class;
@@ -38,11 +40,11 @@ public class SophisticatedWolfPetCarrier extends PetCarrier<SophisticatedWolf> {
 
     @Override
     public List<Component> getInfo(CompoundTag infoTag) {
-        if (infoTag.contains("WolfType")) {
+        if (infoTag.contains(WOLF_TYPE)) {
             return List.of(Component.translatable("sophisticated_wolves.carrier.type")
                     .append(" - ")
                     .append(Component.translatable(
-                            EnumWolfSpecies.getSpeciesByNum(infoTag.getInt("WolfType")).getSpeciesStr())));
+                            EnumWolfSpecies.getSpeciesByNum(infoTag.getInt(WOLF_TYPE)).getSpeciesStr())));
         }
         return null;
     }
@@ -50,7 +52,7 @@ public class SophisticatedWolfPetCarrier extends PetCarrier<SophisticatedWolf> {
     @Override
     public CompoundTag getInfo(SophisticatedWolf wolf) {
         var tag = new CompoundTag();
-        tag.putInt("WolfType", wolf.getSpecies().ordinal());
+        tag.putInt(WOLF_TYPE, wolf.getSpecies().ordinal());
 
         return tag;
     }
@@ -85,7 +87,7 @@ public class SophisticatedWolfPetCarrier extends PetCarrier<SophisticatedWolf> {
         var list = new ArrayList<CompoundTag>();
         for (EnumWolfSpecies species : EnumWolfSpecies.values()) {
             var infoTag = new CompoundTag();
-            infoTag.putInt("WolfType", species.ordinal());
+            infoTag.putInt(WOLF_TYPE, species.ordinal());
 
             var entityTag = new CompoundTag();
             entityTag.putInt("Species", species.ordinal());

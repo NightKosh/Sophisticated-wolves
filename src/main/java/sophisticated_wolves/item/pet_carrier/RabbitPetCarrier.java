@@ -3,7 +3,6 @@ package sophisticated_wolves.item.pet_carrier;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.animal.Rabbit;
 import sophisticated_wolves.api.pet_carrier.PetCarrier;
 
@@ -17,6 +16,8 @@ import java.util.List;
  * @license Lesser GNU Public License v3 (http://www.gnu.org/licenses/lgpl.html)
  */
 public class RabbitPetCarrier extends PetCarrier<Rabbit> {
+
+    private static final String RABBIT_TYPE = "RabbitType";
 
     public static final int[] RABBITS_SPECIES = {0, 1, 2, 3, 4, 5, 99};
 
@@ -37,10 +38,10 @@ public class RabbitPetCarrier extends PetCarrier<Rabbit> {
 
     @Override
     public List<Component> getInfo(CompoundTag infoTag) {
-        if (infoTag.contains("RabbitType")) {
+        if (infoTag.contains(RABBIT_TYPE)) {
             return List.of(Component.translatable("sophisticated_wolves.carrier.type")
                     .append(" - ")
-                    .append(Component.translatable("sophisticated_wolves.rabbit_type." + infoTag.getInt("RabbitType"))));
+                    .append(Component.translatable("sophisticated_wolves.rabbit_type." + infoTag.getInt(RABBIT_TYPE))));
         }
         return null;
     }
@@ -48,7 +49,7 @@ public class RabbitPetCarrier extends PetCarrier<Rabbit> {
     @Override
     public CompoundTag getInfo(Rabbit rabbit) {
         var tag = new CompoundTag();
-        tag.putInt("RabbitType", rabbit.getVariant().id());
+        tag.putInt(RABBIT_TYPE, rabbit.getVariant().id());
 
         return tag;
     }
@@ -58,10 +59,10 @@ public class RabbitPetCarrier extends PetCarrier<Rabbit> {
         var list = new ArrayList<CompoundTag>();
         for (int species : RABBITS_SPECIES) {
             var infoTag = new CompoundTag();
-            infoTag.putInt("RabbitType", species);
+            infoTag.putInt(RABBIT_TYPE, species);
 
             var entityTag = new CompoundTag();
-            entityTag.putInt("RabbitType", species);
+            entityTag.putInt(RABBIT_TYPE, species);
 
             list.add(getDefaultPetCarrier(infoTag, entityTag));
         }

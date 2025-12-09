@@ -18,6 +18,8 @@ import java.util.List;
  */
 public class FoxPetCarrier extends PetCarrier<Fox> {
 
+    private static final String FOX_TYPE = "FoxType";
+
     public enum EnumFoxType {
         RED(Fox.Type.RED),
         SNOW(Fox.Type.SNOW);
@@ -68,11 +70,11 @@ public class FoxPetCarrier extends PetCarrier<Fox> {
 
     @Override
     public List<Component> getInfo(CompoundTag infoTag) {
-        if (infoTag.contains("FoxType")) {
+        if (infoTag.contains(FOX_TYPE)) {
             return List.of(Component.translatable("sophisticated_wolves.carrier.type")
                     .append(" - ")
                     .append(Component.translatable(
-                            "sophisticated_wolves.fox_type." + EnumFoxType.getByNum(infoTag.getInt("FoxType"))
+                            "sophisticated_wolves.fox_type." + EnumFoxType.getByNum(infoTag.getInt(FOX_TYPE))
                                     .toString().toLowerCase())));
         }
         return null;
@@ -81,7 +83,7 @@ public class FoxPetCarrier extends PetCarrier<Fox> {
     @Override
     public CompoundTag getInfo(Fox fox) {
         var tag = new CompoundTag();
-        tag.putInt("FoxType", fox.getVariant().getId());
+        tag.putInt(FOX_TYPE, fox.getVariant().getId());
 
         return tag;
     }
@@ -96,7 +98,7 @@ public class FoxPetCarrier extends PetCarrier<Fox> {
         var list = new ArrayList<CompoundTag>();
         for (EnumFoxType species : EnumFoxType.values()) {
             var infoTag = new CompoundTag();
-            infoTag.putInt("FoxType", species.ordinal());
+            infoTag.putInt(FOX_TYPE, species.ordinal());
 
             var entityTag = new CompoundTag();
             entityTag.putString("Type", species.getFoxType().getSerializedName());

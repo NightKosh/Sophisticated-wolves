@@ -17,6 +17,8 @@ import java.util.List;
  */
 public class ParrotPetCarrier extends PetCarrier<Parrot> {
 
+    private static final String VARIANT = "Variant";
+
     public static final int[] PARROTS_SPECIES = {0, 1, 2, 3, 4};
     //0 = red, 1 = blue, 2 = green, 3 = cyan, 4 = silver.
 
@@ -37,10 +39,10 @@ public class ParrotPetCarrier extends PetCarrier<Parrot> {
 
     @Override
     public List<Component> getInfo(CompoundTag infoTag) {
-        if (infoTag.contains("Variant")) {
+        if (infoTag.contains(VARIANT)) {
             return List.of(Component.translatable("sophisticated_wolves.carrier.type")
                     .append(" - ")
-                    .append(Component.translatable("sophisticated_wolves.parrot_type." + infoTag.getInt("Variant"))));
+                    .append(Component.translatable("sophisticated_wolves.parrot_type." + infoTag.getInt(VARIANT))));
         }
         return null;
     }
@@ -48,7 +50,7 @@ public class ParrotPetCarrier extends PetCarrier<Parrot> {
     @Override
     public CompoundTag getInfo(Parrot parrot) {
         var tag = new CompoundTag();
-        tag.putInt("Variant", parrot.getVariant().getId());
+        tag.putInt(VARIANT, parrot.getVariant().getId());
 
         return tag;
     }
@@ -58,10 +60,10 @@ public class ParrotPetCarrier extends PetCarrier<Parrot> {
         var list = new ArrayList<CompoundTag>();
         for (int species : PARROTS_SPECIES) {
             var infoTag = new CompoundTag();
-            infoTag.putInt("Variant", species);
+            infoTag.putInt(VARIANT, species);
 
             var entityTag = new CompoundTag();
-            entityTag.putInt("Variant", species);
+            entityTag.putInt(VARIANT, species);
 
             list.add(getDefaultPetCarrier(infoTag, entityTag));
         }
