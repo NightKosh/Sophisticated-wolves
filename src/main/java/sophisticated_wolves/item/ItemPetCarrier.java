@@ -71,7 +71,7 @@ public class ItemPetCarrier extends Item {
     private static InteractionResult getPetInfo(
             ItemStack stack, Player player, LivingEntity entity, InteractionHand hand) {
         var entityTag = new CompoundTag();
-        entity.save(entityTag);
+        entity.saveWithoutId(entityTag);
 
         var tag = new CompoundTag();
         tag.putString(CLASS_NAME, entity.getClass().getSimpleName());

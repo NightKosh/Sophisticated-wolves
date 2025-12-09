@@ -1,8 +1,9 @@
 package sophisticated_wolves.item.pet_carrier;
 
-import net.minecraft.core.Registry;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.animal.Cat;
 import net.minecraft.world.entity.animal.CatVariant;
@@ -20,6 +21,9 @@ import java.util.List;
  */
 public class CatPetCarrier extends PetCarrier<Cat> {
 
+    private static final String CAT_TYPE = "CatType";
+    private static final String CAT_VARIANT = "variant";
+
     public enum EnumCatType {
         TABBY(CatVariant.TABBY),
         BLACK(CatVariant.BLACK),
@@ -33,10 +37,12 @@ public class CatPetCarrier extends PetCarrier<Cat> {
         JELLIE(CatVariant.JELLIE),
         ALL_BLACK(CatVariant.ALL_BLACK);
 
-        private final CatVariant catVariant;
+        private final ResourceKey<CatVariant> key;
+        private final CatVariant variant;
 
-        EnumCatType(CatVariant catVariant) {
-            this.catVariant = catVariant;
+        EnumCatType(ResourceKey<CatVariant> key) {
+            this.key = key;
+            this.variant = BuiltInRegistries.CAT_VARIANT.getOrThrow(key);
         }
 
         public static EnumCatType getByNum(int num) {
@@ -47,17 +53,21 @@ public class CatPetCarrier extends PetCarrier<Cat> {
             }
         }
 
-        public static EnumCatType getByCatType(CatVariant catVariant) {
-            for (var catType : EnumCatType.values()) {
-                if (catType.getCatVariant().equals(catVariant)) {
+        public static EnumCatType getByCatVariant(CatVariant catVariant) {
+            for (var catType : values()) {
+                if (catType.variant.equals(catVariant)) {
                     return catType;
                 }
             }
             return TABBY;
         }
 
-        public CatVariant getCatVariant() {
-            return catVariant;
+        public CatVariant getVariant() {
+            return variant;
+        }
+
+        public ResourceKey<CatVariant> getKey() {
+            return key;
         }
 
     }
@@ -79,11 +89,11 @@ public class CatPetCarrier extends PetCarrier<Cat> {
 
     @Override
     public List<Component> getInfo(CompoundTag infoTag) {
-        if (infoTag.contains("CatType")) {
+        if (infoTag.contains(CAT_TYPE)) {
             return List.of(Component.translatable("sophisticated_wolves.carrier.type")
                     .append(" - ")
                     .append(Component.translatable(
-                            "sophisticated_wolves.cat_type." + EnumCatType.getByNum(infoTag.getInt("CatType"))
+                            "sophisticated_wolves.cat_type." + EnumCatType.getByNum(infoTag.getInt(CAT_TYPE))
                                     .toString().toLowerCase())));
         }
         return null;
@@ -92,7 +102,7 @@ public class CatPetCarrier extends PetCarrier<Cat> {
     @Override
     public CompoundTag getInfo(Cat cat) {
         var tag = new CompoundTag();
-        tag.putInt("CatType", EnumCatType.getByCatType(cat.getCatVariant()).ordinal());
+        tag.putInt(CAT_TYPE, EnumCatType.getByCatVariant(cat.getVariant()).ordinal());
 
         return tag;
     }
@@ -106,12 +116,12 @@ public class CatPetCarrier extends PetCarrier<Cat> {
     @Override
     public List<CompoundTag> getDefaultPetCarriers() {
         var list = new ArrayList<CompoundTag>();
-        for (EnumCatType species : EnumCatType.values()) {
+        for (var catType : EnumCatType.values()) {
             var infoTag = new CompoundTag();
-            infoTag.putInt("CatType", species.ordinal());
+            infoTag.putInt(CAT_TYPE, catType.ordinal());
 
             var entityTag = new CompoundTag();
-            entityTag.putString("variant", Registry.CAT_VARIANT.getKey(species.getCatVariant()).toString());
+            entityTag.putString(CAT_VARIANT, catType.getKey().location().toString());
 
             list.add(getDefaultPetCarrier(infoTag, entityTag));
         }
