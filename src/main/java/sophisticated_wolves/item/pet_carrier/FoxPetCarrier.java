@@ -81,7 +81,7 @@ public class FoxPetCarrier extends PetCarrier<Fox> {
     @Override
     public CompoundTag getInfo(Fox fox) {
         var tag = new CompoundTag();
-        tag.putInt("FoxType", EnumFoxType.getByFoxType(fox.getFoxType()).ordinal());
+        tag.putInt("FoxType", fox.getVariant().getId());
 
         return tag;
     }
@@ -99,7 +99,7 @@ public class FoxPetCarrier extends PetCarrier<Fox> {
             infoTag.putInt("FoxType", species.ordinal());
 
             var entityTag = new CompoundTag();
-            entityTag.putString("Type", species.getFoxType().getName());
+            entityTag.putString("Type", species.getFoxType().getSerializedName());
 
             list.add(getDefaultPetCarrier(infoTag, entityTag));
         }

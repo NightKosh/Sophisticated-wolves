@@ -48,7 +48,7 @@ public class ParrotPetCarrier extends PetCarrier<Parrot> {
     @Override
     public CompoundTag getInfo(Parrot parrot) {
         var tag = new CompoundTag();
-        tag.putInt("Variant", parrot.getVariant());
+        tag.putInt("Variant", parrot.getVariant().getId());
 
         return tag;
     }
