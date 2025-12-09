@@ -44,18 +44,19 @@ public class SWTabs {
             event.accept(BlockDogBowl.getItemsForTab(BlockDogBowl.EnumDogBowl.FULL));
             event.accept(new ItemStack(SWBlocks.getKennel()));
 
+            event.accept(new ItemStack(SWItems.getPetCarrier()));
             for (var entry : PetCarrierHelper.getPetCarriers()) {
                 var petCarrier = entry.getValue();
                 if (petCarrier != null) {
                     for (var tag : petCarrier.getDefaultPetCarriers()) {
-                        var stack = new ItemStack(SWItems.getPetCarrier(), 1);
+                        var stack = new ItemStack(SWItems.getPetCarrier());
                         stack.setTag(tag);
                         event.accept(stack);
                     }
                 }
             }
 
-            event.accept(SWItems.getDogEgg());//TODO ???
+            event.accept(SWItems.getDogEgg());
         }
     }
 
