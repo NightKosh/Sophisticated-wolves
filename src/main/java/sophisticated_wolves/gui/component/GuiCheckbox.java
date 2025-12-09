@@ -7,9 +7,11 @@ import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.network.chat.Component;
 import net.minecraft.util.Mth;
-import sophisticated_wolves.core.Resources;
+import sophisticated_wolves.core.SWResources;
 
+import javax.annotation.Nonnull;
 import java.util.List;
+import java.util.function.Supplier;
 
 /**
  * Sophisticated Wolves
@@ -31,7 +33,7 @@ public class GuiCheckbox extends Button {
     }
 
     public GuiCheckbox(int x, int y, GuiCheckbox.GetCheckboxesGroup group, Boolean enabled) {
-        super(x, y, X_SIZE, Y_SIZE, Component.empty(), (button) -> ((GuiCheckbox) button).onClick());
+        super(x, y, X_SIZE, Y_SIZE, Component.empty(), (button) -> ((GuiCheckbox) button).onClick(), Supplier::get);
         this.group = group;
         this.enabled = enabled;
         this.hasText = false;
@@ -42,25 +44,25 @@ public class GuiCheckbox extends Button {
     }
 
     public GuiCheckbox(int x, int y, int width, Component component, GuiCheckbox.GetCheckboxesGroup group, Boolean enabled) {
-        super(x, y, width, Y_SIZE, component, (button) -> ((GuiCheckbox) button).onClick());
+        super(x, y, width, Y_SIZE, component, (button) -> ((GuiCheckbox) button).onClick(), Supplier::get);
         this.group = group;
         this.enabled = enabled;
     }
 
     @Override
-    public void renderButton(PoseStack poseStack, int mouseX, int mouseY, float partialTicks) {
+    public void renderWidget(@Nonnull PoseStack poseStack, int mouseX, int mouseY, float partialTicks) {
         RenderSystem.setShader(GameRenderer::getPositionTexShader);
         RenderSystem.setShaderColor(1, 1, 1, 1);
-        RenderSystem.setShaderTexture(0, Resources.CHECKBOX_GUI);
+        RenderSystem.setShaderTexture(0, SWResources.CHECKBOX_GUI);
 
-        this.blit(poseStack, this.x, this.y, 0, 0, X_SIZE, Y_SIZE);
+        this.blit(poseStack, this.getX(), this.getY(), 0, 0, X_SIZE, Y_SIZE);
         if (this.enabled) {
-            this.blit(poseStack, this.x, this.y, Y_SIZE, 0, X_SIZE, Y_SIZE);
+            this.blit(poseStack, this.getX(), this.getY(), Y_SIZE, 0, X_SIZE, Y_SIZE);
         }
 
         if (this.hasText) {
             drawString(poseStack, Minecraft.getInstance().font, this.getMessage(),
-                    this.x + X_SIZE, this.y + (this.height - 8) / 2,
+                    this.getX() + X_SIZE, this.getY() + (this.height - 8) / 2,
                     this.getFGColor() | Mth.ceil(this.alpha * 255F) << 24);
         }
     }

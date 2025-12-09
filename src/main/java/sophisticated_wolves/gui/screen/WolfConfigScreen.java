@@ -3,6 +3,7 @@ package sophisticated_wolves.gui.screen;
 import com.mojang.blaze3d.platform.Lighting;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
+import net.minecraft.client.gui.GuiComponent;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.renderer.GameRenderer;
@@ -11,6 +12,8 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import sophisticated_wolves.entity.SophisticatedWolf;
 import sophisticated_wolves.gui.component.GuiTabButton;
+
+import javax.annotation.Nonnull;
 
 /**
  * Sophisticated Wolves
@@ -43,8 +46,6 @@ public abstract class WolfConfigScreen extends Screen {
 
     @Override
     public void init() {
-        this.minecraft.keyboardHandler.setSendRepeatsToGui(true); //pauses the game when GUI is opened
-
         int x = (this.width - X_SIZE) / 2;
         int y = (this.height - Y_SIZE) / 2;
 
@@ -59,26 +60,26 @@ public abstract class WolfConfigScreen extends Screen {
                 (button) -> this.minecraft.setScreen(new WolfCommandsConfigScreen(this.wolf))));
 
         this.addRenderableWidget(
-                new Button(this.width / 2 - 50, y + 113, 100, 20,
-                        CommonComponents.GUI_DONE,
-                        (button) -> this.minecraft.setScreen(null)));
-
+                Button.builder(CommonComponents.GUI_DONE, (button) -> this.minecraft.setScreen(null))
+                        .bounds(this.width / 2 - 50, y + 113, 100, 20)
+                        .build()
+        );
         this.initCustomComponents(x, y);
     }
 
     @Override
-    public void render(PoseStack poseStack, int i, int j, float f) {
+    public void render(@Nonnull PoseStack poseStack, int i, int j, float f) {
         Lighting.setupForFlatItems();
         this.renderBackground(poseStack);
 
-        this.drawCenteredString(poseStack, this.font, this.title, this.width / 2, 60, 0xffffff);
+        drawCenteredString(poseStack, this.font, this.title, this.width / 2, 60, 0xffffff);
 
         Lighting.setupFor3DItems();
         super.render(poseStack, i, j, f);
     }
 
     @Override
-    public void renderBackground(PoseStack poseStack) {
+    public void renderBackground(@Nonnull PoseStack poseStack) {
         super.renderBackground(poseStack);
 
         RenderSystem.setShader(GameRenderer::getPositionTexShader);
@@ -87,12 +88,11 @@ public abstract class WolfConfigScreen extends Screen {
 
         int xPos = (this.width - X_SIZE) / 2;
         int yPos = (this.height - Y_SIZE) / 2;
-        this.blit(poseStack, xPos, yPos, 0, 0, 256, 256);
+        blit(poseStack, xPos, yPos, 0, 0, 256, 256);
     }
 
     @Override
     public void removed() {
-        this.minecraft.keyboardHandler.setSendRepeatsToGui(false);
         this.onScreenClosed();
     }
 

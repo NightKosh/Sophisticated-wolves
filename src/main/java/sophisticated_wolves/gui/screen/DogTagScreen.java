@@ -2,8 +2,8 @@ package sophisticated_wolves.gui.screen;
 
 import com.mojang.blaze3d.platform.Lighting;
 import com.mojang.blaze3d.vertex.PoseStack;
-
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiComponent;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.EditBox;
 import net.minecraft.client.gui.screens.Screen;
@@ -12,6 +12,8 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.TamableAnimal;
 import sophisticated_wolves.core.SWMessages;
 import sophisticated_wolves.packets.PetNameMessageToServer;
+
+import javax.annotation.Nonnull;
 
 /**
  * Sophisticated Wolves
@@ -37,15 +39,13 @@ public class DogTagScreen extends Screen {
 
     @Override
     public void init() {
-        this.minecraft.keyboardHandler.setSendRepeatsToGui(true); //pauses the game when GUI is opened
-
         int x = this.width / 2;
         int y = this.height / 4;
 
-        this.nameField = new EditBox(this.font,x - 50, 100, 100, 20,
-                        null, Component.empty());
+        this.nameField = new EditBox(this.font, x - 50, 100, 100, 20,
+                null, Component.empty());
         this.nameField.setMaxLength(32);
-        this.nameField.setFocus(true);
+        this.nameField.setFocused(true);
         this.nameField.setCanLoseFocus(false);
         this.nameField.moveCursorToEnd();
         if (animal.hasCustomName()) {
@@ -53,25 +53,24 @@ public class DogTagScreen extends Screen {
         }
 
         this.addRenderableWidget(
-                new Button(x - 55, y + 120, 55, 20,
-                        CommonComponents.GUI_CANCEL,
-                        (button) -> this.minecraft.setScreen(null)));
-        this.addRenderableWidget(
-                new Button(x + 5, y + 120, 55, 20,
-                        CommonComponents.GUI_DONE,
-                        (button) ->  {
-                            SWMessages.sendToServer(new PetNameMessageToServer(this.animal, this.nameField.getValue()));
-                            this.minecraft.setScreen(null);
-                        }));
+                Button.builder(CommonComponents.GUI_DONE, (button) -> {
+                            SWMessages.sendToServer(
+                                    new PetNameMessageToServer(this.animal, this.nameField.getValue())
+                            );
+                            this.minecraft.setScreen(null); // закрыть GUI
+                        })
+                        .bounds(x + 5, y + 120, 55, 20)
+                        .build()
+        );
         this.addRenderableWidget(nameField);
     }
 
     @Override
-    public void render(PoseStack poseStack, int i, int j, float f) {
+    public void render(@Nonnull PoseStack poseStack, int i, int j, float f) {
         Lighting.setupForFlatItems();
         this.renderBackground(poseStack);
 
-        this.drawCenteredString(poseStack, this.font, this.title, this.width / 2, 60, 0xffffff);
+        drawCenteredString(poseStack, this.font, this.title, this.width / 2, 60, 0xffffff);
 
         Lighting.setupFor3DItems();
         super.render(poseStack, i, j, f);
@@ -86,11 +85,6 @@ public class DogTagScreen extends Screen {
     @Override
     public boolean charTyped(char c, int i) {
         return this.nameField.charTyped(c, i);
-    }
-
-    @Override
-    public void removed() {
-        this.minecraft.keyboardHandler.setSendRepeatsToGui(false);
     }
 
 }

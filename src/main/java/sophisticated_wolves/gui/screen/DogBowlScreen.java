@@ -11,6 +11,8 @@ import sophisticated_wolves.block_entity.BlockEntityDogBowl;
 import sophisticated_wolves.core.SWResources;
 import sophisticated_wolves.gui.menu.DogBowlContainerMenu;
 
+import javax.annotation.Nonnull;
+
 /**
  * Sophisticated Wolves
  *
@@ -35,7 +37,7 @@ public class DogBowlScreen extends AbstractContainerScreen<DogBowlContainerMenu>
     }
 
     @Override
-    protected void renderBg(PoseStack poseStack, float partialTick, int mouseX, int mouseY) {
+    protected void renderBg(@Nonnull PoseStack poseStack, float partialTick, int mouseX, int mouseY) {
         RenderSystem.setShader(GameRenderer::getPositionTexShader);
         RenderSystem.setShaderColor(1, 1, 1, 1);
         RenderSystem.setShaderTexture(0, SWResources.DOG_BOWL_GUI);
@@ -76,7 +78,7 @@ public class DogBowlScreen extends AbstractContainerScreen<DogBowlContainerMenu>
     }
 
     @Override
-    public void render(PoseStack pPoseStack, int mouseX, int mouseY, float delta) {
+    public void render(@Nonnull PoseStack pPoseStack, int mouseX, int mouseY, float delta) {
         renderBackground(pPoseStack);
         super.render(pPoseStack, mouseX, mouseY, delta);
         renderTooltip(pPoseStack, mouseX, mouseY);
