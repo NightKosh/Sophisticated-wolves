@@ -1,7 +1,7 @@
 {
-    "parent": "builtin/generated",
+    "parent": "item/generated",
     "textures": {
-        "layer0": "sophisticated_wolves:items/whistle"
+        "layer0": "sophisticated_wolves:item/whistle"
     },
     "display": {
         "thirdperson": {

@@ -1,7 +1,7 @@
 {
-    "parent": "builtin/generated",
+    "parent": "item/generated",
     "textures": {
-        "layer0": "sophisticated_wolves:items/dog_treat"
+        "layer0": "sophisticated_wolves:item/dog_treat"
     },
     "display": {
         "thirdperson": {
