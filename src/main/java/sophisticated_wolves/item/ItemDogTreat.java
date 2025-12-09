@@ -11,7 +11,6 @@ import net.minecraft.world.level.gameevent.GameEvent;
 import sophisticated_wolves.api.ISophisticatedWolf;
 import sophisticated_wolves.compatibility.Compatibility;
 import sophisticated_wolves.core.SWEntities;
-import sophisticated_wolves.core.SWTabs;
 import sophisticated_wolves.entity.SophisticatedWolf;
 
 /**
@@ -23,8 +22,7 @@ import sophisticated_wolves.entity.SophisticatedWolf;
 public class ItemDogTreat extends Item {
 
     public ItemDogTreat() {
-        super(new Item.Properties()
-                .tab(SWTabs.TAB));
+        super(new Item.Properties().stacksTo(64));
     }
 
     public static void useItemOnWolf(Entity e, Player player, ItemStack stack) {
@@ -33,7 +31,7 @@ public class ItemDogTreat extends Item {
                 !(e instanceof ISophisticatedWolf)) {
             if (wolf.isTame()) {
                 var level = player.getLevel();
-                var sWolf = (SophisticatedWolf) SWEntities.getSophisticatedWolfType().spawn(
+                var sWolf = SWEntities.getSophisticatedWolfType().spawn(
                         (ServerLevel) level, stack, player,
                         wolf.blockPosition(), MobSpawnType.SPAWN_EGG,
                         true, true);

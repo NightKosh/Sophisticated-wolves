@@ -3,7 +3,6 @@ package sophisticated_wolves.item;
 import net.minecraft.world.item.Item;
 import net.minecraftforge.common.ForgeSpawnEggItem;
 import sophisticated_wolves.core.SWEntities;
-import sophisticated_wolves.core.SWTabs;
 
 /**
  * Sophisticated Wolves
@@ -17,7 +16,7 @@ public class ItemWolfEgg extends ForgeSpawnEggItem {
     private static final int HIGHLIGHT_COLOR = 13545366;
 
     public ItemWolfEgg() {
-        super(SWEntities.SOPHISTICATED_WOLF, BACKGROUND_COLOR, HIGHLIGHT_COLOR, new Item.Properties().tab(SWTabs.TAB));
+        super(SWEntities.SOPHISTICATED_WOLF, BACKGROUND_COLOR, HIGHLIGHT_COLOR, new Item.Properties().stacksTo(64));
     }
 
 }

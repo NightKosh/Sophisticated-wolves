@@ -11,9 +11,10 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
 import sophisticated_wolves.core.SWSound;
-import sophisticated_wolves.core.SWTabs;
 import sophisticated_wolves.entity.SophisticatedWolf;
 import sophisticated_wolves.util.LevelUtils;
+
+import javax.annotation.Nonnull;
 
 /**
  * Sophisticated Wolves
@@ -24,13 +25,12 @@ import sophisticated_wolves.util.LevelUtils;
 public class ItemWhistle extends Item {
 
     public ItemWhistle() {
-        super(new Item.Properties()
-                .tab(SWTabs.TAB)
-                .stacksTo(1));
+        super(new Item.Properties().stacksTo(1));
     }
 
+    @Nonnull
     @Override
-    public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
+    public InteractionResultHolder<ItemStack> use(Level level, @Nonnull Player player, @Nonnull InteractionHand hand) {
         if (level.isClientSide()) {
             level.playSound(player, player,
                     player.isShiftKeyDown() ? SWSound.getWhistleLong() : SWSound.getWhistleShort(),

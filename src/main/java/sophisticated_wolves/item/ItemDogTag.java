@@ -9,9 +9,10 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import sophisticated_wolves.core.SWConfiguration;
-import sophisticated_wolves.core.SWTabs;
 import sophisticated_wolves.entity.SophisticatedWolf;
 import sophisticated_wolves.gui.screen.DogTagScreen;
+
+import javax.annotation.Nonnull;
 
 /**
  * Sophisticated Wolves
@@ -22,12 +23,14 @@ import sophisticated_wolves.gui.screen.DogTagScreen;
 public class ItemDogTag extends Item {
 
     public ItemDogTag() {
-        super(new Item.Properties()
-                .tab(SWTabs.TAB));
+        super(new Item.Properties().stacksTo(64));
     }
 
+    @Nonnull
     @Override
-    public InteractionResult interactLivingEntity(ItemStack stack, Player player, LivingEntity entity, InteractionHand hand) {
+    public InteractionResult interactLivingEntity(
+            @Nonnull ItemStack stack, @Nonnull Player player,
+            @Nonnull LivingEntity entity, @Nonnull InteractionHand hand) {
         if (entity instanceof SophisticatedWolf wolf) {
             return setName(wolf, stack, player);
         }

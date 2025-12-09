@@ -15,6 +15,8 @@ import net.minecraft.world.level.material.Material;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
+import javax.annotation.Nonnull;
+
 /**
  * Sophisticated Wolves
  *
@@ -38,14 +40,16 @@ public class BlockKennel extends Block {
     }
 
     @Override
-    public VoxelShape getShape(BlockState blockState, BlockGetter blockGetter,
-                               BlockPos blockPos, CollisionContext collisionContext) {
+    public VoxelShape getShape(
+            @Nonnull BlockState blockState, @Nonnull BlockGetter blockGetter,
+            @Nonnull BlockPos blockPos, @Nonnull CollisionContext collisionContext) {
         return SHAPE;
     }
 
     @Override
-    public VoxelShape getCollisionShape(BlockState blockState, BlockGetter blockGetter,
-                                        BlockPos blockPos, CollisionContext collisionContext) {
+    public VoxelShape getCollisionShape(
+            @Nonnull BlockState blockState, @Nonnull BlockGetter blockGetter,
+            @Nonnull BlockPos blockPos, @Nonnull CollisionContext collisionContext) {
         return SHAPE;
     }
 

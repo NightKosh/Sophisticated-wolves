@@ -3,7 +3,6 @@ package sophisticated_wolves.item.item_block;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import sophisticated_wolves.core.SWBlocks;
-import sophisticated_wolves.core.SWTabs;
 
 /**
  * Sophisticated Wolves
@@ -14,7 +13,7 @@ import sophisticated_wolves.core.SWTabs;
 public class ItemBlockKennel extends BlockItem {
 
     public ItemBlockKennel() {
-        super(SWBlocks.getKennel(), new Item.Properties().tab(SWTabs.TAB));
+        super(SWBlocks.getKennel(), new Item.Properties().stacksTo(64));
     }
 
 }
