@@ -16,22 +16,11 @@ import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.entity.AgeableMob;
-import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.Mob;
-import net.minecraft.world.entity.MobSpawnType;
-import net.minecraft.world.entity.SpawnGroupData;
+import net.minecraft.world.damagesource.DamageTypes;
+import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
-import net.minecraft.world.entity.ai.goal.BreedGoal;
-import net.minecraft.world.entity.ai.goal.FloatGoal;
-import net.minecraft.world.entity.ai.goal.LeapAtTargetGoal;
-import net.minecraft.world.entity.ai.goal.LookAtPlayerGoal;
-import net.minecraft.world.entity.ai.goal.MeleeAttackGoal;
-import net.minecraft.world.entity.ai.goal.RandomLookAroundGoal;
-import net.minecraft.world.entity.ai.goal.SitWhenOrderedToGoal;
-import net.minecraft.world.entity.ai.goal.WaterAvoidingRandomStrollGoal;
+import net.minecraft.world.entity.ai.goal.*;
 import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.ai.goal.target.NonTameRandomTargetGoal;
@@ -49,7 +38,6 @@ import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.pathfinder.BlockPathTypes;
 import net.minecraftforge.common.Tags;
-import sophisticated_wolves.util.FoodUtils;
 import sophisticated_wolves.api.AEntitySophisticatedWolf;
 import sophisticated_wolves.api.EnumWolfSpecies;
 import sophisticated_wolves.core.SWConfiguration;
@@ -58,7 +46,8 @@ import sophisticated_wolves.core.SWItems;
 import sophisticated_wolves.entity.ai.*;
 import sophisticated_wolves.gui.screen.WolfFoodConfigScreen;
 import sophisticated_wolves.item.ItemDogTag;
-import sophisticated_wolves.item.pet_carrier.ItemPetCarrier;
+import sophisticated_wolves.item.ItemPetCarrier;
+import sophisticated_wolves.util.FoodUtils;
 
 import javax.annotation.Nullable;
 
@@ -110,6 +99,7 @@ public class SophisticatedWolf extends AEntitySophisticatedWolf {
     public SophisticatedWolf(EntityType<? extends Wolf> entityType, Level level) {
         super(entityType, level);
         this.setPathfindingMalus(BlockPathTypes.DANGER_FIRE, 30);
+        this.setPathfindingMalus(BlockPathTypes.LAVA, 100);
     }
 
     @Override
@@ -435,13 +425,13 @@ public class SophisticatedWolf extends AEntitySophisticatedWolf {
     public boolean hurt(DamageSource damageSource, float amount) {
         if ((this.fleeGoal != null && this.fleeGoal.shouldFlee() && this.getRandom().nextInt(10) != 0) || // discard if flee
                 (damageSource.getEntity() != null && damageSource.getEntity().equals(this.getOwner()) && !damageSource.getEntity().isShiftKeyDown()) || //protect from owner
-                (SWConfiguration.IMMUNE_TO_CACTI.get() && damageSource.equals(DamageSource.CACTUS))) { // protect from cacti
+                (SWConfiguration.IMMUNE_TO_CACTI.get() && damageSource.is(DamageTypes.CACTUS))) { // protect from cacti
             return false;
         } else {
-            if (damageSource.equals(DamageSource.DROWN) && this.drownGoal != null) {
+            if (damageSource.is(DamageTypes.DROWN) && this.drownGoal != null) {
                 this.drownGoal.setActive(true);
             }
-            if ((damageSource.equals(DamageSource.IN_FIRE) || damageSource.equals(DamageSource.LAVA)) &&
+            if ((damageSource.is(DamageTypes.IN_FIRE) || damageSource.is(DamageTypes.LAVA)) &&
                     this.burnGoal != null) {
                 this.burnGoal.setActive(true);
             }
@@ -472,25 +462,20 @@ public class SophisticatedWolf extends AEntitySophisticatedWolf {
     }
 
     @Override
-    public boolean canCutCorner(BlockPathTypes pathTypes) {
-        return super.canCutCorner(pathTypes) && pathTypes != BlockPathTypes.LAVA;
-    }
-
-    @Override
     public boolean shouldShowName() {
         return (SWConfiguration.ALWAYS_SHOW_WOLF_NAME.get() && this.hasCustomName()) || super.shouldShowName();
     }
 
     /**
-     * Because the implemented A* pathfinding alg doesn't straightfully call out drops from a damagable distance 
-     * above to be a no no, instead they check based on this function here on how many blocks the wolf can 
-     * accept to drop, and the default implementation depends on the health, 
+     * Because the implemented A* pathfinding alg doesn't straightfully call out drops from a damagable distance
+     * above to be a no no, instead they check based on this function here on how many blocks the wolf can
+     * accept to drop, and the default implementation depends on the health,
      * but currently as my experience, it is not good...
      * The wolf will jump even if after that he have 1 hp left... :(
      * I think you want this as Sophisticated Wolves aim to make dogs...
-     * ...oops... i may have ptsd while working for DoggyTalents :)), i 
+     * ...oops... i may have ptsd while working for DoggyTalents :)), i
      * mean wolves know how to care for themselves And not drop.... like that.
-     * I tested this a lot of time in DoggyTalents and it is good... 
+     * I tested this a lot of time in DoggyTalents and it is good...
      */
     @Override
     public int getMaxFallDistance() {
