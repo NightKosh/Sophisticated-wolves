@@ -1,6 +1,7 @@
 {
   "type" : "minecraft:crafting_shapeless",
   "group" : "dog_treat",
+  "category": "misc",
   "ingredients" : [
     {
       "item" : "minecraft:wheat"
