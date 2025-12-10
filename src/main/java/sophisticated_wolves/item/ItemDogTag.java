@@ -14,6 +14,8 @@ import sophisticated_wolves.gui.screen.DogTagScreen;
 
 import javax.annotation.Nonnull;
 
+import static com.mojang.text2speech.Narrator.LOGGER;
+
 /**
  * Sophisticated Wolves
  *
@@ -47,6 +49,9 @@ public class ItemDogTag extends Item {
 
     private static InteractionResult setName(TamableAnimal pet, ItemStack stack, Player player) {
         if (pet.isTame() && pet.getOwnerUUID() != null && pet.getOwnerUUID().equals(player.getUUID())) {
+            if (SWConfiguration.DEBUG_MODE.get()) {
+                LOGGER.info("Dog Tag was used on pet ");
+            }
             if (player.getLevel().isClientSide()) {
                 DogTagScreen.open(pet);
             } else {

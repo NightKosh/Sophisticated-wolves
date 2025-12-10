@@ -51,6 +51,8 @@ import sophisticated_wolves.util.FoodUtils;
 
 import javax.annotation.Nullable;
 
+import static com.mojang.text2speech.Narrator.LOGGER;
+
 /**
  * Sophisticated Wolves
  *
@@ -100,6 +102,10 @@ public class SophisticatedWolf extends AEntitySophisticatedWolf {
         super(entityType, level);
         this.setPathfindingMalus(BlockPathTypes.DANGER_FIRE, 30);
         this.setPathfindingMalus(BlockPathTypes.LAVA, 100);
+
+        if (SWConfiguration.DEBUG_MODE.get()) {
+            LOGGER.info("SophisticatedWolf spawned");
+        }
     }
 
     @Override

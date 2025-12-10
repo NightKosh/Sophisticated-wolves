@@ -29,6 +29,8 @@ public class SWConfiguration {
 
     public static ForgeConfigSpec.ConfigValue<Boolean> ALWAYS_SHOW_WOLF_NAME;
 
+    public static ForgeConfigSpec.ConfigValue<Boolean> DEBUG_MODE;
+
     static {
         BUILDER.push("Configs for Sophisticated Wolves Mod");
 
@@ -58,6 +60,9 @@ public class SWConfiguration {
 
         ALWAYS_SHOW_WOLF_NAME = BUILDER.comment("Always show the wolf's name.")
                 .define( "Always Show Wolves' Name", true);
+
+        DEBUG_MODE = BUILDER.comment("Enable debug mode for additional dev logs")
+                .define("Debug Mode", false);
 
         BUILDER.pop();
         SPEC = BUILDER.build();

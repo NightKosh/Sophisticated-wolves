@@ -10,8 +10,11 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.gameevent.GameEvent;
 import sophisticated_wolves.api.ISophisticatedWolf;
 import sophisticated_wolves.compatibility.Compatibility;
+import sophisticated_wolves.core.SWConfiguration;
 import sophisticated_wolves.core.SWEntities;
 import sophisticated_wolves.entity.SophisticatedWolf;
+
+import static com.mojang.text2speech.Narrator.LOGGER;
 
 /**
  * Sophisticated Wolves
@@ -30,6 +33,10 @@ public class ItemDogTreat extends Item {
                 e instanceof Wolf wolf &&
                 !(e instanceof ISophisticatedWolf)) {
             if (wolf.isTame()) {
+                if (SWConfiguration.DEBUG_MODE.get()) {
+                    LOGGER.info("Dog Treat was used on vanilla wolf");
+                }
+
                 var level = player.getLevel();
                 var sWolf = SWEntities.getSophisticatedWolfType().spawn(
                         (ServerLevel) level, stack, player,
