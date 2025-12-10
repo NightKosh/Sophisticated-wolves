@@ -29,12 +29,12 @@ import sophisticated_wolves.item.pet_carrier.PetCarrierHelper;
 @Mod(ModInfo.ID)
 public class SophisticatedWolvesMod {
 
-    public static SophisticatedWolvesMod instance;
+    public static SophisticatedWolvesMod INSTANCE;
 
-    public static Logger logger = LogManager.getLogger(ModInfo.ID);
+    public static final Logger LOGGER = LogManager.getLogger(ModInfo.ID);
 
     public SophisticatedWolvesMod() {
-        instance = this;
+        INSTANCE = this;
 
         ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, SWConfiguration.SPEC, ModInfo.ID + ".toml");
 
