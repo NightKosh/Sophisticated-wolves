@@ -25,7 +25,8 @@ gradle/
 
 # other
 eclipse
-run/*
+run
+runs/**
 
 # Files from Forge MDK
 changelog.txt
@@ -34,5 +35,7 @@ LICENSE.txt
 README.txt
 forge*changelog.txt
 
-!run/gameteststructures/
-!run/gameteststructures/*
+!runs/
+!runs/gameTestServer/
+!runs/gameTestServer/gameteststructures/
+!runs/gameTestServer/gameteststructures/empty.snbt
