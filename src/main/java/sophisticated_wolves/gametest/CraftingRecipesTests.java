@@ -2,17 +2,18 @@ package sophisticated_wolves.gametest;
 
 import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
-import net.minecraft.world.inventory.CraftingContainer;
 import net.minecraft.world.inventory.MenuType;
+import net.minecraft.world.inventory.TransientCraftingContainer;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.CraftingRecipe;
 import net.minecraft.world.item.crafting.RecipeType;
-import net.minecraftforge.gametest.GameTestHolder;
-import net.minecraftforge.gametest.PrefixGameTestTemplate;
+import net.neoforged.neoforge.gametest.GameTestHolder;
+import net.neoforged.neoforge.gametest.PrefixGameTestTemplate;
 import org.apache.commons.lang3.tuple.Pair;
 import sophisticated_wolves.api.ModInfo;
 import sophisticated_wolves.core.SWBlocks;
@@ -21,8 +22,13 @@ import sophisticated_wolves.core.SWItems;
 import java.util.List;
 
 import static com.mojang.text2speech.Narrator.LOGGER;
-import static net.minecraft.resources.ResourceLocation.fromNamespaceAndPath;
 
+/**
+ * Sophisticated Wolves
+ *
+ * @author NightKosh
+ * @license Lesser GNU Public License v3 (http://www.gnu.org/licenses/lgpl.html)
+ */
 @GameTestHolder(ModInfo.ID)
 @PrefixGameTestTemplate(false)
 public class CraftingRecipesTests {
@@ -141,7 +147,7 @@ public class CraftingRecipesTests {
     protected static void defaultTest(GameTestHelper helper, String recipeName, List<Pair<Integer, Item>> inputs, ItemStack expected) {
         var level = helper.getLevel();
 
-        var res = fromNamespaceAndPath(ModInfo.ID, recipeName);
+        var res = new ResourceLocation(ModInfo.ID, recipeName);
         var recipeByKey = level.getRecipeManager().byKey(res);
 
         if (recipeByKey.isEmpty()) {
@@ -149,8 +155,8 @@ public class CraftingRecipesTests {
             return;
         }
 
-        if (!(recipeByKey.get() instanceof CraftingRecipe)) {
-            helper.fail("Recipe " + recipeName + " isn't an instance of CraftingRecipe: " + recipeByKey.get());
+        if (!(recipeByKey.get().value() instanceof CraftingRecipe)) {
+            helper.fail("Recipe " + recipeName + " isn't an instance of CraftingRecipe: " + recipeByKey.get().value());
             return;
         }
 
@@ -167,7 +173,7 @@ public class CraftingRecipesTests {
             }
         };
 
-        var crafting = new CraftingContainer(dummyMenu, 3, 3);
+        var crafting = new TransientCraftingContainer(dummyMenu, 3, 3);
         for (var pair : inputs) {
             crafting.setItem(pair.getKey(), new ItemStack(pair.getValue()));
         }
@@ -178,7 +184,7 @@ public class CraftingRecipesTests {
             return;
         }
 
-        var result = recipeOpt.get().assemble(crafting, level.registryAccess());
+        var result = recipeOpt.get().value().assemble(crafting, level.registryAccess());
         if (!result.is(expected.getItem())) {
             helper.fail("Expected " + expected.getHoverName().getString() + " item but get " + result.getHoverName().getString());
             return;
