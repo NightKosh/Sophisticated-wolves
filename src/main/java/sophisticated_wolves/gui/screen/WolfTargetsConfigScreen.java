@@ -44,7 +44,7 @@ public class WolfTargetsConfigScreen extends WolfConfigScreen {
     protected void onScreenClosed() {
         wolf.updateTargets(this.attackSkeletons.isEnabled(), this.attackZombies.isEnabled(), this.attackSpiders.isEnabled(),
                 this.attackSlimes.isEnabled(), this.attackNether.isEnabled(), this.attackRaider.isEnabled());
-        SWMessages.sendToServer(new WolfTargetsConfigMessageToServer(this.wolf));
+        SWMessages.sendToServer(WolfTargetsConfigMessageToServer.getFromWolf(this.wolf));
     }
 
     @Override

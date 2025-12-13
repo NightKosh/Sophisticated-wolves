@@ -1,8 +1,8 @@
 package sophisticated_wolves.gui.component;
 
 import com.mojang.blaze3d.systems.RenderSystem;
-import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.network.chat.Component;
@@ -31,17 +31,17 @@ public class GuiTabButton extends Button {
     }
 
     @Override
-    public void renderWidget(@Nonnull PoseStack poseStack, int mouseX, int mouseY, float partialTicks) {
+    public void renderWidget(@Nonnull GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTicks) {
         RenderSystem.setShader(GameRenderer::getPositionTexShader);
         RenderSystem.setShaderColor(1, 1, 1, 1);
         RenderSystem.setShaderTexture(0, SWResources.TAB_BUTTON_GUI);
 
         if (this.isTabActive) {
-            blit(poseStack, this.getX(), this.getY(), 0, 30, this.width, Y_SIZE_ENABLED);
+            guiGraphics.blit(SWResources.TAB_BUTTON_GUI, this.getX(), this.getY(), 0, 30, this.width, Y_SIZE_ENABLED);
         } else {
-            blit(poseStack, this.getX(), this.getY(), 0, 0, this.width, Y_SIZE);
+            guiGraphics.blit(SWResources.TAB_BUTTON_GUI, this.getX(), this.getY(), 0, 0, this.width, Y_SIZE);
         }
-        drawCenteredString(poseStack, Minecraft.getInstance().font, this.getMessage(),
+        guiGraphics.drawCenteredString(Minecraft.getInstance().font, this.getMessage(),
                 this.getX() + this.width / 2, this.getY() + (this.height - 8) / 2,
                 this.getFGColor() | Mth.ceil(this.alpha * 255F) << 24);
     }

@@ -1,8 +1,8 @@
 package sophisticated_wolves.gui.component;
 
 import com.mojang.blaze3d.systems.RenderSystem;
-import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.network.chat.Component;
@@ -50,18 +50,18 @@ public class GuiCheckbox extends Button {
     }
 
     @Override
-    public void renderWidget(@Nonnull PoseStack poseStack, int mouseX, int mouseY, float partialTicks) {
+    public void renderWidget(@Nonnull GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTicks) {
         RenderSystem.setShader(GameRenderer::getPositionTexShader);
         RenderSystem.setShaderColor(1, 1, 1, 1);
         RenderSystem.setShaderTexture(0, SWResources.CHECKBOX_GUI);
 
-        this.blit(poseStack, this.getX(), this.getY(), 0, 0, X_SIZE, Y_SIZE);
+        guiGraphics.blit(SWResources.CHECKBOX_GUI, this.getX(), this.getY(), 0, 0, X_SIZE, Y_SIZE);
         if (this.enabled) {
-            this.blit(poseStack, this.getX(), this.getY(), Y_SIZE, 0, X_SIZE, Y_SIZE);
+            guiGraphics.blit(SWResources.CHECKBOX_GUI, this.getX(), this.getY(), Y_SIZE, 0, X_SIZE, Y_SIZE);
         }
 
         if (this.hasText) {
-            drawString(poseStack, Minecraft.getInstance().font, this.getMessage(),
+            guiGraphics.drawString(Minecraft.getInstance().font, this.getMessage(),
                     this.getX() + X_SIZE, this.getY() + (this.height - 8) / 2,
                     this.getFGColor() | Mth.ceil(this.alpha * 255F) << 24);
         }

@@ -34,7 +34,7 @@ public class DogBowlContainerMenu extends AbstractContainerMenu {
     protected BlockEntityDogBowl dogBowl;
 
     public DogBowlContainerMenu(int containerId, Inventory inv, FriendlyByteBuf extraData) {
-        this(containerId, inv, inv.player.level.getBlockEntity(extraData.readBlockPos()));
+        this(containerId, inv, inv.player.level().getBlockEntity(extraData.readBlockPos()));
     }
 
     public DogBowlContainerMenu(int containerId, Inventory inv, BlockEntity blockEntity) {
@@ -44,7 +44,7 @@ public class DogBowlContainerMenu extends AbstractContainerMenu {
     public DogBowlContainerMenu(int containerId, Inventory inv, BlockEntity blockEntity, ContainerData data) {
         super(SWMenu.DOG_BOWL.get(), containerId);
         this.dogBowl = ((BlockEntityDogBowl) blockEntity);
-        this.level = inv.player.level;
+        this.level = inv.player.level();
         this.data = data;
 
         this.addSlot(new SlotDogBowl(this.dogBowl, 0, 8, 35));

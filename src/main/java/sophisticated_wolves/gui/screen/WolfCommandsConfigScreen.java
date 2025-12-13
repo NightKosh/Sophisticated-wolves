@@ -2,8 +2,8 @@ package sophisticated_wolves.gui.screen;
 
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
-import sophisticated_wolves.core.SWResources;
 import sophisticated_wolves.core.SWMessages;
+import sophisticated_wolves.core.SWResources;
 import sophisticated_wolves.entity.SophisticatedWolf;
 import sophisticated_wolves.gui.component.GuiCheckbox;
 import sophisticated_wolves.packets.WolfCommandsConfigMessageToServer;
@@ -43,7 +43,7 @@ public class WolfCommandsConfigScreen extends WolfConfigScreen {
     @Override
     protected void onScreenClosed() {
         wolf.updateCommands(this.followOwner.isEnabled(), this.guardZone.isEnabled());
-        SWMessages.sendToServer(new WolfCommandsConfigMessageToServer(this.wolf));
+        SWMessages.sendToServer(WolfCommandsConfigMessageToServer.getFromWolf(this.wolf));
     }
 
     @Override

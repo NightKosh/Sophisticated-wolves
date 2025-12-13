@@ -49,7 +49,7 @@ public class WolfFoodConfigScreen extends WolfConfigScreen {
     protected void onScreenClosed() {
         wolf.updateFood(this.isRottenMeatAndBones.isEnabled(), this.isRawMeat.isEnabled(), this.isRawFish.isEnabled(),
                 this.isSpecialFish.isEnabled(), this.isCookedMeat.isEnabled(), this.isCookedFish.isEnabled());
-        SWMessages.sendToServer(new WolfFoodConfigMessageToServer(this.wolf));
+        SWMessages.sendToServer(WolfFoodConfigMessageToServer.getFromWolf(this.wolf));
     }
 
     @Override

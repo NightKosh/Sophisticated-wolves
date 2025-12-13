@@ -1,7 +1,7 @@
 package sophisticated_wolves.gui.screen;
 
 import com.mojang.blaze3d.systems.RenderSystem;
-import com.mojang.blaze3d.vertex.PoseStack;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.network.chat.Component;
@@ -37,7 +37,7 @@ public class DogBowlScreen extends AbstractContainerScreen<DogBowlContainerMenu>
     }
 
     @Override
-    protected void renderBg(@Nonnull PoseStack poseStack, float partialTick, int mouseX, int mouseY) {
+    protected void renderBg(@Nonnull GuiGraphics guiGraphics, float partialTick, int mouseX, int mouseY) {
         RenderSystem.setShader(GameRenderer::getPositionTexShader);
         RenderSystem.setShaderColor(1, 1, 1, 1);
         RenderSystem.setShaderTexture(0, SWResources.DOG_BOWL_GUI);
@@ -46,42 +46,41 @@ public class DogBowlScreen extends AbstractContainerScreen<DogBowlContainerMenu>
         int y = (this.height - this.imageHeight) / 2;
 
         //draw bones background
-        this.blit(poseStack, x + BONES_X_OFFSET, y + BONES_Y_OFFSET_1, 109, 167, 108, 57);
+        guiGraphics.blit(SWResources.DOG_BOWL_GUI, x + BONES_X_OFFSET, y + BONES_Y_OFFSET_1, 109, 167, 108, 57);
 
         // draw bones
         int amountOfFood = dogBowl.getFoodAmount();
         int bonesLevel = (amountOfFood == 0) ? 1 : amountOfFood / BlockDogBowl.EnumDogBowl.BONES_PER_LEVEL + 1;
         int amountOfBonesForLevel = (amountOfFood == 0) ? 0 : amountOfFood % BlockDogBowl.EnumDogBowl.BONES_PER_LEVEL;
         if (amountOfFood > BlockDogBowl.EnumDogBowl.EMPTY.getAmountOfFood()) {
-            drawBones(poseStack, x, y + BONES_Y_OFFSET_1, 1, bonesLevel, amountOfBonesForLevel);
+            drawBones(guiGraphics, x, y + BONES_Y_OFFSET_1, 1, bonesLevel, amountOfBonesForLevel);
             if (amountOfFood > BlockDogBowl.EnumDogBowl.FILLED_25_P.getAmountOfFood()) {
-                drawBones(poseStack, x, y + BONES_Y_OFFSET_2, 2, bonesLevel, amountOfBonesForLevel);
+                drawBones(guiGraphics, x, y + BONES_Y_OFFSET_2, 2, bonesLevel, amountOfBonesForLevel);
                 if (amountOfFood > BlockDogBowl.EnumDogBowl.FILLED_50_P.getAmountOfFood()) {
-                    drawBones(poseStack, x, y + BONES_Y_OFFSET_3, 3, bonesLevel, amountOfBonesForLevel);
+                    drawBones(guiGraphics, x, y + BONES_Y_OFFSET_3, 3, bonesLevel, amountOfBonesForLevel);
                     if (amountOfFood > BlockDogBowl.EnumDogBowl.FILLED_75_P.getAmountOfFood()) {
-                        drawBones(poseStack, x, y + BONES_Y_OFFSET_4, 4, bonesLevel, amountOfBonesForLevel);
+                        drawBones(guiGraphics, x, y + BONES_Y_OFFSET_4, 4, bonesLevel, amountOfBonesForLevel);
                     }
                 }
             }
         }
 
-        this.blit(poseStack, x, y, 0, 0, imageWidth, imageHeight);
+        guiGraphics.blit(SWResources.DOG_BOWL_GUI, x, y, 0, 0, imageWidth, imageHeight);
     }
 
-    private void drawBones(PoseStack poseStack, int x, int y, int level, int bonesLevel, int amountOfBones) {
+    private void drawBones(GuiGraphics guiGraphics, int x, int y, int level, int bonesLevel, int amountOfBones) {
         if (bonesLevel > level) {
-            this.blit(poseStack, x + BONES_X_OFFSET, y, 0, 167, 108, BONE_HEIGHT);
+            guiGraphics.blit(SWResources.DOG_BOWL_GUI, x + BONES_X_OFFSET, y, 0, 167, 108, BONE_HEIGHT);
         } else {
             int offset = amountOfBones * BONE_WIDTH + 12;
-            this.blit(poseStack, x + BONES_X_OFFSET, y, 112 - offset, 167, offset - 4, BONE_HEIGHT);
+            guiGraphics.blit(SWResources.DOG_BOWL_GUI, x + BONES_X_OFFSET, y, 112 - offset, 167, offset - 4, BONE_HEIGHT);
         }
     }
 
     @Override
-    public void render(@Nonnull PoseStack pPoseStack, int mouseX, int mouseY, float delta) {
-        renderBackground(pPoseStack);
-        super.render(pPoseStack, mouseX, mouseY, delta);
-        renderTooltip(pPoseStack, mouseX, mouseY);
+    public void render(@Nonnull GuiGraphics guiGraphics, int mouseX, int mouseY, float delta) {
+        super.render(guiGraphics, mouseX, mouseY, delta);
+        renderTooltip(guiGraphics, mouseX, mouseY);
     }
 
 }
