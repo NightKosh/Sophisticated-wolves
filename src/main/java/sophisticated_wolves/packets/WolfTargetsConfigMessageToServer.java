@@ -1,11 +1,16 @@
 package sophisticated_wolves.packets;
 
-import net.minecraft.network.FriendlyByteBuf;
-import net.minecraftforge.network.NetworkEvent;
+import io.netty.buffer.ByteBuf;
+import net.minecraft.network.codec.ByteBufCodecs;
+import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerPlayer;
+import net.neoforged.neoforge.network.handling.IPayloadContext;
+import sophisticated_wolves.api.ModInfo;
 import sophisticated_wolves.entity.SophisticatedWolf;
 
-import java.util.UUID;
-import java.util.function.Supplier;
+import javax.annotation.Nonnull;
 
 /**
  * Sophisticated Wolves
@@ -13,62 +18,68 @@ import java.util.function.Supplier;
  * @author NightKosh
  * @license Lesser GNU Public License v3 (http://www.gnu.org/licenses/lgpl.html)
  */
-public class WolfTargetsConfigMessageToServer {
+public record WolfTargetsConfigMessageToServer(
+        int wolfId,
+        boolean attackSkeletons,
+        boolean attackZombies,
+        boolean attackSpiders,
+        boolean attackSlimes,
+        boolean attackNether,
+        boolean attackRaider
+) implements CustomPacketPayload {
 
-    private final UUID wolfId;
-    private final boolean attackSkeletons;
-    private final boolean attackZombies;
-    private final boolean attackSpiders;
-    private final boolean attackSlimes;
-    private final boolean attackNether;
-    private final boolean attackRaider;
+    public static final Type<WolfTargetsConfigMessageToServer> TYPE =
+            new Type<>(new ResourceLocation(ModInfo.ID, "wolf_targets_config"));
 
-    public WolfTargetsConfigMessageToServer(SophisticatedWolf wolf) {
-        this.wolfId = wolf.getUUID();
+    public static final StreamCodec<ByteBuf, WolfTargetsConfigMessageToServer> STREAM_CODEC =
+            StreamCodec.of(
+                    (buf, msg) -> {
+                        ByteBufCodecs.VAR_INT.encode(buf, msg.wolfId());
+                        ByteBufCodecs.BOOL.encode(buf, msg.attackSkeletons());
+                        ByteBufCodecs.BOOL.encode(buf, msg.attackZombies());
+                        ByteBufCodecs.BOOL.encode(buf, msg.attackSpiders());
+                        ByteBufCodecs.BOOL.encode(buf, msg.attackSlimes());
+                        ByteBufCodecs.BOOL.encode(buf, msg.attackNether());
+                        ByteBufCodecs.BOOL.encode(buf, msg.attackRaider());
+                    },
+                    buf -> new WolfTargetsConfigMessageToServer(
+                            ByteBufCodecs.VAR_INT.decode(buf),
+                            ByteBufCodecs.BOOL.decode(buf),
+                            ByteBufCodecs.BOOL.decode(buf),
+                            ByteBufCodecs.BOOL.decode(buf),
+                            ByteBufCodecs.BOOL.decode(buf),
+                            ByteBufCodecs.BOOL.decode(buf),
+                            ByteBufCodecs.BOOL.decode(buf)
+                    )
+            );
+
+    @Nonnull
+    @Override
+    public Type<? extends CustomPacketPayload> type() {
+        return TYPE;
+    }
+
+    public static WolfTargetsConfigMessageToServer getFromWolf(SophisticatedWolf wolf) {
         var wolfTargets = wolf.getWolfTargets();
-        this.attackSkeletons = wolfTargets.attackSkeletons();
-        this.attackZombies = wolfTargets.attackZombies();
-        this.attackSpiders = wolfTargets.attackSpiders();
-        this.attackSlimes = wolfTargets.attackSlimes();
-        this.attackNether = wolfTargets.attackNether();
-        this.attackRaider = wolfTargets.attackRaider();
+        return new WolfTargetsConfigMessageToServer(wolf.getId(),
+                wolfTargets.attackSkeletons(), wolfTargets.attackZombies(), wolfTargets.attackSpiders(),
+                wolfTargets.attackSlimes(), wolfTargets.attackNether(), wolfTargets.attackRaider());
+
     }
 
-    public WolfTargetsConfigMessageToServer(FriendlyByteBuf buf) {
-        this.wolfId = UUID.fromString(buf.readUtf());
-        this.attackSkeletons = buf.readBoolean();
-        this.attackZombies = buf.readBoolean();
-        this.attackSpiders = buf.readBoolean();
-        this.attackSlimes = buf.readBoolean();
-        this.attackNether = buf.readBoolean();
-        this.attackRaider = buf.readBoolean();
-    }
-
-    public void toBytes(FriendlyByteBuf buf) {
-        buf.writeUtf(this.wolfId.toString());
-        buf.writeBoolean(this.attackSkeletons);
-        buf.writeBoolean(this.attackZombies);
-        buf.writeBoolean(this.attackSpiders);
-        buf.writeBoolean(this.attackSlimes);
-        buf.writeBoolean(this.attackNether);
-        buf.writeBoolean(this.attackRaider);
-    }
-
-    public boolean handle(Supplier<NetworkEvent.Context> supplier) {
-        var context = supplier.get();
+    public static void handle(WolfTargetsConfigMessageToServer msg, IPayloadContext context) {
         context.enqueueWork(() -> {
-            var player = context.getSender();
-            var level = player.getLevel();
+            ServerPlayer player = (ServerPlayer) context.player();
+            var level = player.level();
 
-            if (level != null) {
-                var animal = level.getEntity(this.wolfId);
-                if (animal != null && animal instanceof SophisticatedWolf wolf) {
-                    wolf.updateTargets(this.attackSkeletons, this.attackZombies, this.attackSpiders,
-                            this.attackSlimes, this.attackNether, this.attackRaider);
-                }
+            var entity = level.getEntity(msg.wolfId());
+            if (entity instanceof SophisticatedWolf wolf) {
+                wolf.updateTargets(
+                        msg.attackSkeletons(), msg.attackZombies(), msg.attackSpiders(),
+                        msg.attackSlimes(), msg.attackNether(), msg.attackRaider()
+                );
             }
         });
-        return true;
     }
 
 }

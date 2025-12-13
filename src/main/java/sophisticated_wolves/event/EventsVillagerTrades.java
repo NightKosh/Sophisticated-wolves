@@ -1,5 +1,6 @@
 package sophisticated_wolves.event;
 
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.animal.Cat;
 import net.minecraft.world.entity.animal.Chicken;
@@ -10,10 +11,12 @@ import net.minecraft.world.entity.animal.Rabbit;
 import net.minecraft.world.entity.animal.Wolf;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.component.CustomData;
+import net.minecraft.world.item.trading.ItemCost;
 import net.minecraft.world.item.trading.MerchantOffer;
-import net.minecraftforge.event.village.VillagerTradesEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.common.EventBusSubscriber;
+import net.neoforged.neoforge.event.village.VillagerTradesEvent;
 import sophisticated_wolves.api.ModInfo;
 import sophisticated_wolves.core.SWItems;
 import sophisticated_wolves.core.SWVillagers;
@@ -26,7 +29,7 @@ import sophisticated_wolves.item.pet_carrier.PetCarrierHelper;
  * @author NightKosh
  * @license Lesser GNU Public License v3 (http://www.gnu.org/licenses/lgpl.html)
  */
-@Mod.EventBusSubscriber(modid = ModInfo.ID)
+@EventBusSubscriber(modid = ModInfo.ID)
 public class EventsVillagerTrades {
 
     @SubscribeEvent
@@ -35,16 +38,17 @@ public class EventsVillagerTrades {
             var trades = event.getTrades();
 
             trades.get(1).add((trader, rand) -> new MerchantOffer(
-                    new ItemStack(Items.EMERALD, 1),
+                    new ItemCost(Items.EMERALD, 1),
                     new ItemStack(SWItems.getDogTag(), 5),
-                    20, 8, 0.02F));
+                    20, 8, 0.02F
+            ));
             trades.get(1).add((trader, rand) -> new MerchantOffer(
-                    new ItemStack(Items.EMERALD, 1),
+                    new ItemCost(Items.EMERALD, 1),
                     new ItemStack(SWItems.getDogTreat(), 5),
                     20, 8, 0.02F));
 
             trades.get(2).add((trader, rand) -> new MerchantOffer(
-                    new ItemStack(Items.EMERALD, rand.nextInt(8, 12)),
+                    new ItemCost(Items.EMERALD, rand.nextInt(8, 12)),
                     new ItemStack(SWItems.getPetCarrier(), 1),
                     10, 15, 0.02F));
             trades.get(2).add((trader, rand) -> getCarrierOffer(Chicken.class, 15, 20, rand));
@@ -63,7 +67,7 @@ public class EventsVillagerTrades {
 
     private static MerchantOffer getCarrierOffer(Class petClass, int minPrice, int maxPrice, RandomSource random) {
         return new MerchantOffer(
-                new ItemStack(Items.EMERALD, random.nextInt(minPrice, maxPrice)),
+                new ItemCost(Items.EMERALD, random.nextInt(minPrice, maxPrice)),
                 getCarrierForTrade(petClass, random),
                 3, 30, 0.02F);
     }
@@ -75,7 +79,7 @@ public class EventsVillagerTrades {
         if (petCarrier != null) {
             var tags = petCarrier.getDefaultPetCarriers();
             if (tags != null) {
-                stack.setTag(tags.get(random.nextInt(tags.size())));
+                stack.set(DataComponents.CUSTOM_DATA, CustomData.of(tags.get(random.nextInt(tags.size()))));
             }
         }
         return stack;

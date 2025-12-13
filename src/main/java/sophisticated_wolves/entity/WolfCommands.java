@@ -21,6 +21,12 @@ public record WolfCommands(boolean followOwner, boolean guardZone, Integer guard
         this(followOwner, guardZone, blockPos.getX(), blockPos.getY(), blockPos.getZ());
     }
 
+    public static CompoundTag toTag(WolfCommands wolfCommands) {
+        var tag = new CompoundTag();
+        wolfCommands.saveData(tag);
+        return tag;
+    }
+
     public void saveData(CompoundTag tag) {
         var commands = new CompoundTag();
         commands.putBoolean("FollowOwner", this.followOwner);

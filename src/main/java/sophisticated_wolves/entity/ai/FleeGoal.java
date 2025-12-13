@@ -24,7 +24,7 @@ public class FleeGoal extends AvoidCreeperGoal {
     }
 
     private boolean isMonsterNearby(Class<? extends Mob> clazz) {
-        var monsters = this.wolf.getLevel().getEntitiesOfClass(
+        var monsters = this.wolf.level().getEntitiesOfClass(
                 clazz,
                 this.wolf.getBoundingBox()
                         .inflate(this.distance, 3, this.distance),

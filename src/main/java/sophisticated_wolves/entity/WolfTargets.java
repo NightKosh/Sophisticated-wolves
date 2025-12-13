@@ -46,6 +46,12 @@ public record WolfTargets(boolean attackSkeletons, boolean attackZombies, boolea
         this(true, false, false, false, false, false);
     }
 
+    public static CompoundTag toTag(WolfTargets wolfTargets) {
+        var tag = new CompoundTag();
+        wolfTargets.saveData(tag);
+        return tag;
+    }
+
     public void saveData(CompoundTag tag) {
         var allowedFoodTag = new CompoundTag();
         allowedFoodTag.putBoolean("AttackSkeletons", this.attackSkeletons);

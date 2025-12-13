@@ -8,14 +8,12 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.levelgen.structure.pools.SinglePoolElement;
 import net.minecraft.world.level.levelgen.structure.pools.StructureTemplatePool;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProcessorList;
-import net.minecraftforge.event.server.ServerAboutToStartEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.common.EventBusSubscriber;
+import net.neoforged.neoforge.event.server.ServerAboutToStartEvent;
 import sophisticated_wolves.api.ModInfo;
 
 import java.util.ArrayList;
-
-import static net.minecraft.resources.ResourceLocation.fromNamespaceAndPath;
 
 /**
  * Sophisticated Wolves
@@ -23,11 +21,11 @@ import static net.minecraft.resources.ResourceLocation.fromNamespaceAndPath;
  * @author NightKosh
  * @license Lesser GNU Public License v3 (http://www.gnu.org/licenses/lgpl.html)
  */
-@Mod.EventBusSubscriber(modid = ModInfo.ID)
+@EventBusSubscriber(modid = ModInfo.ID)
 public class SWStructures {
 
     private static final ResourceKey<StructureProcessorList> EMPTY_PROCESSOR_LIST_KEY =
-            ResourceKey.create(Registries.PROCESSOR_LIST, fromNamespaceAndPath("minecraft", "empty"));
+            ResourceKey.create(Registries.PROCESSOR_LIST, new ResourceLocation("minecraft", "empty"));
 
     private static void addBuildingToPool(
             Registry<StructureTemplatePool> templatePoolRegistry,
@@ -59,11 +57,11 @@ public class SWStructures {
                 event.getServer().registryAccess().registryOrThrow(Registries.PROCESSOR_LIST);
 
         addBuildingToPool(templatePoolRegistry, processorListRegistry,
-                fromNamespaceAndPath("minecraft", "village/plains/houses"),
+                new ResourceLocation("minecraft", "village/plains/houses"),
                 "sophisticated_wolves:village/plains_kennels", 1);
 
         addBuildingToPool(templatePoolRegistry, processorListRegistry,
-                fromNamespaceAndPath("minecraft", "village/taiga/houses"),
+                new ResourceLocation("minecraft", "village/taiga/houses"),
                 "sophisticated_wolves:village/taiga_kennels", 1);
     }
 

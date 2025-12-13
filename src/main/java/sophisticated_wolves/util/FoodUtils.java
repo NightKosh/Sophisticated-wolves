@@ -1,5 +1,6 @@
 package sophisticated_wolves.util;
 
+import net.minecraft.tags.ItemTags;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -19,7 +20,7 @@ public class FoodUtils {
 
     public static boolean isWolfFood(ItemStack stack) {
         return isBone(stack) ||
-                stack.getFoodProperties(null) != null && stack.getFoodProperties(null).isMeat() ||
+                stack.is(ItemTags.WOLF_FOOD) ||
                 stack.getItem().equals(Items.COOKED_COD) ||
                 stack.getItem().equals(Items.COOKED_SALMON) ||
                 stack.getItem().equals(Items.COD) ||
@@ -64,7 +65,7 @@ public class FoodUtils {
             return 1;
         } else if (isFoodItem(stack)) {
             if (isWolfFood(stack)) {
-                return stack.getFoodProperties(null).getNutrition();
+                return stack.getFoodProperties(null).nutrition();
             } else {
                 return 0;
             }

@@ -10,7 +10,7 @@
     }
   ],
   "result" : {
-    "item" : "sophisticated_wolves:dog_tag",
+    "id": "sophisticated_wolves:dog_tag",
     "count" : 5
   }
 }

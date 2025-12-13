@@ -1,6 +1,6 @@
 package sophisticated_wolves.core;
 
-import net.minecraftforge.common.ForgeConfigSpec;
+import net.neoforged.neoforge.common.ModConfigSpec;
 import sophisticated_wolves.entity.SophisticatedWolf;
 
 /**
@@ -11,25 +11,25 @@ import sophisticated_wolves.entity.SophisticatedWolf;
  */
 public class SWConfiguration {
 
-    public static final ForgeConfigSpec SPEC;
-    public static final ForgeConfigSpec.Builder BUILDER = new ForgeConfigSpec.Builder();
+    public static final ModConfigSpec SPEC;
+    public static final ModConfigSpec.Builder BUILDER = new ModConfigSpec.Builder();
 
-    public static ForgeConfigSpec.ConfigValue<Boolean> CUSTOM_WOLF_TEXTURES;
-    public static ForgeConfigSpec.ConfigValue<Boolean> CUSTOM_BREEDING;
-    public static ForgeConfigSpec.ConfigValue<Boolean> NAME_TAG_FOR_ANY_PETS;
-    public static ForgeConfigSpec.ConfigValue<Boolean> IMMUNE_TO_CACTI;
-    public static ForgeConfigSpec.ConfigValue<Boolean> WOLVES_WALKS_THROUGH_EACH_OTHER;
-    public static ForgeConfigSpec.ConfigValue<Boolean> WOLVES_WALKS_THROUGH_OWNER;
-    public static ForgeConfigSpec.ConfigValue<Integer> WOLVES_HEALTH_WILD;
-    public static ForgeConfigSpec.ConfigValue<Integer> WOLVES_HEALTH_TAMED;
-    public static ForgeConfigSpec.ConfigValue<Integer> WOLVES_HEALTH_FLEE;
-    public static ForgeConfigSpec.ConfigValue<Integer> WOLVES_DAMAGE_TAMED;
+    public static ModConfigSpec.ConfigValue<Boolean> CUSTOM_WOLF_TEXTURES;
+    public static ModConfigSpec.ConfigValue<Boolean> CUSTOM_BREEDING;
+    public static ModConfigSpec.ConfigValue<Boolean> NAME_TAG_FOR_ANY_PETS;
+    public static ModConfigSpec.ConfigValue<Boolean> IMMUNE_TO_CACTI;
+    public static ModConfigSpec.ConfigValue<Boolean> WOLVES_WALKS_THROUGH_EACH_OTHER;
+    public static ModConfigSpec.ConfigValue<Boolean> WOLVES_WALKS_THROUGH_OWNER;
+    public static ModConfigSpec.ConfigValue<Integer> WOLVES_HEALTH_WILD;
+    public static ModConfigSpec.ConfigValue<Integer> WOLVES_HEALTH_TAMED;
+    public static ModConfigSpec.ConfigValue<Integer> WOLVES_HEALTH_FLEE;
+    public static ModConfigSpec.ConfigValue<Integer> WOLVES_DAMAGE_TAMED;
 
-    public static ForgeConfigSpec.ConfigValue<Boolean> ATTACK_ANIMALS;
+    public static ModConfigSpec.ConfigValue<Boolean> ATTACK_ANIMALS;
 
-    public static ForgeConfigSpec.ConfigValue<Boolean> ALWAYS_SHOW_WOLF_NAME;
+    public static ModConfigSpec.ConfigValue<Boolean> ALWAYS_SHOW_WOLF_NAME;
 
-    public static ForgeConfigSpec.ConfigValue<Boolean> DEBUG_MODE;
+    public static ModConfigSpec.ConfigValue<Boolean> DEBUG_MODE;
 
     static {
         BUILDER.push("Configs for Sophisticated Wolves Mod");

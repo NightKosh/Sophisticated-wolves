@@ -11,7 +11,7 @@
     }
   ],
   "result" : {
-    "item" : "sophisticated_wolves:dog_treat",
+    "id": "sophisticated_wolves:dog_treat",
     "count" : 1
   }
 }

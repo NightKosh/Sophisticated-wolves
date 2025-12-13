@@ -51,8 +51,8 @@ public class ItemWhistle extends Item {
                             (!wolf.isOrderedToSit() || player.isShiftKeyDown()) &&
                             !(wolf instanceof SophisticatedWolf sWolf && sWolf.getWolfCommands().guardZone())) {
                         for (int i = 0; i < 50; i++) {
-                            int xRand = player.getLevel().getRandom().nextInt(5) + xPos - 2;
-                            int zRand = player.getLevel().getRandom().nextInt(5) + zPos - 2;
+                            int xRand = player.level().getRandom().nextInt(5) + xPos - 2;
+                            int zRand = player.level().getRandom().nextInt(5) + zPos - 2;
                             if (LevelUtils.isPositionSafe(level, xRand, yPos, zRand)) {
                                 wolf.setInSittingPose(false);
                                 wolf.moveTo(xRand + 0.5, yPos, zRand + 0.5, wolf.getYRot(), wolf.getXRot());

@@ -3,7 +3,7 @@ package sophisticated_wolves.gui.screen;
 import com.mojang.blaze3d.platform.Lighting;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
-import net.minecraft.client.gui.GuiComponent;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.renderer.GameRenderer;
@@ -68,19 +68,19 @@ public abstract class WolfConfigScreen extends Screen {
     }
 
     @Override
-    public void render(@Nonnull PoseStack poseStack, int i, int j, float f) {
+    public void render(@Nonnull GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTick) {
         Lighting.setupForFlatItems();
-        this.renderBackground(poseStack);
+        this.renderBackground(guiGraphics, mouseX, mouseY, partialTick);
 
-        drawCenteredString(poseStack, this.font, this.title, this.width / 2, 60, 0xffffff);
+        guiGraphics.drawCenteredString(this.font, this.title, this.width / 2, 60, 0xffffff);
 
         Lighting.setupFor3DItems();
-        super.render(poseStack, i, j, f);
+        super.render(guiGraphics, mouseX, mouseY, partialTick);
     }
 
     @Override
-    public void renderBackground(@Nonnull PoseStack poseStack) {
-        super.renderBackground(poseStack);
+    public void renderBackground(@Nonnull GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTick) {
+        super.renderBackground(guiGraphics, mouseX, mouseY, partialTick);
 
         RenderSystem.setShader(GameRenderer::getPositionTexShader);
         RenderSystem.setShaderColor(1, 1, 1, 1);
@@ -88,7 +88,7 @@ public abstract class WolfConfigScreen extends Screen {
 
         int xPos = (this.width - X_SIZE) / 2;
         int yPos = (this.height - Y_SIZE) / 2;
-        blit(poseStack, xPos, yPos, 0, 0, 256, 256);
+        guiGraphics.blit(getBackground(), xPos, yPos, 0, 0, 256, 256);
     }
 
     @Override

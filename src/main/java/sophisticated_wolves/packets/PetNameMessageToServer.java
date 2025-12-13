@@ -1,12 +1,17 @@
 package sophisticated_wolves.packets;
 
-import net.minecraft.network.FriendlyByteBuf;
+import io.netty.buffer.ByteBuf;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.codec.ByteBufCodecs;
+import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.TamableAnimal;
-import net.minecraftforge.network.NetworkEvent;
+import net.neoforged.neoforge.network.handling.IPayloadContext;
+import sophisticated_wolves.api.ModInfo;
 
-import java.util.UUID;
-import java.util.function.Supplier;
+import javax.annotation.Nonnull;
 
 /**
  * Sophisticated Wolves
@@ -14,40 +19,37 @@ import java.util.function.Supplier;
  * @author NightKosh
  * @license Lesser GNU Public License v3 (http://www.gnu.org/licenses/lgpl.html)
  */
-public class PetNameMessageToServer {
+public record PetNameMessageToServer(
+        int animalId,
+        String text
+) implements CustomPacketPayload {
 
-    private final UUID animalId;
-    private final String text;
+    public static final Type<PetNameMessageToServer> TYPE =
+            new Type<>(new ResourceLocation(ModInfo.ID, "pet_name"));
 
-    public PetNameMessageToServer(TamableAnimal animal, String text) {
-        this.animalId = animal.getUUID();
-        this.text = text;
+    public static final StreamCodec<ByteBuf, PetNameMessageToServer> STREAM_CODEC =
+            StreamCodec.composite(
+                    ByteBufCodecs.INT, PetNameMessageToServer::animalId,
+                    ByteBufCodecs.STRING_UTF8, PetNameMessageToServer::text,
+                    PetNameMessageToServer::new
+            );
+
+    @Nonnull
+    @Override
+    public Type<? extends CustomPacketPayload> type() {
+        return TYPE;
     }
 
-    public PetNameMessageToServer(FriendlyByteBuf buf) {
-        this.animalId = UUID.fromString(buf.readUtf());
-        this.text = buf.readUtf();
-    }
-
-    public void toBytes(FriendlyByteBuf buf) {
-        buf.writeUtf(this.animalId.toString());
-        buf.writeUtf(this.text);
-    }
-
-    public boolean handle(Supplier<NetworkEvent.Context> supplier) {
-        var context = supplier.get();
+    public static void handle(PetNameMessageToServer msg, IPayloadContext context) {
         context.enqueueWork(() -> {
-            var player = context.getSender();
-            var level = player.getLevel();
+            ServerPlayer player = (ServerPlayer) context.player();
+            var level = player.level();
 
-            if (level != null) {
-                var animal = level.getEntity(this.animalId);
-                if (animal != null && animal instanceof TamableAnimal) {
-                    animal.setCustomName(Component.literal(this.text));
-                }
+            var entity = level.getEntity(msg.animalId());
+            if (entity instanceof TamableAnimal animal) {
+                animal.setCustomName(Component.literal(msg.text()));
             }
         });
-        return true;
     }
 
 }

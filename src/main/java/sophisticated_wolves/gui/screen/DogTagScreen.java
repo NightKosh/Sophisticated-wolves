@@ -1,9 +1,8 @@
 package sophisticated_wolves.gui.screen;
 
 import com.mojang.blaze3d.platform.Lighting;
-import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiComponent;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.EditBox;
 import net.minecraft.client.gui.screens.Screen;
@@ -47,7 +46,7 @@ public class DogTagScreen extends Screen {
         this.nameField.setMaxLength(32);
         this.nameField.setFocused(true);
         this.nameField.setCanLoseFocus(false);
-        this.nameField.moveCursorToEnd();
+        this.nameField.moveCursorToEnd(false);
         if (animal.hasCustomName()) {
             this.nameField.setValue(animal.getCustomName().getString());
         }
@@ -55,7 +54,7 @@ public class DogTagScreen extends Screen {
         this.addRenderableWidget(
                 Button.builder(CommonComponents.GUI_DONE, (button) -> {
                             SWMessages.sendToServer(
-                                    new PetNameMessageToServer(this.animal, this.nameField.getValue())
+                                    new PetNameMessageToServer(this.animal.getId(), this.nameField.getValue())
                             );
                             this.minecraft.setScreen(null); // закрыть GUI
                         })
@@ -66,14 +65,13 @@ public class DogTagScreen extends Screen {
     }
 
     @Override
-    public void render(@Nonnull PoseStack poseStack, int i, int j, float f) {
+    public void render(@Nonnull GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTick) {
+        super.render(guiGraphics, mouseX, mouseY, partialTick);
         Lighting.setupForFlatItems();
-        this.renderBackground(poseStack);
 
-        drawCenteredString(poseStack, this.font, this.title, this.width / 2, 60, 0xffffff);
+        guiGraphics.drawCenteredString(this.font, this.title, this.width / 2, 60, 0xffffff);
 
         Lighting.setupFor3DItems();
-        super.render(poseStack, i, j, f);
     }
 
     @Override

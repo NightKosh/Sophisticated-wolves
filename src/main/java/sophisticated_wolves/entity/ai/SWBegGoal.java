@@ -30,7 +30,7 @@ public class SWBegGoal extends Goal {
 
     public SWBegGoal(SophisticatedWolf wolf, float lookDistance) {
         this.wolf = wolf;
-        this.level = wolf.getLevel();
+        this.level = wolf.level();
         this.lookDistance = lookDistance * lookDistance;
         this.begTargeting = TargetingConditions.forNonCombat().range(lookDistance);
         this.setFlags(EnumSet.of(Goal.Flag.LOOK));

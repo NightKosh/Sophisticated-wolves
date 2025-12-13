@@ -1,23 +1,13 @@
 package sophisticated_wolves;
 
-import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.fml.ModLoadingContext;
-import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.config.ModConfig;
-import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
-import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import net.neoforged.bus.api.IEventBus;
+import net.neoforged.fml.ModLoadingContext;
+import net.neoforged.fml.common.Mod;
+import net.neoforged.fml.config.ModConfig;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import sophisticated_wolves.api.ModInfo;
-import sophisticated_wolves.core.SWBlockEntities;
-import sophisticated_wolves.core.SWBlocks;
-import sophisticated_wolves.core.SWConfiguration;
-import sophisticated_wolves.core.SWEntities;
-import sophisticated_wolves.core.SWItems;
-import sophisticated_wolves.core.SWMenu;
-import sophisticated_wolves.core.SWMessages;
-import sophisticated_wolves.core.SWSound;
-import sophisticated_wolves.core.SWVillagers;
+import sophisticated_wolves.core.*;
 import sophisticated_wolves.item.pet_carrier.PetCarrierHelper;
 
 /**
@@ -33,33 +23,22 @@ public class SophisticatedWolvesMod {
 
     public static final Logger LOGGER = LogManager.getLogger(ModInfo.ID);
 
-    public SophisticatedWolvesMod() {
+    public SophisticatedWolvesMod(IEventBus eventBus) {
         INSTANCE = this;
 
         ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, SWConfiguration.SPEC, ModInfo.ID + ".toml");
 
-        var eventBus = FMLJavaModLoadingContext.get().getModEventBus();
-
+        SWTabs.register(eventBus);
         SWItems.register(eventBus);
         SWBlocks.register(eventBus);
         SWBlockEntities.register(eventBus);
         SWMenu.register(eventBus);
 
         SWSound.register(eventBus);
-
         SWEntities.register(eventBus);
-
         SWVillagers.register(eventBus);
 
-        eventBus.addListener(this::setup);
-
-        MinecraftForge.EVENT_BUS.register(this);
-
         PetCarrierHelper.addPetCarriers();
-    }
-
-    private void setup(final FMLCommonSetupEvent event) {
-        SWMessages.register();
     }
 
 //TODO remove?

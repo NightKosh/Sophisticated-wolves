@@ -35,7 +35,7 @@ public class MoveCancelAtMiningGoal extends Goal {
     public boolean canUse() {
         if (!this.pet.isTame() ||
                 this.pet.isOrderedToSit() ||
-                !this.pet.isOnGround() ||
+                !this.pet.onGround() ||
                 this.pet.isInLove() ||
                 this.pet.getTarget() != null) {
             return false;

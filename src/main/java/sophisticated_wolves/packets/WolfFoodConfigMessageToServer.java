@@ -1,11 +1,16 @@
 package sophisticated_wolves.packets;
 
-import net.minecraft.network.FriendlyByteBuf;
-import net.minecraftforge.network.NetworkEvent;
+import io.netty.buffer.ByteBuf;
+import net.minecraft.network.codec.ByteBufCodecs;
+import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerPlayer;
+import net.neoforged.neoforge.network.handling.IPayloadContext;
+import sophisticated_wolves.api.ModInfo;
 import sophisticated_wolves.entity.SophisticatedWolf;
 
-import java.util.UUID;
-import java.util.function.Supplier;
+import javax.annotation.Nonnull;
 
 /**
  * Sophisticated Wolves
@@ -13,62 +18,72 @@ import java.util.function.Supplier;
  * @author NightKosh
  * @license Lesser GNU Public License v3 (http://www.gnu.org/licenses/lgpl.html)
  */
-public class WolfFoodConfigMessageToServer {
+public record WolfFoodConfigMessageToServer(
+        int wolfId,
+        boolean rottenMeatAndBones,
+        boolean rawMeat,
+        boolean rawFish,
+        boolean specialFish,
+        boolean cookedMeat,
+        boolean cookedFish
+) implements CustomPacketPayload {
 
-    private final UUID wolfId;
-    private final boolean rottenMeatAndBones;
-    private final boolean rawMeat;
-    private final boolean rawFish;
-    private final boolean specialFish;
-    private final boolean cookedMeat;
-    private final boolean cookedFish;
+    public static final Type<WolfFoodConfigMessageToServer> TYPE =
+            new Type<>(new ResourceLocation(ModInfo.ID, "wolf_food_config"));
 
-    public WolfFoodConfigMessageToServer(SophisticatedWolf wolf) {
-        this.wolfId = wolf.getUUID();
+    public static final StreamCodec<ByteBuf, WolfFoodConfigMessageToServer> STREAM_CODEC =
+            StreamCodec.of(
+                    (buf, msg) -> {
+                        ByteBufCodecs.VAR_INT.encode(buf, msg.wolfId());
+                        ByteBufCodecs.BOOL.encode(buf, msg.rottenMeatAndBones());
+                        ByteBufCodecs.BOOL.encode(buf, msg.rawMeat());
+                        ByteBufCodecs.BOOL.encode(buf, msg.rawFish());
+                        ByteBufCodecs.BOOL.encode(buf, msg.specialFish());
+                        ByteBufCodecs.BOOL.encode(buf, msg.cookedMeat());
+                        ByteBufCodecs.BOOL.encode(buf, msg.cookedFish());
+                    },
+                    buf -> new WolfFoodConfigMessageToServer(
+                            ByteBufCodecs.VAR_INT.decode(buf),
+                            ByteBufCodecs.BOOL.decode(buf),
+                            ByteBufCodecs.BOOL.decode(buf),
+                            ByteBufCodecs.BOOL.decode(buf),
+                            ByteBufCodecs.BOOL.decode(buf),
+                            ByteBufCodecs.BOOL.decode(buf),
+                            ByteBufCodecs.BOOL.decode(buf)
+                    )
+            );
+
+    @Nonnull
+    @Override
+    public Type<? extends CustomPacketPayload> type() {
+        return TYPE;
+    }
+
+    public static WolfFoodConfigMessageToServer getFromWolf(SophisticatedWolf wolf) {
         var wolfFood = wolf.getWolfFood();
-        this.rottenMeatAndBones = wolfFood.rottenMeatAndBones();
-        this.rawMeat = wolfFood.rawMeat();
-        this.rawFish = wolfFood.rawFish();
-        this.specialFish = wolfFood.specialFish();
-        this.cookedMeat = wolfFood.cookedMeat();
-        this.cookedFish = wolfFood.cookedFish();
+        return new WolfFoodConfigMessageToServer(wolf.getId(),
+                wolfFood.rottenMeatAndBones(), wolfFood.rawMeat(), wolfFood.rawFish(),
+                wolfFood.specialFish(), wolfFood.cookedMeat(), wolfFood.cookedFish());
+
     }
 
-    public WolfFoodConfigMessageToServer(FriendlyByteBuf buf) {
-        this.wolfId = UUID.fromString(buf.readUtf());
-        this.rottenMeatAndBones = buf.readBoolean();
-        this.rawMeat = buf.readBoolean();
-        this.rawFish = buf.readBoolean();
-        this.specialFish = buf.readBoolean();
-        this.cookedMeat = buf.readBoolean();
-        this.cookedFish = buf.readBoolean();
-    }
-
-    public void toBytes(FriendlyByteBuf buf) {
-        buf.writeUtf(this.wolfId.toString());
-        buf.writeBoolean(this.rottenMeatAndBones);
-        buf.writeBoolean(this.rawMeat);
-        buf.writeBoolean(this.rawFish);
-        buf.writeBoolean(this.specialFish);
-        buf.writeBoolean(this.cookedMeat);
-        buf.writeBoolean(this.cookedFish);
-    }
-
-    public boolean handle(Supplier<NetworkEvent.Context> supplier) {
-        var context = supplier.get();
+    public static void handle(WolfFoodConfigMessageToServer msg, IPayloadContext context) {
         context.enqueueWork(() -> {
-            var player = context.getSender();
-            var level = player.getLevel();
+            ServerPlayer player = (ServerPlayer) context.player();
+            var level = player.level();
 
-            if (level != null) {
-                var animal = level.getEntity(this.wolfId);
-                if (animal != null && animal instanceof SophisticatedWolf wolf) {
-                    wolf.updateFood(this.rottenMeatAndBones, this.rawMeat, this.rawFish,
-                            this.specialFish, this.cookedMeat, this.cookedFish);
-                }
+            var entity = level.getEntity(msg.wolfId());
+            if (entity instanceof SophisticatedWolf wolf) {
+                wolf.updateFood(
+                        msg.rottenMeatAndBones(),
+                        msg.rawMeat(),
+                        msg.rawFish(),
+                        msg.specialFish(),
+                        msg.cookedMeat(),
+                        msg.cookedFish()
+                );
             }
         });
-        return true;
     }
 
 }

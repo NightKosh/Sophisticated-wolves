@@ -1,11 +1,16 @@
 package sophisticated_wolves.packets;
 
-import net.minecraft.network.FriendlyByteBuf;
-import net.minecraftforge.network.NetworkEvent;
+import io.netty.buffer.ByteBuf;
+import net.minecraft.network.codec.ByteBufCodecs;
+import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerPlayer;
+import net.neoforged.neoforge.network.handling.IPayloadContext;
+import sophisticated_wolves.api.ModInfo;
 import sophisticated_wolves.entity.SophisticatedWolf;
 
-import java.util.UUID;
-import java.util.function.Supplier;
+import javax.annotation.Nonnull;
 
 /**
  * Sophisticated Wolves
@@ -13,45 +18,42 @@ import java.util.function.Supplier;
  * @author NightKosh
  * @license Lesser GNU Public License v3 (http://www.gnu.org/licenses/lgpl.html)
  */
-public class WolfCommandsConfigMessageToServer {
+public record WolfCommandsConfigMessageToServer(int wolfId, boolean followOwner, boolean guardZone)
+        implements CustomPacketPayload {
 
-    private final UUID wolfId;
-    private final boolean followOwner;
-    private final boolean guardZone;
+    public static final CustomPacketPayload.Type<WolfCommandsConfigMessageToServer> TYPE =
+            new CustomPacketPayload.Type<>(new ResourceLocation(ModInfo.ID, "wolf_commands_config"));
 
-    public WolfCommandsConfigMessageToServer(SophisticatedWolf wolf) {
-        this.wolfId = wolf.getUUID();
+    public static final StreamCodec<ByteBuf, WolfCommandsConfigMessageToServer> STREAM_CODEC =
+            StreamCodec.composite(
+                    ByteBufCodecs.VAR_INT, WolfCommandsConfigMessageToServer::wolfId,
+                    ByteBufCodecs.BOOL, WolfCommandsConfigMessageToServer::followOwner,
+                    ByteBufCodecs.BOOL, WolfCommandsConfigMessageToServer::guardZone,
+                    WolfCommandsConfigMessageToServer::new
+            );
+
+    @Nonnull
+    @Override
+    public Type<? extends CustomPacketPayload> type() {
+        return TYPE;
+    }
+
+    public static WolfCommandsConfigMessageToServer getFromWolf(SophisticatedWolf wolf) {
         var commands = wolf.getWolfCommands();
-        this.followOwner = commands.followOwner();
-        this.guardZone = commands.guardZone();
+        return new WolfCommandsConfigMessageToServer(wolf.getId(), commands.followOwner(), commands.guardZone());
+
     }
 
-    public WolfCommandsConfigMessageToServer(FriendlyByteBuf buf) {
-        this.wolfId = UUID.fromString(buf.readUtf());
-        this.followOwner = buf.readBoolean();
-        this.guardZone = buf.readBoolean();
-    }
-
-    public void toBytes(FriendlyByteBuf buf) {
-        buf.writeUtf(this.wolfId.toString());
-        buf.writeBoolean(this.followOwner);
-        buf.writeBoolean(this.guardZone);
-    }
-
-    public boolean handle(Supplier<NetworkEvent.Context> supplier) {
-        var context = supplier.get();
+    public static void handle(WolfCommandsConfigMessageToServer msg, IPayloadContext context) {
         context.enqueueWork(() -> {
-            var player = context.getSender();
-            var level = player.getLevel();
+            var player = (ServerPlayer) context.player();
+            var level = player.level();
 
-            if (level != null) {
-                var animal = level.getEntity(this.wolfId);
-                if (animal != null && animal instanceof SophisticatedWolf wolf) {
-                    wolf.updateCommands(this.followOwner, this.guardZone);
-                }
+            var entity = level.getEntity(msg.wolfId());
+            if (entity instanceof SophisticatedWolf wolf) {
+                wolf.updateCommands(msg.followOwner(), msg.guardZone());
             }
         });
-        return true;
     }
 
 }

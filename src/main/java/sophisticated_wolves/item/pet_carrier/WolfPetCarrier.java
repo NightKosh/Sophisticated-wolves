@@ -46,7 +46,7 @@ public class WolfPetCarrier extends PetCarrier<Wolf> {
     @Override
     public void doAtSpawn(Wolf wolf, Player player) {
         wolf.setOwnerUUID(player.getUUID());
-        wolf.setTame(true);
+        wolf.setTame(true, true);
     }
 
     @Override

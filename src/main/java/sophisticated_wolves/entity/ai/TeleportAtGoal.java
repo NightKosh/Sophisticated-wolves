@@ -26,7 +26,7 @@ public class TeleportAtGoal extends Goal {
     public TeleportAtGoal(SophisticatedWolf wolf) {
         this.wolf = wolf;
         this.owner = wolf.getOwner();
-        this.level = wolf.getLevel();
+        this.level = wolf.level();
         this.navigation = wolf.getNavigation();
     }
 

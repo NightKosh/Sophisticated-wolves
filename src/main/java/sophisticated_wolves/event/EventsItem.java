@@ -1,8 +1,8 @@
 package sophisticated_wolves.event;
 
-import net.minecraftforge.event.entity.player.PlayerInteractEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.common.EventBusSubscriber;
+import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
 import sophisticated_wolves.api.ModInfo;
 import sophisticated_wolves.core.SWConfiguration;
 import sophisticated_wolves.core.SWItems;
@@ -10,7 +10,7 @@ import sophisticated_wolves.item.ItemDogTag;
 import sophisticated_wolves.item.ItemDogTreat;
 import sophisticated_wolves.item.ItemPetCarrier;
 
-import static com.mojang.text2speech.Narrator.LOGGER;
+import static sophisticated_wolves.SophisticatedWolvesMod.LOGGER;
 
 /**
  * Sophisticated Wolves
@@ -18,7 +18,7 @@ import static com.mojang.text2speech.Narrator.LOGGER;
  * @author NightKosh
  * @license Lesser GNU Public License v3 (http://www.gnu.org/licenses/lgpl.html)
  */
-@Mod.EventBusSubscriber(modid = ModInfo.ID)
+@EventBusSubscriber(modid = ModInfo.ID)
 public class EventsItem {
 
     @SubscribeEvent

@@ -1,31 +1,29 @@
 package sophisticated_wolves.block;
 
+import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.component.CustomData;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.BaseEntityBlock;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.RenderShape;
-import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
-import net.minecraft.world.level.material.Material;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import net.minecraftforge.network.NetworkHooks;
 import sophisticated_wolves.block_entity.BlockEntityDogBowl;
 import sophisticated_wolves.core.SWBlocks;
 
@@ -43,6 +41,7 @@ public class BlockDogBowl extends BaseEntityBlock {
 
     public static final IntegerProperty FOOD_LEVEL = IntegerProperty.create("food_level", 0, 4);
     private static final VoxelShape SHAPE = Block.box(4, 0, 4, 12, 2, 12);
+    public static final MapCodec<BlockDogBowl> CODEC = simpleCodec(BlockDogBowl::new);
 
     public enum EnumDogBowl {
         EMPTY(0),
@@ -86,11 +85,8 @@ public class BlockDogBowl extends BaseEntityBlock {
 
     }
 
-    public BlockDogBowl() {
-        super(BlockBehaviour.Properties.of(Material.STONE)
-                .sound(SoundType.STONE)
-                .noCollission()
-                .strength(0.7F));
+    public BlockDogBowl(Properties properties) {
+        super(properties);
 
         this.registerDefaultState(this.stateDefinition.any()
                 .setValue(FOOD_LEVEL, EnumDogBowl.EMPTY.ordinal()));
@@ -100,17 +96,19 @@ public class BlockDogBowl extends BaseEntityBlock {
         var tag = new CompoundTag();
         tag.putInt("FoodLevel", bowl.ordinal());
         tag.putInt("FoodAmount", bowl.getAmountOfFood());
+
         var stack = new ItemStack(SWBlocks.getDogBowl());
-        stack.setTag(tag);
+        stack.set(DataComponents.CUSTOM_DATA, CustomData.of(tag));
         return stack;
     }
 
     @Override
     public void appendHoverText(
-            @Nonnull ItemStack stack, BlockGetter blockGetter,
+            @Nonnull ItemStack stack, @Nonnull Item.TooltipContext context,
             @Nonnull List<Component> tooltips, @Nonnull TooltipFlag flag) {
-        if (stack.hasTag()) {
-            var tag = stack.getTag();
+        var data = stack.get(DataComponents.CUSTOM_DATA);
+        if (data != null) {
+            var tag = data.getUnsafe();
             if (tag != null && tag.contains("FoodAmount")) {
                 tooltips.add(Component.translatable("block.sophisticated_wolves.dog_bowl.amount_of_food")
                         .append(Component.literal(String.valueOf(tag.getInt("FoodAmount")))));
@@ -124,25 +122,33 @@ public class BlockDogBowl extends BaseEntityBlock {
         return new BlockEntityDogBowl(blockPos, state);
     }
 
+    @Nonnull
     @Override
-    public InteractionResult use(
+    public InteractionResult useWithoutItem(
             @Nonnull BlockState state, Level level, @Nonnull BlockPos pos, @Nonnull Player player,
-            @Nonnull InteractionHand hand, @Nonnull BlockHitResult hitResult) {
+            @Nonnull BlockHitResult hitResult) {
         var dogBowl = (BlockEntityDogBowl) level.getBlockEntity(pos);
         if (level.isClientSide()) {
             return InteractionResult.SUCCESS;
         } else if (dogBowl != null && !player.isShiftKeyDown()) {
-            NetworkHooks.openScreen(((ServerPlayer) player), dogBowl, pos);
+            player.openMenu(dogBowl, pos);
             return InteractionResult.CONSUME;
         }
         return InteractionResult.PASS;
     }
 
+    @Nonnull
     @Override
     public VoxelShape getShape(
             @Nonnull BlockState blockState, @Nonnull BlockGetter blockGetter,
             @Nonnull BlockPos blockPos, @Nonnull CollisionContext collisionContext) {
         return SHAPE;
+    }
+
+    @Nonnull
+    @Override
+    protected MapCodec<? extends BaseEntityBlock> codec() {
+        return CODEC;
     }
 
     @Nonnull
@@ -166,8 +172,9 @@ public class BlockDogBowl extends BaseEntityBlock {
         if (tileEntity != null) {
             Integer foodAmount = null;
 
-            if (stack.hasTag()) {
-                var tag = stack.getTag();
+            var data = stack.get(DataComponents.CUSTOM_DATA);
+            if (data != null) {
+                var tag = data.getUnsafe();
                 if (tag != null && tag.contains("FoodAmount")) {
                     foodAmount = tag.getInt("FoodAmount");
                 }

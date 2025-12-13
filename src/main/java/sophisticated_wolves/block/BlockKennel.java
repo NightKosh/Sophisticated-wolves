@@ -11,7 +11,6 @@ import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.DirectionProperty;
-import net.minecraft.world.level.material.Material;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
@@ -30,7 +29,7 @@ public class BlockKennel extends Block {
     public static final DirectionProperty FACING = HorizontalDirectionalBlock.FACING;
 
     public BlockKennel() {
-        super(BlockBehaviour.Properties.of(Material.WOOD)
+        super(BlockBehaviour.Properties.of()
                 .sound(SoundType.WOOD)
                 .noCollission()
                 .strength(0.7F));
@@ -39,6 +38,7 @@ public class BlockKennel extends Block {
                 .setValue(FACING, Direction.NORTH));
     }
 
+    @Nonnull
     @Override
     public VoxelShape getShape(
             @Nonnull BlockState blockState, @Nonnull BlockGetter blockGetter,
@@ -46,6 +46,7 @@ public class BlockKennel extends Block {
         return SHAPE;
     }
 
+    @Nonnull
     @Override
     public VoxelShape getCollisionShape(
             @Nonnull BlockState blockState, @Nonnull BlockGetter blockGetter,

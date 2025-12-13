@@ -51,7 +51,7 @@ public class AvoidCreeperGoal extends Goal {
      */
     @Override
     public boolean canUse() {
-        var creepers = this.wolf.getLevel().getEntitiesOfClass(
+        var creepers = this.wolf.level().getEntitiesOfClass(
                 Creeper.class,
                 this.wolf.getBoundingBox()
                         .inflate(this.distance, 3, this.distance),

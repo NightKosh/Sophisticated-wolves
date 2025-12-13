@@ -37,7 +37,7 @@ public class AttackCancelGoal extends Goal {
         var owner = this.pet.getOwner();
         if (owner == null ||
                 this.pet.isOrderedToSit() ||
-                !this.pet.isOnGround()) {
+                !this.pet.onGround()) {
             return false;
         }
 
