@@ -1,7 +1,7 @@
 package sophisticated_wolves.item;
 
 import net.minecraft.world.item.Item;
-import net.minecraftforge.common.ForgeSpawnEggItem;
+import net.minecraft.world.item.SpawnEggItem;
 import sophisticated_wolves.core.SWEntities;
 
 /**
@@ -10,13 +10,13 @@ import sophisticated_wolves.core.SWEntities;
  * @author NightKosh
  * @license Lesser GNU Public License v3 (http://www.gnu.org/licenses/lgpl.html)
  */
-public class ItemWolfEgg extends ForgeSpawnEggItem {
+public class ItemWolfEgg extends SpawnEggItem {
 
     private static final int BACKGROUND_COLOR = 14144467;
     private static final int HIGHLIGHT_COLOR = 13545366;
 
     public ItemWolfEgg() {
-        super(SWEntities.SOPHISTICATED_WOLF, BACKGROUND_COLOR, HIGHLIGHT_COLOR, new Item.Properties().stacksTo(64));
+        super(SWEntities.SOPHISTICATED_WOLF.get(), BACKGROUND_COLOR, HIGHLIGHT_COLOR, new Item.Properties().stacksTo(64));
     }
 
 }

@@ -12,9 +12,8 @@ import sophisticated_wolves.api.ISophisticatedWolf;
 import sophisticated_wolves.compatibility.Compatibility;
 import sophisticated_wolves.core.SWConfiguration;
 import sophisticated_wolves.core.SWEntities;
-import sophisticated_wolves.entity.SophisticatedWolf;
 
-import static com.mojang.text2speech.Narrator.LOGGER;
+import static sophisticated_wolves.SophisticatedWolvesMod.LOGGER;
 
 /**
  * Sophisticated Wolves
@@ -29,7 +28,7 @@ public class ItemDogTreat extends Item {
     }
 
     public static void useItemOnWolf(Entity e, Player player, ItemStack stack) {
-        if (!player.getLevel().isClientSide() &&
+        if (!player.level().isClientSide() &&
                 e instanceof Wolf wolf &&
                 !(e instanceof ISophisticatedWolf)) {
             if (wolf.isTame()) {
@@ -37,7 +36,7 @@ public class ItemDogTreat extends Item {
                     LOGGER.info("Dog Treat was used on vanilla wolf");
                 }
 
-                var level = player.getLevel();
+                var level = player.level();
                 var sWolf = SWEntities.getSophisticatedWolfType().spawn(
                         (ServerLevel) level, stack, player,
                         wolf.blockPosition(), MobSpawnType.SPAWN_EGG,
@@ -46,7 +45,7 @@ public class ItemDogTreat extends Item {
                     sWolf.copyPosition(wolf);
                     sWolf.setCustomName(wolf.getCustomName());
                     sWolf.setCollarColor(wolf.getCollarColor());
-                    sWolf.setTame(true);
+                    sWolf.setTame(true, true);
                     sWolf.setOwnerUUID(wolf.getOwnerUUID());
                     sWolf.setHealth(wolf.getHealth());
                     sWolf.setWolfSpeciesByBiome(level);

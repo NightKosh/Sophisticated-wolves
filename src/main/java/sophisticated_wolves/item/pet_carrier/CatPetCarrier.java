@@ -102,7 +102,7 @@ public class CatPetCarrier extends PetCarrier<Cat> {
     @Override
     public CompoundTag getInfo(Cat cat) {
         var tag = new CompoundTag();
-        tag.putInt(CAT_TYPE, EnumCatType.getByCatVariant(cat.getVariant()).ordinal());
+        tag.putInt(CAT_TYPE, EnumCatType.getByCatVariant(cat.getVariant().value()).ordinal());
 
         return tag;
     }
@@ -110,7 +110,7 @@ public class CatPetCarrier extends PetCarrier<Cat> {
     @Override
     public void doAtSpawn(Cat cat, Player player) {
         cat.setOwnerUUID(player.getUUID());
-        cat.setTame(true);
+        cat.setTame(true, true);
     }
 
     @Override

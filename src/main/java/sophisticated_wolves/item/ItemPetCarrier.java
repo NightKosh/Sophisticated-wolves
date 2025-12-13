@@ -1,6 +1,7 @@
 package sophisticated_wolves.item;
 
 import net.minecraft.core.Direction;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
@@ -11,6 +12,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.component.CustomData;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.gameevent.GameEvent;
@@ -43,8 +45,8 @@ public class ItemPetCarrier extends Item {
     public InteractionResult interactLivingEntity(
             @Nonnull ItemStack stack, @Nonnull Player player,
             LivingEntity entity, @Nonnull InteractionHand hand) {
-        if (!entity.getLevel().isClientSide() &&
-                !(stack.hasTag() && stack.getTag().contains(CLASS_NAME)) &&
+        if (!entity.level().isClientSide() &&
+                !(stack.get(DataComponents.CUSTOM_DATA) != null && stack.get(DataComponents.CUSTOM_DATA).contains(CLASS_NAME)) &&
                 entity instanceof SophisticatedWolf wolf &&
                 wolf.isTame() &&
                 wolf.getOwnerUUID() != null && wolf.getOwnerUUID().equals(player.getUUID())) {
@@ -54,9 +56,9 @@ public class ItemPetCarrier extends Item {
     }
 
     public static void useItemOnOtherPets(Entity e, Player player, ItemStack stack, InteractionHand hand) {
-        if (!e.getLevel().isClientSide() &&
+        if (!e.level().isClientSide() &&
                 stack != null &&
-                !(stack.hasTag() && stack.getTag().contains(CLASS_NAME)) &&
+                !(stack.get(DataComponents.CUSTOM_DATA) != null && stack.get(DataComponents.CUSTOM_DATA).contains(CLASS_NAME)) &&
                 e instanceof LivingEntity entity) {
             if (entity instanceof TamableAnimal pet && !(pet instanceof SophisticatedWolf)) {
                 if (pet.isTame() && pet.getOwnerUUID() != null && pet.getOwnerUUID().equals(player.getUUID())) {
@@ -95,7 +97,7 @@ public class ItemPetCarrier extends Item {
 
         tag.put(MOB_DATA, entityTag);
 
-        stack.setTag(tag);
+        stack.set(DataComponents.CUSTOM_DATA, CustomData.of(tag));
         player.setItemInHand(hand, stack);
         entity.remove(Entity.RemovalReason.DISCARDED);
 
@@ -111,9 +113,10 @@ public class ItemPetCarrier extends Item {
             return InteractionResult.SUCCESS;
         } else {
             var stack = context.getItemInHand();
-            if (stack.hasTag()) {
-                var tag = stack.getTag();
-                if (tag.contains(CLASS_NAME)) {
+            var data = stack.get(DataComponents.CUSTOM_DATA);
+            if (data != null) {
+                var tag = data.getUnsafe();
+                if (tag != null && tag.contains(CLASS_NAME)) {
                     var petCarrier = PetCarrierHelper.getPetCarrier(tag.getString(CLASS_NAME));
                     if (petCarrier != null) {
                         var pos = context.getClickedPos();
@@ -134,7 +137,7 @@ public class ItemPetCarrier extends Item {
                             petCarrier.doAtSpawn(entity, player);
 
                             if (!player.isCreative()) {
-                                stack.setTag(new CompoundTag());
+                                stack.set(DataComponents.CUSTOM_DATA, CustomData.of(new CompoundTag()));
                             }
                             level.gameEvent(player, GameEvent.ENTITY_PLACE, pos);
 
@@ -151,10 +154,11 @@ public class ItemPetCarrier extends Item {
 
     @Override
     public void appendHoverText(
-            @Nonnull ItemStack stack, Level level,
+            @Nonnull ItemStack stack, @Nonnull Item.TooltipContext context,
             @Nonnull List<Component> tooltips, @Nonnull TooltipFlag flag) {
-        if (stack.hasTag()) {
-            var tag = stack.getTag();
+        var data = stack.get(DataComponents.CUSTOM_DATA);
+        if (data != null) {
+            var tag = data.getUnsafe();
             if (tag != null && tag.contains(CLASS_NAME)) {
                 var petCarrier = PetCarrierHelper.getPetCarrier(tag.getString(CLASS_NAME));
                 if (petCarrier != null) {
@@ -178,7 +182,7 @@ public class ItemPetCarrier extends Item {
             }
         }
 
-        super.appendHoverText(stack, level, tooltips, flag);
+        super.appendHoverText(stack, context, tooltips, flag);
     }
 
 }
