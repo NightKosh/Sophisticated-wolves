@@ -2,7 +2,7 @@ package sophisticated_wolves.entity.ai;
 
 import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.entity.ai.navigation.PathNavigation;
-import net.minecraft.world.level.pathfinder.BlockPathTypes;
+import net.minecraft.world.level.pathfinder.PathType;
 import sophisticated_wolves.entity.SophisticatedWolf;
 import sophisticated_wolves.util.LevelUtils;
 
@@ -64,14 +64,14 @@ public class StayNearGuardZone extends Goal {
     @Override
     public void start() {
         this.timeToRecalcPath = 0;
-        this.oldWaterCost = this.wolf.getPathfindingMalus(BlockPathTypes.WATER);
-        this.wolf.setPathfindingMalus(BlockPathTypes.WATER, 0);
+        this.oldWaterCost = this.wolf.getPathfindingMalus(PathType.WATER);
+        this.wolf.setPathfindingMalus(PathType.WATER, 0);
     }
 
     @Override
     public void stop() {
         this.navigation.stop();
-        this.wolf.setPathfindingMalus(BlockPathTypes.WATER, this.oldWaterCost);
+        this.wolf.setPathfindingMalus(PathType.WATER, this.oldWaterCost);
     }
 
     @Override

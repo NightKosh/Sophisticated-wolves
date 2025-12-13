@@ -4,7 +4,6 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
-import net.minecraft.network.syncher.EntityDataSerializer;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerLevel;
@@ -36,8 +35,8 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.ServerLevelAccessor;
-import net.minecraft.world.level.pathfinder.BlockPathTypes;
-import net.minecraftforge.common.Tags;
+import net.minecraft.world.level.pathfinder.PathType;
+import net.neoforged.neoforge.common.Tags;
 import sophisticated_wolves.api.AEntitySophisticatedWolf;
 import sophisticated_wolves.api.EnumWolfSpecies;
 import sophisticated_wolves.core.SWConfiguration;
@@ -49,9 +48,10 @@ import sophisticated_wolves.item.ItemDogTag;
 import sophisticated_wolves.item.ItemPetCarrier;
 import sophisticated_wolves.util.FoodUtils;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import static com.mojang.text2speech.Narrator.LOGGER;
+import static sophisticated_wolves.SophisticatedWolvesMod.LOGGER;
 
 /**
  * Sophisticated Wolves
@@ -68,30 +68,14 @@ public class SophisticatedWolf extends AEntitySophisticatedWolf {
     public static final int DISTANCE_TO_TELEPORT_TO_OWNER_SQR = 900;//30^2 blocks
     public static final byte EXTINGUISH_EVENT_ID = 99;
 
-    public static final EntityDataSerializer<WolfFood> WOLF_FOOD_SERIALIZER = EntityDataSerializer.simple(
-            (byteBuf, wolfFood) -> wolfFood.saveData(byteBuf),
-            WolfFood::getFromByteBuf);
-    public static final EntityDataSerializer<WolfTargets> WOLF_TARGETS_SERIALIZER = EntityDataSerializer.simple(
-            (byteBuf, wolfTargets) -> wolfTargets.saveData(byteBuf),
-            WolfTargets::getFromByteBuf);
-    public static final EntityDataSerializer<WolfCommands> WOLF_COMMANDS_SERIALIZER = EntityDataSerializer.simple(
-            (byteBuf, wolfCommands) -> wolfCommands.saveData(byteBuf),
-            WolfCommands::getFromByteBuf);
-
-    static {
-        EntityDataSerializers.registerSerializer(WOLF_FOOD_SERIALIZER);
-        EntityDataSerializers.registerSerializer(WOLF_TARGETS_SERIALIZER);
-        EntityDataSerializers.registerSerializer(WOLF_COMMANDS_SERIALIZER);
-    }
-
     private static final EntityDataAccessor<Integer> WOLF_SPECIES =
             SynchedEntityData.defineId(SophisticatedWolf.class, EntityDataSerializers.INT);
-    private static final EntityDataAccessor<WolfFood> WOLF_FOOD =
-            SynchedEntityData.defineId(SophisticatedWolf.class, WOLF_FOOD_SERIALIZER);
-    private static final EntityDataAccessor<WolfTargets> WOLF_TARGETS =
-            SynchedEntityData.defineId(SophisticatedWolf.class, WOLF_TARGETS_SERIALIZER);
-    private static final EntityDataAccessor<WolfCommands> WOLF_COMMANDS =
-            SynchedEntityData.defineId(SophisticatedWolf.class, WOLF_COMMANDS_SERIALIZER);
+    private static final EntityDataAccessor<CompoundTag> WOLF_FOOD =
+            SynchedEntityData.defineId(SophisticatedWolf.class, EntityDataSerializers.COMPOUND_TAG);
+    private static final EntityDataAccessor<CompoundTag> WOLF_TARGETS =
+            SynchedEntityData.defineId(SophisticatedWolf.class, EntityDataSerializers.COMPOUND_TAG);
+    private static final EntityDataAccessor<CompoundTag> WOLF_COMMANDS =
+            SynchedEntityData.defineId(SophisticatedWolf.class, EntityDataSerializers.COMPOUND_TAG);
 
     protected FleeGoal fleeGoal;
     protected ShakeIfBurnOrPoisonGoal shakeGoal;
@@ -100,8 +84,8 @@ public class SophisticatedWolf extends AEntitySophisticatedWolf {
 
     public SophisticatedWolf(EntityType<? extends Wolf> entityType, Level level) {
         super(entityType, level);
-        this.setPathfindingMalus(BlockPathTypes.DANGER_FIRE, 30);
-        this.setPathfindingMalus(BlockPathTypes.LAVA, 100);
+        this.setPathfindingMalus(PathType.DANGER_FIRE, 30);
+        this.setPathfindingMalus(PathType.LAVA, 100);
 
         if (SWConfiguration.DEBUG_MODE.get()) {
             LOGGER.info("SophisticatedWolf spawned");
@@ -166,20 +150,20 @@ public class SophisticatedWolf extends AEntitySophisticatedWolf {
     }
 
     @Override
-    protected void defineSynchedData() {
-        super.defineSynchedData();
-        this.getEntityData().define(WOLF_SPECIES, 0);
-        this.getEntityData().define(WOLF_FOOD, new WolfFood());
-        this.getEntityData().define(WOLF_TARGETS, new WolfTargets());
-        this.getEntityData().define(WOLF_COMMANDS, new WolfCommands());
+    protected void defineSynchedData(@Nonnull SynchedEntityData.Builder builder) {
+        super.defineSynchedData(builder);
+        builder.define(WOLF_SPECIES, 0);
+        builder.define(WOLF_FOOD, WolfFood.toTag(new WolfFood()));
+        builder.define(WOLF_TARGETS, WolfTargets.toTag(new WolfTargets()));
+        builder.define(WOLF_COMMANDS, WolfCommands.toTag(new WolfCommands()));
     }
 
     @Nullable
     public SpawnGroupData finalizeSpawn(
-            ServerLevelAccessor accessor, DifficultyInstance difficulty,
-            MobSpawnType mobSpawnType, @Nullable SpawnGroupData spawnGroupData, @Nullable CompoundTag tag) {
+            ServerLevelAccessor accessor, @Nonnull DifficultyInstance difficulty,
+            @Nonnull MobSpawnType mobSpawnType, @Nullable SpawnGroupData spawnGroupData) {
         this.setWolfSpeciesByBiome(accessor.getLevel());
-        return super.finalizeSpawn(accessor, difficulty, mobSpawnType, spawnGroupData, tag);
+        return super.finalizeSpawn(accessor, difficulty, mobSpawnType, spawnGroupData);
     }
 
     @Override
@@ -254,7 +238,7 @@ public class SophisticatedWolf extends AEntitySophisticatedWolf {
             var moveVec = this.getDeltaMovement();
 
             for (int i = 0; i < 7; i++) {
-                this.level.addParticle(
+                this.level().addParticle(
                         ParticleTypes.SMOKE,
                         this.getRandomX(1), this.getRandomY() + 0.5, this.getRandomZ(1),
                         moveVec.x(), moveVec.y(), moveVec.z());
@@ -288,7 +272,7 @@ public class SophisticatedWolf extends AEntitySophisticatedWolf {
         if (this.isTame()) {
             // breed wolves with dog treats
             if (stack.is(SWItems.getDogTreat()) &&
-                    !this.getLevel().isClientSide() &&
+                    !this.level().isClientSide() &&
                     this.getAge() == 0) {
                 this.usePlayerItem(player, hand, stack);
                 this.setInLove(player);
@@ -309,7 +293,7 @@ public class SophisticatedWolf extends AEntitySophisticatedWolf {
             } else if (stack.getItem() instanceof ItemDogTag || stack.getItem() instanceof ItemPetCarrier) {
                 return InteractionResult.FAIL;
             } else if (FoodUtils.isBone(stack)) {
-                if (this.getLevel().isClientSide()) {
+                if (this.level().isClientSide()) {
                     WolfFoodConfigScreen.open(this);
                 }
                 stack.shrink(1);
@@ -317,7 +301,7 @@ public class SophisticatedWolf extends AEntitySophisticatedWolf {
             }
         } else if (stack.is(Items.BONE) && !this.isAngry()) {
             var result = super.mobInteract(player, hand);
-            if (this.isTame() && !this.getLevel().isClientSide()) {
+            if (this.isTame() && !this.level().isClientSide()) {
                 this.setHealth(SWConfiguration.WOLVES_HEALTH_TAMED.get());
             }
 
@@ -337,8 +321,8 @@ public class SophisticatedWolf extends AEntitySophisticatedWolf {
     }
 
     @Override
-    public void setTame(boolean tamed) {
-        super.setTame(tamed);
+    public void setTame(boolean tamed, boolean applyTamingSideEffects) {
+        super.setTame(tamed, true);
         //Used only to override default max health at spawn in case it was changed in configs
         if (tamed) {
             this.getAttribute(Attributes.MAX_HEALTH).setBaseValue(SWConfiguration.WOLVES_HEALTH_TAMED.get());
@@ -353,13 +337,13 @@ public class SophisticatedWolf extends AEntitySophisticatedWolf {
 
     @Override
     public Wolf getBreedOffspring(ServerLevel serverLevel, AgeableMob entity) {
-        var wolf = SWEntities.getSophisticatedWolfType().create(this.level);
+        var wolf = SWEntities.getSophisticatedWolfType().create(this.level());
         wolf.updateSpecies(this.getSpecies()); //setting species to same as parent that spawned it
         var ownerId = this.getOwnerUUID();
 
         if (ownerId != null) {
             wolf.setOwnerUUID(ownerId);
-            wolf.setTame(true);
+            wolf.setTame(true, true);
         }
         return wolf;
     }
@@ -387,7 +371,7 @@ public class SophisticatedWolf extends AEntitySophisticatedWolf {
 
     //checks for creepers nearby
     private boolean creeperAlert() {
-        var list = this.level.getEntitiesOfClass(
+        var list = this.level().getEntitiesOfClass(
                 Creeper.class, this.getBoundingBox().expandTowards(16, 4, 16));
         if (!list.isEmpty()) {
             this.playSound(SoundEvents.WOLF_GROWL, getSoundVolume(),
@@ -402,11 +386,11 @@ public class SophisticatedWolf extends AEntitySophisticatedWolf {
     public EnumWolfSpecies getSpeciesByBiome(Level level) {
         var biome = level.getBiome(this.blockPosition());
 
-        if (biome.containsTag(Tags.Biomes.IS_SNOWY)) {
+        if (biome.is(Tags.Biomes.IS_SNOWY)) {
             return EnumWolfSpecies.VANILLA;
-        } else if (biome.containsTag(Tags.Biomes.IS_CONIFEROUS)) {//TAIGA
+        } else if (biome.is(Tags.Biomes.IS_CONIFEROUS_TREE)) {//TAIGA
             return EnumWolfSpecies.BLACK;
-        } else if (biome.containsTag(Tags.Biomes.IS_SPOOKY)) {//DARK_FOREST
+        } else if (biome.is(Tags.Biomes.IS_SPOOKY)) {//DARK_FOREST
             return EnumWolfSpecies.BROWN;
         } else {
             return EnumWolfSpecies.FOREST;
@@ -489,7 +473,7 @@ public class SophisticatedWolf extends AEntitySophisticatedWolf {
     }
 
     public void updateFood(WolfFood food) {
-        this.getEntityData().set(WOLF_FOOD, food);
+        this.getEntityData().set(WOLF_FOOD, WolfFood.toTag(food));
     }
 
     public void updateFood(boolean rottenMeatAndBones, boolean rawMeat, boolean rawFish,
@@ -498,7 +482,7 @@ public class SophisticatedWolf extends AEntitySophisticatedWolf {
     }
 
     public void updateTargets(WolfTargets targets) {
-        this.getEntityData().set(WOLF_TARGETS, targets);
+        this.getEntityData().set(WOLF_TARGETS, WolfTargets.toTag(targets));
     }
 
     public void updateTargets(boolean attackSkeletons, boolean attackZombies, boolean attackSpiders,
@@ -507,7 +491,7 @@ public class SophisticatedWolf extends AEntitySophisticatedWolf {
     }
 
     public void updateCommands(WolfCommands commands) {
-        this.getEntityData().set(WOLF_COMMANDS, commands);
+        this.getEntityData().set(WOLF_COMMANDS, WolfCommands.toTag(commands));
     }
 
     public void updateCommands(boolean followOwner, boolean guardZone) {
@@ -515,15 +499,15 @@ public class SophisticatedWolf extends AEntitySophisticatedWolf {
     }
 
     public WolfFood getWolfFood() {
-        return this.getEntityData().get(WOLF_FOOD);
+        return WolfFood.getFromTag(this.entityData.get(WOLF_FOOD));
     }
 
     public WolfTargets getWolfTargets() {
-        return this.getEntityData().get(WOLF_TARGETS);
+        return WolfTargets.getFromTag(this.entityData.get(WOLF_TARGETS));
     }
 
     public WolfCommands getWolfCommands() {
-        return this.getEntityData().get(WOLF_COMMANDS);
+        return WolfCommands.getFromTag(this.entityData.get(WOLF_COMMANDS));
     }
 
 }

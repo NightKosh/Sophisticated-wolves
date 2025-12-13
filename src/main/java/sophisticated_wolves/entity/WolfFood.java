@@ -23,6 +23,12 @@ public record WolfFood(boolean rottenMeatAndBones, boolean rawMeat, boolean rawF
                 rottenMeatAndBones && rawMeat && rawFish && specialFish && cookedMeat && cookedFish);
     }
 
+    public static CompoundTag toTag(WolfFood wolfFood) {
+        var tag = new CompoundTag();
+        wolfFood.saveData(tag);
+        return tag;
+    }
+
     public void saveData(CompoundTag tag) {
         var allowedFoodTag = new CompoundTag();
         allowedFoodTag.putBoolean("RottenMeatAndBones", this.rottenMeatAndBones);

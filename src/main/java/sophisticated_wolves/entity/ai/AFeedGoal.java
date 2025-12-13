@@ -23,7 +23,7 @@ public abstract class AFeedGoal<T extends Object> extends Goal {
 
     public AFeedGoal(SophisticatedWolf wolf) {
         this.pet = wolf;
-        this.level = wolf.getLevel();
+        this.level = wolf.level();
         this.owner = wolf.getOwner();
     }
 

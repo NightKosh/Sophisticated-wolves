@@ -77,8 +77,8 @@ public class SWNearestAttackableTargetGoal extends TargetGoal {
 
     protected LivingEntity findTarget(List<Class<? extends LivingEntity>> classes) {
         for (var clazz : classes) {
-            var mob = this.mob.level.getNearestEntity(
-                    this.mob.level.getEntitiesOfClass(
+            var mob = this.mob.level().getNearestEntity(
+                    this.mob.level().getEntitiesOfClass(
                             clazz,
                             this.getTargetSearchArea(this.getFollowDistance()),
                             (x) -> true),

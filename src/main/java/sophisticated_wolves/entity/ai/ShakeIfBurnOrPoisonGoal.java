@@ -24,7 +24,7 @@ public class ShakeIfBurnOrPoisonGoal extends Goal {
 
     public ShakeIfBurnOrPoisonGoal(SophisticatedWolf wolf) {
         this.wolf = wolf;
-        this.level = wolf.getLevel();
+        this.level = wolf.level();
         this.petPathfinder = this.wolf.getNavigation();
     }
 
@@ -33,7 +33,7 @@ public class ShakeIfBurnOrPoisonGoal extends Goal {
      */
     @Override
     public boolean canUse() {
-        if (!this.wolf.isTame() || !this.wolf.isOnGround()) {
+        if (!this.wolf.isTame() || !this.wolf.onGround()) {
             return false;
         }
 
