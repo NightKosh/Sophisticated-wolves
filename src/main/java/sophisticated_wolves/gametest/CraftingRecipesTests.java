@@ -21,7 +21,7 @@ import sophisticated_wolves.core.SWItems;
 
 import java.util.List;
 
-import static com.mojang.text2speech.Narrator.LOGGER;
+import static sophisticated_wolves.SophisticatedWolvesMod.LOGGER;
 
 /**
  * Sophisticated Wolves

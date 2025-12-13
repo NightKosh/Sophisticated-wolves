@@ -1,12 +1,15 @@
 package sophisticated_wolves.core;
 
+import net.minecraft.core.component.DataComponents;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.event.CreativeModeTabEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
+import net.minecraft.world.item.component.CustomData;
+import net.neoforged.bus.api.IEventBus;
+import net.neoforged.neoforge.registries.DeferredHolder;
+import net.neoforged.neoforge.registries.DeferredRegister;
 import sophisticated_wolves.api.ModInfo;
 import sophisticated_wolves.block.BlockDogBowl;
 import sophisticated_wolves.item.pet_carrier.PetCarrierHelper;
@@ -17,47 +20,44 @@ import sophisticated_wolves.item.pet_carrier.PetCarrierHelper;
  * @author NightKosh
  * @license Lesser GNU Public License v3 (http://www.gnu.org/licenses/lgpl.html)
  */
-@Mod.EventBusSubscriber(modid = ModInfo.ID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class SWTabs {
 
-    public static CreativeModeTab SW_TAB;
+    public static final DeferredRegister<CreativeModeTab> SW_TAB =
+            DeferredRegister.create(Registries.CREATIVE_MODE_TAB, ModInfo.ID);
 
-    @SubscribeEvent
-    public static void registerTabs(CreativeModeTabEvent.Register event) {
-        SW_TAB = event.registerCreativeModeTab(
-                ResourceLocation.fromNamespaceAndPath(ModInfo.ID, "sophisticated_wolves"),
-                builder -> builder
-                        .icon(() -> new ItemStack(SWItems.getDogTreat()))
-                        .title(Component.translatable("itemGroup." + ModInfo.ID))
-                        .build()
-        );
-    }
+    public static final DeferredHolder<CreativeModeTab, CreativeModeTab> ADVANCED_FISHING_TAB =
+            SW_TAB.register("sophisticated_wolves", () -> CreativeModeTab.builder()
+                    .icon(() -> new ItemStack(SWItems.getDogTreat()))
+                    .title(Component.translatable("itemGroup." + ModInfo.ID))
+                    .displayItems((parameters, output) -> {
 
-    @SubscribeEvent
-    public static void buildContents(CreativeModeTabEvent.BuildContents event) {
-        if (event.getTab() == SW_TAB) {
-            event.accept(SWItems.getDogTag());
-            event.accept(SWItems.getDogTreat());
-            event.accept(SWItems.getWhistle());
+                        output.accept(SWItems.getDogTag());
+                        output.accept(SWItems.getDogTreat());
+                        output.accept(SWItems.getWhistle());
 
-            event.accept(BlockDogBowl.getItemsForTab(BlockDogBowl.EnumDogBowl.EMPTY));
-            event.accept(BlockDogBowl.getItemsForTab(BlockDogBowl.EnumDogBowl.FULL));
-            event.accept(new ItemStack(SWBlocks.getKennel()));
+                        output.accept(BlockDogBowl.getItemsForTab(BlockDogBowl.EnumDogBowl.EMPTY));
+                        output.accept(BlockDogBowl.getItemsForTab(BlockDogBowl.EnumDogBowl.FULL));
+                        output.accept(new ItemStack(SWBlocks.getKennel()));
 
-            event.accept(new ItemStack(SWItems.getPetCarrier()));
-            for (var entry : PetCarrierHelper.getPetCarriers()) {
-                var petCarrier = entry.getValue();
-                if (petCarrier != null) {
-                    for (var tag : petCarrier.getDefaultPetCarriers()) {
-                        var stack = new ItemStack(SWItems.getPetCarrier());
-                        stack.setTag(tag);
-                        event.accept(stack);
-                    }
-                }
-            }
+                        output.accept(new ItemStack(SWItems.getPetCarrier()));
+                        for (var entry : PetCarrierHelper.getPetCarriers()) {
+                            var petCarrier = entry.getValue();
+                            if (petCarrier != null) {
+                                for (var tag : petCarrier.getDefaultPetCarriers()) {
+                                    var stack = new ItemStack(SWItems.getPetCarrier());
+                                    stack.set(DataComponents.CUSTOM_DATA, CustomData.of(tag));
+                                    output.accept(stack);
+                                }
+                            }
+                        }
 
-            event.accept(SWItems.getDogEgg());
-        }
+                        output.accept(SWItems.getDogEgg());
+                    })
+                    .build()
+            );
+
+    public static void register(IEventBus modEventBus) {
+        SW_TAB.register(modEventBus);
     }
 
 }

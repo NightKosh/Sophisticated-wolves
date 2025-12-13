@@ -1,6 +1,6 @@
 package sophisticated_wolves.compatibility;
 
-import net.minecraftforge.fml.ModList;
+import net.neoforged.fml.ModList;
 
 /**
  * Sophisticated Wolves
