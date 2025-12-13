@@ -1,6 +1,7 @@
 package sophisticated_wolves.block_entity;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.MenuProvider;
@@ -13,6 +14,8 @@ import org.jetbrains.annotations.Nullable;
 import sophisticated_wolves.block.BlockDogBowl;
 import sophisticated_wolves.core.SWBlockEntities;
 import sophisticated_wolves.gui.menu.DogBowlContainerMenu;
+
+import javax.annotation.Nonnull;
 
 /**
  * Sophisticated Wolves
@@ -30,17 +33,17 @@ public class BlockEntityDogBowl extends BlockEntity implements MenuProvider {
     }
 
     @Override
-    public void saveAdditional(CompoundTag compound) {
-        super.saveAdditional(compound);
+    public void saveAdditional(@Nonnull CompoundTag compound, @Nonnull HolderLookup.Provider registries) {
+        super.saveAdditional(compound, registries);
 
         compound.putInt("FoodAmount", foodAmount);
     }
 
     @Override
-    public void load(CompoundTag compound) {
-        super.load(compound);
+    public void loadAdditional(@Nonnull CompoundTag tag, @Nonnull HolderLookup.Provider provider) {
+        super.loadAdditional(tag, provider);
 
-        foodAmount = compound.getInt("FoodAmount");
+        foodAmount = tag.getInt("FoodAmount");
     }
 
     public int getFoodAmount() {
@@ -69,13 +72,20 @@ public class BlockEntityDogBowl extends BlockEntity implements MenuProvider {
                         BlockDogBowl.EnumDogBowl.getTypeByFood(foodAmount).ordinal()));
     }
 
+    @Nonnull
     @Override
-    public CompoundTag getUpdateTag() {
+    public CompoundTag getUpdateTag(@Nonnull HolderLookup.Provider provider) {
         var tag = new CompoundTag();
-        this.saveAdditional(tag);
+        this.saveAdditional(tag, provider);
         return tag;
     }
 
+    @Override
+    public void handleUpdateTag(CompoundTag tag, @Nonnull HolderLookup.Provider provider) {
+        foodAmount = tag.getInt("FoodAmount");
+    }
+
+    @Nonnull
     @Override
     public Component getDisplayName() {
         return Component.empty();
@@ -83,7 +93,7 @@ public class BlockEntityDogBowl extends BlockEntity implements MenuProvider {
 
     @Nullable
     @Override
-    public AbstractContainerMenu createMenu(int containerId, Inventory inventory, Player player) {
+    public AbstractContainerMenu createMenu(int containerId, @Nonnull Inventory inventory, @Nonnull Player player) {
         return new DogBowlContainerMenu(containerId, inventory, this);
     }
 
