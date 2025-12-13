@@ -7,9 +7,11 @@ import net.minecraft.client.renderer.entity.WolfRenderer;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.animal.Wolf;
-import sophisticated_wolves.core.SWResources;
 import sophisticated_wolves.core.SWConfiguration;
+import sophisticated_wolves.core.SWResources;
 import sophisticated_wolves.entity.SophisticatedWolf;
+
+import javax.annotation.Nonnull;
 
 /**
  * Sophisticated Wolves
@@ -33,8 +35,9 @@ public class SophisticatedWolfRenderer extends WolfRenderer {
         super(context);
     }
 
+    @Nonnull
     @Override
-    public ResourceLocation getTextureLocation(Wolf wolf) {
+    public ResourceLocation getTextureLocation(@Nonnull Wolf wolf) {
         if (SWConfiguration.CUSTOM_WOLF_TEXTURES.get()) {
             switch (((SophisticatedWolf) wolf).getSpecies()) {
                 case BROWN:
@@ -64,11 +67,12 @@ public class SophisticatedWolfRenderer extends WolfRenderer {
     }
 
     @Override
-    protected void renderNameTag(Wolf wolf, Component component, PoseStack poseStack,
-                                 MultiBufferSource multiBufferSource, int xz) {
-        var coloredComponent = Component.literal(component.getString())
-                .withStyle(component.getStyle().withColor(getWolfNameColor(wolf)));
-        super.renderNameTag(wolf, coloredComponent, poseStack, multiBufferSource, xz);
+    protected void renderNameTag(
+            @Nonnull Wolf wolf, Component displayName, @Nonnull PoseStack poseStack,
+            @Nonnull MultiBufferSource multiBufferSource, int packedLight, float partialTick) {
+        var coloredComponent = Component.literal(displayName.getString())
+                .withStyle(displayName.getStyle().withColor(getWolfNameColor(wolf)));
+        super.renderNameTag(wolf, coloredComponent, poseStack, multiBufferSource, packedLight, partialTick);
     }
 
     //changes color of wolf's name based on health
