@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "BBB",
+    "PWP",
+    "P#P"
+  ],
+  "key": {
+    "B": "minecraft:brick",
+    "P": "#minecraft:planks",
+    "W": "#minecraft:wool",
+    "#": "sophisticated_wolves:dog_bowl"
+  },
+  "result": {
+    "id": "sophisticated_wolves:kennel"
+  }
+}

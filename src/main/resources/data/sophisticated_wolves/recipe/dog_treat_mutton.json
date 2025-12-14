@@ -3,12 +3,8 @@
   "group" : "dog_treat",
   "category": "misc",
   "ingredients" : [
-    {
-      "item" : "minecraft:wheat"
-    },
-    {
-      "item" : "minecraft:porkchop"
-    }
+    "minecraft:wheat",
+    "minecraft:mutton"
   ],
   "result" : {
     "id": "sophisticated_wolves:dog_treat",

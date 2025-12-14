@@ -6,15 +6,9 @@
     "DI"
   ],
   "key" : {
-    "I" : {
-      "item" : "minecraft:iron_ingot"
-    },
-    "G" : {
-      "item" : "minecraft:gold_ingot"
-    },
-    "D" : {
-      "item" : "minecraft:orange_dye"
-    }
+    "I" : "minecraft:iron_ingot",
+    "G" : "minecraft:gold_ingot",
+    "D" : "minecraft:orange_dye"
   },
   "result" : {
     "id": "sophisticated_wolves:whistle"

@@ -2,12 +2,8 @@
   "type" : "minecraft:crafting_shapeless",
   "category": "misc",
   "ingredients" : [
-    {
-      "item" : "minecraft:brick"
-    },
-    {
-      "item" : "minecraft:bowl"
-    }
+    "minecraft:brick",
+    "minecraft:bowl"
   ],
   "result" : {
     "id": "sophisticated_wolves:dog_bowl"
