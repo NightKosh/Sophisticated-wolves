@@ -3,9 +3,9 @@
   
     "entity.sophisticated_wolves.sophisticated_wolf" : "Chó Sói Thông Thái",
   
-    "block.sophisticated_wolves.dog_bowl" : "Tô đồ ăn",
-    "block.sophisticated_wolves.dog_bowl.amount_of_food" : "Lượng đồ ăn: ",
-    "block.sophisticated_wolves.kennel" : "Cũi",
+    "item.sophisticated_wolves.dog_bowl" : "Tô đồ ăn",
+    "item.sophisticated_wolves.dog_bowl.amount_of_food" : "Lượng đồ ăn: ",
+    "item.sophisticated_wolves.kennel" : "Cũi",
   
     "item.sophisticated_wolves.dog_tag" : "Đặt tên cún",
     "item.sophisticated_wolves.dog_treat" : "Bánh thưởng",

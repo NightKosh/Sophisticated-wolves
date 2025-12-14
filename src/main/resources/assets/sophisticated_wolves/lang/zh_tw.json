@@ -3,9 +3,9 @@
 
   "entity.sophisticated_wolves.sophisticated_wolf" : "精緻的狼",
 
-  "block.sophisticated_wolves.dog_bowl" : "狗碗",
-  "block.sophisticated_wolves.dog_bowl.amount_of_food" : "Amount of food: ",
-  "block.sophisticated_wolves.kennel" : "狗窩",
+  "item.sophisticated_wolves.dog_bowl" : "狗碗",
+  "item.sophisticated_wolves.dog_bowl.amount_of_food" : "Amount of food: ",
+  "item.sophisticated_wolves.kennel" : "狗窩",
 
   "item.sophisticated_wolves.dog_tag" : "狗牌",
   "item.sophisticated_wolves.dog_treat" : "狗飼料",

@@ -3,9 +3,9 @@
 
   "entity.sophisticated_wolves.sophisticated_wolf" : "Sophisticated Wolf",
 
-  "block.sophisticated_wolves.dog_bowl" : "Dog Bowl",
-  "block.sophisticated_wolves.dog_bowl.amount_of_food" : "Amount of food: ",
-  "block.sophisticated_wolves.kennel" : "Kennel",
+  "item.sophisticated_wolves.dog_bowl" : "Dog Bowl",
+  "item.sophisticated_wolves.dog_bowl.amount_of_food" : "Amount of food: ",
+  "item.sophisticated_wolves.kennel" : "Kennel",
 
   "item.sophisticated_wolves.dog_tag" : "Dog Tag",
   "item.sophisticated_wolves.dog_treat" : "Dog Treat",

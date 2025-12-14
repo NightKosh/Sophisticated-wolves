@@ -3,9 +3,9 @@
 
   "entity.sophisticated_wolves.sophisticated_wolf" : "Lobo",
 
-  "block.sophisticated_wolves.dog_bowl" : "Cuenco para perros",
-  "block.sophisticated_wolves.dog_bowl.amount_of_food" : "Amount of food: ",
-  "block.sophisticated_wolves.kennel" : "Casa para perros",
+  "item.sophisticated_wolves.dog_bowl" : "Cuenco para perros",
+  "item.sophisticated_wolves.dog_bowl.amount_of_food" : "Amount of food: ",
+  "item.sophisticated_wolves.kennel" : "Casa para perros",
 
   "item.sophisticated_wolves.dog_tag" : "Placa de identificación",
   "item.sophisticated_wolves.dog_treat" : "Galleta para lobos",

@@ -3,9 +3,9 @@
 
   "entity.sophisticated_wolves.sophisticated_wolf" : "Hoch entwickelter Wolf",
 
-  "block.sophisticated_wolves.dog_bowl" : "Hundenapf",
-  "block.sophisticated_wolves.dog_bowl.amount_of_food" : "Amount of food: ",
-  "block.sophisticated_wolves.kennel" : "Hundehütte",
+  "item.sophisticated_wolves.dog_bowl" : "Hundenapf",
+  "item.sophisticated_wolves.dog_bowl.amount_of_food" : "Amount of food: ",
+  "item.sophisticated_wolves.kennel" : "Hundehütte",
 
   "item.sophisticated_wolves.dog_tag" : "Hundemarke",
   "item.sophisticated_wolves.dog_treat" : "Hundeleckerli",

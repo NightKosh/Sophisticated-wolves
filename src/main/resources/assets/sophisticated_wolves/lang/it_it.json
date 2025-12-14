@@ -3,9 +3,9 @@
 
   "entity.sophisticated_wolves.sophisticated_wolf" : "Lupo Sofisticato",
 
-  "block.sophisticated_wolves.dog_bowl" : "Ciotola per cani",
-  "block.sophisticated_wolves.dog_bowl.amount_of_food" : "Amount of food: ",
-  "block.sophisticated_wolves.kennel" : "Cuccia",
+  "item.sophisticated_wolves.dog_bowl" : "Ciotola per cani",
+  "item.sophisticated_wolves.dog_bowl.amount_of_food" : "Amount of food: ",
+  "item.sophisticated_wolves.kennel" : "Cuccia",
 
   "item.sophisticated_wolves.dog_tag" : "Medaglietta",
   "item.sophisticated_wolves.dog_treat" : "Dolcetto per cani",

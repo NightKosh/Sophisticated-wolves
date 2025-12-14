@@ -3,9 +3,9 @@
 
   "entity.sophisticated_wolves.sophisticated_wolf" : "Умный волк",
 
-  "block.sophisticated_wolves.dog_bowl" : "Собачья миска",
-  "block.sophisticated_wolves.dog_bowl.amount_of_food" : "Количество еды: ",
-  "block.sophisticated_wolves.kennel" : "Будка",
+  "item.sophisticated_wolves.dog_bowl" : "Собачья миска",
+  "item.sophisticated_wolves.dog_bowl.amount_of_food" : "Количество еды: ",
+  "item.sophisticated_wolves.kennel" : "Будка",
 
   "item.sophisticated_wolves.dog_tag" : "Собачья бирка",
   "item.sophisticated_wolves.dog_treat" : "Собачье лакомство",

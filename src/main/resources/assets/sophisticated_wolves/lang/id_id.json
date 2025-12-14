@@ -3,9 +3,9 @@
 
   "entity.sophisticated_wolves.sophisticated_wolf" : "Serigala Canggih",
 
-  "block.sophisticated_wolves.dog_bowl" : "Mangkuk Anjing",
-  "block.sophisticated_wolves.dog_bowl.amount_of_food" : "Amount of food: ",
-  "block.sophisticated_wolves.kennel" : "Kandang Anjing",
+  "item.sophisticated_wolves.dog_bowl" : "Mangkuk Anjing",
+  "item.sophisticated_wolves.dog_bowl.amount_of_food" : "Amount of food: ",
+  "item.sophisticated_wolves.kennel" : "Kandang Anjing",
 
   "item.sophisticated_wolves.dog_tag" : "Tag Anjing",
   "item.sophisticated_wolves.dog_treat" : "Makanan anjing",
