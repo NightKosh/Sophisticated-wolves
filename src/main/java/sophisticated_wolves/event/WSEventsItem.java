@@ -19,7 +19,7 @@ import static sophisticated_wolves.SophisticatedWolvesMod.LOGGER;
  * @license Lesser GNU Public License v3 (http://www.gnu.org/licenses/lgpl.html)
  */
 @EventBusSubscriber(modid = ModInfo.ID)
-public class EventsItem {
+public class WSEventsItem {
 
     @SubscribeEvent
     public static void entityInteract(PlayerInteractEvent.EntityInteract event) {

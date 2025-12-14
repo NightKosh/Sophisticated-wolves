@@ -5,7 +5,7 @@ import net.minecraft.world.level.levelgen.Heightmap;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.entity.EntityAttributeCreationEvent;
-import net.neoforged.neoforge.event.entity.SpawnPlacementRegisterEvent;
+import net.neoforged.neoforge.event.entity.RegisterSpawnPlacementsEvent;
 import sophisticated_wolves.api.ModInfo;
 import sophisticated_wolves.core.SWEntities;
 import sophisticated_wolves.entity.SophisticatedWolf;
@@ -16,8 +16,8 @@ import sophisticated_wolves.entity.SophisticatedWolf;
  * @author NightKosh
  * @license Lesser GNU Public License v3 (http://www.gnu.org/licenses/lgpl.html)
  */
-@EventBusSubscriber(modid = ModInfo.ID, bus = EventBusSubscriber.Bus.MOD)
-public class EventsEntity {
+@EventBusSubscriber(modid = ModInfo.ID)
+public class SWEventsEntity {
 
     @SubscribeEvent
     public static void registerEntityAttributes(EntityAttributeCreationEvent event) {
@@ -25,12 +25,12 @@ public class EventsEntity {
     }
 
     @SubscribeEvent
-    public static void registerSpawnPlacement(SpawnPlacementRegisterEvent event) {
+    public static void registerSpawnPlacement(RegisterSpawnPlacementsEvent event) {
         event.register(SWEntities.getSophisticatedWolfType(),
                 SpawnPlacementTypes.ON_GROUND,
                 Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
                 SophisticatedWolf::checkSpawnRules,
-                SpawnPlacementRegisterEvent.Operation.OR);
+                RegisterSpawnPlacementsEvent.Operation.OR);
     }
 
 }

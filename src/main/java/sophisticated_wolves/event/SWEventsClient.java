@@ -14,8 +14,8 @@ import sophisticated_wolves.core.SWEntities;
  * @author NightKosh
  * @license Lesser GNU Public License v3 (http://www.gnu.org/licenses/lgpl.html)
  */
-@EventBusSubscriber(modid = ModInfo.ID, bus = EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
-public class EventsClient {
+@EventBusSubscriber(modid = ModInfo.ID, value = Dist.CLIENT)
+public class SWEventsClient {
 
     @SubscribeEvent
     public static void entityRenderers(EntityRenderersEvent.RegisterRenderers event) {

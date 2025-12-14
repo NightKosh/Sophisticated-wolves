@@ -1,7 +1,7 @@
 package sophisticated_wolves;
 
 import net.neoforged.bus.api.IEventBus;
-import net.neoforged.fml.ModLoadingContext;
+import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.config.ModConfig;
 import org.apache.logging.log4j.LogManager;
@@ -23,10 +23,10 @@ public class SophisticatedWolvesMod {
 
     public static final Logger LOGGER = LogManager.getLogger(ModInfo.ID);
 
-    public SophisticatedWolvesMod(IEventBus eventBus) {
+    public SophisticatedWolvesMod(IEventBus eventBus, ModContainer container) {
         INSTANCE = this;
 
-        ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, SWConfiguration.SPEC, ModInfo.ID + ".toml");
+        container.registerConfig(ModConfig.Type.COMMON, SWConfiguration.SPEC, ModInfo.ID + ".toml");
 
         SWTabs.register(eventBus);
         SWItems.register(eventBus);
