@@ -1,10 +1,9 @@
 package sophisticated_wolves.gui.component;
 
-import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
-import net.minecraft.client.renderer.GameRenderer;
+import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.network.chat.Component;
 import net.minecraft.util.Mth;
 import sophisticated_wolves.core.SWResources;
@@ -24,6 +23,8 @@ public class GuiTabButton extends Button {
     public static final int Y_SIZE = 30;
     public static final int Y_SIZE_ENABLED = 32;
 
+    private static final int TEXTURE_SIZE = 256;
+
     private boolean isTabActive = false;
 
     public GuiTabButton(int x, int y, Component component, Button.OnPress onPress) {
@@ -31,15 +32,19 @@ public class GuiTabButton extends Button {
     }
 
     @Override
-    public void renderWidget(@Nonnull GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTicks) {
-        RenderSystem.setShader(GameRenderer::getPositionTexShader);
-        RenderSystem.setShaderColor(1, 1, 1, 1);
-        RenderSystem.setShaderTexture(0, SWResources.TAB_BUTTON_GUI);
-
+    public void renderContents(@Nonnull GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTicks) {
         if (this.isTabActive) {
-            guiGraphics.blit(SWResources.TAB_BUTTON_GUI, this.getX(), this.getY(), 0, 30, this.width, Y_SIZE_ENABLED);
+            guiGraphics.blit(RenderPipelines.GUI_TEXTURED, SWResources.TAB_BUTTON_GUI,
+                    this.getX(), this.getY(),
+                    0, 30,
+                    this.width, Y_SIZE_ENABLED,
+                    TEXTURE_SIZE, TEXTURE_SIZE);
         } else {
-            guiGraphics.blit(SWResources.TAB_BUTTON_GUI, this.getX(), this.getY(), 0, 0, this.width, Y_SIZE);
+            guiGraphics.blit(RenderPipelines.GUI_TEXTURED, SWResources.TAB_BUTTON_GUI,
+                    this.getX(), this.getY(),
+                    0, 0,
+                    this.width, Y_SIZE,
+                    TEXTURE_SIZE, TEXTURE_SIZE);
         }
         guiGraphics.drawCenteredString(Minecraft.getInstance().font, this.getMessage(),
                 this.getX() + this.width / 2, this.getY() + (this.height - 8) / 2,

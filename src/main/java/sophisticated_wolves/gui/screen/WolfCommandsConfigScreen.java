@@ -1,7 +1,7 @@
 package sophisticated_wolves.gui.screen;
 
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import sophisticated_wolves.core.SWMessages;
 import sophisticated_wolves.core.SWResources;
 import sophisticated_wolves.entity.SophisticatedWolf;
@@ -29,15 +29,14 @@ public class WolfCommandsConfigScreen extends WolfConfigScreen {
     protected void initCustomComponents(int x, int y) {
         this.commandsScreenButton.setTabActive(true);
 
-        var commands = wolf.getWolfCommands();
         this.addRenderableWidget(this.followOwner = new GuiCheckbox(x + COLUMN_1, y + LINE_2, 80,
                 Component.translatable("gui.sophisticated_wolves.wolf_commands_configs.follow_owner_button"),
                 () -> List.of(guardZone),
-                commands.followOwner()));
+                wolf.followOwner));
         this.addRenderableWidget(this.guardZone = new GuiCheckbox(x + COLUMN_2, y + LINE_2, 80,
                 Component.translatable("gui.sophisticated_wolves.wolf_commands_configs.guard_zone_button"),
                 () -> List.of(followOwner),
-                commands.guardZone()));
+                wolf.guardZone));
     }
 
     @Override
@@ -47,7 +46,7 @@ public class WolfCommandsConfigScreen extends WolfConfigScreen {
     }
 
     @Override
-    protected ResourceLocation getBackground() {
+    protected Identifier getBackground() {
         return SWResources.COMMANDS_GUI;
     }
 

@@ -1,11 +1,12 @@
 package sophisticated_wolves.gui.screen;
 
-import com.mojang.blaze3d.platform.Lighting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.EditBox;
 import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.client.input.CharacterEvent;
+import net.minecraft.client.input.KeyEvent;
 import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.TamableAnimal;
@@ -56,7 +57,7 @@ public class DogTagScreen extends Screen {
                             SWMessages.sendToServer(
                                     new PetNameMessageToServer(this.animal.getId(), this.nameField.getValue())
                             );
-                            this.minecraft.setScreen(null); // закрыть GUI
+                            this.minecraft.setScreen(null); // close GUI
                         })
                         .bounds(x + 5, y + 120, 55, 20)
                         .build()
@@ -67,22 +68,19 @@ public class DogTagScreen extends Screen {
     @Override
     public void render(@Nonnull GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTick) {
         super.render(guiGraphics, mouseX, mouseY, partialTick);
-        Lighting.setupForFlatItems();
 
         guiGraphics.drawCenteredString(this.font, this.title, this.width / 2, 60, 0xffffff);
-
-        Lighting.setupFor3DItems();
     }
 
     @Override
-    public boolean keyPressed(int p_96552_, int p_96553_, int p_96554_) {
-        this.nameField.keyPressed(p_96552_, p_96553_, p_96554_);
-        return super.keyPressed(p_96552_, p_96553_, p_96554_);
+    public boolean keyPressed(KeyEvent keyEvent) {
+        this.nameField.keyPressed(keyEvent);
+        return super.keyPressed(keyEvent);
     }
 
     @Override
-    public boolean charTyped(char c, int i) {
-        return this.nameField.charTyped(c, i);
+    public boolean charTyped(CharacterEvent characterEvent) {
+        return this.nameField.charTyped(characterEvent);
     }
 
 }

@@ -1,7 +1,7 @@
 package sophisticated_wolves.gui.screen;
 
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import sophisticated_wolves.core.SWResources;
 import sophisticated_wolves.core.SWMessages;
 import sophisticated_wolves.entity.SophisticatedWolf;
@@ -31,13 +31,12 @@ public class WolfTargetsConfigScreen extends WolfConfigScreen {
     protected void initCustomComponents(int x, int y) {
         this.targetsScreenButton.setTabActive(true);
 
-        var wolfTargets = wolf.getWolfTargets();
-        this.addRenderableWidget(this.attackSlimes = new GuiCheckbox(x + COLUMN_1, y + LINE_1, wolfTargets.attackSlimes()));
-        this.addRenderableWidget(this.attackSkeletons = new GuiCheckbox(x + COLUMN_2, y + LINE_1, wolfTargets.attackSkeletons()));
-        this.addRenderableWidget(this.attackSpiders = new GuiCheckbox(x + COLUMN_1, y + LINE_2, wolfTargets.attackSpiders()));
-        this.addRenderableWidget(this.attackZombies = new GuiCheckbox(x + COLUMN_2, y + LINE_2, wolfTargets.attackZombies()));
-        this.addRenderableWidget(this.attackNether = new GuiCheckbox(x + COLUMN_1, y + LINE_3, wolfTargets.attackNether()));
-        this.addRenderableWidget(this.attackRaider = new GuiCheckbox(x + COLUMN_2, y + LINE_3, wolfTargets.attackRaider()));
+        this.addRenderableWidget(this.attackSlimes = new GuiCheckbox(x + COLUMN_1, y + LINE_1, wolf.attackSlimes));
+        this.addRenderableWidget(this.attackSkeletons = new GuiCheckbox(x + COLUMN_2, y + LINE_1, wolf.attackSkeletons));
+        this.addRenderableWidget(this.attackSpiders = new GuiCheckbox(x + COLUMN_1, y + LINE_2, wolf.attackSpiders));
+        this.addRenderableWidget(this.attackZombies = new GuiCheckbox(x + COLUMN_2, y + LINE_2, wolf.attackZombies));
+        this.addRenderableWidget(this.attackNether = new GuiCheckbox(x + COLUMN_1, y + LINE_3, wolf.attackNether));
+        this.addRenderableWidget(this.attackRaider = new GuiCheckbox(x + COLUMN_2, y + LINE_3, wolf.attackRaider));
     }
 
     @Override
@@ -48,7 +47,7 @@ public class WolfTargetsConfigScreen extends WolfConfigScreen {
     }
 
     @Override
-    protected ResourceLocation getBackground() {
+    protected Identifier getBackground() {
         return SWResources.TARGET_GUI;
     }
 

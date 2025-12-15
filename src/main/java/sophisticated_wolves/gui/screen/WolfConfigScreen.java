@@ -1,15 +1,12 @@
 package sophisticated_wolves.gui.screen;
 
-import com.mojang.blaze3d.platform.Lighting;
-import com.mojang.blaze3d.systems.RenderSystem;
-import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.screens.Screen;
-import net.minecraft.client.renderer.GameRenderer;
+import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import sophisticated_wolves.entity.SophisticatedWolf;
 import sophisticated_wolves.gui.component.GuiTabButton;
 
@@ -32,6 +29,8 @@ public abstract class WolfConfigScreen extends Screen {
     protected static final int LINE_1 = 40;
     protected static final int LINE_2 = 61;
     protected static final int LINE_3 = 81;
+
+    private static final int TEXTURE_SIZE = 256;
 
     protected final SophisticatedWolf wolf;
 
@@ -69,26 +68,22 @@ public abstract class WolfConfigScreen extends Screen {
 
     @Override
     public void render(@Nonnull GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTick) {
-        Lighting.setupForFlatItems();
         this.renderBackground(guiGraphics, mouseX, mouseY, partialTick);
 
         guiGraphics.drawCenteredString(this.font, this.title, this.width / 2, 60, 0xffffff);
 
-        Lighting.setupFor3DItems();
         super.render(guiGraphics, mouseX, mouseY, partialTick);
     }
 
     @Override
     public void renderBackground(@Nonnull GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTick) {
-        super.renderBackground(guiGraphics, mouseX, mouseY, partialTick);
-
-        RenderSystem.setShader(GameRenderer::getPositionTexShader);
-        RenderSystem.setShaderColor(1, 1, 1, 1);
-        RenderSystem.setShaderTexture(0, getBackground());
-
         int xPos = (this.width - X_SIZE) / 2;
         int yPos = (this.height - Y_SIZE) / 2;
-        guiGraphics.blit(getBackground(), xPos, yPos, 0, 0, 256, 256);
+        guiGraphics.blit(RenderPipelines.GUI_TEXTURED, getBackground(),
+                xPos, yPos,
+                0, 0,
+                TEXTURE_SIZE, TEXTURE_SIZE,
+                TEXTURE_SIZE, TEXTURE_SIZE);
     }
 
     @Override
@@ -98,7 +93,7 @@ public abstract class WolfConfigScreen extends Screen {
 
     protected abstract void initCustomComponents(int x, int y);
 
-    protected abstract ResourceLocation getBackground();
+    protected abstract Identifier getBackground();
 
     protected abstract void onScreenClosed();
 
