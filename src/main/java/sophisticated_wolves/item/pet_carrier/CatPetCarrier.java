@@ -1,15 +1,19 @@
 package sophisticated_wolves.item.pet_carrier;
 
-import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceKey;
+import net.minecraft.util.ProblemReporter;
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.animal.Cat;
-import net.minecraft.world.entity.animal.CatVariant;
+import net.minecraft.world.entity.animal.feline.Cat;
+import net.minecraft.world.entity.animal.feline.CatVariant;
+import net.minecraft.world.entity.animal.feline.CatVariants;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.storage.TagValueInput;
+import net.minecraft.world.level.storage.TagValueOutput;
 import sophisticated_wolves.api.pet_carrier.PetCarrier;
 
+import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,45 +29,22 @@ public class CatPetCarrier extends PetCarrier<Cat> {
     private static final String CAT_VARIANT = "variant";
 
     public enum EnumCatType {
-        TABBY(CatVariant.TABBY),
-        BLACK(CatVariant.BLACK),
-        RED(CatVariant.RED),
-        SIAMESE(CatVariant.SIAMESE),
-        BRITISH_SHORTHAIR(CatVariant.BRITISH_SHORTHAIR),
-        CALICO(CatVariant.CALICO),
-        PERSIAN(CatVariant.PERSIAN),
-        RAGDOLL(CatVariant.RAGDOLL),
-        WHITE(CatVariant.WHITE),
-        JELLIE(CatVariant.JELLIE),
-        ALL_BLACK(CatVariant.ALL_BLACK);
+        TABBY(CatVariants.TABBY),
+        BLACK(CatVariants.BLACK),
+        RED(CatVariants.RED),
+        SIAMESE(CatVariants.SIAMESE),
+        BRITISH_SHORTHAIR(CatVariants.BRITISH_SHORTHAIR),
+        CALICO(CatVariants.CALICO),
+        PERSIAN(CatVariants.PERSIAN),
+        RAGDOLL(CatVariants.RAGDOLL),
+        WHITE(CatVariants.WHITE),
+        JELLIE(CatVariants.JELLIE),
+        ALL_BLACK(CatVariants.ALL_BLACK);
 
         private final ResourceKey<CatVariant> key;
-        private final CatVariant variant;
 
         EnumCatType(ResourceKey<CatVariant> key) {
             this.key = key;
-            this.variant = BuiltInRegistries.CAT_VARIANT.getOrThrow(key);
-        }
-
-        public static EnumCatType getByNum(int num) {
-            if (num >= 0 && num < EnumCatType.values().length) {
-                return EnumCatType.values()[num];
-            } else {
-                return TABBY;
-            }
-        }
-
-        public static EnumCatType getByCatVariant(CatVariant catVariant) {
-            for (var catType : values()) {
-                if (catType.variant.equals(catVariant)) {
-                    return catType;
-                }
-            }
-            return TABBY;
-        }
-
-        public CatVariant getVariant() {
-            return variant;
         }
 
         public ResourceKey<CatVariant> getKey() {
@@ -73,7 +54,7 @@ public class CatPetCarrier extends PetCarrier<Cat> {
     }
 
     @Override
-    public Class getPetClass() {
+    public Class<Cat> getPetClass() {
         return Cat.class;
     }
 
@@ -83,7 +64,25 @@ public class CatPetCarrier extends PetCarrier<Cat> {
     }
 
     @Override
-    public EntityType getEntityType() {
+    public void readPetData(Cat pet, CompoundTag tag) {
+        pet.readAdditionalSaveData(TagValueInput.create(
+                ProblemReporter.DISCARDING,
+                pet.level().registryAccess(),
+                tag));
+    }
+
+    @Nullable
+    @Override
+    public CompoundTag addPetData(Cat pet) {
+        var output = TagValueOutput.createWithContext(
+                ProblemReporter.DISCARDING,
+                pet.level().registryAccess());
+        pet.addAdditionalSaveData(output);
+        return output.buildResult();
+    }
+
+    @Override
+    public EntityType<Cat> getEntityType() {
         return EntityType.CAT;
     }
 
@@ -93,8 +92,8 @@ public class CatPetCarrier extends PetCarrier<Cat> {
             return List.of(Component.translatable("sophisticated_wolves.carrier.type")
                     .append(" - ")
                     .append(Component.translatable(
-                            "sophisticated_wolves.cat_type." + EnumCatType.getByNum(infoTag.getInt(CAT_TYPE))
-                                    .toString().toLowerCase())));
+                            "sophisticated_wolves.cat_type." + infoTag.getStringOr(CAT_TYPE, "minecraft:tabby")
+                                    .split(":", 2)[1])));
         }
         return null;
     }
@@ -102,14 +101,14 @@ public class CatPetCarrier extends PetCarrier<Cat> {
     @Override
     public CompoundTag getInfo(Cat cat) {
         var tag = new CompoundTag();
-        tag.putInt(CAT_TYPE, EnumCatType.getByCatVariant(cat.getVariant().value()).ordinal());
+        tag.putString(CAT_TYPE, cat.getVariant().getKey().identifier().toString());
 
         return tag;
     }
 
     @Override
     public void doAtSpawn(Cat cat, Player player) {
-        cat.setOwnerUUID(player.getUUID());
+        cat.setOwner(player);
         cat.setTame(true, true);
     }
 
@@ -117,11 +116,12 @@ public class CatPetCarrier extends PetCarrier<Cat> {
     public List<CompoundTag> getDefaultPetCarriers() {
         var list = new ArrayList<CompoundTag>();
         for (var catType : EnumCatType.values()) {
+            String variant = catType.getKey().identifier().toString();
             var infoTag = new CompoundTag();
-            infoTag.putInt(CAT_TYPE, catType.ordinal());
+            infoTag.putString(CAT_TYPE, variant);
 
             var entityTag = new CompoundTag();
-            entityTag.putString(CAT_VARIANT, catType.getKey().location().toString());
+            entityTag.putString(CAT_VARIANT, variant);
 
             list.add(getDefaultPetCarrier(infoTag, entityTag));
         }

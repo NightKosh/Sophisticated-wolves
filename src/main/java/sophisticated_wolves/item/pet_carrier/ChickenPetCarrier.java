@@ -1,7 +1,7 @@
 package sophisticated_wolves.item.pet_carrier;
 
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.animal.Chicken;
+import net.minecraft.world.entity.animal.chicken.Chicken;
 import sophisticated_wolves.api.pet_carrier.PetCarrier;
 
 /**
@@ -13,7 +13,7 @@ import sophisticated_wolves.api.pet_carrier.PetCarrier;
 public class ChickenPetCarrier extends PetCarrier<Chicken> {
 
     @Override
-    public Class getPetClass() {
+    public Class<Chicken> getPetClass() {
         return Chicken.class;
     }
 
@@ -23,7 +23,7 @@ public class ChickenPetCarrier extends PetCarrier<Chicken> {
     }
 
     @Override
-    public EntityType getEntityType() {
+    public EntityType<Chicken> getEntityType() {
         return EntityType.CHICKEN;
     }
 

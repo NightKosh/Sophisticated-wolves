@@ -205,7 +205,7 @@ public class SophisticatedWolf extends AEntitySophisticatedWolf {
     }
 
     @Override
-    protected void addAdditionalSaveData(ValueOutput value) {
+    public void addAdditionalSaveData(ValueOutput value) {
         super.addAdditionalSaveData(value);
         // food
         value.putBoolean("RottenMeatAndBones", eatRottenMeatAndBones());
@@ -230,7 +230,7 @@ public class SophisticatedWolf extends AEntitySophisticatedWolf {
     }
 
     @Override
-    protected void readAdditionalSaveData(ValueInput value) {
+    public void readAdditionalSaveData(ValueInput value) {
         super.readAdditionalSaveData(value);
         this.updateFood(value);
         this.updateTargets(value);

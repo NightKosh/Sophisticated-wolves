@@ -2,11 +2,15 @@ package sophisticated_wolves.item.pet_carrier;
 
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
+import net.minecraft.util.ProblemReporter;
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.animal.Fox;
+import net.minecraft.world.entity.animal.fox.Fox;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.storage.TagValueInput;
+import net.minecraft.world.level.storage.TagValueOutput;
 import sophisticated_wolves.api.pet_carrier.PetCarrier;
 
+import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,12 +25,12 @@ public class FoxPetCarrier extends PetCarrier<Fox> {
     private static final String FOX_TYPE = "FoxType";
 
     public enum EnumFoxType {
-        RED(Fox.Type.RED),
-        SNOW(Fox.Type.SNOW);
+        RED(Fox.Variant.RED),
+        SNOW(Fox.Variant.SNOW);
 
-        private final Fox.Type foxType;
+        private final Fox.Variant foxType;
 
-        EnumFoxType(Fox.Type foxType) {
+        EnumFoxType(Fox.Variant foxType) {
             this.foxType = foxType;
         }
 
@@ -38,7 +42,7 @@ public class FoxPetCarrier extends PetCarrier<Fox> {
             }
         }
 
-        public static EnumFoxType getByFoxType(Fox.Type foxType) {
+        public static EnumFoxType getByFoxType(Fox.Variant foxType) {
             for (var type : values()) {
                 if (type.getFoxType().equals(foxType)) {
                     return type;
@@ -47,14 +51,14 @@ public class FoxPetCarrier extends PetCarrier<Fox> {
             return RED;
         }
 
-        public Fox.Type getFoxType() {
+        public Fox.Variant getFoxType() {
             return foxType;
         }
 
     }
 
     @Override
-    public Class getPetClass() {
+    public Class<Fox> getPetClass() {
         return Fox.class;
     }
 
@@ -64,7 +68,25 @@ public class FoxPetCarrier extends PetCarrier<Fox> {
     }
 
     @Override
-    public EntityType getEntityType() {
+    public void readPetData(Fox pet, CompoundTag tag) {
+        pet.readAdditionalSaveData(TagValueInput.create(
+                ProblemReporter.DISCARDING,
+                pet.level().registryAccess(),
+                tag));
+    }
+
+    @Nullable
+    @Override
+    public CompoundTag addPetData(Fox pet) {
+        var output = TagValueOutput.createWithContext(
+                ProblemReporter.DISCARDING,
+                pet.level().registryAccess());
+        pet.addAdditionalSaveData(output);
+        return output.buildResult();
+    }
+
+    @Override
+    public EntityType<Fox> getEntityType() {
         return EntityType.FOX;
     }
 
@@ -74,7 +96,7 @@ public class FoxPetCarrier extends PetCarrier<Fox> {
             return List.of(Component.translatable("sophisticated_wolves.carrier.type")
                     .append(" - ")
                     .append(Component.translatable(
-                            "sophisticated_wolves.fox_type." + EnumFoxType.getByNum(infoTag.getInt(FOX_TYPE))
+                            "sophisticated_wolves.fox_type." + EnumFoxType.getByNum(infoTag.getIntOr(FOX_TYPE, 0))
                                     .toString().toLowerCase())));
         }
         return null;
@@ -90,13 +112,13 @@ public class FoxPetCarrier extends PetCarrier<Fox> {
 
     @Override
     public void doAtSpawn(Fox fox, Player player) {
-        fox.addTrustedUUID(player.getUUID());
+        fox.addTrustedEntity(player);
     }
 
     @Override
     public List<CompoundTag> getDefaultPetCarriers() {
         var list = new ArrayList<CompoundTag>();
-        for (EnumFoxType species : EnumFoxType.values()) {
+        for (var species : EnumFoxType.values()) {
             var infoTag = new CompoundTag();
             infoTag.putInt(FOX_TYPE, species.ordinal());
 
