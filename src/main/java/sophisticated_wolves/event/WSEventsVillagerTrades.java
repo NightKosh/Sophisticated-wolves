@@ -8,7 +8,6 @@ import net.minecraft.world.entity.animal.feline.Ocelot;
 import net.minecraft.world.entity.animal.fox.Fox;
 import net.minecraft.world.entity.animal.parrot.Parrot;
 import net.minecraft.world.entity.animal.rabbit.Rabbit;
-import net.minecraft.world.entity.animal.wolf.Wolf;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.component.CustomData;
@@ -60,12 +59,11 @@ public class WSEventsVillagerTrades {
             trades.get(2).add((trader, entity, rand) -> getCarrierOffer(Chicken.class, 15, 20, rand));
 
             trades.get(3).add((trader, entity, rand) -> getCarrierOffer(Rabbit.class, 15, 20, rand));
-            trades.get(3).add((trader, entity, rand) -> getCarrierOffer(Wolf.class, 20, 25, rand));
+            trades.get(3).add((trader, entity, rand) -> getCarrierOffer(Parrot.class, 25, 30, rand));
 
-            trades.get(4).add((trader, entity, rand) -> getCarrierOffer(Parrot.class, 25, 30, rand));
             trades.get(4).add((trader, entity, rand) -> getCarrierOffer(Cat.class, 30, 40, rand));
+            trades.get(4).add((trader, entity, rand) -> getCarrierOffer(SophisticatedWolf.class, 35, 45, rand));
 
-            trades.get(5).add((trader, entity, rand) -> getCarrierOffer(SophisticatedWolf.class, 35, 45, rand));
             trades.get(5).add((trader, entity, rand) -> getCarrierOffer(Ocelot.class, 45, 55, rand));
             trades.get(5).add((trader, entity, rand) -> getCarrierOffer(Fox.class, 45, 55, rand));
         }
