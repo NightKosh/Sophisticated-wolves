@@ -2,16 +2,14 @@ package sophisticated_wolves.entity;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
-import net.minecraft.sounds.SoundEvents;
 import net.minecraft.tags.BlockTags;
+import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.util.RandomSource;
-import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.DamageSource;
@@ -25,20 +23,21 @@ import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.ai.goal.target.NonTameRandomTargetGoal;
 import net.minecraft.world.entity.ai.goal.target.ResetUniversalAngerTargetGoal;
 import net.minecraft.world.entity.animal.Animal;
-import net.minecraft.world.entity.animal.Turtle;
-import net.minecraft.world.entity.animal.Wolf;
-import net.minecraft.world.entity.animal.horse.Llama;
+import net.minecraft.world.entity.animal.equine.Llama;
+import net.minecraft.world.entity.animal.turtle.Turtle;
+import net.minecraft.world.entity.animal.wolf.Wolf;
+import net.minecraft.world.entity.animal.wolf.WolfSoundVariants;
 import net.minecraft.world.entity.monster.Creeper;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
-import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.pathfinder.PathType;
-import net.neoforged.neoforge.common.Tags;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import sophisticated_wolves.api.AEntitySophisticatedWolf;
-import sophisticated_wolves.api.EnumWolfSpecies;
 import sophisticated_wolves.core.SWConfiguration;
 import sophisticated_wolves.core.SWEntities;
 import sophisticated_wolves.core.SWItems;
@@ -49,7 +48,6 @@ import sophisticated_wolves.item.ItemPetCarrier;
 import sophisticated_wolves.util.FoodUtils;
 
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 
 import static sophisticated_wolves.SophisticatedWolvesMod.LOGGER;
 
@@ -68,14 +66,44 @@ public class SophisticatedWolf extends AEntitySophisticatedWolf {
     public static final int DISTANCE_TO_TELEPORT_TO_OWNER_SQR = 900;//30^2 blocks
     public static final byte EXTINGUISH_EVENT_ID = 99;
 
-    private static final EntityDataAccessor<Integer> WOLF_SPECIES =
+    // food
+    private static final EntityDataAccessor<Boolean> EAT_ROTTEN_MEAT_AND_BONES =
+            SynchedEntityData.defineId(SophisticatedWolf.class, EntityDataSerializers.BOOLEAN);
+    private static final EntityDataAccessor<Boolean> EAT_RAW_MEAT =
+            SynchedEntityData.defineId(SophisticatedWolf.class, EntityDataSerializers.BOOLEAN);
+    private static final EntityDataAccessor<Boolean> EAT_RAW_FISH =
+            SynchedEntityData.defineId(SophisticatedWolf.class, EntityDataSerializers.BOOLEAN);
+    private static final EntityDataAccessor<Boolean> EAT_SPECIAL_FISH =
+            SynchedEntityData.defineId(SophisticatedWolf.class, EntityDataSerializers.BOOLEAN);
+    private static final EntityDataAccessor<Boolean> EAT_COOKED_MEAT =
+            SynchedEntityData.defineId(SophisticatedWolf.class, EntityDataSerializers.BOOLEAN);
+    private static final EntityDataAccessor<Boolean> EAT_COOKED_FISH =
+            SynchedEntityData.defineId(SophisticatedWolf.class, EntityDataSerializers.BOOLEAN);
+
+    // targets
+    private static final EntityDataAccessor<Boolean> ATTACK_SKELETONS =
+            SynchedEntityData.defineId(SophisticatedWolf.class, EntityDataSerializers.BOOLEAN);
+    private static final EntityDataAccessor<Boolean> ATTACK_ZOMBIES =
+            SynchedEntityData.defineId(SophisticatedWolf.class, EntityDataSerializers.BOOLEAN);
+    private static final EntityDataAccessor<Boolean> ATTACK_SPIDERS =
+            SynchedEntityData.defineId(SophisticatedWolf.class, EntityDataSerializers.BOOLEAN);
+    private static final EntityDataAccessor<Boolean> ATTACK_SLIMES =
+            SynchedEntityData.defineId(SophisticatedWolf.class, EntityDataSerializers.BOOLEAN);
+    private static final EntityDataAccessor<Boolean> ATTACK_NETHER =
+            SynchedEntityData.defineId(SophisticatedWolf.class, EntityDataSerializers.BOOLEAN);
+    private static final EntityDataAccessor<Boolean> ATTACK_RAIDER =
+            SynchedEntityData.defineId(SophisticatedWolf.class, EntityDataSerializers.BOOLEAN);
+    // commands
+    private static final EntityDataAccessor<Boolean> FOLLOW_OWNER =
+            SynchedEntityData.defineId(SophisticatedWolf.class, EntityDataSerializers.BOOLEAN);
+    private static final EntityDataAccessor<Boolean> GUARD_ZONE =
+            SynchedEntityData.defineId(SophisticatedWolf.class, EntityDataSerializers.BOOLEAN);
+    private static final EntityDataAccessor<Integer> GUARD_X =
             SynchedEntityData.defineId(SophisticatedWolf.class, EntityDataSerializers.INT);
-    private static final EntityDataAccessor<CompoundTag> WOLF_FOOD =
-            SynchedEntityData.defineId(SophisticatedWolf.class, EntityDataSerializers.COMPOUND_TAG);
-    private static final EntityDataAccessor<CompoundTag> WOLF_TARGETS =
-            SynchedEntityData.defineId(SophisticatedWolf.class, EntityDataSerializers.COMPOUND_TAG);
-    private static final EntityDataAccessor<CompoundTag> WOLF_COMMANDS =
-            SynchedEntityData.defineId(SophisticatedWolf.class, EntityDataSerializers.COMPOUND_TAG);
+    private static final EntityDataAccessor<Integer> GUARD_Y =
+            SynchedEntityData.defineId(SophisticatedWolf.class, EntityDataSerializers.INT);
+    private static final EntityDataAccessor<Integer> GUARD_Z =
+            SynchedEntityData.defineId(SophisticatedWolf.class, EntityDataSerializers.INT);
 
     protected FleeGoal fleeGoal;
     protected ShakeIfBurnOrPoisonGoal shakeGoal;
@@ -100,7 +128,7 @@ public class SophisticatedWolf extends AEntitySophisticatedWolf {
         this.burnGoal = new TeleportAtBurningGoal(this);
 
         this.goalSelector.addGoal(1, new FloatGoal(this));
-        this.goalSelector.addGoal(1, new Wolf.WolfPanicGoal(1.5));
+        this.goalSelector.addGoal(1, new TamableAnimal.TamableAnimalPanicGoal(1.5, DamageTypeTags.PANIC_ENVIRONMENTAL_CAUSES));
         this.goalSelector.addGoal(2, this.fleeGoal); //new behavior
         this.goalSelector.addGoal(3, new AvoidCreeperGoal(this, 8, 3, 1, 1.4)); //new behavior
         this.goalSelector.addGoal(5, new SitWhenOrderedToGoal(this));
@@ -143,71 +171,94 @@ public class SophisticatedWolf extends AEntitySophisticatedWolf {
     }
 
     public static boolean checkSpawnRules(
-            EntityType<SophisticatedWolf> entityType, LevelAccessor levelAccessor, MobSpawnType mobSpawnType,
-            BlockPos blockPos, RandomSource randomSource) {
-        return levelAccessor.getBlockState(blockPos.below()).is(BlockTags.WOLVES_SPAWNABLE_ON) &&
-                isBrightEnoughToSpawn(levelAccessor, blockPos);
+            EntityType<SophisticatedWolf> entityType, LevelAccessor level, EntitySpawnReason spawnReason,
+            BlockPos pos, RandomSource random) {
+        return level.getBlockState(pos.below()).is(BlockTags.WOLVES_SPAWNABLE_ON) &&
+                isBrightEnoughToSpawn(level, pos);
     }
 
     @Override
     protected void defineSynchedData(@Nonnull SynchedEntityData.Builder builder) {
         super.defineSynchedData(builder);
-        builder.define(WOLF_SPECIES, 0);
-        builder.define(WOLF_FOOD, WolfFood.toTag(new WolfFood()));
-        builder.define(WOLF_TARGETS, WolfTargets.toTag(new WolfTargets()));
-        builder.define(WOLF_COMMANDS, WolfCommands.toTag(new WolfCommands()));
-    }
-
-    @Nullable
-    public SpawnGroupData finalizeSpawn(
-            ServerLevelAccessor accessor, @Nonnull DifficultyInstance difficulty,
-            @Nonnull MobSpawnType mobSpawnType, @Nullable SpawnGroupData spawnGroupData) {
-        this.setWolfSpeciesByBiome(accessor.getLevel());
-        return super.finalizeSpawn(accessor, difficulty, mobSpawnType, spawnGroupData);
+        // food
+        builder.define(EAT_ROTTEN_MEAT_AND_BONES, true);
+        builder.define(EAT_RAW_MEAT, false);
+        builder.define(EAT_RAW_FISH, false);
+        builder.define(EAT_SPECIAL_FISH, false);
+        builder.define(EAT_COOKED_MEAT, false);
+        builder.define(EAT_COOKED_FISH, false);
+        // targets
+        builder.define(ATTACK_SKELETONS, true);
+        builder.define(ATTACK_ZOMBIES, false);
+        builder.define(ATTACK_SPIDERS, false);
+        builder.define(ATTACK_SLIMES, false);
+        builder.define(ATTACK_NETHER, false);
+        builder.define(ATTACK_RAIDER, false);
+        // commands
+        builder.define(FOLLOW_OWNER, true);
+        builder.define(GUARD_ZONE, false);
+        builder.define(GUARD_X, 0);
+        builder.define(GUARD_Y, 64);
+        builder.define(GUARD_Z, 0);
     }
 
     @Override
-    public void addAdditionalSaveData(CompoundTag tag) {
-        super.addAdditionalSaveData(tag);
-        this.getWolfFood().saveData(tag);
-        this.getWolfTargets().saveData(tag);
-        this.getWolfCommands().saveData(tag);
-        tag.putInt("Species", this.getSpecies().ordinal());
+    protected void addAdditionalSaveData(ValueOutput value) {
+        super.addAdditionalSaveData(value);
+        // food
+        value.putBoolean("RottenMeatAndBones", eatRottenMeatAndBones());
+        value.putBoolean("RawMeat", eatRawMeat());
+        value.putBoolean("RawFish", eatRawFish());
+        value.putBoolean("SpecialFish", eatSpecialFish());
+        value.putBoolean("CookedMeat", eatCookedMeat());
+        value.putBoolean("CookedFish", eatCookedFish());
+        // targets
+        value.putBoolean("AttackSkeletons", attackSkeletons());
+        value.putBoolean("AttackZombies", attackZombies());
+        value.putBoolean("AttackSpiders", attackSpiders());
+        value.putBoolean("AttackSlimes", attackSlimes());
+        value.putBoolean("AttackNether", attackNether());
+        value.putBoolean("AttackRaider", attackRaider());
+        // commands
+        value.putBoolean("FollowOwner", followOwner());
+        value.putBoolean("GuardZone", guardZone());
+        value.putInt("GuardX", guardX());
+        value.putInt("GuardY", guardY());
+        value.putInt("GuardZ", guardZ());
     }
 
     @Override
-    public void readAdditionalSaveData(CompoundTag tag) {
-        super.readAdditionalSaveData(tag);
-        this.updateFood(WolfFood.getFromTag(tag));
-        this.updateTargets(WolfTargets.getFromTag(tag));
-        this.updateCommands(WolfCommands.getFromTag(tag));
-        this.updateSpecies(EnumWolfSpecies.getSpeciesByNum(tag.getInt("Species")));
+    protected void readAdditionalSaveData(ValueInput value) {
+        super.readAdditionalSaveData(value);
+        this.updateFood(value);
+        this.updateTargets(value);
+        this.updateCommands(value);
     }
 
     @Override
     protected SoundEvent getAmbientSound() {
         if (this.isAngry()) {
-            return SoundEvents.WOLF_GROWL;
+            return this.getSoundVariant().value().growlSound().value();
         }
 
         //Growls if creeper is near
         if (this.isTame() && this.creeperAlert()) {
-            return SoundEvents.WOLF_GROWL;
+            return this.getSoundVariant().value().growlSound().value();
         }
 
         if (this.getRandom().nextInt(3) == 0 && !this.creeperAlert()) {
             if (this.isTame() && this.getHealth() < SWConfiguration.WOLVES_HEALTH_TAMED.get() / 2F) {
-                return SoundEvents.WOLF_WHINE;
+                return this.getSoundVariant().value().whineSound().value();
             } else {
-                return SoundEvents.WOLF_PANT;
+                return this.getSoundVariant().value().pantSound().value();
             }
         } else {
             //sitting wolves will only bark 1/4 of the time
             if (!this.isOrderedToSit()) {
-                return SoundEvents.WOLF_AMBIENT;
+                return this.getSoundVariant().value().ambientSound().value();
             } else {
                 if (this.getRandom().nextInt(3) == 0) {
-                    return SoundEvents.WOLF_AMBIENT;
+                    return this.getSoundVariant().value().ambientSound().value();
                 } else {
                     return null;
                 }
@@ -336,15 +387,26 @@ public class SophisticatedWolf extends AEntitySophisticatedWolf {
     }
 
     @Override
-    public Wolf getBreedOffspring(ServerLevel serverLevel, AgeableMob entity) {
-        var wolf = SWEntities.getSophisticatedWolfType().create(this.level());
-        wolf.updateSpecies(this.getSpecies()); //setting species to same as parent that spawned it
-        var ownerId = this.getOwnerUUID();
+    public SophisticatedWolf getBreedOffspring(ServerLevel serverLevel, AgeableMob entity) {
+        var wolf = SWEntities.getSophisticatedWolfType().create(serverLevel, EntitySpawnReason.BREEDING);
+        if (wolf != null && entity instanceof SophisticatedWolf wolf1) {
+            if (this.random.nextBoolean()) {
+                wolf.setVariant(this.getVariant());
+            } else {
+                wolf.setVariant(wolf1.getVariant());
+            }
 
-        if (ownerId != null) {
-            wolf.setOwnerUUID(ownerId);
-            wolf.setTame(true, true);
+            if (this.isTame()) {
+                wolf.setOwnerReference(this.getOwnerReference());
+                wolf.setTame(true, true);
+                var dyecolor = this.getCollarColor();
+                var dyecolor1 = wolf1.getCollarColor();
+                wolf.setCollarColor(DyeColor.getMixedColor(serverLevel, dyecolor, dyecolor1));
+            }
+
+            wolf.setSoundVariant(WolfSoundVariants.pickRandomSoundVariant(this.registryAccess(), this.random));
         }
+
         return wolf;
     }
 
@@ -374,7 +436,7 @@ public class SophisticatedWolf extends AEntitySophisticatedWolf {
         var list = this.level().getEntitiesOfClass(
                 Creeper.class, this.getBoundingBox().expandTowards(16, 4, 16));
         if (!list.isEmpty()) {
-            this.playSound(SoundEvents.WOLF_GROWL, getSoundVolume(),
+            this.playSound(this.getSoundVariant().value().growlSound().value(), getSoundVolume(),
                     (this.getRandom().nextFloat() - this.getRandom().nextFloat()) * 0.2F + 1);
             return true;
         } else {
@@ -383,36 +445,7 @@ public class SophisticatedWolf extends AEntitySophisticatedWolf {
     }
 
     @Override
-    public EnumWolfSpecies getSpeciesByBiome(Level level) {
-        var biome = level.getBiome(this.blockPosition());
-
-        if (biome.is(Tags.Biomes.IS_SNOWY)) {
-            return EnumWolfSpecies.VANILLA;
-        } else if (biome.is(Tags.Biomes.IS_CONIFEROUS_TREE)) {//TAIGA
-            return EnumWolfSpecies.BLACK;
-        } else if (biome.is(Tags.Biomes.IS_SPOOKY)) {//DARK_FOREST
-            return EnumWolfSpecies.BROWN;
-        } else {
-            return EnumWolfSpecies.FOREST;
-        }
-    }
-
-    public void setWolfSpeciesByBiome(Level level) {
-        this.updateSpecies(this.getSpeciesByBiome(level));
-    }
-
-    @Override
-    public EnumWolfSpecies getSpecies() {
-        return EnumWolfSpecies.values()[this.getEntityData().get(WOLF_SPECIES)];
-    }
-
-    @Override
-    public void updateSpecies(EnumWolfSpecies species) {
-        this.getEntityData().set(WOLF_SPECIES, species.ordinal());
-    }
-
-    @Override
-    public boolean hurt(DamageSource damageSource, float amount) {
+    public boolean hurtServer(ServerLevel serverLevel, DamageSource damageSource, float amount) {
         if ((this.fleeGoal != null && this.fleeGoal.shouldFlee() && this.getRandom().nextInt(10) != 0) || // discard if flee
                 (damageSource.getEntity() != null && damageSource.getEntity().equals(this.getOwner()) && !damageSource.getEntity().isShiftKeyDown()) || //protect from owner
                 (SWConfiguration.IMMUNE_TO_CACTI.get() && damageSource.is(DamageTypes.CACTUS))) { // protect from cacti
@@ -425,7 +458,7 @@ public class SophisticatedWolf extends AEntitySophisticatedWolf {
                     this.burnGoal != null) {
                 this.burnGoal.setActive(true);
             }
-            return super.hurt(damageSource, amount);
+            return super.hurtServer(serverLevel, damageSource, amount);
         }
     }
 
@@ -472,42 +505,126 @@ public class SophisticatedWolf extends AEntitySophisticatedWolf {
         return 3;
     }
 
-    public void updateFood(WolfFood food) {
-        this.getEntityData().set(WOLF_FOOD, WolfFood.toTag(food));
+    public void updateFood(ValueInput value) {
+        this.updateFood(value.getBooleanOr("RottenMeatAndBones", true),
+                value.getBooleanOr("RawMeat", false),
+                value.getBooleanOr("RawFish", false),
+                value.getBooleanOr("SpecialFish", false),
+                value.getBooleanOr("CookedMeat", false),
+                value.getBooleanOr("CookedFish", false));
     }
 
     public void updateFood(boolean rottenMeatAndBones, boolean rawMeat, boolean rawFish,
                            boolean specialFish, boolean cookedMeat, boolean cookedFish) {
-        this.updateFood(new WolfFood(rottenMeatAndBones, rawMeat, rawFish, specialFish, cookedMeat, cookedFish));
+        this.getEntityData().set(EAT_ROTTEN_MEAT_AND_BONES, rottenMeatAndBones);
+        this.getEntityData().set(EAT_RAW_MEAT, rawMeat);
+        this.getEntityData().set(EAT_RAW_FISH, rawFish);
+        this.getEntityData().set(EAT_SPECIAL_FISH, specialFish);
+        this.getEntityData().set(EAT_COOKED_MEAT, cookedMeat);
+        this.getEntityData().set(EAT_COOKED_FISH, cookedFish);
     }
 
-    public void updateTargets(WolfTargets targets) {
-        this.getEntityData().set(WOLF_TARGETS, WolfTargets.toTag(targets));
+    public void updateTargets(ValueInput value) {
+        this.updateTargets(value.getBooleanOr("AttackSkeletons", true),
+                value.getBooleanOr("AttackZombies", false),
+                value.getBooleanOr("AttackSpiders", false),
+                value.getBooleanOr("AttackSlimes", false),
+                value.getBooleanOr("AttackNether", false),
+                value.getBooleanOr("AttackRaider", false));
     }
 
     public void updateTargets(boolean attackSkeletons, boolean attackZombies, boolean attackSpiders,
                               boolean attackSlimes, boolean attackNether, boolean attackRaider) {
-        this.updateTargets(new WolfTargets(attackSkeletons, attackZombies, attackSpiders, attackSlimes, attackNether, attackRaider));
+        this.getEntityData().set(ATTACK_SKELETONS, attackSkeletons);
+        this.getEntityData().set(ATTACK_ZOMBIES, attackZombies);
+        this.getEntityData().set(ATTACK_SPIDERS, attackSpiders);
+        this.getEntityData().set(ATTACK_SLIMES, attackSlimes);
+        this.getEntityData().set(ATTACK_NETHER, attackNether);
+        this.getEntityData().set(ATTACK_RAIDER, attackRaider);
     }
 
-    public void updateCommands(WolfCommands commands) {
-        this.getEntityData().set(WOLF_COMMANDS, WolfCommands.toTag(commands));
+    public void updateCommands(ValueInput value) {
+        this.updateCommands(value.getBooleanOr("FollowOwner", true),
+                value.getBooleanOr("GuardZone", false));
     }
 
     public void updateCommands(boolean followOwner, boolean guardZone) {
-        this.updateCommands(new WolfCommands(followOwner, guardZone, this.blockPosition()));
+        this.getEntityData().set(FOLLOW_OWNER, followOwner);
+        this.getEntityData().set(GUARD_ZONE, guardZone);
+        this.getEntityData().set(GUARD_X, this.blockPosition().getX());
+        this.getEntityData().set(GUARD_Y, this.blockPosition().getY());
+        this.getEntityData().set(GUARD_Z, this.blockPosition().getZ());
     }
 
-    public WolfFood getWolfFood() {
-        return WolfFood.getFromTag(this.entityData.get(WOLF_FOOD));
+    public boolean eatRottenMeatAndBones() {
+        return this.getEntityData().get(EAT_ROTTEN_MEAT_AND_BONES);
     }
 
-    public WolfTargets getWolfTargets() {
-        return WolfTargets.getFromTag(this.entityData.get(WOLF_TARGETS));
+    // food
+    public boolean eatRawMeat() {
+        return this.getEntityData().get(EAT_RAW_MEAT);
     }
 
-    public WolfCommands getWolfCommands() {
-        return WolfCommands.getFromTag(this.entityData.get(WOLF_COMMANDS));
+    public boolean eatRawFish() {
+        return this.getEntityData().get(EAT_RAW_FISH);
+    }
+
+    public boolean eatSpecialFish() {
+        return this.getEntityData().get(EAT_SPECIAL_FISH);
+    }
+
+    public boolean eatCookedMeat() {
+        return this.getEntityData().get(EAT_COOKED_MEAT);
+    }
+
+    public boolean eatCookedFish() {
+        return this.getEntityData().get(EAT_COOKED_FISH);
+    }
+
+    // targets
+    public boolean attackSkeletons() {
+        return this.getEntityData().get(ATTACK_SKELETONS);
+    }
+
+    public boolean attackZombies() {
+        return this.getEntityData().get(ATTACK_ZOMBIES);
+    }
+
+    public boolean attackSpiders() {
+        return this.getEntityData().get(ATTACK_SPIDERS);
+    }
+
+    public boolean attackSlimes() {
+        return this.getEntityData().get(ATTACK_SLIMES);
+    }
+
+    public boolean attackNether() {
+        return this.getEntityData().get(ATTACK_NETHER);
+    }
+
+    public boolean attackRaider() {
+        return this.getEntityData().get(ATTACK_RAIDER);
+    }
+
+    // commands
+    public boolean followOwner() {
+        return this.getEntityData().get(FOLLOW_OWNER);
+    }
+
+    public boolean guardZone() {
+        return this.getEntityData().get(GUARD_ZONE);
+    }
+
+    public int guardX() {
+        return this.getEntityData().get(GUARD_X);
+    }
+
+    public int guardY() {
+        return this.getEntityData().get(GUARD_Y);
+    }
+
+    public int guardZ() {
+        return this.getEntityData().get(GUARD_Z);
     }
 
 }

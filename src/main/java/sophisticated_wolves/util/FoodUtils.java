@@ -1,5 +1,6 @@
 package sophisticated_wolves.util;
 
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -15,7 +16,7 @@ import sophisticated_wolves.entity.SophisticatedWolf;
 public class FoodUtils {
 
     public static boolean isFoodItem(ItemStack stack) {
-        return stack.getFoodProperties(null) != null;
+        return stack.has(DataComponents.FOOD);
     }
 
     public static boolean isWolfFood(ItemStack stack) {
@@ -30,26 +31,21 @@ public class FoodUtils {
     }
 
     public static boolean isWolfFood(SophisticatedWolf wolf, ItemStack stack) {
-        var wolfFood = wolf.getWolfFood();
-        if (wolfFood.anyFood()) {
-            return isWolfFood(stack);
-        } else {
-            return wolfFood.rottenMeatAndBones() && (isBone(stack) || isFoodType(stack, Items.ROTTEN_FLESH)) ||
-                    wolfFood.rawMeat() && (
-                            isFoodType(stack, Items.CHICKEN) || isFoodType(stack, Items.BEEF) ||
-                            isFoodType(stack, Items.PORKCHOP) || isFoodType(stack, Items.MUTTON) ||
-                            isFoodType(stack, Items.RABBIT)) ||
-                    wolfFood.cookedMeat() && (
-                            isFoodType(stack, Items.COOKED_CHICKEN) || isFoodType(stack, Items.COOKED_BEEF) ||
-                            isFoodType(stack, Items.COOKED_PORKCHOP) || isFoodType(stack, Items.COOKED_MUTTON) ||
-                            isFoodType(stack, Items.COOKED_RABBIT)) ||
-                    wolfFood.rawFish() && (
-                            isFoodType(stack, Items.COD) || isFoodType(stack, Items.SALMON)) ||
-                    wolfFood.cookedFish() && (
-                            isFoodType(stack, Items.COOKED_COD) || isFoodType(stack, Items.COOKED_SALMON)) ||
-                    wolfFood.specialFish() && (
-                            isFoodType(stack, Items.PUFFERFISH) || isFoodType(stack, Items.TROPICAL_FISH));
-        }
+        return wolf.eatRottenMeatAndBones() && (isBone(stack) || isFoodType(stack, Items.ROTTEN_FLESH)) ||
+                wolf.eatRawMeat() && (
+                        isFoodType(stack, Items.CHICKEN) || isFoodType(stack, Items.BEEF) ||
+                                isFoodType(stack, Items.PORKCHOP) || isFoodType(stack, Items.MUTTON) ||
+                                isFoodType(stack, Items.RABBIT)) ||
+                wolf.eatCookedMeat() && (
+                        isFoodType(stack, Items.COOKED_CHICKEN) || isFoodType(stack, Items.COOKED_BEEF) ||
+                                isFoodType(stack, Items.COOKED_PORKCHOP) || isFoodType(stack, Items.COOKED_MUTTON) ||
+                                isFoodType(stack, Items.COOKED_RABBIT)) ||
+                wolf.eatRawFish() && (
+                        isFoodType(stack, Items.COD) || isFoodType(stack, Items.SALMON)) ||
+                wolf.eatCookedFish() && (
+                        isFoodType(stack, Items.COOKED_COD) || isFoodType(stack, Items.COOKED_SALMON)) ||
+                wolf.eatSpecialFish() && (
+                        isFoodType(stack, Items.PUFFERFISH) || isFoodType(stack, Items.TROPICAL_FISH));
     }
 
     public static boolean isBone(ItemStack stack) {
@@ -65,7 +61,7 @@ public class FoodUtils {
             return 1;
         } else if (isFoodItem(stack)) {
             if (isWolfFood(stack)) {
-                return stack.getFoodProperties(null).nutrition();
+                return stack.get(DataComponents.FOOD).nutrition();
             } else {
                 return 0;
             }

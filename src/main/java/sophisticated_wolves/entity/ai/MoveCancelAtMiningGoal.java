@@ -1,10 +1,9 @@
 package sophisticated_wolves.entity.ai;
 
+import net.minecraft.tags.ItemTags;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.TamableAnimal;
 import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.entity.ai.navigation.PathNavigation;
-import net.minecraft.world.item.DiggerItem;
 import sophisticated_wolves.entity.SophisticatedWolf;
 
 /**
@@ -47,8 +46,15 @@ public class MoveCancelAtMiningGoal extends Goal {
         if (this.owner == null || this.pet.distanceTo(this.owner) > this.dist) {
             return false;
         }
-        return this.owner.swinging && this.owner.getMainHandItem().getItem() instanceof DiggerItem &&
-                this.pet.getWolfCommands().followOwner();
+        return this.owner.swinging && this.pet.followOwner() && isDiggerItem(this.owner);
+    }
+
+    private static boolean isDiggerItem(LivingEntity owner) {
+        var stack = owner.getMainHandItem();
+        return stack.is(ItemTags.PICKAXES) ||
+                stack.is(ItemTags.SHOVELS) ||
+                stack.is(ItemTags.AXES) ||
+                stack.is(ItemTags.HOES);
     }
 
     /**
@@ -60,7 +66,7 @@ public class MoveCancelAtMiningGoal extends Goal {
                 !this.pet.isInLove() &&
                 this.pet.getTarget() == null &&
                 this.owner.swinging &&
-                this.owner.getMainHandItem().getItem() instanceof DiggerItem;
+                isDiggerItem(this.owner);
     }
 
     /**

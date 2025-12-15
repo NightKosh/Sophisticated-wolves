@@ -57,7 +57,7 @@ public abstract class AFeedGoal<T extends Object> extends Goal {
                 this.pet.getHealth() < SWConfiguration.WOLVES_HEALTH_TAMED.get() &&
                 this.feedObject != null && this.ifFeedObjectAlive() &&
                 //wolf should be in guard mode or item should be closer than teleportation range
-                (this.pet.getWolfCommands().guardZone() ||
+                (this.pet.guardZone() ||
                         this.getDistanceSqrToFeedObject(this.owner) < SophisticatedWolf.DISTANCE_TO_TELEPORT_TO_OWNER_SQR);
     }
 
