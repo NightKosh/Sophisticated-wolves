@@ -4,13 +4,14 @@ import io.netty.buffer.ByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.neoforged.neoforge.network.handling.IPayloadContext;
 import sophisticated_wolves.api.ModInfo;
 import sophisticated_wolves.entity.SophisticatedWolf;
 
 import javax.annotation.Nonnull;
+
+import static net.minecraft.resources.Identifier.fromNamespaceAndPath;
 
 /**
  * Sophisticated Wolves
@@ -29,7 +30,7 @@ public record WolfTargetsConfigMessageToServer(
 ) implements CustomPacketPayload {
 
     public static final Type<WolfTargetsConfigMessageToServer> TYPE =
-            new Type<>(new ResourceLocation(ModInfo.ID, "wolf_targets_config"));
+            new Type<>(fromNamespaceAndPath(ModInfo.ID, "wolf_targets_config"));
 
     public static final StreamCodec<ByteBuf, WolfTargetsConfigMessageToServer> STREAM_CODEC =
             StreamCodec.of(
@@ -60,10 +61,9 @@ public record WolfTargetsConfigMessageToServer(
     }
 
     public static WolfTargetsConfigMessageToServer getFromWolf(SophisticatedWolf wolf) {
-        var wolfTargets = wolf.getWolfTargets();
         return new WolfTargetsConfigMessageToServer(wolf.getId(),
-                wolfTargets.attackSkeletons(), wolfTargets.attackZombies(), wolfTargets.attackSpiders(),
-                wolfTargets.attackSlimes(), wolfTargets.attackNether(), wolfTargets.attackRaider());
+                wolf.attackSkeletons(), wolf.attackZombies(), wolf.attackSpiders(),
+                wolf.attackSlimes(), wolf.attackNether(), wolf.attackRaider());
 
     }
 

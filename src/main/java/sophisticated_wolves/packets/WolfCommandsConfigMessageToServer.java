@@ -4,13 +4,14 @@ import io.netty.buffer.ByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.neoforged.neoforge.network.handling.IPayloadContext;
 import sophisticated_wolves.api.ModInfo;
 import sophisticated_wolves.entity.SophisticatedWolf;
 
 import javax.annotation.Nonnull;
+
+import static net.minecraft.resources.Identifier.fromNamespaceAndPath;
 
 /**
  * Sophisticated Wolves
@@ -22,7 +23,7 @@ public record WolfCommandsConfigMessageToServer(int wolfId, boolean followOwner,
         implements CustomPacketPayload {
 
     public static final CustomPacketPayload.Type<WolfCommandsConfigMessageToServer> TYPE =
-            new CustomPacketPayload.Type<>(new ResourceLocation(ModInfo.ID, "wolf_commands_config"));
+            new CustomPacketPayload.Type<>(fromNamespaceAndPath(ModInfo.ID, "wolf_commands_config"));
 
     public static final StreamCodec<ByteBuf, WolfCommandsConfigMessageToServer> STREAM_CODEC =
             StreamCodec.composite(
@@ -39,8 +40,7 @@ public record WolfCommandsConfigMessageToServer(int wolfId, boolean followOwner,
     }
 
     public static WolfCommandsConfigMessageToServer getFromWolf(SophisticatedWolf wolf) {
-        var commands = wolf.getWolfCommands();
-        return new WolfCommandsConfigMessageToServer(wolf.getId(), commands.followOwner(), commands.guardZone());
+        return new WolfCommandsConfigMessageToServer(wolf.getId(), wolf.followOwner(), wolf.guardZone());
 
     }
 
