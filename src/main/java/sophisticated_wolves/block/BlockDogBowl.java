@@ -4,13 +4,10 @@ import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.component.CustomData;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
@@ -29,7 +26,6 @@ import sophisticated_wolves.core.SWBlocks;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import java.util.List;
 
 /**
  * Sophisticated Wolves
@@ -102,20 +98,6 @@ public class BlockDogBowl extends BaseEntityBlock {
         return stack;
     }
 
-    @Override
-    public void appendHoverText(
-            @Nonnull ItemStack stack, @Nonnull Item.TooltipContext context,
-            @Nonnull List<Component> tooltips, @Nonnull TooltipFlag flag) {
-        var data = stack.get(DataComponents.CUSTOM_DATA);
-        if (data != null) {
-            var tag = data.getUnsafe();
-            if (tag != null && tag.contains("FoodAmount")) {
-                tooltips.add(Component.translatable("block.sophisticated_wolves.dog_bowl.amount_of_food")
-                        .append(Component.literal(String.valueOf(tag.getInt("FoodAmount")))));
-            }
-        }
-    }
-
     @Nullable
     @Override
     public BlockEntity newBlockEntity(@Nonnull BlockPos blockPos, @Nonnull BlockState state) {
@@ -174,9 +156,9 @@ public class BlockDogBowl extends BaseEntityBlock {
 
             var data = stack.get(DataComponents.CUSTOM_DATA);
             if (data != null) {
-                var tag = data.getUnsafe();
+                var tag = data.copyTag();
                 if (tag != null && tag.contains("FoodAmount")) {
-                    foodAmount = tag.getInt("FoodAmount");
+                    foodAmount = tag.getInt("FoodAmount").get();
                 }
             }
 

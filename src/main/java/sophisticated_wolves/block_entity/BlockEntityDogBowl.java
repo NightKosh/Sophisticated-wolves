@@ -10,6 +10,8 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import org.jetbrains.annotations.Nullable;
 import sophisticated_wolves.block.BlockDogBowl;
 import sophisticated_wolves.core.SWBlockEntities;
@@ -30,20 +32,6 @@ public class BlockEntityDogBowl extends BlockEntity implements MenuProvider {
     public BlockEntityDogBowl(BlockPos blockPos, BlockState state) {
         super(SWBlockEntities.DOG_BOWL.get(), blockPos, state);
 
-    }
-
-    @Override
-    public void saveAdditional(@Nonnull CompoundTag compound, @Nonnull HolderLookup.Provider registries) {
-        super.saveAdditional(compound, registries);
-
-        compound.putInt("FoodAmount", foodAmount);
-    }
-
-    @Override
-    public void loadAdditional(@Nonnull CompoundTag tag, @Nonnull HolderLookup.Provider provider) {
-        super.loadAdditional(tag, provider);
-
-        foodAmount = tag.getInt("FoodAmount");
     }
 
     public int getFoodAmount() {
@@ -72,17 +60,29 @@ public class BlockEntityDogBowl extends BlockEntity implements MenuProvider {
                         BlockDogBowl.EnumDogBowl.getTypeByFood(foodAmount).ordinal()));
     }
 
+    @Override
+    protected void saveAdditional(ValueOutput out) {
+        super.saveAdditional(out);
+        out.putInt("FoodAmount", foodAmount);
+    }
+
+    @Override
+    protected void loadAdditional(ValueInput in) {
+        super.loadAdditional(in);
+        foodAmount = in.getIntOr("FoodAmount", 0);
+    }
+
     @Nonnull
     @Override
     public CompoundTag getUpdateTag(@Nonnull HolderLookup.Provider provider) {
         var tag = new CompoundTag();
-        this.saveAdditional(tag, provider);
+        tag.putInt("FoodAmount", this.foodAmount);
         return tag;
     }
 
     @Override
-    public void handleUpdateTag(CompoundTag tag, @Nonnull HolderLookup.Provider provider) {
-        foodAmount = tag.getInt("FoodAmount");
+    public void handleUpdateTag(ValueInput in) {
+        loadAdditional(in);
     }
 
     @Nonnull
