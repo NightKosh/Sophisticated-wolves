@@ -58,7 +58,7 @@ public class ItemDogTag extends Item {
             if (player.level().isClientSide()) {
                 DogTagScreen.open(pet);
             } else {
-                stack.shrink(1);
+                stack.consume(1, player);
             }
             return InteractionResult.SUCCESS;
         }

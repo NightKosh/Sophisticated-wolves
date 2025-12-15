@@ -55,7 +55,7 @@ public class ItemDogTreat extends Item {
 
                     level.gameEvent(player, GameEvent.ENTITY_PLACE, wolf.blockPosition());
 
-                    stack.shrink(1);
+                    stack.consume(1, player);
                 }
             }
         }
