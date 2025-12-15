@@ -6,7 +6,10 @@ import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.client.event.EntityRenderersEvent;
 import sophisticated_wolves.api.ModInfo;
 import sophisticated_wolves.client.renderer.SophisticatedWolfRenderer;
+import sophisticated_wolves.core.SWConfiguration;
 import sophisticated_wolves.core.SWEntities;
+
+import static sophisticated_wolves.SophisticatedWolvesMod.LOGGER;
 
 /**
  * Sophisticated Wolves
@@ -19,6 +22,9 @@ public class SWEventsClient {
 
     @SubscribeEvent
     public static void entityRenderers(EntityRenderersEvent.RegisterRenderers event) {
+        if (SWConfiguration.DEBUG_MODE.get()) {
+            LOGGER.info("EntityRenderersEvent.RegisterRenderers event triggered");
+        }
         event.registerEntityRenderer(SWEntities.getSophisticatedWolfType(), SophisticatedWolfRenderer::new);
     }
 

@@ -18,10 +18,12 @@ import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.village.VillagerTradesEvent;
 import sophisticated_wolves.api.ModInfo;
+import sophisticated_wolves.core.SWConfiguration;
 import sophisticated_wolves.core.SWItems;
 import sophisticated_wolves.entity.SophisticatedWolf;
 import sophisticated_wolves.item.pet_carrier.PetCarrierHelper;
 
+import static sophisticated_wolves.SophisticatedWolvesMod.LOGGER;
 import static sophisticated_wolves.core.SWVillagers.ZOOLOGIST_KEY;
 
 /**
@@ -36,6 +38,9 @@ public class WSEventsVillagerTrades {
     @SubscribeEvent
     public static void addTrades(VillagerTradesEvent event) {
         if (event.getType() == ZOOLOGIST_KEY) {
+            if (SWConfiguration.DEBUG_MODE.get()) {
+                LOGGER.info("VillagerTradesEvent event fro zoologist villager triggered");
+            }
             var trades = event.getTrades();
 
             trades.get(1).add((trader, entity, rand) -> new MerchantOffer(
