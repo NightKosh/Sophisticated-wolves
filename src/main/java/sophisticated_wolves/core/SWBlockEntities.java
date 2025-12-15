@@ -22,8 +22,10 @@ public class SWBlockEntities {
     public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<BlockEntityDogBowl>> DOG_BOWL =
             BLOCK_ENTITIES_REGISTER.register(
                     "dog_bowl_entity",
-                    () -> BlockEntityType.Builder.of(BlockEntityDogBowl::new, SWBlocks.getDogBowl())
-                            .build(null));
+                    () -> new BlockEntityType<>(
+                            BlockEntityDogBowl::new,
+                            SWBlocks.getDogBowl()
+                    ));
 
     public static void register(IEventBus eventBus) {
         BLOCK_ENTITIES_REGISTER.register(eventBus);

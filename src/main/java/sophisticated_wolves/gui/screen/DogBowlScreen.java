@@ -1,9 +1,8 @@
 package sophisticated_wolves.gui.screen;
 
-import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
-import net.minecraft.client.renderer.GameRenderer;
+import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Inventory;
 import sophisticated_wolves.block.BlockDogBowl;
@@ -28,6 +27,8 @@ public class DogBowlScreen extends AbstractContainerScreen<DogBowlContainerMenu>
     private static final int BONES_Y_OFFSET_4 = 58;
     private static final int BONE_WIDTH = 4;
     private static final int BONE_HEIGHT = 12;
+    private static final int TEXTURE_SIZE = 256;
+
 
     private final BlockEntityDogBowl dogBowl;
 
@@ -38,15 +39,15 @@ public class DogBowlScreen extends AbstractContainerScreen<DogBowlContainerMenu>
 
     @Override
     protected void renderBg(@Nonnull GuiGraphics guiGraphics, float partialTick, int mouseX, int mouseY) {
-        RenderSystem.setShader(GameRenderer::getPositionTexShader);
-        RenderSystem.setShaderColor(1, 1, 1, 1);
-        RenderSystem.setShaderTexture(0, SWResources.DOG_BOWL_GUI);
-
         int x = (this.width - this.imageWidth) / 2;
         int y = (this.height - this.imageHeight) / 2;
 
         //draw bones background
-        guiGraphics.blit(SWResources.DOG_BOWL_GUI, x + BONES_X_OFFSET, y + BONES_Y_OFFSET_1, 109, 167, 108, 57);
+        guiGraphics.blit(RenderPipelines.GUI_TEXTURED, SWResources.DOG_BOWL_GUI,
+                x + BONES_X_OFFSET, y + BONES_Y_OFFSET_1,
+                109, 167,
+                108, 57,
+                TEXTURE_SIZE, TEXTURE_SIZE);
 
         // draw bones
         int amountOfFood = dogBowl.getFoodAmount();
@@ -65,15 +66,28 @@ public class DogBowlScreen extends AbstractContainerScreen<DogBowlContainerMenu>
             }
         }
 
-        guiGraphics.blit(SWResources.DOG_BOWL_GUI, x, y, 0, 0, imageWidth, imageHeight);
+        // draw background
+        guiGraphics.blit(RenderPipelines.GUI_TEXTURED, SWResources.DOG_BOWL_GUI,
+                x, y,
+                0, 0,
+                imageWidth, imageHeight,
+                TEXTURE_SIZE, TEXTURE_SIZE);
     }
 
     private void drawBones(GuiGraphics guiGraphics, int x, int y, int level, int bonesLevel, int amountOfBones) {
         if (bonesLevel > level) {
-            guiGraphics.blit(SWResources.DOG_BOWL_GUI, x + BONES_X_OFFSET, y, 0, 167, 108, BONE_HEIGHT);
+            guiGraphics.blit(RenderPipelines.GUI_TEXTURED, SWResources.DOG_BOWL_GUI,
+                    x + BONES_X_OFFSET, y,
+                    0, 167,
+                    108, BONE_HEIGHT,
+                    TEXTURE_SIZE, TEXTURE_SIZE);
         } else {
             int offset = amountOfBones * BONE_WIDTH + 12;
-            guiGraphics.blit(SWResources.DOG_BOWL_GUI, x + BONES_X_OFFSET, y, 112 - offset, 167, offset - 4, BONE_HEIGHT);
+            guiGraphics.blit(RenderPipelines.GUI_TEXTURED, SWResources.DOG_BOWL_GUI,
+                    x + BONES_X_OFFSET, y,
+                    112 - offset, 167,
+                    offset - 4, BONE_HEIGHT,
+                    TEXTURE_SIZE, TEXTURE_SIZE);
         }
     }
 

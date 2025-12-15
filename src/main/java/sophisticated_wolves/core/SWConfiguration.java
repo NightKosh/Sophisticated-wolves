@@ -14,7 +14,6 @@ public class SWConfiguration {
     public static final ModConfigSpec SPEC;
     public static final ModConfigSpec.Builder BUILDER = new ModConfigSpec.Builder();
 
-    public static ModConfigSpec.ConfigValue<Boolean> CUSTOM_WOLF_TEXTURES;
     public static ModConfigSpec.ConfigValue<Boolean> CUSTOM_BREEDING;
     public static ModConfigSpec.ConfigValue<Boolean> NAME_TAG_FOR_ANY_PETS;
     public static ModConfigSpec.ConfigValue<Boolean> IMMUNE_TO_CACTI;
@@ -34,8 +33,6 @@ public class SWConfiguration {
     static {
         BUILDER.push("Configs for Sophisticated Wolves Mod");
 
-        CUSTOM_WOLF_TEXTURES = BUILDER.comment("Should sophisticated wolves use custom textures(or be like vanilla wolves)?")
-                .define("Use Custom Wolf Textures", true);
         CUSTOM_BREEDING = BUILDER.comment("Should sophisticated wolves breed in its own way?")
                 .define("Custom Breeding", true);
         NAME_TAG_FOR_ANY_PETS = BUILDER.comment("Should name tags be used for any kind of pet?")

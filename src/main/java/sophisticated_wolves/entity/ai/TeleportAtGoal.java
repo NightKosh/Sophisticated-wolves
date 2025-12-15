@@ -72,8 +72,7 @@ public class TeleportAtGoal extends Goal {
                 var pos = new BlockPos(xPos + x, yPos, zPos + z);
                 var state = this.level.getBlockState(pos);
                 if (state.isAir()) {
-                    this.wolf.moveTo(xPos + x + 0.5, yPos, zPos + z + 0.5,
-                            this.wolf.getYRot(), this.wolf.getXRot());
+                    this.wolf.teleportTo(xPos + x + 0.5, yPos, zPos + z + 0.5);
                     this.navigation.stop();
                     return;
                 }

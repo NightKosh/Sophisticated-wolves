@@ -4,13 +4,14 @@ import io.netty.buffer.ByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.neoforged.neoforge.network.handling.IPayloadContext;
 import sophisticated_wolves.api.ModInfo;
 import sophisticated_wolves.entity.SophisticatedWolf;
 
 import javax.annotation.Nonnull;
+
+import static net.minecraft.resources.Identifier.fromNamespaceAndPath;
 
 /**
  * Sophisticated Wolves
@@ -29,7 +30,7 @@ public record WolfFoodConfigMessageToServer(
 ) implements CustomPacketPayload {
 
     public static final Type<WolfFoodConfigMessageToServer> TYPE =
-            new Type<>(new ResourceLocation(ModInfo.ID, "wolf_food_config"));
+            new Type<>(fromNamespaceAndPath(ModInfo.ID, "wolf_food_config"));
 
     public static final StreamCodec<ByteBuf, WolfFoodConfigMessageToServer> STREAM_CODEC =
             StreamCodec.of(
@@ -60,10 +61,9 @@ public record WolfFoodConfigMessageToServer(
     }
 
     public static WolfFoodConfigMessageToServer getFromWolf(SophisticatedWolf wolf) {
-        var wolfFood = wolf.getWolfFood();
         return new WolfFoodConfigMessageToServer(wolf.getId(),
-                wolfFood.rottenMeatAndBones(), wolfFood.rawMeat(), wolfFood.rawFish(),
-                wolfFood.specialFish(), wolfFood.cookedMeat(), wolfFood.cookedFish());
+                wolf.eatRottenMeatAndBones(), wolf.eatRawMeat(), wolf.eatRawFish(),
+                wolf.eatSpecialFish(), wolf.eatCookedMeat(), wolf.eatCookedFish());
 
     }
 

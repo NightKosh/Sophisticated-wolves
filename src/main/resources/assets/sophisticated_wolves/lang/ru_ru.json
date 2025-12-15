@@ -3,9 +3,9 @@
 
   "entity.sophisticated_wolves.sophisticated_wolf" : "Умный волк",
 
-  "block.sophisticated_wolves.dog_bowl" : "Собачья миска",
-  "block.sophisticated_wolves.dog_bowl.amount_of_food" : "Количество еды: ",
-  "block.sophisticated_wolves.kennel" : "Будка",
+  "item.sophisticated_wolves.dog_bowl" : "Собачья миска",
+  "item.sophisticated_wolves.dog_bowl.amount_of_food" : "Количество еды: ",
+  "item.sophisticated_wolves.kennel" : "Будка",
 
   "item.sophisticated_wolves.dog_tag" : "Собачья бирка",
   "item.sophisticated_wolves.dog_treat" : "Собачье лакомство",
@@ -13,10 +13,15 @@
   "item.sophisticated_wolves.pet_carrier" : "Переноска",
   "item.sophisticated_wolves.dog_egg" : "Яйцо призыва умного волка",
 
-  "sophisticated_wolves.wolf_type.vanilla" : "Серый",
-  "sophisticated_wolves.wolf_type.forest" : "Лесной",
+  "sophisticated_wolves.wolf_type.pale" : "Бледный",
+  "sophisticated_wolves.wolf_type.spotted" : "Пятнистый",
+  "sophisticated_wolves.wolf_type.snowy" : "Снежный",
   "sophisticated_wolves.wolf_type.black" : "Чёрный",
-  "sophisticated_wolves.wolf_type.brown" : "Коричневый",
+  "sophisticated_wolves.wolf_type.ashen" : "Пепельный",
+  "sophisticated_wolves.wolf_type.rusty" : "Ржавый",
+  "sophisticated_wolves.wolf_type.woods" : "Лесной",
+  "sophisticated_wolves.wolf_type.chestnut" : "Каштановый",
+  "sophisticated_wolves.wolf_type.striped" : "Полосатый",
 
   "sophisticated_wolves.cat_type.tabby" : "Табби",
   "sophisticated_wolves.cat_type.black" : "Чёрно-белая",
@@ -50,6 +55,7 @@
   "sophisticated_wolves.carrier.pet" : "Питомец",
   "sophisticated_wolves.carrier.type" : "Тип",
   "sophisticated_wolves.carrier.name" : "Имя",
+  "sophisticated_wolves.carrier.has_armor" : "В броне",
 
   "gui.sophisticated_wolves.edit_dog_name.title" : "Дайте своему питомцу имя:",
   "gui.sophisticated_wolves.wolf_configs.food_button" : "Еда",

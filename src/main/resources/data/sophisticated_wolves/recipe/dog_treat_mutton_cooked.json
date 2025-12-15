@@ -1,0 +1,13 @@
+{
+  "type" : "minecraft:crafting_shapeless",
+  "group" : "dog_treat",
+  "category": "misc",
+  "ingredients" : [
+    "minecraft:wheat",
+    "minecraft:cooked_mutton"
+  ],
+  "result" : {
+    "id": "sophisticated_wolves:dog_treat",
+    "count" : 2
+  }
+}

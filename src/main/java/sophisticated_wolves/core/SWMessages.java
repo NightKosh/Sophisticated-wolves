@@ -4,6 +4,7 @@ import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.server.level.ServerPlayer;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
+import net.neoforged.neoforge.client.network.ClientPacketDistributor;
 import net.neoforged.neoforge.network.PacketDistributor;
 import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
 import sophisticated_wolves.api.ModInfo;
@@ -18,7 +19,7 @@ import sophisticated_wolves.packets.WolfTargetsConfigMessageToServer;
  * @author NightKosh
  * @license Lesser GNU Public License v3 (http://www.gnu.org/licenses/lgpl.html)
  */
-@EventBusSubscriber(modid = ModInfo.ID, bus = EventBusSubscriber.Bus.MOD)
+@EventBusSubscriber(modid = ModInfo.ID)
 public class SWMessages {
 
     public static final String NETWORK_VERSION = "1";
@@ -53,7 +54,7 @@ public class SWMessages {
     }
 
     public static void sendToServer(CustomPacketPayload payload) {
-        PacketDistributor.sendToServer(payload);
+        ClientPacketDistributor.sendToServer(payload);
     }
 
     public static void sendToPlayer(CustomPacketPayload payload, ServerPlayer player) {

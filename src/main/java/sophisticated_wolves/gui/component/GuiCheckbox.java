@@ -1,10 +1,9 @@
 package sophisticated_wolves.gui.component;
 
-import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
-import net.minecraft.client.renderer.GameRenderer;
+import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.network.chat.Component;
 import net.minecraft.util.Mth;
 import sophisticated_wolves.core.SWResources;
@@ -24,7 +23,9 @@ public class GuiCheckbox extends Button {
     private static final int X_SIZE = 15;
     private static final int Y_SIZE = 15;
 
-    private GetCheckboxesGroup group;
+    private static final int TEXTURE_SIZE = 256;
+
+    private final GetCheckboxesGroup group;
     private boolean hasText = true;
     private boolean enabled;
 
@@ -50,14 +51,18 @@ public class GuiCheckbox extends Button {
     }
 
     @Override
-    public void renderWidget(@Nonnull GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTicks) {
-        RenderSystem.setShader(GameRenderer::getPositionTexShader);
-        RenderSystem.setShaderColor(1, 1, 1, 1);
-        RenderSystem.setShaderTexture(0, SWResources.CHECKBOX_GUI);
-
-        guiGraphics.blit(SWResources.CHECKBOX_GUI, this.getX(), this.getY(), 0, 0, X_SIZE, Y_SIZE);
+    public void renderContents(@Nonnull GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTicks) {
+        guiGraphics.blit(RenderPipelines.GUI_TEXTURED, SWResources.CHECKBOX_GUI,
+                this.getX(), this.getY(),
+                0, 0,
+                X_SIZE, Y_SIZE,
+                TEXTURE_SIZE, TEXTURE_SIZE);
         if (this.enabled) {
-            guiGraphics.blit(SWResources.CHECKBOX_GUI, this.getX(), this.getY(), Y_SIZE, 0, X_SIZE, Y_SIZE);
+            guiGraphics.blit(RenderPipelines.GUI_TEXTURED, SWResources.CHECKBOX_GUI,
+                    this.getX(), this.getY(),
+                    Y_SIZE, 0,
+                    X_SIZE, Y_SIZE,
+                    TEXTURE_SIZE, TEXTURE_SIZE);
         }
 
         if (this.hasText) {

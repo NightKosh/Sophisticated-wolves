@@ -3,9 +3,9 @@
 
   "entity.sophisticated_wolves.sophisticated_wolf" : "Hoch entwickelter Wolf",
 
-  "block.sophisticated_wolves.dog_bowl" : "Hundenapf",
-  "block.sophisticated_wolves.dog_bowl.amount_of_food" : "Amount of food: ",
-  "block.sophisticated_wolves.kennel" : "Hundehütte",
+  "item.sophisticated_wolves.dog_bowl" : "Hundenapf",
+  "item.sophisticated_wolves.dog_bowl.amount_of_food" : "Amount of food: ",
+  "item.sophisticated_wolves.kennel" : "Hundehütte",
 
   "item.sophisticated_wolves.dog_tag" : "Hundemarke",
   "item.sophisticated_wolves.dog_treat" : "Hundeleckerli",
@@ -13,10 +13,15 @@
   "item.sophisticated_wolves.pet_carrier" : "Transportbox",
   "item.sophisticated_wolves.dog_egg" : "Sophisticated Wolf Spawn Egg",
 
-  "sophisticated_wolves.wolf_type.vanilla" : "Grau",
-  "sophisticated_wolves.wolf_type.forest" : "Waldfarben",
-  "sophisticated_wolves.wolf_type.black" : "Schwarz",
-  "sophisticated_wolves.wolf_type.brown" : "Braun",
+  "sophisticated_wolves.wolf_type.pale" : "Pale",
+  "sophisticated_wolves.wolf_type.spotted" : "Spotted",
+  "sophisticated_wolves.wolf_type.snowy" : "Snowy",
+  "sophisticated_wolves.wolf_type.black" : "Black",
+  "sophisticated_wolves.wolf_type.ashen" : "Ashen",
+  "sophisticated_wolves.wolf_type.rusty" : "Rusty",
+  "sophisticated_wolves.wolf_type.woods" : "Woods",
+  "sophisticated_wolves.wolf_type.chestnut" : "Chestnut",
+  "sophisticated_wolves.wolf_type.striped" : "Striped",
 
   "sophisticated_wolves.cat_type.tabby" : "Tabby",
   "sophisticated_wolves.cat_type.black" : "Tuxedo",
@@ -50,6 +55,7 @@
   "sophisticated_wolves.carrier.pet" : "Pet ## TODO",
   "sophisticated_wolves.carrier.type" : "Type ## TODO",
   "sophisticated_wolves.carrier.name" : "Name",
+  "sophisticated_wolves.carrier.has_armor" : "Has Armor",
 
   "gui.sophisticated_wolves.edit_dog_name.title" : "Gib deinem Haustier einen Namen:",
   "gui.sophisticated_wolves.wolf_configs.food_button" : "Food",

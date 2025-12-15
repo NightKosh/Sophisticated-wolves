@@ -5,13 +5,14 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.TamableAnimal;
 import net.neoforged.neoforge.network.handling.IPayloadContext;
 import sophisticated_wolves.api.ModInfo;
 
 import javax.annotation.Nonnull;
+
+import static net.minecraft.resources.Identifier.fromNamespaceAndPath;
 
 /**
  * Sophisticated Wolves
@@ -25,7 +26,7 @@ public record PetNameMessageToServer(
 ) implements CustomPacketPayload {
 
     public static final Type<PetNameMessageToServer> TYPE =
-            new Type<>(new ResourceLocation(ModInfo.ID, "pet_name"));
+            new Type<>(fromNamespaceAndPath(ModInfo.ID, "pet_name"));
 
     public static final StreamCodec<ByteBuf, PetNameMessageToServer> STREAM_CODEC =
             StreamCodec.composite(

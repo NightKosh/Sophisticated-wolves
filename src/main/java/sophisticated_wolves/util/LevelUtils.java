@@ -48,8 +48,7 @@ public class LevelUtils {
         for (int dX = -2; dX <= 2; dX++) {
             for (int dZ = -2; dZ <= 2; dZ++) {
                 if (LevelUtils.isPositionSafe(mob.level(), xPos + dX, yPos, zPos + dZ)) {
-                    mob.moveTo(xPos + dX + 0.5F, yPos, zPos + dZ + 0.5F,
-                            mob.getYRot(), mob.getXRot());
+                    mob.teleportTo(xPos + dX + 0.5F, yPos, zPos + dZ + 0.5F);
                     mob.getNavigation().stop();
                     return;
                 }

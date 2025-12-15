@@ -2,10 +2,15 @@ package sophisticated_wolves.item.pet_carrier;
 
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
+import net.minecraft.util.ProblemReporter;
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.animal.Rabbit;
+import net.minecraft.world.entity.animal.rabbit.Rabbit;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.storage.TagValueInput;
+import net.minecraft.world.level.storage.TagValueOutput;
 import sophisticated_wolves.api.pet_carrier.PetCarrier;
 
+import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,7 +27,7 @@ public class RabbitPetCarrier extends PetCarrier<Rabbit> {
     public static final int[] RABBITS_SPECIES = {0, 1, 2, 3, 4, 5, 99};
 
     @Override
-    public Class getPetClass() {
+    public Class<Rabbit> getPetClass() {
         return Rabbit.class;
     }
 
@@ -32,8 +37,26 @@ public class RabbitPetCarrier extends PetCarrier<Rabbit> {
     }
 
     @Override
-    public EntityType getEntityType() {
+    public EntityType<Rabbit> getEntityType() {
         return EntityType.RABBIT;
+    }
+
+    @Override
+    public void readPetData(Rabbit pet, CompoundTag tag) {
+        pet.readAdditionalSaveData(TagValueInput.create(
+                ProblemReporter.DISCARDING,
+                pet.level().registryAccess(),
+                tag));
+    }
+
+    @Nullable
+    @Override
+    public CompoundTag addPetData(Rabbit pet) {
+        var output = TagValueOutput.createWithContext(
+                ProblemReporter.DISCARDING,
+                pet.level().registryAccess());
+        pet.addAdditionalSaveData(output);
+        return output.buildResult();
     }
 
     @Override
@@ -41,7 +64,7 @@ public class RabbitPetCarrier extends PetCarrier<Rabbit> {
         if (infoTag.contains(RABBIT_TYPE)) {
             return List.of(Component.translatable("sophisticated_wolves.carrier.type")
                     .append(" - ")
-                    .append(Component.translatable("sophisticated_wolves.rabbit_type." + infoTag.getInt(RABBIT_TYPE))));
+                    .append(Component.translatable("sophisticated_wolves.rabbit_type." + infoTag.getIntOr(RABBIT_TYPE, 0))));
         }
         return null;
     }

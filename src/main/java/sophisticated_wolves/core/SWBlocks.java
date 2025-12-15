@@ -1,6 +1,7 @@
 package sophisticated_wolves.core;
 
 import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.SoundType;
@@ -16,6 +17,8 @@ import sophisticated_wolves.item.item_block.ItemBlockKennel;
 
 import java.util.function.Supplier;
 
+import static net.minecraft.resources.Identifier.fromNamespaceAndPath;
+
 /**
  * Sophisticated Wolves
  *
@@ -24,13 +27,17 @@ import java.util.function.Supplier;
  */
 public class SWBlocks {
 
+    public static final ResourceKey DOG_BOWL_RK = ResourceKey.create(Registries.BLOCK, fromNamespaceAndPath(ModInfo.ID, "dog_bowl"));
+    public static final ResourceKey KENNEL_RK = ResourceKey.create(Registries.BLOCK, fromNamespaceAndPath(ModInfo.ID, "kennel"));
+
     public static final DeferredRegister<Block> BLOCKS_REGISTER =
             DeferredRegister.create(Registries.BLOCK, ModInfo.ID);
 
     private static final DeferredHolder<Block, Block> DOG_BOWL = registerBlock("dog_bowl",
             () -> new BlockDogBowl(BlockBehaviour.Properties.of()
+                    .setId(SWBlocks.DOG_BOWL_RK)
                     .sound(SoundType.STONE)
-                    .noCollission()
+                    .noCollision()
                     .strength(0.7F)),
             ItemBlockDogBowl::new);
     private static final DeferredHolder<Block, Block> KENNEL = registerBlock("kennel", BlockKennel::new, ItemBlockKennel::new);

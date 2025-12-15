@@ -1,11 +1,11 @@
 package sophisticated_wolves.entity.ai;
 
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.entity.ai.targeting.TargetingConditions;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Items;
-import net.minecraft.world.level.Level;
 import sophisticated_wolves.entity.SophisticatedWolf;
 
 import javax.annotation.Nullable;
@@ -20,7 +20,7 @@ import java.util.EnumSet;
 public class SWBegGoal extends Goal {
 
     private final SophisticatedWolf wolf;
-    private final Level level;
+    private final ServerLevel level;
     private final float lookDistance;
     private final TargetingConditions begTargeting;
 
@@ -30,7 +30,7 @@ public class SWBegGoal extends Goal {
 
     public SWBegGoal(SophisticatedWolf wolf, float lookDistance) {
         this.wolf = wolf;
-        this.level = wolf.level();
+        this.level = getServerLevel(wolf);
         this.lookDistance = lookDistance * lookDistance;
         this.begTargeting = TargetingConditions.forNonCombat().range(lookDistance);
         this.setFlags(EnumSet.of(Goal.Flag.LOOK));

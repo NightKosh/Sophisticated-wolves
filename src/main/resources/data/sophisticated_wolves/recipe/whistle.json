@@ -1,0 +1,16 @@
+{
+  "type" : "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern" : [
+    "IG",
+    "DI"
+  ],
+  "key" : {
+    "I" : "minecraft:iron_ingot",
+    "G" : "minecraft:gold_ingot",
+    "D" : "minecraft:orange_dye"
+  },
+  "result" : {
+    "id": "sophisticated_wolves:whistle"
+  }
+}

@@ -1,17 +1,10 @@
 package sophisticated_wolves.client.renderer;
 
-import com.mojang.blaze3d.vertex.PoseStack;
-import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.WolfRenderer;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.entity.animal.Wolf;
+import net.minecraft.world.entity.animal.wolf.Wolf;
 import sophisticated_wolves.core.SWConfiguration;
-import sophisticated_wolves.core.SWResources;
-import sophisticated_wolves.entity.SophisticatedWolf;
-
-import javax.annotation.Nonnull;
 
 /**
  * Sophisticated Wolves
@@ -35,44 +28,11 @@ public class SophisticatedWolfRenderer extends WolfRenderer {
         super(context);
     }
 
-    @Nonnull
     @Override
-    public ResourceLocation getTextureLocation(@Nonnull Wolf wolf) {
-        if (SWConfiguration.CUSTOM_WOLF_TEXTURES.get()) {
-            switch (((SophisticatedWolf) wolf).getSpecies()) {
-                case BROWN:
-                    if (wolf.isTame()) {
-                        return SWResources.BROWN_WOLF_TAME;
-                    } else if (wolf.isAngry()) {
-                        return SWResources.BROWN_WOLF_ANGRY;
-                    }
-                    return SWResources.BROWN_WOLF;
-                case BLACK:
-                    if (wolf.isTame()) {
-                        return SWResources.BLACK_WOLF_TAME;
-                    } else if (wolf.isAngry()) {
-                        return SWResources.BLACK_WOLF_ANGRY;
-                    }
-                    return SWResources.BLACK_WOLF;
-                case FOREST:
-                    if (wolf.isTame()) {
-                        return SWResources.FOREST_WOLF_TAME;
-                    } else if (wolf.isAngry()) {
-                        return SWResources.FOREST_WOLF_ANGRY;
-                    }
-                    return SWResources.FOREST_WOLF;
-            }
-        }
-        return super.getTextureLocation(wolf);
-    }
-
-    @Override
-    protected void renderNameTag(
-            @Nonnull Wolf wolf, Component displayName, @Nonnull PoseStack poseStack,
-            @Nonnull MultiBufferSource multiBufferSource, int packedLight, float partialTick) {
-        var coloredComponent = Component.literal(displayName.getString())
+    protected Component getNameTag(Wolf wolf) {
+        Component displayName = super.getNameTag(wolf);
+        return Component.literal(displayName.getString())
                 .withStyle(displayName.getStyle().withColor(getWolfNameColor(wolf)));
-        super.renderNameTag(wolf, coloredComponent, poseStack, multiBufferSource, packedLight, partialTick);
     }
 
     //changes color of wolf's name based on health

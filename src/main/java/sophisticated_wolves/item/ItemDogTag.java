@@ -9,6 +9,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import sophisticated_wolves.core.SWConfiguration;
+import sophisticated_wolves.core.SWItems;
 import sophisticated_wolves.entity.SophisticatedWolf;
 import sophisticated_wolves.gui.screen.DogTagScreen;
 
@@ -25,7 +26,9 @@ import static sophisticated_wolves.SophisticatedWolvesMod.LOGGER;
 public class ItemDogTag extends Item {
 
     public ItemDogTag() {
-        super(new Item.Properties().stacksTo(64));
+        super(new Item.Properties()
+                .stacksTo(64)
+                .setId(SWItems.DOG_TAG_RK));
     }
 
     @Nonnull
@@ -48,14 +51,14 @@ public class ItemDogTag extends Item {
     }
 
     private static InteractionResult setName(TamableAnimal pet, ItemStack stack, Player player) {
-        if (pet.isTame() && pet.getOwnerUUID() != null && pet.getOwnerUUID().equals(player.getUUID())) {
+        if (pet.isTame() && pet.getOwner() != null && pet.getOwner().getUUID().equals(player.getUUID())) {
             if (SWConfiguration.DEBUG_MODE.get()) {
                 LOGGER.info("Dog Tag was used on pet ");
             }
             if (player.level().isClientSide()) {
                 DogTagScreen.open(pet);
             } else {
-                stack.shrink(1);
+                stack.consume(1, player);
             }
             return InteractionResult.SUCCESS;
         }

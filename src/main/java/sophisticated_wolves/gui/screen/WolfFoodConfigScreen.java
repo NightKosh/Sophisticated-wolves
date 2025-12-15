@@ -2,7 +2,7 @@ package sophisticated_wolves.gui.screen;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import sophisticated_wolves.core.SWResources;
 import sophisticated_wolves.core.SWMessages;
 import sophisticated_wolves.entity.SophisticatedWolf;
@@ -36,13 +36,12 @@ public class WolfFoodConfigScreen extends WolfConfigScreen {
     protected void initCustomComponents(int x, int y) {
         this.foodScreenButton.setTabActive(true);
 
-        var wolfFood = wolf.getWolfFood();
-        this.addRenderableWidget(this.isRottenMeatAndBones = new GuiCheckbox(x + COLUMN_1, y + LINE_1, wolfFood.rottenMeatAndBones()));
-        this.addRenderableWidget(this.isRawFish = new GuiCheckbox(x + COLUMN_2, y + LINE_1, wolfFood.rawFish()));
-        this.addRenderableWidget(this.isCookedFish = new GuiCheckbox(x + COLUMN_1, y + LINE_2, wolfFood.cookedFish()));
-        this.addRenderableWidget(this.isSpecialFish = new GuiCheckbox(x + COLUMN_2, y + LINE_2, wolfFood.specialFish()));
-        this.addRenderableWidget(this.isRawMeat = new GuiCheckbox(x + COLUMN_1, y + LINE_3, wolfFood.rawMeat()));
-        this.addRenderableWidget(this.isCookedMeat = new GuiCheckbox(x + COLUMN_2, y + LINE_3, wolfFood.cookedMeat()));
+        this.addRenderableWidget(this.isRottenMeatAndBones = new GuiCheckbox(x + COLUMN_1, y + LINE_1, wolf.eatRottenMeatAndBones()));
+        this.addRenderableWidget(this.isRawFish = new GuiCheckbox(x + COLUMN_2, y + LINE_1, wolf.eatRawFish()));
+        this.addRenderableWidget(this.isCookedFish = new GuiCheckbox(x + COLUMN_1, y + LINE_2, wolf.eatCookedFish()));
+        this.addRenderableWidget(this.isSpecialFish = new GuiCheckbox(x + COLUMN_2, y + LINE_2, wolf.eatSpecialFish()));
+        this.addRenderableWidget(this.isRawMeat = new GuiCheckbox(x + COLUMN_1, y + LINE_3, wolf.eatRawMeat()));
+        this.addRenderableWidget(this.isCookedMeat = new GuiCheckbox(x + COLUMN_2, y + LINE_3, wolf.eatCookedMeat()));
     }
 
     @Override
@@ -53,7 +52,7 @@ public class WolfFoodConfigScreen extends WolfConfigScreen {
     }
 
     @Override
-    protected ResourceLocation getBackground() {
+    protected Identifier getBackground() {
         return SWResources.FOOD_GUI;
     }
 

@@ -17,7 +17,7 @@ public class SWFollowOwnerGoal extends FollowOwnerGoal {
     private int timeToRecalcPath;
 
     public SWFollowOwnerGoal(SophisticatedWolf entity, double speedModifier, float startDistance, float stopDistance) {
-        super(entity, speedModifier, startDistance, stopDistance, false);
+        super(entity, speedModifier, startDistance, stopDistance);
 
         this.pet = entity;
         this.speedModifier = speedModifier;
@@ -32,7 +32,7 @@ public class SWFollowOwnerGoal extends FollowOwnerGoal {
                 !this.pet.isPassenger() &&
                 super.canUse() && //true -> owner != null
                 !this.owner.onClimbable() &&
-                this.pet.getWolfCommands().followOwner();
+                this.pet.followOwner();
     }
 
     /**
@@ -44,7 +44,7 @@ public class SWFollowOwnerGoal extends FollowOwnerGoal {
                 !this.pet.isPassenger() &&
                 super.canContinueToUse() &&
                 !this.owner.onClimbable() &&
-                this.pet.getWolfCommands().followOwner();
+                this.pet.followOwner();
     }
 
     /**

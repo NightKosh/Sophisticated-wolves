@@ -13,7 +13,9 @@ import sophisticated_wolves.core.SWBlocks;
 public class ItemBlockKennel extends BlockItem {
 
     public ItemBlockKennel() {
-        super(SWBlocks.getKennel(), new Item.Properties().stacksTo(64));
+        super(SWBlocks.getKennel(), new Item.Properties()
+                .stacksTo(64)
+                .setId(SWBlocks.KENNEL_RK));
     }
 
 }
