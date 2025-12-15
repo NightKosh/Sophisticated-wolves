@@ -7,6 +7,7 @@ import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
+import net.minecraft.sounds.SoundEvents;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.util.RandomSource;
@@ -30,6 +31,7 @@ import net.minecraft.world.entity.animal.wolf.WolfSoundVariants;
 import net.minecraft.world.entity.monster.Creeper;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.DyeColor;
+import net.minecraft.world.item.DyeItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
@@ -330,15 +332,16 @@ public class SophisticatedWolf extends AEntitySophisticatedWolf {
                 return InteractionResult.SUCCESS;
             }
 
+            if (stack.getItem() instanceof DyeItem) {
+                return super.mobInteract(player, hand);
+            }
+
             if (FoodUtils.isFoodItem(stack) && this.getHealth() < SWConfiguration.WOLVES_HEALTH_TAMED.get()) {
                 int hp = FoodUtils.getHealPoints(stack);
 
                 if (hp > 0) {
-                    if (!player.getAbilities().instabuild) {
-                        stack.shrink(1);
-                    }
-
                     this.heal(hp);
+                    stack.consume(1, player);
                     return InteractionResult.SUCCESS;
                 }
             } else if (stack.getItem() instanceof ItemDogTag || stack.getItem() instanceof ItemPetCarrier) {
@@ -347,16 +350,15 @@ public class SophisticatedWolf extends AEntitySophisticatedWolf {
                 if (this.level().isClientSide()) {
                     WolfFoodConfigScreen.open(this);
                 }
-                stack.shrink(1);
+                stack.consume(1, player);
                 return InteractionResult.SUCCESS;
             }
-        } else if (stack.is(Items.BONE) && !this.isAngry()) {
-            var result = super.mobInteract(player, hand);
-            if (this.isTame() && !this.level().isClientSide()) {
-                this.setHealth(SWConfiguration.WOLVES_HEALTH_TAMED.get());
-            }
 
-            return result;
+            if (this.isEquippableInSlot(stack, EquipmentSlot.BODY)) {
+                return super.mobInteract(player, hand);
+            } else if (this.getBodyArmorItem().isValidRepairItem(stack)) {
+                return super.mobInteract(player, hand);
+            }
         }
 
         return super.mobInteract(player, hand);
