@@ -7,11 +7,9 @@ import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.entity.EntityAttributeCreationEvent;
 import net.neoforged.neoforge.event.entity.RegisterSpawnPlacementsEvent;
 import sophisticated_wolves.api.ModInfo;
-import sophisticated_wolves.core.SWConfiguration;
 import sophisticated_wolves.core.SWEntities;
 import sophisticated_wolves.entity.SophisticatedWolf;
 
-import static sophisticated_wolves.SophisticatedWolvesMod.LOGGER;
 
 /**
  * Sophisticated Wolves
@@ -29,9 +27,6 @@ public class SWEventsEntity {
 
     @SubscribeEvent
     public static void registerSpawnPlacement(RegisterSpawnPlacementsEvent event) {
-        if (SWConfiguration.DEBUG_MODE.get()) {
-            LOGGER.info("RegisterSpawnPlacementsEvent event triggered");
-        }
         event.register(SWEntities.getSophisticatedWolfType(),
                 SpawnPlacementTypes.ON_GROUND,
                 Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
