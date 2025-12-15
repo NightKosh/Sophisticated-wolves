@@ -32,11 +32,11 @@ public class WolfCommandsConfigScreen extends WolfConfigScreen {
         this.addRenderableWidget(this.followOwner = new GuiCheckbox(x + COLUMN_1, y + LINE_2, 80,
                 Component.translatable("gui.sophisticated_wolves.wolf_commands_configs.follow_owner_button"),
                 () -> List.of(guardZone),
-                wolf.followOwner));
+                wolf.followOwner()));
         this.addRenderableWidget(this.guardZone = new GuiCheckbox(x + COLUMN_2, y + LINE_2, 80,
                 Component.translatable("gui.sophisticated_wolves.wolf_commands_configs.guard_zone_button"),
                 () -> List.of(followOwner),
-                wolf.guardZone));
+                wolf.guardZone()));
     }
 
     @Override

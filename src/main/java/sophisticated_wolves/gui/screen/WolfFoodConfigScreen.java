@@ -36,12 +36,12 @@ public class WolfFoodConfigScreen extends WolfConfigScreen {
     protected void initCustomComponents(int x, int y) {
         this.foodScreenButton.setTabActive(true);
 
-        this.addRenderableWidget(this.isRottenMeatAndBones = new GuiCheckbox(x + COLUMN_1, y + LINE_1, wolf.eatRottenMeatAndBones));
-        this.addRenderableWidget(this.isRawFish = new GuiCheckbox(x + COLUMN_2, y + LINE_1, wolf.eatRawFish));
-        this.addRenderableWidget(this.isCookedFish = new GuiCheckbox(x + COLUMN_1, y + LINE_2, wolf.eatCookedFish));
-        this.addRenderableWidget(this.isSpecialFish = new GuiCheckbox(x + COLUMN_2, y + LINE_2, wolf.eatSpecialFish));
-        this.addRenderableWidget(this.isRawMeat = new GuiCheckbox(x + COLUMN_1, y + LINE_3, wolf.eatRawMeat));
-        this.addRenderableWidget(this.isCookedMeat = new GuiCheckbox(x + COLUMN_2, y + LINE_3, wolf.eatCookedMeat));
+        this.addRenderableWidget(this.isRottenMeatAndBones = new GuiCheckbox(x + COLUMN_1, y + LINE_1, wolf.eatRottenMeatAndBones()));
+        this.addRenderableWidget(this.isRawFish = new GuiCheckbox(x + COLUMN_2, y + LINE_1, wolf.eatRawFish()));
+        this.addRenderableWidget(this.isCookedFish = new GuiCheckbox(x + COLUMN_1, y + LINE_2, wolf.eatCookedFish()));
+        this.addRenderableWidget(this.isSpecialFish = new GuiCheckbox(x + COLUMN_2, y + LINE_2, wolf.eatSpecialFish()));
+        this.addRenderableWidget(this.isRawMeat = new GuiCheckbox(x + COLUMN_1, y + LINE_3, wolf.eatRawMeat()));
+        this.addRenderableWidget(this.isCookedMeat = new GuiCheckbox(x + COLUMN_2, y + LINE_3, wolf.eatCookedMeat()));
     }
 
     @Override

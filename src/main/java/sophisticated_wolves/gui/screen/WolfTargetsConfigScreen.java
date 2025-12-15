@@ -31,12 +31,12 @@ public class WolfTargetsConfigScreen extends WolfConfigScreen {
     protected void initCustomComponents(int x, int y) {
         this.targetsScreenButton.setTabActive(true);
 
-        this.addRenderableWidget(this.attackSlimes = new GuiCheckbox(x + COLUMN_1, y + LINE_1, wolf.attackSlimes));
-        this.addRenderableWidget(this.attackSkeletons = new GuiCheckbox(x + COLUMN_2, y + LINE_1, wolf.attackSkeletons));
-        this.addRenderableWidget(this.attackSpiders = new GuiCheckbox(x + COLUMN_1, y + LINE_2, wolf.attackSpiders));
-        this.addRenderableWidget(this.attackZombies = new GuiCheckbox(x + COLUMN_2, y + LINE_2, wolf.attackZombies));
-        this.addRenderableWidget(this.attackNether = new GuiCheckbox(x + COLUMN_1, y + LINE_3, wolf.attackNether));
-        this.addRenderableWidget(this.attackRaider = new GuiCheckbox(x + COLUMN_2, y + LINE_3, wolf.attackRaider));
+        this.addRenderableWidget(this.attackSlimes = new GuiCheckbox(x + COLUMN_1, y + LINE_1, wolf.attackSlimes()));
+        this.addRenderableWidget(this.attackSkeletons = new GuiCheckbox(x + COLUMN_2, y + LINE_1, wolf.attackSkeletons()));
+        this.addRenderableWidget(this.attackSpiders = new GuiCheckbox(x + COLUMN_1, y + LINE_2, wolf.attackSpiders()));
+        this.addRenderableWidget(this.attackZombies = new GuiCheckbox(x + COLUMN_2, y + LINE_2, wolf.attackZombies()));
+        this.addRenderableWidget(this.attackNether = new GuiCheckbox(x + COLUMN_1, y + LINE_3, wolf.attackNether()));
+        this.addRenderableWidget(this.attackRaider = new GuiCheckbox(x + COLUMN_2, y + LINE_3, wolf.attackRaider()));
     }
 
     @Override
