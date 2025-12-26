@@ -24,7 +24,7 @@ public class SWTabs {
     public static final DeferredRegister<CreativeModeTab> SW_TAB =
             DeferredRegister.create(Registries.CREATIVE_MODE_TAB, ModInfo.ID);
 
-    public static final DeferredHolder<CreativeModeTab, CreativeModeTab> ADVANCED_FISHING_TAB =
+    public static final DeferredHolder<CreativeModeTab, CreativeModeTab> SOPHISTICATED_WOLVES =
             SW_TAB.register("sophisticated_wolves", () -> CreativeModeTab.builder()
                     .icon(() -> new ItemStack(SWItems.getDogTreat()))
                     .title(Component.translatable("itemGroup." + ModInfo.ID))
