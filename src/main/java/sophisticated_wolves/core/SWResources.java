@@ -13,23 +13,7 @@ import static net.minecraft.resources.Identifier.fromNamespaceAndPath;
  */
 public class SWResources {
 
-    private static final String ENTITY_LOCATION = "textures/entity/";
     private static final String GUI_LOCATION = "textures/gui/";
-
-    //Brown Wolf
-    public static final Identifier BROWN_WOLF = fromNamespaceAndPath(ModInfo.ID, ENTITY_LOCATION + "brown/wolf.png");
-    public static final Identifier BROWN_WOLF_TAME = fromNamespaceAndPath(ModInfo.ID, ENTITY_LOCATION + "brown/wolf_tame.png");
-    public static final Identifier BROWN_WOLF_ANGRY = fromNamespaceAndPath(ModInfo.ID, ENTITY_LOCATION + "brown/wolf_angry.png");
-
-    //Black Wolf
-    public static final Identifier BLACK_WOLF = fromNamespaceAndPath(ModInfo.ID, ENTITY_LOCATION + "black/wolf.png");
-    public static final Identifier BLACK_WOLF_TAME = fromNamespaceAndPath(ModInfo.ID, ENTITY_LOCATION + "black/wolf_tame.png");
-    public static final Identifier BLACK_WOLF_ANGRY = fromNamespaceAndPath(ModInfo.ID, ENTITY_LOCATION + "black/wolf_angry.png");
-
-    //Forest Wolf
-    public static final Identifier FOREST_WOLF = fromNamespaceAndPath(ModInfo.ID, ENTITY_LOCATION + "forest/wolf.png");
-    public static final Identifier FOREST_WOLF_TAME = fromNamespaceAndPath(ModInfo.ID, ENTITY_LOCATION + "forest/wolf_tame.png");
-    public static final Identifier FOREST_WOLF_ANGRY = fromNamespaceAndPath(ModInfo.ID, ENTITY_LOCATION + "forest/wolf_angry.png");
 
     // Gui
     public static final Identifier DOG_BOWL_GUI = fromNamespaceAndPath(ModInfo.ID, GUI_LOCATION + "dog_bowl_gui.png");
