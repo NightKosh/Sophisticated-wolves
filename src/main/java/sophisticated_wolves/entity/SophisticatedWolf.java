@@ -449,9 +449,10 @@ public class SophisticatedWolf extends AEntitySophisticatedWolf {
     }
 
     @Override
-    public boolean hurtServer(@Nonnull ServerLevel serverLevel, @Nonnull DamageSource damageSource, float amount) {
+    public boolean hurtServer(@Nonnull ServerLevel level, @Nonnull DamageSource damageSource, float amount) {
         if ((this.fleeGoal != null && this.fleeGoal.shouldFlee() && this.getRandom().nextInt(10) != 0) || // discard if flee
-                (damageSource.getEntity() != null && damageSource.getEntity().equals(this.getOwner()) && !damageSource.getEntity().isShiftKeyDown()) || //protect from owner
+                (damageSource.getEntity() instanceof Player player && !damageSource.getEntity().isShiftKeyDown() &&
+                        player.equals(this.getOwner()) || !level.isPvpAllowed()) || //protect from owner or other players if pvp disabled
                 (SWConfiguration.IMMUNE_TO_CACTI.get() && damageSource.is(DamageTypes.CACTUS)) ||
                 (SWConfiguration.IMMUNE_TO_SWEET_BERRY_BUSH.get() && damageSource.is(DamageTypes.SWEET_BERRY_BUSH))) { // protect from cacti
             return false;
@@ -463,7 +464,7 @@ public class SophisticatedWolf extends AEntitySophisticatedWolf {
                     this.burnGoal != null) {
                 this.burnGoal.setActive(true);
             }
-            return super.hurtServer(serverLevel, damageSource, amount);
+            return super.hurtServer(level, damageSource, amount);
         }
     }
 
