@@ -17,6 +17,7 @@ public class SWConfiguration {
     public static ModConfigSpec.ConfigValue<Boolean> CUSTOM_BREEDING;
     public static ModConfigSpec.ConfigValue<Boolean> NAME_TAG_FOR_ANY_PETS;
     public static ModConfigSpec.ConfigValue<Boolean> IMMUNE_TO_CACTI;
+    public static ModConfigSpec.ConfigValue<Boolean> IMMUNE_TO_SWEET_BERRY_BUSH;
     public static ModConfigSpec.ConfigValue<Boolean> WOLVES_WALKS_THROUGH_EACH_OTHER;
     public static ModConfigSpec.ConfigValue<Boolean> WOLVES_WALKS_THROUGH_OWNER;
     public static ModConfigSpec.ConfigValue<Integer> WOLVES_HEALTH_WILD;
@@ -39,6 +40,8 @@ public class SWConfiguration {
                 .define("Name Tag For Any Pets", true);
         IMMUNE_TO_CACTI = BUILDER.comment("Should sophisticated wolves be immune to cacti damage?")
                 .define("Immune To Cacti", true);
+        IMMUNE_TO_CACTI = BUILDER.comment("Should sophisticated wolves be immune to sweet berry bush damage?")
+                .define("Immune To Sweet Berry Bush", true);
         WOLVES_WALKS_THROUGH_EACH_OTHER = BUILDER.comment("Should sophisticated wolves walks through each other?")
                 .define("Wolves Walks Through Each Other", true);
         WOLVES_WALKS_THROUGH_OWNER = BUILDER.comment("Should sophisticated wolves walks through owner?")

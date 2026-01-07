@@ -205,7 +205,7 @@ public class SophisticatedWolf extends AEntitySophisticatedWolf {
     }
 
     @Override
-    public void addAdditionalSaveData(ValueOutput value) {
+    public void addAdditionalSaveData(@Nonnull ValueOutput value) {
         super.addAdditionalSaveData(value);
         // food
         value.putBoolean("RottenMeatAndBones", eatRottenMeatAndBones());
@@ -230,13 +230,14 @@ public class SophisticatedWolf extends AEntitySophisticatedWolf {
     }
 
     @Override
-    public void readAdditionalSaveData(ValueInput value) {
+    public void readAdditionalSaveData(@Nonnull ValueInput value) {
         super.readAdditionalSaveData(value);
         this.updateFood(value);
         this.updateTargets(value);
         this.updateCommands(value);
     }
 
+    @Nonnull
     @Override
     protected SoundEvent getAmbientSound() {
         if (this.isAngry()) {
@@ -318,8 +319,9 @@ public class SophisticatedWolf extends AEntitySophisticatedWolf {
         super.tick();
     }
 
+    @Nonnull
     @Override
-    public InteractionResult mobInteract(Player player, InteractionHand hand) {
+    public InteractionResult mobInteract(Player player, @Nonnull InteractionHand hand) {
         var stack = player.getItemInHand(hand);
 
         if (this.isTame()) {
@@ -389,7 +391,7 @@ public class SophisticatedWolf extends AEntitySophisticatedWolf {
     }
 
     @Override
-    public SophisticatedWolf getBreedOffspring(ServerLevel serverLevel, AgeableMob entity) {
+    public SophisticatedWolf getBreedOffspring(@Nonnull ServerLevel serverLevel, @Nonnull AgeableMob entity) {
         var wolf = SWEntities.getSophisticatedWolfType().create(serverLevel, EntitySpawnReason.BREEDING);
         if (wolf != null && entity instanceof SophisticatedWolf wolf1) {
             if (this.random.nextBoolean()) {
@@ -413,7 +415,7 @@ public class SophisticatedWolf extends AEntitySophisticatedWolf {
     }
 
     @Override
-    public boolean canMate(Animal animal) {
+    public boolean canMate(@Nonnull Animal animal) {
         if (animal != this && this.isTame() && animal instanceof SophisticatedWolf wolf) {
             return wolf.isTame() && (!wolf.isOrderedToSit() && this.isInLove() && wolf.isInLove());
         }
@@ -447,10 +449,11 @@ public class SophisticatedWolf extends AEntitySophisticatedWolf {
     }
 
     @Override
-    public boolean hurtServer(ServerLevel serverLevel, DamageSource damageSource, float amount) {
+    public boolean hurtServer(@Nonnull ServerLevel serverLevel, @Nonnull DamageSource damageSource, float amount) {
         if ((this.fleeGoal != null && this.fleeGoal.shouldFlee() && this.getRandom().nextInt(10) != 0) || // discard if flee
                 (damageSource.getEntity() != null && damageSource.getEntity().equals(this.getOwner()) && !damageSource.getEntity().isShiftKeyDown()) || //protect from owner
-                (SWConfiguration.IMMUNE_TO_CACTI.get() && damageSource.is(DamageTypes.CACTUS))) { // protect from cacti
+                (SWConfiguration.IMMUNE_TO_CACTI.get() && damageSource.is(DamageTypes.CACTUS)) ||
+                (SWConfiguration.IMMUNE_TO_SWEET_BERRY_BUSH.get() && damageSource.is(DamageTypes.SWEET_BERRY_BUSH))) { // protect from cacti
             return false;
         } else {
             if (damageSource.is(DamageTypes.DROWN) && this.drownGoal != null) {
@@ -465,7 +468,7 @@ public class SophisticatedWolf extends AEntitySophisticatedWolf {
     }
 
     @Override
-    public boolean canCollideWith(Entity entity) {
+    public boolean canCollideWith(@Nonnull Entity entity) {
         if (SWConfiguration.WOLVES_WALKS_THROUGH_EACH_OTHER.get() && entity instanceof SophisticatedWolf) {
             return false;
         }
