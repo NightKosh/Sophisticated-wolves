@@ -73,13 +73,13 @@ public class DogTagScreen extends Screen {
     }
 
     @Override
-    public boolean keyPressed(KeyEvent keyEvent) {
+    public boolean keyPressed(@Nonnull KeyEvent keyEvent) {
         this.nameField.keyPressed(keyEvent);
         return super.keyPressed(keyEvent);
     }
 
     @Override
-    public boolean charTyped(CharacterEvent characterEvent) {
+    public boolean charTyped(@Nonnull CharacterEvent characterEvent) {
         return this.nameField.charTyped(characterEvent);
     }
 
