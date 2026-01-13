@@ -34,7 +34,7 @@ public class ItemBlockDogBowl extends BlockItem {
         var data = stack.get(DataComponents.CUSTOM_DATA);
         if (data != null) {
             var tag = data.copyTag();
-            if (tag != null && tag.contains("FoodAmount")) {
+            if (tag.contains("FoodAmount")) {
                 consumer.accept(Component.translatable("item.sophisticated_wolves.dog_bowl.amount_of_food")
                         .append(Component.literal(String.valueOf(tag.getInt("FoodAmount").get()))));
             }

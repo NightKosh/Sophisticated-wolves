@@ -157,7 +157,7 @@ public class BlockDogBowl extends BaseEntityBlock {
             var data = stack.get(DataComponents.CUSTOM_DATA);
             if (data != null) {
                 var tag = data.copyTag();
-                if (tag != null && tag.contains("FoodAmount")) {
+                if (tag.contains("FoodAmount")) {
                     foodAmount = tag.getInt("FoodAmount").get();
                 }
             }

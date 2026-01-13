@@ -120,7 +120,7 @@ public class ItemPetCarrier extends Item {
             var data = stack.get(DataComponents.CUSTOM_DATA);
             if (data != null) {
                 var tag = data.copyTag();
-                if (tag != null && tag.contains(CLASS_NAME)) {
+                if (tag.contains(CLASS_NAME)) {
                     var petCarrier = PetCarrierHelper.getPetCarrier(tag.getString(CLASS_NAME).get());
                     if (petCarrier != null) {
                         var pos = context.getClickedPos();
@@ -164,7 +164,7 @@ public class ItemPetCarrier extends Item {
         var data = stack.get(DataComponents.CUSTOM_DATA);
         if (data != null) {
             var tag = data.copyTag();
-            if (tag != null && tag.contains(CLASS_NAME)) {
+            if (tag.contains(CLASS_NAME)) {
                 var petCarrier = PetCarrierHelper.getPetCarrier(tag.getString(CLASS_NAME).get());
                 if (petCarrier != null) {
                     consumer.accept(Component.translatable("sophisticated_wolves.carrier.pet")
