@@ -13,8 +13,9 @@ import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.BaseEntityBlock;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.RenderShape;
+import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
@@ -88,6 +89,14 @@ public class BlockDogBowl extends BaseEntityBlock {
                 .setValue(FOOD_LEVEL, EnumDogBowl.EMPTY.ordinal()));
     }
 
+    public BlockDogBowl() {
+        this(BlockBehaviour.Properties.of()
+                .setId(SWBlocks.DOG_BOWL_RK)
+                .sound(SoundType.STONE)
+                .noCollision()
+                .strength(0.7F));
+    }
+
     public static ItemStack getItemsForTab(EnumDogBowl bowl) {
         var tag = new CompoundTag();
         tag.putInt("FoodLevel", bowl.ordinal());
@@ -133,12 +142,6 @@ public class BlockDogBowl extends BaseEntityBlock {
         return CODEC;
     }
 
-    @Nonnull
-    @Override
-    public RenderShape getRenderShape(@Nonnull BlockState state) {
-        return RenderShape.MODEL;
-    }
-
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> stateBuilder) {
         stateBuilder.add(FOOD_LEVEL);
@@ -150,19 +153,18 @@ public class BlockDogBowl extends BaseEntityBlock {
             @Nonnull BlockState state, LivingEntity placer, @Nonnull ItemStack stack) {
         super.setPlacedBy(level, pos, state, placer, stack);
 
-        var tileEntity = (BlockEntityDogBowl) level.getBlockEntity(pos);
-        if (tileEntity != null) {
+        if (level.getBlockEntity(pos) instanceof BlockEntityDogBowl bowl) {
             Integer foodAmount = null;
 
             var data = stack.get(DataComponents.CUSTOM_DATA);
             if (data != null) {
                 var tag = data.copyTag();
                 if (tag.contains("FoodAmount")) {
-                    foodAmount = tag.getInt("FoodAmount").get();
+                    foodAmount = tag.getIntOr("FoodAmount", 0);
                 }
             }
 
-            tileEntity.setFoodAmount(foodAmount == null ?
+            bowl.setFoodAmount(foodAmount == null ?
                     EnumDogBowl.getById(state.getValue(FOOD_LEVEL)).getAmountOfFood() :
                     foodAmount);
         }

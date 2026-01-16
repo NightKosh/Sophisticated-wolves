@@ -1,20 +1,201 @@
 {
-    "variants": {
-        "facing=east": {
-            "model": "sophisticated_wolves:block/kennel",
-             "y" : 90
-        },
-        "facing=west": {
-            "model": "sophisticated_wolves:block/kennel",
-             "y" : 270
-        },
-        "facing=south": {
-            "model": "sophisticated_wolves:block/kennel",
-            "y" : 180
-        },
-        "facing=north": {
-            "model": "sophisticated_wolves:block/kennel",
-            "y" : 0
-        }
+  "multipart": [
+    {
+      "when": { "facing": "north" },
+      "apply": { "model": "sophisticated_wolves:block/kennel/kennel", "y": 0 }
+    },
+    {
+      "when": { "facing": "east" },
+      "apply": { "model": "sophisticated_wolves:block/kennel/kennel", "y": 90 }
+    },
+    {
+      "when": { "facing": "south" },
+      "apply": { "model": "sophisticated_wolves:block/kennel/kennel", "y": 180 }
+    },
+    {
+      "when": { "facing": "west" },
+      "apply": { "model": "sophisticated_wolves:block/kennel/kennel", "y": 270 }
+    },
+
+    {
+      "when": { "facing": "north"},
+      "apply": { "model": "sophisticated_wolves:block/kennel/dog_bowl", "y": 0 }
+    },
+    {
+      "when": { "facing": "east"},
+      "apply": { "model": "sophisticated_wolves:block/kennel/dog_bowl", "y": 90 }
+    },
+    {
+      "when": { "facing": "south"},
+      "apply": { "model": "sophisticated_wolves:block/kennel/dog_bowl", "y": 180 }
+    },
+    {
+      "when": { "facing": "west"},
+      "apply": { "model": "sophisticated_wolves:block/kennel/dog_bowl", "y": 270 }
+    },
+
+    {
+      "when": { "facing": "north", "food_level": "1" },
+      "apply": { "model": "sophisticated_wolves:block/kennel/dog_bowl_1", "y": 0 }
+    },
+    {
+      "when": { "facing": "north", "food_level": "2" },
+      "apply": { "model": "sophisticated_wolves:block/kennel/dog_bowl_1", "y": 0 }
+    },
+    {
+      "when": { "facing": "north", "food_level": "2" },
+      "apply": { "model": "sophisticated_wolves:block/kennel/dog_bowl_2", "y": 0 }
+    },
+    {
+      "when": { "facing": "north", "food_level": "3" },
+      "apply": { "model": "sophisticated_wolves:block/kennel/dog_bowl_1", "y": 0 }
+    },
+    {
+      "when": { "facing": "north", "food_level": "3" },
+      "apply": { "model": "sophisticated_wolves:block/kennel/dog_bowl_2", "y": 0 }
+    },
+    {
+      "when": { "facing": "north", "food_level": "3" },
+      "apply": { "model": "sophisticated_wolves:block/kennel/dog_bowl_3", "y": 0 }
+    },
+    {
+      "when": { "facing": "north", "food_level": "4" },
+      "apply": { "model": "sophisticated_wolves:block/kennel/dog_bowl_1", "y": 0 }
+    },
+    {
+      "when": { "facing": "north", "food_level": "4" },
+      "apply": { "model": "sophisticated_wolves:block/kennel/dog_bowl_2", "y": 0 }
+    },
+    {
+      "when": { "facing": "north", "food_level": "4" },
+      "apply": { "model": "sophisticated_wolves:block/kennel/dog_bowl_3", "y": 0 }
+    },
+    {
+      "when": { "facing": "north", "food_level": "4" },
+      "apply": { "model": "sophisticated_wolves:block/kennel/dog_bowl_4", "y": 0 }
+    },
+
+    {
+      "when": { "facing": "east", "food_level": "1" },
+      "apply": { "model": "sophisticated_wolves:block/kennel/dog_bowl_1", "y": 90 }
+    },
+    {
+      "when": { "facing": "east", "food_level": "2" },
+      "apply": { "model": "sophisticated_wolves:block/kennel/dog_bowl_1", "y": 90 }
+    },
+    {
+      "when": { "facing": "east", "food_level": "2" },
+      "apply": { "model": "sophisticated_wolves:block/kennel/dog_bowl_2", "y": 90 }
+    },
+    {
+      "when": { "facing": "east", "food_level": "3" },
+      "apply": { "model": "sophisticated_wolves:block/kennel/dog_bowl_1", "y": 90 }
+    },
+    {
+      "when": { "facing": "east", "food_level": "3" },
+      "apply": { "model": "sophisticated_wolves:block/kennel/dog_bowl_2", "y": 90 }
+    },
+    {
+      "when": { "facing": "east", "food_level": "3" },
+      "apply": { "model": "sophisticated_wolves:block/kennel/dog_bowl_3", "y": 90 }
+    },
+    {
+      "when": { "facing": "east", "food_level": "4" },
+      "apply": { "model": "sophisticated_wolves:block/kennel/dog_bowl_1", "y": 90 }
+    },
+    {
+      "when": { "facing": "east", "food_level": "4" },
+      "apply": { "model": "sophisticated_wolves:block/kennel/dog_bowl_2", "y": 90 }
+    },
+    {
+      "when": { "facing": "east", "food_level": "4" },
+      "apply": { "model": "sophisticated_wolves:block/kennel/dog_bowl_3", "y": 90 }
+    },
+    {
+      "when": { "facing": "east", "food_level": "4" },
+      "apply": { "model": "sophisticated_wolves:block/kennel/dog_bowl_4", "y": 90 }
+    },
+
+    {
+      "when": { "facing": "south", "food_level": "1" },
+      "apply": { "model": "sophisticated_wolves:block/kennel/dog_bowl_1", "y": 180 }
+    },
+    {
+      "when": { "facing": "south", "food_level": "2" },
+      "apply": { "model": "sophisticated_wolves:block/kennel/dog_bowl_1", "y": 180 }
+    },
+    {
+      "when": { "facing": "south", "food_level": "2" },
+      "apply": { "model": "sophisticated_wolves:block/kennel/dog_bowl_2", "y": 180 }
+    },
+    {
+      "when": { "facing": "south", "food_level": "3" },
+      "apply": { "model": "sophisticated_wolves:block/kennel/dog_bowl_1", "y": 180 }
+    },
+    {
+      "when": { "facing": "south", "food_level": "3" },
+      "apply": { "model": "sophisticated_wolves:block/kennel/dog_bowl_2", "y": 180 }
+    },
+    {
+      "when": { "facing": "south", "food_level": "3" },
+      "apply": { "model": "sophisticated_wolves:block/kennel/dog_bowl_3", "y": 180 }
+    },
+    {
+      "when": { "facing": "south", "food_level": "4" },
+      "apply": { "model": "sophisticated_wolves:block/kennel/dog_bowl_1", "y": 180 }
+    },
+    {
+      "when": { "facing": "south", "food_level": "4" },
+      "apply": { "model": "sophisticated_wolves:block/kennel/dog_bowl_2", "y": 180 }
+    },
+    {
+      "when": { "facing": "south", "food_level": "4" },
+      "apply": { "model": "sophisticated_wolves:block/kennel/dog_bowl_3", "y": 180 }
+    },
+    {
+      "when": { "facing": "south", "food_level": "4" },
+      "apply": { "model": "sophisticated_wolves:block/kennel/dog_bowl_4", "y": 180 }
+    },
+
+    {
+      "when": { "facing": "west", "food_level": "1" },
+      "apply": { "model": "sophisticated_wolves:block/kennel/dog_bowl_1", "y": 270 }
+    },
+    {
+      "when": { "facing": "west", "food_level": "2" },
+      "apply": { "model": "sophisticated_wolves:block/kennel/dog_bowl_1", "y": 270 }
+    },
+    {
+      "when": { "facing": "west", "food_level": "2" },
+      "apply": { "model": "sophisticated_wolves:block/kennel/dog_bowl_2", "y": 270 }
+    },
+    {
+      "when": { "facing": "west", "food_level": "3" },
+      "apply": { "model": "sophisticated_wolves:block/kennel/dog_bowl_1", "y": 270 }
+    },
+    {
+      "when": { "facing": "west", "food_level": "3" },
+      "apply": { "model": "sophisticated_wolves:block/kennel/dog_bowl_2", "y": 270 }
+    },
+    {
+      "when": { "facing": "west", "food_level": "3" },
+      "apply": { "model": "sophisticated_wolves:block/kennel/dog_bowl_3", "y": 270 }
+    },
+    {
+      "when": { "facing": "west", "food_level": "4" },
+      "apply": { "model": "sophisticated_wolves:block/kennel/dog_bowl_1", "y": 270 }
+    },
+    {
+      "when": { "facing": "west", "food_level": "4" },
+      "apply": { "model": "sophisticated_wolves:block/kennel/dog_bowl_2", "y": 270 }
+    },
+    {
+      "when": { "facing": "west", "food_level": "4" },
+      "apply": { "model": "sophisticated_wolves:block/kennel/dog_bowl_3", "y": 270 }
+    },
+    {
+      "when": { "facing": "west", "food_level": "4" },
+      "apply": { "model": "sophisticated_wolves:block/kennel/dog_bowl_4", "y": 270 }
     }
+  ]
 }

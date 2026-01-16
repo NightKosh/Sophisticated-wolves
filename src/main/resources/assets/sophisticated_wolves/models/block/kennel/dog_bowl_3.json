@@ -1,11 +1,11 @@
 {
 	"credit": "Made with Blockbench, a free, modern block model editor by JannisX11",
-    "parent":"sophisticated_wolves:block/dog_bowl",
+    "parent":"sophisticated_wolves:block/kennel/dog_bowl",
 	"elements": [
 		{
 			"name": "food18",
-			"from": [7, 1, 6.5],
-			"to": [7.5, 1.5, 7],
+			"from": [7, 1, -9.5],
+			"to": [7.5, 1.5, -9],
 			"shade": true,
 			"faces": {
 				"north": {"uv": [9, 7, 10, 8], "texture": "#0"},
@@ -18,8 +18,8 @@
 		},
 		{
 			"name": "food19",
-			"from": [7.75, 1, 8.5],
-			"to": [8.25, 1.5, 9],
+			"from": [7.75, 1, -7.5],
+			"to": [8.25, 1.5, -7],
 			"shade": true,
 			"faces": {
 				"north": {"uv": [11, 7, 12, 8], "texture": "#0"},
@@ -32,8 +32,8 @@
 		},
 		{
 			"name": "food20",
-			"from": [8.4, 1, 7.9],
-			"to": [8.9, 1.5, 8.4],
+			"from": [8.4, 1, -8.1],
+			"to": [8.9, 1.5, -7.6],
 			"shade": true,
 			"faces": {
 				"north": {"uv": [11, 7, 12, 8], "texture": "#0"},
@@ -46,8 +46,8 @@
 		},
 		{
 			"name": "food21",
-			"from": [8.75, 1, 7.25],
-			"to": [9.25, 1.5, 7.75],
+			"from": [8.75, 1, -8.75],
+			"to": [9.25, 1.5, -8.25],
 			"shade": true,
 			"faces": {
 				"north": {"uv": [9, 7, 10, 8], "texture": "#0"},
@@ -60,8 +60,8 @@
 		},
 		{
 			"name": "food22",
-			"from": [8, 1, 7],
-			"to": [8.5, 1.5, 7.5],
+			"from": [8, 1, -9],
+			"to": [8.5, 1.5, -8.5],
 			"shade": true,
 			"faces": {
 				"north": {"uv": [11, 7, 12, 8], "texture": "#0"},
@@ -79,8 +79,8 @@
 		},
 		{
 			"name": "food23",
-			"from": [9.25, 1, 8.35],
-			"to": [9.75, 1.5, 8.85],
+			"from": [9.25, 1, -7.65],
+			"to": [9.75, 1.5, -7.15],
 			"shade": true,
 			"faces": {
 				"north": {"uv": [9, 7, 10, 8], "texture": "#0"},
@@ -93,8 +93,8 @@
 		},
 		{
 			"name": "food24",
-			"from": [6.25, 1, 7.25],
-			"to": [6.75, 1.5, 7.75],
+			"from": [6.25, 1, -8.75],
+			"to": [6.75, 1.5, -8.25],
 			"shade": true,
 			"faces": {
 				"north": {"uv": [9, 7, 10, 8], "texture": "#0"},
@@ -107,8 +107,8 @@
 		},
 		{
 			"name": "food25",
-			"from": [7.65, 1.5, 7.5],
-			"to": [8.15, 2, 8],
+			"from": [7.65, 1.5, -8.5],
+			"to": [8.15, 2, -8],
 			"shade": true,
 			"faces": {
 				"north": {"uv": [11, 7, 12, 8], "texture": "#0"},
@@ -121,8 +121,8 @@
 		},
 		{
 			"name": "food26",
-			"from": [7.5, 1.5, 8.25],
-			"to": [8, 2, 8.75],
+			"from": [7.5, 1.5, -7.75],
+			"to": [8, 2, -7.25],
 			"shade": true,
 			"faces": {
 				"north": {"uv": [9, 7, 10, 8], "texture": "#0"},
@@ -135,8 +135,8 @@
 		},
 		{
 			"name": "food27",
-			"from": [6.85, 1.5, 8.5],
-			"to": [7.35, 2, 9],
+			"from": [6.85, 1.5, -7.5],
+			"to": [7.35, 2, -7],
 			"shade": true,
 			"faces": {
 				"north": {"uv": [11, 7, 12, 8], "texture": "#0"},
@@ -149,8 +149,8 @@
 		},
 		{
 			"name": "food28",
-			"from": [8.25, 1.5, 7],
-			"to": [8.75, 2, 7.5],
+			"from": [8.25, 1.5, -9],
+			"to": [8.75, 2, -8.5],
 			"shade": true,
 			"faces": {
 				"north": {"uv": [9, 7, 10, 8], "texture": "#0"},
@@ -163,8 +163,8 @@
 		},
 		{
 			"name": "food29",
-			"from": [8.75, 1.5, 8],
-			"to": [9.25, 2, 8.5],
+			"from": [8.75, 1.5, -8],
+			"to": [9.25, 2, -7.5],
 			"shade": true,
 			"faces": {
 				"north": {"uv": [9, 7, 10, 8], "texture": "#0"},
@@ -177,8 +177,8 @@
 		},
 		{
 			"name": "food30",
-			"from": [6.5, 1.5, 7],
-			"to": [7, 2, 7.5],
+			"from": [6.5, 1.5, -7],
+			"to": [7, 2, -8.5],
 			"shade": true,
 			"faces": {
 				"north": {"uv": [9, 7, 10, 8], "texture": "#0"},
@@ -191,8 +191,8 @@
 		},
 		{
 			"name": "food31",
-			"from": [7.25, 1.5, 6.85],
-			"to": [7.75, 2, 7.35],
+			"from": [7.25, 1.5, -9.15],
+			"to": [7.75, 2, -8.65],
 			"shade": true,
 			"faces": {
 				"north": {"uv": [11, 7, 12, 8], "texture": "#0"},
@@ -205,8 +205,8 @@
 		},
 		{
 			"name": "food32",
-			"from": [7, 1.5, 7.5],
-			"to": [7.5, 2, 8],
+			"from": [7, 1.5, -8.5],
+			"to": [7.5, 2, -8],
 			"shade": true,
 			"faces": {
 				"north": {"uv": [9, 7, 10, 8], "texture": "#0"},
@@ -219,8 +219,8 @@
 		},
 		{
 			"name": "food33",
-			"from": [8, 1.5, 8.5],
-			"to": [8.5, 2, 9],
+			"from": [8, 1.5, -7.5],
+			"to": [8.5, 2, -7],
 			"shade": true,
 			"faces": {
 				"north": {"uv": [11, 7, 12, 8], "texture": "#0"},

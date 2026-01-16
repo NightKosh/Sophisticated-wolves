@@ -7,6 +7,7 @@ import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import sophisticated_wolves.api.ModInfo;
 import sophisticated_wolves.block_entity.BlockEntityDogBowl;
+import sophisticated_wolves.block_entity.BlockEntityKennel;
 
 /**
  * Sophisticated Wolves
@@ -25,6 +26,14 @@ public class SWBlockEntities {
                     () -> new BlockEntityType<>(
                             BlockEntityDogBowl::new,
                             SWBlocks.getDogBowl()
+                    ));
+
+    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<BlockEntityKennel>> KENNEL =
+            BLOCK_ENTITIES_REGISTER.register(
+                    "kennel_entity",
+                    () -> new BlockEntityType<>(
+                            BlockEntityKennel::new,
+                            SWBlocks.getKennel()
                     ));
 
     public static void register(IEventBus eventBus) {

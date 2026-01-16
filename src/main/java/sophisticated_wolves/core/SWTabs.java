@@ -11,6 +11,7 @@ import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import sophisticated_wolves.api.ModInfo;
 import sophisticated_wolves.block.BlockDogBowl;
+import sophisticated_wolves.block.BlockKennel;
 import sophisticated_wolves.item.pet_carrier.PetCarrierHelper;
 
 /**
@@ -36,7 +37,9 @@ public class SWTabs {
 
                         output.accept(BlockDogBowl.getItemsForTab(BlockDogBowl.EnumDogBowl.EMPTY));
                         output.accept(BlockDogBowl.getItemsForTab(BlockDogBowl.EnumDogBowl.FULL));
-                        output.accept(new ItemStack(SWBlocks.getKennel()));
+
+                        output.accept(BlockKennel.getItemsForTab(BlockDogBowl.EnumDogBowl.EMPTY));
+                        output.accept(BlockKennel.getItemsForTab(BlockDogBowl.EnumDogBowl.FULL));
 
                         output.accept(new ItemStack(SWItems.getPetCarrier()));
                         for (var entry : PetCarrierHelper.getPetCarriers()) {

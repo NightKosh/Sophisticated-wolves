@@ -9,10 +9,10 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
-import org.jetbrains.annotations.Nullable;
 import sophisticated_wolves.block.BlockDogBowl;
 import sophisticated_wolves.core.SWBlockEntities;
 import sophisticated_wolves.gui.menu.DogBowlContainerMenu;
@@ -30,8 +30,11 @@ public class BlockEntityDogBowl extends BlockEntity implements MenuProvider {
     private int foodAmount;
 
     public BlockEntityDogBowl(BlockPos blockPos, BlockState state) {
-        super(SWBlockEntities.DOG_BOWL.get(), blockPos, state);
+        this(SWBlockEntities.DOG_BOWL.get(), blockPos, state);
+    }
 
+    public BlockEntityDogBowl(BlockEntityType type, BlockPos blockPos, BlockState state) {
+        super(type, blockPos, state);
     }
 
     public int getFoodAmount() {
@@ -50,6 +53,7 @@ public class BlockEntityDogBowl extends BlockEntity implements MenuProvider {
 
     public void addFood(int foodAmount) {
         this.setFoodAmount(this.foodAmount + foodAmount);
+        this.setChanged();
     }
 
     private void amountOfFoodChanged() {
@@ -91,7 +95,6 @@ public class BlockEntityDogBowl extends BlockEntity implements MenuProvider {
         return Component.empty();
     }
 
-    @Nullable
     @Override
     public AbstractContainerMenu createMenu(int containerId, @Nonnull Inventory inventory, @Nonnull Player player) {
         return new DogBowlContainerMenu(containerId, inventory, this);

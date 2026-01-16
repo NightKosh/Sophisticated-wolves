@@ -84,7 +84,7 @@ public abstract class AFeedGoal<T extends Object> extends Goal {
         if (this.feedObject != null) {
             timeToStopGoal++;
             this.moveTo();
-            if (this.getDistanceSqrToFeedObject(this.pet) <= 1.3F) {
+            if (this.getDistanceSqrToFeedObject(this.pet) <= 2) {
                 this.pet.getLookControl().setLookAt(
                         this.getFeedObjectPosX(), this.getFeedObjectPosY(), this.getFeedObjectPosZ(),
                         0.25F, 0.25F);

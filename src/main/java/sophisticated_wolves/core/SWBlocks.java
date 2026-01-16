@@ -4,8 +4,6 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.SoundType;
-import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
@@ -33,13 +31,7 @@ public class SWBlocks {
     public static final DeferredRegister<Block> BLOCKS_REGISTER =
             DeferredRegister.create(Registries.BLOCK, ModInfo.ID);
 
-    private static final DeferredHolder<Block, Block> DOG_BOWL = registerBlock("dog_bowl",
-            () -> new BlockDogBowl(BlockBehaviour.Properties.of()
-                    .setId(SWBlocks.DOG_BOWL_RK)
-                    .sound(SoundType.STONE)
-                    .noCollision()
-                    .strength(0.7F)),
-            ItemBlockDogBowl::new);
+    private static final DeferredHolder<Block, Block> DOG_BOWL = registerBlock("dog_bowl", BlockDogBowl::new, ItemBlockDogBowl::new);
     private static final DeferredHolder<Block, Block> KENNEL = registerBlock("kennel", BlockKennel::new, ItemBlockKennel::new);
 
     private static <T extends Block> DeferredHolder<Block, T> registerBlock(

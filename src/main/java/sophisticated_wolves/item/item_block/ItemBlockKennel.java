@@ -1,8 +1,16 @@
 package sophisticated_wolves.item.item_block;
 
+import net.minecraft.core.component.DataComponents;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.component.TooltipDisplay;
 import sophisticated_wolves.core.SWBlocks;
+
+import javax.annotation.Nonnull;
+import java.util.function.Consumer;
 
 /**
  * Sophisticated Wolves
@@ -16,6 +24,21 @@ public class ItemBlockKennel extends BlockItem {
         super(SWBlocks.getKennel(), new Item.Properties()
                 .stacksTo(64)
                 .setId(SWBlocks.KENNEL_RK));
+    }
+
+    @Override
+    public void appendHoverText(
+            @Nonnull ItemStack stack, @Nonnull Item.TooltipContext context,
+            @Nonnull TooltipDisplay tooltipDisplay, @Nonnull Consumer<Component> consumer,
+            @Nonnull TooltipFlag flag) {
+        var data = stack.get(DataComponents.CUSTOM_DATA);
+        if (data != null) {
+            var tag = data.copyTag();
+            if (tag.contains("FoodAmount")) {
+                consumer.accept(Component.translatable("item.sophisticated_wolves.dog_bowl.amount_of_food")
+                        .append(Component.literal(String.valueOf(tag.getInt("FoodAmount").get()))));
+            }
+        }
     }
 
 }
