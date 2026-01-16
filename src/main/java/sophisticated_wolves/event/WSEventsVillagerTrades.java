@@ -71,7 +71,7 @@ public class WSEventsVillagerTrades {
         return new MerchantOffer(
                 new ItemCost(Items.EMERALD, random.nextInt(minPrice, maxPrice)),
                 getCarrierForTrade(petClass, random),
-                10, 50, 0.02F);
+                10, 30, 0.02F);
     }
 
     private static ItemStack getCarrierForTrade(Class petClass, RandomSource random) {
