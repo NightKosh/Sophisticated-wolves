@@ -50,6 +50,7 @@ public class ItemDogTreat extends Item {
                     sWolf.setTame(true, true);
                     sWolf.setOwner(wolf.getOwner());
                     sWolf.setHealth(wolf.getHealth());
+                    sWolf.setVariant(wolf.getVariant());
 
                     wolf.remove(Entity.RemovalReason.DISCARDED);
 
