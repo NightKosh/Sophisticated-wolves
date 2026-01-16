@@ -34,10 +34,6 @@
                   "properties": ["food_level"]
                 }
               ]
-            },
-            {
-              "type": "minecraft:item",
-              "name": "sophisticated_wolves:kennel"
             }
           ]
         }
