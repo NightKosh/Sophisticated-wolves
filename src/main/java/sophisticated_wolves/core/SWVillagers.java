@@ -36,17 +36,13 @@ public class SWVillagers {
             "kennel_poi",
             () -> new PoiType(ImmutableSet.copyOf(SWBlocks.getKennel().getStateDefinition().getPossibleStates()),
                     1, 1));
-    public static final DeferredHolder<PoiType, PoiType> DOG_BOWL_POI = POI_TYPES_REGISTER.register(
-            "dog_bowl_poi",
-            () -> new PoiType(ImmutableSet.copyOf(SWBlocks.getDogBowl().getStateDefinition().getPossibleStates()),
-                    1, 1));
 
     public static final DeferredHolder<VillagerProfession, VillagerProfession> ZOOLOGIST = VILLAGER_PROFESSIONS_REGISTER.register(
             SophisticatedWolvesAPI.VILLAGER_ID,
             () -> new VillagerProfession(
                     Component.translatable("entity.minecraft.villager." + ModInfo.ID + "." + SophisticatedWolvesAPI.VILLAGER_ID),
                     x -> x.getDelegate().is(KENNEL_BLOCK_POI),
-                    x -> x.getDelegate().is(DOG_BOWL_POI),
+                    x -> x.getDelegate().is(KENNEL_BLOCK_POI),
                     ImmutableSet.of(),
                     ImmutableSet.of(),
                     SoundEvents.VILLAGER_WORK_CLERIC));
