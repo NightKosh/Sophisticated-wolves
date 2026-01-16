@@ -22,6 +22,7 @@ public final class PetCarrierHelper extends PetCarrierHandler {
         addPet(new ParrotPetCarrier());
         addPet(new OcelotPetCarrier());
         addPet(new FoxPetCarrier());
+        addPet(new ArmadilloPetCarrier());
     }
 
 }
