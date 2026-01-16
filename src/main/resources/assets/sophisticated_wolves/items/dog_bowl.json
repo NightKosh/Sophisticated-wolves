@@ -1,6 +1,6 @@
 {
   "model": {
     "type": "minecraft:model",
-    "model": "sophisticated_wolves:item/dog_bowl"
+    "model": "sophisticated_wolves:block/dog_bowl"
   }
 }

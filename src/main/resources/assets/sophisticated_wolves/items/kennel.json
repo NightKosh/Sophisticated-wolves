@@ -1,6 +1,6 @@
 {
   "model": {
     "type": "minecraft:model",
-    "model": "sophisticated_wolves:item/kennel"
+    "model": "sophisticated_wolves:block/kennel/kennel"
   }
 }
