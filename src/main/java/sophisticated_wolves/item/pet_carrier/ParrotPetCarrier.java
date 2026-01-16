@@ -94,4 +94,10 @@ public class ParrotPetCarrier extends PetCarrier<Parrot> {
         return list;
     }
 
+    @Override
+    public void doAtSpawn(Parrot parrot, Player player) {
+        parrot.setOwner(player);
+        parrot.setTame(true, true);
+    }
+
 }
