@@ -2,6 +2,7 @@ package sophisticated_wolves.event;
 
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.util.RandomSource;
+import net.minecraft.world.entity.animal.armadillo.Armadillo;
 import net.minecraft.world.entity.animal.chicken.Chicken;
 import net.minecraft.world.entity.animal.feline.Cat;
 import net.minecraft.world.entity.animal.feline.Ocelot;
@@ -42,26 +43,23 @@ public class WSEventsVillagerTrades {
             }
             var trades = event.getTrades();
 
-            trades.get(1).add((trader, entity, rand) -> new MerchantOffer(
-                    new ItemCost(Items.EMERALD, 1),
-                    new ItemStack(SWItems.getDogTag(), 5),
-                    20, 8, 0.02F
-            ));
-            trades.get(1).add((trader, entity, rand) -> new MerchantOffer(
-                    new ItemCost(Items.EMERALD, 1),
-                    new ItemStack(SWItems.getDogTreat(), 5),
-                    20, 8, 0.02F));
+            trades.get(1).add((trader, entity, rand) -> getCarrierOffer(Chicken.class, 10, 15, rand));
+            trades.get(1).add((trader, entity, rand) -> getCarrierOffer(Rabbit.class, 10, 15, rand));
 
             trades.get(2).add((trader, entity, rand) -> new MerchantOffer(
-                    new ItemCost(Items.EMERALD, rand.nextInt(8, 12)),
-                    new ItemStack(SWItems.getPetCarrier(), 1),
-                    10, 15, 0.02F));
-            trades.get(2).add((trader, entity, rand) -> getCarrierOffer(Chicken.class, 15, 20, rand));
+                    new ItemCost(Items.EMERALD, rand.nextInt(15, 25)),
+                    new ItemStack(Items.AXOLOTL_BUCKET),
+                    10, 30, 0.02F));
 
-            trades.get(3).add((trader, entity, rand) -> getCarrierOffer(Rabbit.class, 15, 20, rand));
-            trades.get(3).add((trader, entity, rand) -> getCarrierOffer(Parrot.class, 25, 30, rand));
+            trades.get(2).add((trader, entity, rand) -> new MerchantOffer(
+                    new ItemCost(Items.EMERALD, rand.nextInt(15, 25)),
+                    new ItemStack(Items.TADPOLE_BUCKET),
+                    10, 30, 0.02F));
 
-            trades.get(4).add((trader, entity, rand) -> getCarrierOffer(Cat.class, 30, 40, rand));
+            trades.get(3).add((trader, entity, rand) -> getCarrierOffer(Parrot.class, 25, 35, rand));
+            trades.get(3).add((trader, entity, rand) -> getCarrierOffer(Armadillo.class, 25, 35, rand));
+
+            trades.get(4).add((trader, entity, rand) -> getCarrierOffer(Cat.class, 35, 45, rand));
             trades.get(4).add((trader, entity, rand) -> getCarrierOffer(SophisticatedWolf.class, 35, 45, rand));
 
             trades.get(5).add((trader, entity, rand) -> getCarrierOffer(Ocelot.class, 45, 55, rand));
@@ -73,7 +71,7 @@ public class WSEventsVillagerTrades {
         return new MerchantOffer(
                 new ItemCost(Items.EMERALD, random.nextInt(minPrice, maxPrice)),
                 getCarrierForTrade(petClass, random),
-                3, 30, 0.02F);
+                10, 50, 0.02F);
     }
 
     private static ItemStack getCarrierForTrade(Class petClass, RandomSource random) {
