@@ -40,7 +40,7 @@ public class SWConfiguration {
                 .define("Name Tag For Any Pets", true);
         IMMUNE_TO_CACTI = BUILDER.comment("Should sophisticated wolves be immune to cacti damage?")
                 .define("Immune To Cacti", true);
-        IMMUNE_TO_CACTI = BUILDER.comment("Should sophisticated wolves be immune to sweet berry bush damage?")
+        IMMUNE_TO_SWEET_BERRY_BUSH = BUILDER.comment("Should sophisticated wolves be immune to sweet berry bush damage?")
                 .define("Immune To Sweet Berry Bush", true);
         WOLVES_WALKS_THROUGH_EACH_OTHER = BUILDER.comment("Should sophisticated wolves walks through each other?")
                 .define("Wolves Walks Through Each Other", true);
