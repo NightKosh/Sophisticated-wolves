@@ -60,33 +60,33 @@ public class SWStructures {
         if (SWConfiguration.DEBUG_MODE.get()) {
             LOGGER.info("ServerAboutToStartEvent event triggered");
         }
-//        var templatePoolRegistry = event.getServer()
-//                .registryAccess()
-//                .lookupOrThrow(Registries.TEMPLATE_POOL);
-//
-//        var processorListRegistry = event.getServer()
-//                .registryAccess()
-//                .lookupOrThrow(Registries.PROCESSOR_LIST);
-//
-//        addBuildingToPool(templatePoolRegistry, processorListRegistry,
-//                withDefaultNamespace("village/plains/houses"),
-//                "sophisticated_wolves:village/plains/dog_house", 100);
+        var templatePoolRegistry = event.getServer()
+                .registryAccess()
+                .lookupOrThrow(Registries.TEMPLATE_POOL);
 
-//        addBuildingToPool(templatePoolRegistry, processorListRegistry,
-//                withDefaultNamespace("village/savanna/houses"),
-//                "sophisticated_wolves:village/savanna_kennels", 10);
-//
-//        addBuildingToPool(templatePoolRegistry, processorListRegistry,
-//                withDefaultNamespace("village/desert/houses"),
-//                "sophisticated_wolves:village/desert_kennels", 10);
-//
-//        addBuildingToPool(templatePoolRegistry, processorListRegistry,
-//                withDefaultNamespace("village/taiga/houses"),
-//                "sophisticated_wolves:village/taiga_kennels", 10);
-//
-//        addBuildingToPool(templatePoolRegistry, processorListRegistry,
-//                withDefaultNamespace("village/snowy/houses"),
-//                "sophisticated_wolves:village/snowy_kennels", 10);
+        var processorListRegistry = event.getServer()
+                .registryAccess()
+                .lookupOrThrow(Registries.PROCESSOR_LIST);
+
+        addBuildingToPool(templatePoolRegistry, processorListRegistry,
+                withDefaultNamespace("village/plains/houses"),
+                "sophisticated_wolves:village/plains/houses/dogs_house", 3);
+
+        addBuildingToPool(templatePoolRegistry, processorListRegistry,
+                withDefaultNamespace("village/savanna/houses"),
+                "sophisticated_wolves:village/savanna/houses/dogs_house", 3);
+
+        addBuildingToPool(templatePoolRegistry, processorListRegistry,
+                withDefaultNamespace("village/desert/houses"),
+                "sophisticated_wolves:village/desert/houses/dogs_house", 3);
+
+        addBuildingToPool(templatePoolRegistry, processorListRegistry,
+                withDefaultNamespace("village/taiga/houses"),
+                "sophisticated_wolves:village/taiga/houses/dogs_house", 3);
+
+        addBuildingToPool(templatePoolRegistry, processorListRegistry,
+                withDefaultNamespace("village/snowy/houses"),
+                "sophisticated_wolves:village/snowy/houses/dogs_house", 3);
     }
 
 }
