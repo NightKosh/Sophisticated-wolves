@@ -1,0 +1,40 @@
+{
+  "criteria": {
+    "has_my_item": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "minecraft:wheat",
+              "minecraft:beef",
+              "minecraft:cooked_beef",
+              "minecraft:chicken",
+              "minecraft:cooked_chicken",
+              "minecraft:mutton",
+              "minecraft:cooked_mutton",
+              "minecraft:porkchop",
+              "minecraft:cooked_porkchop",
+              "minecraft:rabbit",
+              "minecraft:cooked_rabbit"
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "rewards": {
+    "recipes": [
+      "sophisticated_wolves:dog_treat_beef",
+      "sophisticated_wolves:dog_treat_beef_cooked",
+      "sophisticated_wolves:dog_treat_chicken",
+      "sophisticated_wolves:dog_treat_chicken_cooked",
+      "sophisticated_wolves:dog_treat_mutton",
+      "sophisticated_wolves:dog_treat_mutton_cooked",
+      "sophisticated_wolves:dog_treat_pork",
+      "sophisticated_wolves:dog_treat_pork_cooked",
+      "sophisticated_wolves:dog_treat_rabbit",
+      "sophisticated_wolves:dog_treat_rabbit_cooked"
+    ]
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "criteria": {
+    "has_my_item": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "minecraft:iron_ingot",
+              "minecraft:smooth_stone_slab",
+              "minecraft:iron_bars",
+              "#minecraft:wool"
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "rewards": {
+    "recipes": [
+      "sophisticated_wolves:pet_carrier"
+    ]
+  }
+}

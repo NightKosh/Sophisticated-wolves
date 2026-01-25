@@ -1,0 +1,24 @@
+{
+  "criteria": {
+    "has_my_item": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "minecraft:string",
+              "minecraft:leather",
+              "minecraft:rabbit_hide"
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "rewards": {
+    "recipes": [
+      "sophisticated_wolves:dog_tag",
+      "sophisticated_wolves:dog_tag_rabbit"
+    ]
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "criteria": {
+    "has_my_item": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "minecraft:brick",
+              "minecraft:bowl",
+              "#minecraft:planks",
+              "#minecraft:wool"
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "rewards": {
+    "recipes": [
+      "sophisticated_wolves:dog_bowl",
+      "sophisticated_wolves:kennel"
+    ]
+  }
+}
