@@ -112,7 +112,7 @@ public class SophisticatedWolf extends AEntitySophisticatedWolf {
     protected TeleportAtDrowningGoal drownGoal;
     protected TeleportAtBurningGoal burnGoal;
 
-    public SophisticatedWolf(EntityType<? extends Wolf> entityType, Level level) {
+    public SophisticatedWolf(EntityType<? extends AEntitySophisticatedWolf> entityType, Level level) {
         super(entityType, level);
         this.setPathfindingMalus(PathType.DANGER_FIRE, 30);
         this.setPathfindingMalus(PathType.LAVA, 100);

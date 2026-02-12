@@ -16,6 +16,7 @@ import net.minecraft.world.item.component.CustomData;
 import net.minecraft.world.item.component.TooltipDisplay;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.gameevent.GameEvent;
+import sophisticated_wolves.api.pet_carrier.PetCarrier;
 import sophisticated_wolves.core.SWItems;
 import sophisticated_wolves.entity.SophisticatedWolf;
 import sophisticated_wolves.item.pet_carrier.PetCarrierHelper;
@@ -31,10 +32,7 @@ import java.util.function.Consumer;
  */
 public class ItemPetCarrier extends Item {
 
-    private static final String CLASS_NAME = "ClassName";
     private static final String CUSTOM_NAME = "CustomName";
-    private static final String INFO_LIST = "InfoList";
-    private static final String MOB_DATA = "MobData";
     private static final String ADDITIONAL_DATA = "AdditionalData";
 
     public ItemPetCarrier() {
@@ -49,7 +47,8 @@ public class ItemPetCarrier extends Item {
             @Nonnull ItemStack stack, @Nonnull Player player,
             LivingEntity entity, @Nonnull InteractionHand hand) {
         if (!entity.level().isClientSide() &&
-                !(stack.get(DataComponents.CUSTOM_DATA) != null && stack.get(DataComponents.CUSTOM_DATA).contains(CLASS_NAME)) &&
+                !(stack.get(DataComponents.CUSTOM_DATA) != null &&
+                        stack.get(DataComponents.CUSTOM_DATA).contains(PetCarrier.CLASS_NAME)) &&
                 entity instanceof SophisticatedWolf wolf &&
                 wolf.isTame() &&
                 wolf.getOwner() != null && wolf.getOwner().equals(player)) {
@@ -61,7 +60,8 @@ public class ItemPetCarrier extends Item {
     public static void useItemOnOtherPets(Entity e, Player player, ItemStack stack, InteractionHand hand) {
         if (!e.level().isClientSide() &&
                 stack != null &&
-                !(stack.get(DataComponents.CUSTOM_DATA) != null && stack.get(DataComponents.CUSTOM_DATA).contains(CLASS_NAME)) &&
+                !(stack.get(DataComponents.CUSTOM_DATA) != null &&
+                        stack.get(DataComponents.CUSTOM_DATA).contains(PetCarrier.CLASS_NAME)) &&
                 e instanceof LivingEntity entity) {
             if (entity instanceof TamableAnimal pet && !(pet instanceof SophisticatedWolf)) {
                 if (pet.isTame() && pet.getOwner() != null && pet.getOwner().equals(player)) {
@@ -77,13 +77,13 @@ public class ItemPetCarrier extends Item {
             ItemStack stack, Player player, LivingEntity entity, InteractionHand hand) {
 
         var tag = new CompoundTag();
-        tag.putString(CLASS_NAME, entity.getClass().getSimpleName());
+        tag.putString(PetCarrier.CLASS_NAME, entity.getClass().getSimpleName());
 
         var petCarrier = PetCarrierHelper.getPetCarrier(entity.getClass().getSimpleName());
         if (petCarrier != null) {
             var infoTag = petCarrier.getInfo(entity);
             if (infoTag != null) {
-                tag.put(INFO_LIST, infoTag);
+                tag.put(PetCarrier.INFO_LIST, infoTag);
             }
 
             var additionalNbt = petCarrier.getAdditionalData(entity);
@@ -98,7 +98,7 @@ public class ItemPetCarrier extends Item {
 
         var petData = petCarrier.addPetData(entity);
         if (petData != null) {
-            tag.put(MOB_DATA, petData);
+            tag.put(PetCarrier.MOB_DATA, petData);
         }
 
         stack.set(DataComponents.CUSTOM_DATA, CustomData.of(tag));
@@ -120,8 +120,8 @@ public class ItemPetCarrier extends Item {
             var data = stack.get(DataComponents.CUSTOM_DATA);
             if (data != null) {
                 var tag = data.copyTag();
-                if (tag.contains(CLASS_NAME)) {
-                    var petCarrier = PetCarrierHelper.getPetCarrier(tag.getString(CLASS_NAME).get());
+                if (tag.contains(PetCarrier.CLASS_NAME)) {
+                    var petCarrier = PetCarrierHelper.getPetCarrier(tag.getString(PetCarrier.CLASS_NAME).get());
                     if (petCarrier != null) {
                         var pos = context.getClickedPos();
                         var player = context.getPlayer();
@@ -129,8 +129,8 @@ public class ItemPetCarrier extends Item {
                         var entity = entityType.spawn((ServerLevel) level, stack, player, pos, EntitySpawnReason.SPAWN_ITEM_USE,
                                 true, context.getClickedFace() == Direction.UP);
                         if (entity != null) {
-                            if (entity instanceof Mob mob && tag.contains(MOB_DATA)) {
-                                petCarrier.readPetData(mob, tag.getCompound(MOB_DATA).get());
+                            if (entity instanceof Mob mob && tag.contains(PetCarrier.MOB_DATA)) {
+                                petCarrier.readPetData(mob, tag.getCompound(PetCarrier.MOB_DATA).get());
                             }
                             if (tag.contains(ADDITIONAL_DATA)) {
                                 petCarrier.setAdditionalData(entity, tag.getCompound(ADDITIONAL_DATA).get());
@@ -164,8 +164,8 @@ public class ItemPetCarrier extends Item {
         var data = stack.get(DataComponents.CUSTOM_DATA);
         if (data != null) {
             var tag = data.copyTag();
-            if (tag.contains(CLASS_NAME)) {
-                var petCarrier = PetCarrierHelper.getPetCarrier(tag.getString(CLASS_NAME).get());
+            if (tag.contains(PetCarrier.CLASS_NAME)) {
+                var petCarrier = PetCarrierHelper.getPetCarrier(tag.getString(PetCarrier.CLASS_NAME).get());
                 if (petCarrier != null) {
                     consumer.accept(Component.translatable("sophisticated_wolves.carrier.pet")
                             .append(" - ")
@@ -177,8 +177,8 @@ public class ItemPetCarrier extends Item {
                                 .append(Component.literal(tag.getString(CUSTOM_NAME).get())));
                     }
 
-                    if (tag.contains(INFO_LIST)) {
-                        var tooltipList = petCarrier.getInfo(tag.getCompound(INFO_LIST).get());
+                    if (tag.contains(PetCarrier.INFO_LIST)) {
+                        var tooltipList = petCarrier.getInfo(tag.getCompound(PetCarrier.INFO_LIST).get());
                         if (tooltipList != null) {
                             tooltipList.stream().forEach(consumer::accept);
                         }

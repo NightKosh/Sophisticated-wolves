@@ -41,11 +41,4 @@ public class SophisticatedWolvesMod {
         PetCarrierHelper.addPetCarriers();
     }
 
-//TODO remove?
-//    @Mod.EventHandler
-//    public void postInit(FMLPostInitializationEvent event) {
-//
-//        Compatibility.checkMods();
-//    }
-
 }
