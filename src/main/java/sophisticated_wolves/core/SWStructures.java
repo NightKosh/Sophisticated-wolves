@@ -70,23 +70,23 @@ public class SWStructures {
 
         addBuildingToPool(templatePoolRegistry, processorListRegistry,
                 withDefaultNamespace("village/plains/houses"),
-                "sophisticated_wolves:village/plains/houses/dogs_house", 3);
+                "sophisticated_wolves:village/plains/houses/dogs_house", 2);
 
         addBuildingToPool(templatePoolRegistry, processorListRegistry,
                 withDefaultNamespace("village/savanna/houses"),
-                "sophisticated_wolves:village/savanna/houses/dogs_house", 3);
+                "sophisticated_wolves:village/savanna/houses/dogs_house", 2);
 
         addBuildingToPool(templatePoolRegistry, processorListRegistry,
                 withDefaultNamespace("village/desert/houses"),
-                "sophisticated_wolves:village/desert/houses/dogs_house", 3);
+                "sophisticated_wolves:village/desert/houses/dogs_house", 2);
 
         addBuildingToPool(templatePoolRegistry, processorListRegistry,
                 withDefaultNamespace("village/taiga/houses"),
-                "sophisticated_wolves:village/taiga/houses/dogs_house", 3);
+                "sophisticated_wolves:village/taiga/houses/dogs_house", 2);
 
         addBuildingToPool(templatePoolRegistry, processorListRegistry,
                 withDefaultNamespace("village/snowy/houses"),
-                "sophisticated_wolves:village/snowy/houses/dogs_house", 3);
+                "sophisticated_wolves:village/snowy/houses/dogs_house", 2);
     }
 
 }
