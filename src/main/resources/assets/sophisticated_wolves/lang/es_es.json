@@ -70,5 +70,5 @@
   "gui.sophisticated_wolves.wolf_commands_configs.follow_owner_button" : "Follow owner",
   "gui.sophisticated_wolves.wolf_commands_configs.guard_zone_button" : "Guard zone",
 
-  "entity.minecraft.villager.sophisticated_wolves.zoologist" : "Zoologist ## TODO"
+  "entity.sophisticated_wolves.villager.zoologist" : "Zoologist ## TODO"
 }

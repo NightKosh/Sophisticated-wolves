@@ -40,7 +40,7 @@ public class SWVillagers {
     public static final DeferredHolder<VillagerProfession, VillagerProfession> ZOOLOGIST = VILLAGER_PROFESSIONS_REGISTER.register(
             SophisticatedWolvesAPI.VILLAGER_ID,
             () -> new VillagerProfession(
-                    Component.translatable("entity.minecraft.villager." + ModInfo.ID + "." + SophisticatedWolvesAPI.VILLAGER_ID),
+                    Component.translatable("entity." + ModInfo.ID + ".villager." + SophisticatedWolvesAPI.VILLAGER_ID),
                     x -> x.getDelegate().is(KENNEL_BLOCK_POI),
                     x -> x.getDelegate().is(KENNEL_BLOCK_POI),
                     ImmutableSet.of(),
