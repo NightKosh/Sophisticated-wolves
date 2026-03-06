@@ -1,0 +1,17 @@
+{
+  "parent": "sophisticated_wolves:new_tricks",
+  "display": {
+    "icon": { "id": "minecraft:netherite_sword" },
+    "title": { "translate": "advancement.sophisticated_wolves.territorial" },
+    "description": { "translate": "advancement.sophisticated_wolves.territorial.desc" },
+    "frame": "goal",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "triggered": {
+      "trigger": "minecraft:impossible"
+    }
+  }
+}

@@ -2,7 +2,9 @@ package sophisticated_wolves.entity.ai;
 
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.goal.Goal;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
+import sophisticated_wolves.core.SWAdvancements;
 import sophisticated_wolves.core.SWConfiguration;
 import sophisticated_wolves.entity.SophisticatedWolf;
 
@@ -90,6 +92,10 @@ public abstract class AFeedGoal<T extends Object> extends Goal {
                         0.25F, 0.25F);
 
                 this.feed();
+
+                if (this.owner instanceof Player player) {
+                    SWAdvancements.giveAdvancement(player, level, SWAdvancements.WELL_FED);
+                }
             }
         }
     }

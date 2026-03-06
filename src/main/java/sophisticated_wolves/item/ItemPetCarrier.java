@@ -17,6 +17,7 @@ import net.minecraft.world.item.component.TooltipDisplay;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.gameevent.GameEvent;
 import sophisticated_wolves.api.pet_carrier.PetCarrier;
+import sophisticated_wolves.core.SWAdvancements;
 import sophisticated_wolves.core.SWItems;
 import sophisticated_wolves.entity.SophisticatedWolf;
 import sophisticated_wolves.item.pet_carrier.PetCarrierHelper;
@@ -105,6 +106,7 @@ public class ItemPetCarrier extends Item {
         player.setItemInHand(hand, stack);
         entity.remove(Entity.RemovalReason.DISCARDED);
 
+        SWAdvancements.giveAdvancement(player, player.level(), SWAdvancements.PORTABLE_FRIEND);
         return InteractionResult.SUCCESS;
     }
 
@@ -144,6 +146,9 @@ public class ItemPetCarrier extends Item {
                                 stack.set(DataComponents.CUSTOM_DATA, CustomData.of(new CompoundTag()));
                             }
                             level.gameEvent(player, GameEvent.ENTITY_PLACE, pos);
+
+
+                            SWAdvancements.giveAdvancement(player, player.level(), SWAdvancements.BACK_TO_THE_WILD);
 
                             return InteractionResult.SUCCESS;
                         }

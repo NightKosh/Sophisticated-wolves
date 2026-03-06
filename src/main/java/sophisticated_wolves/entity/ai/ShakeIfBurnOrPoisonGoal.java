@@ -4,7 +4,9 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.entity.ai.navigation.PathNavigation;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
+import sophisticated_wolves.core.SWAdvancements;
 import sophisticated_wolves.entity.SophisticatedWolf;
 import sophisticated_wolves.util.LevelUtils;
 
@@ -104,10 +106,18 @@ public class ShakeIfBurnOrPoisonGoal extends Goal {
             if (this.isBurning) {
                 this.wolf.clearFire();
                 this.wolf.playSound(SoundEvents.FIRE_EXTINGUISH, this.wolf.getSoundVolume(), 1.6F);
+
+                if (this.wolf.getOwner() instanceof Player player) {
+                    SWAdvancements.giveAdvancement(player, level, SWAdvancements.FIREPROOF);
+                }
             } else if (this.isPoisoned) {
                 this.wolf.removeEffect(MobEffects.POISON);
                 this.wolf.removeEffect(MobEffects.WITHER);
                 this.wolf.playSound(SoundEvents.LLAMA_SPIT, this.wolf.getSoundVolume(), 1);
+
+                if (this.wolf.getOwner() instanceof Player player) {
+                    SWAdvancements.giveAdvancement(player, level, SWAdvancements.ANTIDOTE);
+                }
             }
         }
     }

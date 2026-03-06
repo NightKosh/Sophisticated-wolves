@@ -1,0 +1,17 @@
+{
+  "parent": "sophisticated_wolves:creeper_alert",
+  "display": {
+    "icon": { "id": "minecraft:feather" },
+    "title": { "translate": "advancement.sophisticated_wolves.tactical_retreat" },
+    "description": { "translate": "advancement.sophisticated_wolves.tactical_retreat.desc" },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "triggered": {
+      "trigger": "minecraft:impossible"
+    }
+  }
+}

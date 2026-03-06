@@ -40,6 +40,7 @@ import net.minecraft.world.level.pathfinder.PathType;
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
 import sophisticated_wolves.api.AEntitySophisticatedWolf;
+import sophisticated_wolves.core.SWAdvancements;
 import sophisticated_wolves.core.SWConfiguration;
 import sophisticated_wolves.core.SWEntities;
 import sophisticated_wolves.core.SWItems;

@@ -1,0 +1,17 @@
+{
+  "parent": "sophisticated_wolves:sophisticated_taste",
+  "display": {
+    "icon": { "id": "minecraft:tnt" },
+    "title": { "translate": "advancement.sophisticated_wolves.creeper_alert" },
+    "description": { "translate": "advancement.sophisticated_wolves.creeper_alert.desc" },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "triggered": {
+      "trigger": "minecraft:impossible"
+    }
+  }
+}

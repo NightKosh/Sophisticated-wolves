@@ -1,0 +1,17 @@
+{
+  "parent": "minecraft:husbandry/tame_an_animal",
+  "display": {
+    "icon": { "id": "sophisticated_wolves:dog_treat" },
+    "title": { "translate": "advancement.sophisticated_wolves.sophisticated_taste" },
+    "description": { "translate": "advancement.sophisticated_wolves.sophisticated_taste.desc" },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "triggered": {
+      "trigger": "minecraft:impossible"
+    }
+  }
+}

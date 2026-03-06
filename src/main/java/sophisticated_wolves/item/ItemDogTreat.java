@@ -9,6 +9,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.gameevent.GameEvent;
 import sophisticated_wolves.api.AEntitySophisticatedWolf;
+import sophisticated_wolves.core.SWAdvancements;
 import sophisticated_wolves.core.SWConfiguration;
 import sophisticated_wolves.core.SWEntities;
 import sophisticated_wolves.core.SWItems;
@@ -57,6 +58,8 @@ public class ItemDogTreat extends Item {
                     level.gameEvent(player, GameEvent.ENTITY_PLACE, wolf.blockPosition());
 
                     stack.consume(1, player);
+
+                    SWAdvancements.giveAdvancement(player, level, SWAdvancements.SOPHISTICATED_TASTE);
                 }
             }
         }

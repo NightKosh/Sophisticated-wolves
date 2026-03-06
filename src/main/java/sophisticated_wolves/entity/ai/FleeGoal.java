@@ -3,6 +3,8 @@ package sophisticated_wolves.entity.ai;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.monster.Slime;
+import net.minecraft.world.entity.player.Player;
+import sophisticated_wolves.core.SWAdvancements;
 import sophisticated_wolves.core.SWConfiguration;
 import sophisticated_wolves.entity.SophisticatedWolf;
 
@@ -42,4 +44,12 @@ public class FleeGoal extends AvoidCreeperGoal {
         return this.wolf.isTame() && this.wolf.getHealth() <= SWConfiguration.WOLVES_HEALTH_FLEE.get();
     }
 
+    @Override
+    public void start() {
+        super.start();
+
+        if (this.wolf.getOwner() instanceof Player player) {
+            SWAdvancements.giveAdvancement(player, player.level(), SWAdvancements.TACTICAL_RETREAT);
+        }
+    }
 }

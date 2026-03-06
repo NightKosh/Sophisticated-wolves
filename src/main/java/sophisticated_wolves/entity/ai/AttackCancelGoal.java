@@ -4,6 +4,8 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.TamableAnimal;
 import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.entity.ai.navigation.PathNavigation;
+import net.minecraft.world.entity.player.Player;
+import sophisticated_wolves.core.SWAdvancements;
 
 /**
  * Sophisticated Wolves
@@ -62,6 +64,10 @@ public class AttackCancelGoal extends Goal {
     @Override
     public void start() {
         this.petPathfinder.stop();
+
+        if (this.owner instanceof Player player) {
+            SWAdvancements.giveAdvancement(player, player.level(), SWAdvancements.STAND_DOWN);
+        }
     }
 
     /**

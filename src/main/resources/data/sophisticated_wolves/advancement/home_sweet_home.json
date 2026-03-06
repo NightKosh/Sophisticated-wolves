@@ -1,0 +1,20 @@
+{
+  "parent": "sophisticated_wolves:well_fed",
+  "display": {
+    "icon": { "id": "sophisticated_wolves:kennel" },
+    "title": { "translate": "advancement.sophisticated_wolves.home_sweet_home" },
+    "description": { "translate": "advancement.sophisticated_wolves.home_sweet_home.desc" },
+    "frame": "goal",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "place_doghouse": {
+      "trigger": "minecraft:placed_block",
+      "conditions": {
+        "block": "sophisticated_wolves:kennel"
+      }
+    }
+  }
+}

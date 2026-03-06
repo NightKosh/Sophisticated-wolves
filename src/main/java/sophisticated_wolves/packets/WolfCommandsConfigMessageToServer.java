@@ -7,6 +7,7 @@ import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.server.level.ServerPlayer;
 import net.neoforged.neoforge.network.handling.IPayloadContext;
 import sophisticated_wolves.api.ModInfo;
+import sophisticated_wolves.core.SWAdvancements;
 import sophisticated_wolves.entity.SophisticatedWolf;
 
 import javax.annotation.Nonnull;
@@ -52,6 +53,10 @@ public record WolfCommandsConfigMessageToServer(int wolfId, boolean followOwner,
             var entity = level.getEntity(msg.wolfId());
             if (entity instanceof SophisticatedWolf wolf) {
                 wolf.updateCommands(msg.followOwner(), msg.guardZone());
+                SWAdvancements.giveAdvancement(player, level, SWAdvancements.NEW_TRICKS);
+                if (msg.guardZone()) {
+                    SWAdvancements.giveAdvancement(player, level, SWAdvancements.TERRITORIAL);
+                }
             }
         });
     }

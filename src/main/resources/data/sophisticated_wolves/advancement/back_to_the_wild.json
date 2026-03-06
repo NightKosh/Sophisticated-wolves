@@ -1,0 +1,17 @@
+{
+  "parent": "sophisticated_wolves:portable_friend",
+  "display": {
+    "icon": { "id": "sophisticated_wolves:pet_carrier" },
+    "title": { "translate": "advancement.sophisticated_wolves.back_to_the_wild" },
+    "description": { "translate": "advancement.sophisticated_wolves.back_to_the_wild.desc" },
+    "frame": "goal",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "triggered": {
+      "trigger": "minecraft:impossible"
+    }
+  }
+}

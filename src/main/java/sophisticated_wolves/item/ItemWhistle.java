@@ -9,6 +9,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
+import sophisticated_wolves.core.SWAdvancements;
 import sophisticated_wolves.core.SWItems;
 import sophisticated_wolves.core.SWSound;
 import sophisticated_wolves.entity.SophisticatedWolf;
@@ -63,6 +64,8 @@ public class ItemWhistle extends Item {
                                 break;
                             }
                         }
+
+                        SWAdvancements.giveAdvancement(player, level, SWAdvancements.COME_HERE);
                     }
                 }
             }

@@ -7,6 +7,7 @@ import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.server.level.ServerPlayer;
 import net.neoforged.neoforge.network.handling.IPayloadContext;
 import sophisticated_wolves.api.ModInfo;
+import sophisticated_wolves.core.SWAdvancements;
 import sophisticated_wolves.entity.SophisticatedWolf;
 
 import javax.annotation.Nonnull;
@@ -82,6 +83,10 @@ public record WolfFoodConfigMessageToServer(
                         msg.cookedMeat(),
                         msg.cookedFish()
                 );
+                SWAdvancements.giveAdvancement(player, level, SWAdvancements.NEW_TRICKS);
+                if (msg.rawMeat() || msg.rawFish() || msg.specialFish() || msg.cookedMeat() || msg.cookedFish()) {
+                    SWAdvancements.giveAdvancement(player, level, SWAdvancements.SELF_SERVICE);
+                }
             }
         });
     }

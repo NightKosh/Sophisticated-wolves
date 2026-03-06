@@ -9,6 +9,7 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.TamableAnimal;
 import net.neoforged.neoforge.network.handling.IPayloadContext;
 import sophisticated_wolves.api.ModInfo;
+import sophisticated_wolves.core.SWAdvancements;
 
 import javax.annotation.Nonnull;
 
@@ -49,6 +50,8 @@ public record PetNameMessageToServer(
             var entity = level.getEntity(msg.animalId());
             if (entity instanceof TamableAnimal animal) {
                 animal.setCustomName(Component.literal(msg.text()));
+
+                SWAdvancements.giveAdvancement(player, level, SWAdvancements.NAME_TO_REMEMBER);
             }
         });
     }

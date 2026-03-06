@@ -1,0 +1,17 @@
+{
+  "parent": "sophisticated_wolves:sophisticated_taste",
+  "display": {
+    "icon": { "id": "minecraft:bell" },
+    "title": { "translate": "advancement.sophisticated_wolves.stand_down" },
+    "description": { "translate": "advancement.sophisticated_wolves.stand_down.desc" },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "triggered": {
+      "trigger": "minecraft:impossible"
+    }
+  }
+}

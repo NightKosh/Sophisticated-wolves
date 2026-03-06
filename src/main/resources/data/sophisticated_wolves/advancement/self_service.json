@@ -1,0 +1,17 @@
+{
+  "parent": "sophisticated_wolves:new_tricks",
+  "display": {
+    "icon": { "id": "minecraft:cooked_beef" },
+    "title": { "translate": "advancement.sophisticated_wolves.self_service" },
+    "description": { "translate": "advancement.sophisticated_wolves.self_service.desc" },
+    "frame": "goal",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "triggered": {
+      "trigger": "minecraft:impossible"
+    }
+  }
+}
