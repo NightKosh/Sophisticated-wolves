@@ -2,6 +2,8 @@ package sophisticated_wolves.entity.ai;
 
 import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.entity.monster.Creeper;
+import net.minecraft.world.entity.player.Player;
+import sophisticated_wolves.core.SWAdvancements;
 import sophisticated_wolves.entity.SophisticatedWolf;
 
 /**
@@ -40,6 +42,10 @@ public class CreeperAlertGoal extends Goal {
         this.ticks = 0;
         this.wolf.playSound(this.wolf.getSoundVariant().value().growlSound().value(), this.wolf.getSoundVolume(),
                 (this.wolf.getRandom().nextFloat() - this.wolf.getRandom().nextFloat()) * 0.2F + 1);
+
+        if (this.wolf.getOwner() instanceof Player player) {
+            SWAdvancements.giveAdvancement(player, player.level(), SWAdvancements.CREEPER_ALERT);
+        }
     }
 
     @Override
