@@ -6,9 +6,7 @@ import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.entity.ai.navigation.PathNavigation;
 import net.minecraft.world.entity.ai.util.DefaultRandomPos;
 import net.minecraft.world.entity.monster.Creeper;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.pathfinder.Path;
-import sophisticated_wolves.core.SWAdvancements;
 import sophisticated_wolves.entity.SophisticatedWolf;
 
 import java.util.function.Predicate;
@@ -53,25 +51,23 @@ public class AvoidCreeperGoal extends Goal {
      */
     @Override
     public boolean canUse() {
-        var creepers = this.wolf.level().getEntitiesOfClass(
-                Creeper.class,
-                this.wolf.getBoundingBox()
-                        .inflate(this.distance, 3, this.distance),
-                this.canBeSeenSelector);
-        for (var creeper : creepers) {
-
-            if (creeper.isIgnited()) {
-                if (this.wolf.distanceTo(creeper) < MIN_DIST_TO_CHARGED_CREEPER && moveAway(creeper, 16, 7)) {
+        if (this.wolf.isTame()) {
+            var creepers = this.wolf.level().getEntitiesOfClass(
+                    Creeper.class,
+                    this.wolf.getBoundingBox()
+                            .inflate(this.distance, 3, this.distance),
+                    this.canBeSeenSelector);
+            for (var creeper : creepers) {
+                if (creeper.isIgnited()) {
+                    if (this.wolf.distanceTo(creeper) < MIN_DIST_TO_CHARGED_CREEPER && moveAway(creeper, 16, 7)) {
+                        this.monster = creeper;
+                        return true;
+                    }
+                } else if (this.wolf.distanceTo(creeper) < this.minDist2 && moveAway(creeper)) {
                     this.monster = creeper;
+
                     return true;
                 }
-            } else if (this.wolf.distanceTo(creeper) < this.minDist2 && moveAway(creeper)) {
-                this.monster = creeper;
-
-                if (this.wolf.getOwner() instanceof Player player) {
-                    SWAdvancements.giveAdvancement(player, this.wolf.level(), SWAdvancements.CREEPER_ALERT);
-                }
-                return true;
             }
         }
         return false;

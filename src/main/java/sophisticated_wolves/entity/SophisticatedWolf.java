@@ -7,7 +7,6 @@ import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
-import net.minecraft.sounds.SoundEvents;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.util.RandomSource;
@@ -28,19 +27,16 @@ import net.minecraft.world.entity.animal.equine.Llama;
 import net.minecraft.world.entity.animal.turtle.Turtle;
 import net.minecraft.world.entity.animal.wolf.Wolf;
 import net.minecraft.world.entity.animal.wolf.WolfSoundVariants;
-import net.minecraft.world.entity.monster.Creeper;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.DyeItem;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.pathfinder.PathType;
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
 import sophisticated_wolves.api.AEntitySophisticatedWolf;
-import sophisticated_wolves.core.SWAdvancements;
 import sophisticated_wolves.core.SWConfiguration;
 import sophisticated_wolves.core.SWEntities;
 import sophisticated_wolves.core.SWItems;
@@ -133,6 +129,7 @@ public class SophisticatedWolf extends AEntitySophisticatedWolf {
         this.goalSelector.addGoal(1, new FloatGoal(this));
         this.goalSelector.addGoal(1, new TamableAnimal.TamableAnimalPanicGoal(1.5, DamageTypeTags.PANIC_ENVIRONMENTAL_CAUSES));
         this.goalSelector.addGoal(2, this.fleeGoal); //new behavior
+        this.goalSelector.addGoal(2, new CreeperAlertGoal(this, 16)); //new behavior
         this.goalSelector.addGoal(3, new AvoidCreeperGoal(this, 8, 3, 1, 1.4)); //new behavior
         this.goalSelector.addGoal(5, new SitWhenOrderedToGoal(this));
         this.goalSelector.addGoal(7, this.shakeGoal); //new behavior
@@ -245,12 +242,7 @@ public class SophisticatedWolf extends AEntitySophisticatedWolf {
             return this.getSoundVariant().value().growlSound().value();
         }
 
-        //Growls if creeper is near
-        if (this.isTame() && this.creeperAlert()) {
-            return this.getSoundVariant().value().growlSound().value();
-        }
-
-        if (this.getRandom().nextInt(3) == 0 && !this.creeperAlert()) {
+        if (this.getRandom().nextInt(3) == 0) {
             if (this.isTame() && this.getHealth() < SWConfiguration.WOLVES_HEALTH_TAMED.get() / 2F) {
                 return this.getSoundVariant().value().whineSound().value();
             } else {
@@ -434,19 +426,6 @@ public class SophisticatedWolf extends AEntitySophisticatedWolf {
         }
 
         return false;
-    }
-
-    //checks for creepers nearby
-    private boolean creeperAlert() {
-        var list = this.level().getEntitiesOfClass(
-                Creeper.class, this.getBoundingBox().expandTowards(16, 4, 16));
-        if (!list.isEmpty()) {
-            this.playSound(this.getSoundVariant().value().growlSound().value(), getSoundVolume(),
-                    (this.getRandom().nextFloat() - this.getRandom().nextFloat()) * 0.2F + 1);
-            return true;
-        } else {
-            return false;
-        }
     }
 
     @Override
