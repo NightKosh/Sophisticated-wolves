@@ -13,7 +13,18 @@
     "place_doghouse": {
       "trigger": "minecraft:placed_block",
       "conditions": {
-        "block": "sophisticated_wolves:kennel"
+        "location": [
+          {
+            "condition": "minecraft:location_check",
+            "predicate": {
+              "block": {
+                "blocks": [
+                  "sophisticated_wolves:kennel"
+                ]
+              }
+            }
+          }
+        ]
       }
     }
   }
