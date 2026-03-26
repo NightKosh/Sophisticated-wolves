@@ -1,0 +1,20 @@
+{
+  "wants": {
+    "id": "minecraft:emerald",
+    "count": {
+      "type": "minecraft:uniform",
+      "min": 35,
+      "max": 45
+    }
+  },
+  "gives": {
+    "id": "sophisticated_wolves:pet_carrier",
+    "count": 1,
+    "components": {
+      "minecraft:custom_data": "{ClassName:\"SophisticatedWolf\",InfoList:{WolfType:\"minecraft:spotted\"},MobData:{variant:\"minecraft:spotted\"}}"
+    }
+  },
+  "xp": 15,
+  "max_uses": 3,
+  "reputation_discount": 0.05
+}

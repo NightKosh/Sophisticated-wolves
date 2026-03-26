@@ -1,7 +1,7 @@
 package sophisticated_wolves.gui.component;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.network.chat.Component;
@@ -32,7 +32,7 @@ public class GuiTabButton extends Button {
     }
 
     @Override
-    public void renderContents(@Nonnull GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTicks) {
+    public void extractContents(@Nonnull GuiGraphicsExtractor guiGraphics, int mouseX, int mouseY, float partialTicks) {
         if (this.isTabActive) {
             guiGraphics.blit(RenderPipelines.GUI_TEXTURED, SWResources.TAB_BUTTON_GUI,
                     this.getX(), this.getY(),
@@ -46,7 +46,7 @@ public class GuiTabButton extends Button {
                     this.width, Y_SIZE,
                     TEXTURE_SIZE, TEXTURE_SIZE);
         }
-        guiGraphics.drawCenteredString(Minecraft.getInstance().font, this.getMessage(),
+        guiGraphics.centeredText(Minecraft.getInstance().font, this.getMessage(),
                 this.getX() + this.width / 2, this.getY() + (this.height - 8) / 2,
                 this.getFGColor() | Mth.ceil(this.alpha * 255F) << 24);
     }

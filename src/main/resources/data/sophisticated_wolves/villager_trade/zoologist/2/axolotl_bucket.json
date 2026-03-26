@@ -1,0 +1,17 @@
+{
+  "wants": {
+    "id": "minecraft:emerald",
+    "count": {
+      "type": "minecraft:uniform",
+      "min": 15,
+      "max": 25
+    }
+  },
+  "gives": {
+    "id": "minecraft:axolotl_bucket",
+    "count": 1
+  },
+  "xp": 8,
+  "max_uses": 3,
+  "reputation_discount": 0.05
+}

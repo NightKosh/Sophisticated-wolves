@@ -26,6 +26,7 @@ import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.animal.equine.Llama;
 import net.minecraft.world.entity.animal.turtle.Turtle;
 import net.minecraft.world.entity.animal.wolf.Wolf;
+import net.minecraft.world.entity.animal.wolf.WolfSoundVariant;
 import net.minecraft.world.entity.animal.wolf.WolfSoundVariants;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.DyeColor;
@@ -111,7 +112,7 @@ public class SophisticatedWolf extends AEntitySophisticatedWolf {
 
     public SophisticatedWolf(EntityType<? extends AEntitySophisticatedWolf> entityType, Level level) {
         super(entityType, level);
-        this.setPathfindingMalus(PathType.DANGER_FIRE, 30);
+        this.setPathfindingMalus(PathType.FIRE, 30);
         this.setPathfindingMalus(PathType.LAVA, 100);
 
         if (SWConfiguration.DEBUG_MODE.get()) {
@@ -239,27 +240,33 @@ public class SophisticatedWolf extends AEntitySophisticatedWolf {
     @Override
     protected SoundEvent getAmbientSound() {
         if (this.isAngry()) {
-            return this.getSoundVariant().value().growlSound().value();
+            return this.getSoundSet().growlSound().value();
         }
 
         if (this.getRandom().nextInt(3) == 0) {
             if (this.isTame() && this.getHealth() < SWConfiguration.WOLVES_HEALTH_TAMED.get() / 2F) {
-                return this.getSoundVariant().value().whineSound().value();
+                return this.getSoundSet().whineSound().value();
             } else {
-                return this.getSoundVariant().value().pantSound().value();
+                return this.getSoundSet().pantSound().value();
             }
         } else {
             //sitting wolves will only bark 1/4 of the time
             if (!this.isOrderedToSit()) {
-                return this.getSoundVariant().value().ambientSound().value();
+                return this.getSoundSet().ambientSound().value();
             } else {
                 if (this.getRandom().nextInt(3) == 0) {
-                    return this.getSoundVariant().value().ambientSound().value();
+                    return this.getSoundSet().ambientSound().value();
                 } else {
                     return null;
                 }
             }
         }
+    }
+
+    public WolfSoundVariant.WolfSoundSet getSoundSet() {
+        return this.isBaby() ?
+                this.getSoundVariant().value().babySounds() :
+                this.getSoundVariant().value().adultSounds();
     }
 
     @Override

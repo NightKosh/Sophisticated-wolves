@@ -1,0 +1,6 @@
+{
+  "amount": 3,
+  "allow_duplicates": false,
+  "trades": "#sophisticated_wolves:zoologist/level_5",
+  "random_sequence": "sophisticated_wolves:trade_set/zoologist/level_5"
+}

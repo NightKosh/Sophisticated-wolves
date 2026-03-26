@@ -40,7 +40,7 @@ public class CreeperAlertGoal extends Goal {
     @Override
     public void start() {
         this.ticks = 0;
-        this.wolf.playSound(this.wolf.getSoundVariant().value().growlSound().value(), this.wolf.getSoundVolume(),
+        this.wolf.playSound(this.wolf.getSoundSet().growlSound().value(), this.wolf.getSoundVolume(),
                 (this.wolf.getRandom().nextFloat() - this.wolf.getRandom().nextFloat()) * 0.2F + 1);
 
         if (this.wolf.getOwner() instanceof Player player) {

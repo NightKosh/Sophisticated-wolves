@@ -1,6 +1,6 @@
 package sophisticated_wolves.gui.screen;
 
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.network.chat.Component;
@@ -38,7 +38,7 @@ public class DogBowlScreen extends AbstractContainerScreen<DogBowlContainerMenu>
     }
 
     @Override
-    protected void renderBg(@Nonnull GuiGraphics guiGraphics, float partialTick, int mouseX, int mouseY) {
+    public void extractBackground(@Nonnull GuiGraphicsExtractor guiGraphics, int mouseX, int mouseY, float partialTick) {
         int x = (this.width - this.imageWidth) / 2;
         int y = (this.height - this.imageHeight) / 2;
 
@@ -74,7 +74,7 @@ public class DogBowlScreen extends AbstractContainerScreen<DogBowlContainerMenu>
                 TEXTURE_SIZE, TEXTURE_SIZE);
     }
 
-    private void drawBones(GuiGraphics guiGraphics, int x, int y, int level, int bonesLevel, int amountOfBones) {
+    private void drawBones(GuiGraphicsExtractor guiGraphics, int x, int y, int level, int bonesLevel, int amountOfBones) {
         if (bonesLevel > level) {
             guiGraphics.blit(RenderPipelines.GUI_TEXTURED, SWResources.DOG_BOWL_GUI,
                     x + BONES_X_OFFSET, y,
@@ -92,9 +92,9 @@ public class DogBowlScreen extends AbstractContainerScreen<DogBowlContainerMenu>
     }
 
     @Override
-    public void render(@Nonnull GuiGraphics guiGraphics, int mouseX, int mouseY, float delta) {
-        super.render(guiGraphics, mouseX, mouseY, delta);
-        renderTooltip(guiGraphics, mouseX, mouseY);
+    public void extractRenderState(@Nonnull GuiGraphicsExtractor guiGraphics, int mouseX, int mouseY, float delta) {
+        super.extractRenderState(guiGraphics, mouseX, mouseY, delta);
+        this.extractTooltip(guiGraphics, mouseX, mouseY);
     }
 
 }
