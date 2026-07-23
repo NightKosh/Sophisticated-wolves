@@ -1,6 +1,7 @@
 package sophisticated_wolves.item.pet_carrier;
 
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.EntityTypes;
 import net.minecraft.world.entity.animal.armadillo.Armadillo;
 import sophisticated_wolves.api.pet_carrier.PetCarrier;
 
@@ -24,7 +25,7 @@ public class ArmadilloPetCarrier extends PetCarrier<Armadillo> {
 
     @Override
     public EntityType<Armadillo> getEntityType() {
-        return EntityType.ARMADILLO;
+        return EntityTypes.ARMADILLO;
     }
 
 }

@@ -29,7 +29,7 @@ public class WolfFoodConfigScreen extends WolfConfigScreen {
     }
 
     public static void open(SophisticatedWolf wolf) {
-        Minecraft.getInstance().setScreen(new WolfFoodConfigScreen(wolf));
+        Minecraft.getInstance().setScreenAndShow(new WolfFoodConfigScreen(wolf));
     }
 
     @Override

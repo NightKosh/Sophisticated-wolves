@@ -1,6 +1,7 @@
 package sophisticated_wolves.item.pet_carrier;
 
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.EntityTypes;
 import net.minecraft.world.entity.animal.feline.Ocelot;
 import sophisticated_wolves.api.pet_carrier.PetCarrier;
 
@@ -24,7 +25,7 @@ public class OcelotPetCarrier extends PetCarrier<Ocelot> {
 
     @Override
     public EntityType<Ocelot> getEntityType() {
-        return EntityType.OCELOT;
+        return EntityTypes.OCELOT;
     }
 
 }

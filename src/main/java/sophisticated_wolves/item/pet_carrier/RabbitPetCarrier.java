@@ -4,6 +4,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.util.ProblemReporter;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.EntityTypes;
 import net.minecraft.world.entity.animal.rabbit.Rabbit;
 import net.minecraft.world.level.storage.TagValueInput;
 import net.minecraft.world.level.storage.TagValueOutput;
@@ -37,7 +38,7 @@ public class RabbitPetCarrier extends PetCarrier<Rabbit> {
 
     @Override
     public EntityType<Rabbit> getEntityType() {
-        return EntityType.RABBIT;
+        return EntityTypes.RABBIT;
     }
 
     @Override

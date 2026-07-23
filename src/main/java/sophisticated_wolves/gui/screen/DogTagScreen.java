@@ -34,7 +34,7 @@ public class DogTagScreen extends Screen {
     }
 
     public static void open(TamableAnimal dog) {
-        Minecraft.getInstance().setScreen(new DogTagScreen(dog));
+        Minecraft.getInstance().setScreenAndShow(new DogTagScreen(dog));
     }
 
     @Override
@@ -57,7 +57,7 @@ public class DogTagScreen extends Screen {
                             SWMessages.sendToServer(
                                     new PetNameMessageToServer(this.animal.getId(), this.nameField.getValue())
                             );
-                            this.minecraft.setScreen(null); // close GUI
+                            this.minecraft.setScreenAndShow(null); // close GUI
                         })
                         .bounds(x + 5, y + 120, 55, 20)
                         .build()

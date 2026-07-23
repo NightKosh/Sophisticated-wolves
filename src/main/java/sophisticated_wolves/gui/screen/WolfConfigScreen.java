@@ -50,16 +50,16 @@ public abstract class WolfConfigScreen extends Screen {
 
         this.addRenderableWidget(this.foodScreenButton = new GuiTabButton(x + 3, y - TAB_BUTTONS_Y,
                 Component.translatable("gui.sophisticated_wolves.wolf_configs.food_button"),
-                (button) -> this.minecraft.setScreen(new WolfFoodConfigScreen(this.wolf))));
+                (button) -> this.minecraft.setScreenAndShow(new WolfFoodConfigScreen(this.wolf))));
         this.addRenderableWidget(this.targetsScreenButton = new GuiTabButton(x + 3 + GuiTabButton.X_SIZE, y - TAB_BUTTONS_Y,
                 Component.translatable("gui.sophisticated_wolves.wolf_configs.targets_button"),
-                (button) -> this.minecraft.setScreen(new WolfTargetsConfigScreen(this.wolf))));
+                (button) -> this.minecraft.setScreenAndShow(new WolfTargetsConfigScreen(this.wolf))));
         this.addRenderableWidget(this.commandsScreenButton = new GuiTabButton(x + 3 + GuiTabButton.X_SIZE * 2, y - TAB_BUTTONS_Y,
                 Component.translatable("gui.sophisticated_wolves.wolf_configs.commands_button"),
-                (button) -> this.minecraft.setScreen(new WolfCommandsConfigScreen(this.wolf))));
+                (button) -> this.minecraft.setScreenAndShow(new WolfCommandsConfigScreen(this.wolf))));
 
         this.addRenderableWidget(
-                Button.builder(CommonComponents.GUI_DONE, (button) -> this.minecraft.setScreen(null))
+                Button.builder(CommonComponents.GUI_DONE, (button) -> this.minecraft.setScreenAndShow(null))
                         .bounds(this.width / 2 - 50, y + 113, 100, 20)
                         .build()
         );

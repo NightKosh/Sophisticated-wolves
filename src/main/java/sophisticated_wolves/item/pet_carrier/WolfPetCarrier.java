@@ -5,6 +5,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.util.ProblemReporter;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.EntityTypes;
 import net.minecraft.world.entity.animal.wolf.Wolf;
 import net.minecraft.world.entity.animal.wolf.WolfVariant;
 import net.minecraft.world.entity.animal.wolf.WolfVariants;
@@ -132,7 +133,7 @@ public class WolfPetCarrier extends PetCarrier<Wolf> {
 
     @Override
     public EntityType<Wolf> getEntityType() {
-        return EntityType.WOLF;
+        return EntityTypes.WOLF;
     }
 
 }

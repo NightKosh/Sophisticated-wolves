@@ -5,6 +5,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.util.ProblemReporter;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.EntityTypes;
 import net.minecraft.world.entity.animal.chicken.Chicken;
 import net.minecraft.world.entity.animal.chicken.ChickenVariant;
 import net.minecraft.world.entity.animal.chicken.ChickenVariants;
@@ -56,7 +57,7 @@ public class ChickenPetCarrier extends PetCarrier<Chicken> {
 
     @Override
     public EntityType<Chicken> getEntityType() {
-        return EntityType.CHICKEN;
+        return EntityTypes.CHICKEN;
     }
 
     @Override
